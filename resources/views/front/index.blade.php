@@ -81,7 +81,7 @@
         <h1 class="display-4 fw-bold mb-3">Trade Smarter.<br>Invest with <span class="text-accent">Confidence.</span></h1>
         <p class="lead text-muted mb-4">XVolty Trade empowers you to build real wealth through secure crypto trading, smart investment plans, and lightning-fast transactions — all in one powerful platform.</p>
         <div class="d-flex flex-wrap gap-2 mb-4">
-          <a href="{{ route('register') }}" class="btn btn-primary btn-lg">Get Started <i class="fa-solid fa-arrow-right ms-1"></i></a>
+          <!-- <a href="{{ route('register') }}" class="btn btn-primary btn-lg">Get Started <i class="fa-solid fa-arrow-right ms-1"></i></a> -->
           <a href="#" class="btn btn-outline-primary btn-lg">Learn More</a>
         </div>
         <div class="d-flex flex-wrap gap-4 small text-muted">

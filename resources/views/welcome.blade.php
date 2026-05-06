@@ -69,7 +69,7 @@
                 </div>
                 <div class="flex items-center space-x-4">
                     <a href="{{ route('login') }}" class="hidden md:block text-gray-600 hover:text-brand-600 font-medium transition">Sign In</a>
-                    <a href="{{ route('register') }}" class="bg-brand-600 text-white hover:bg-brand-700 px-6 py-2.5 rounded-lg font-semibold shadow-lg shadow-brand-500/30 transition transform hover:-translate-y-0.5">Get Started</a>
+                    <!-- <a href="{{ route('register') }}" class="bg-brand-600 text-white hover:bg-brand-700 px-6 py-2.5 rounded-lg font-semibold shadow-lg shadow-brand-500/30 transition transform hover:-translate-y-0.5">Get Started</a> -->
                 </div>
             </div>
         </div>
