@@ -68,8 +68,8 @@
                     <a href="#features" class="text-gray-600 hover:text-brand-600 transition font-medium">Features</a>
                 </div>
                 <div class="flex items-center space-x-4">
-                    <a href="{{ url('login/user') }}" class="hidden md:block text-gray-600 hover:text-brand-600 font-medium transition">Sign In</a>
-                    <a href="{{ url('login/user') }}" class="bg-brand-600 text-white hover:bg-brand-700 px-6 py-2.5 rounded-lg font-semibold shadow-lg shadow-brand-500/30 transition transform hover:-translate-y-0.5">Get Started</a>
+                    <a href="{{ route('login') }}" class="hidden md:block text-gray-600 hover:text-brand-600 font-medium transition">Sign In</a>
+                    <a href="{{ route('register') }}" class="bg-brand-600 text-white hover:bg-brand-700 px-6 py-2.5 rounded-lg font-semibold shadow-lg shadow-brand-500/30 transition transform hover:-translate-y-0.5">Get Started</a>
                 </div>
             </div>
         </div>
@@ -100,7 +100,7 @@
                         Join a next-generation learning platform designed to help individuals grow through education, digital training, and performance-based rewards.
                     </p>
                     <div class="flex flex-col sm:flex-row gap-4">
-                        <a href="{{ url('login/user') }}" class="bg-white text-brand-900 hover:bg-gray-50 font-bold py-3.5 px-8 rounded-lg shadow-xl transition flex items-center justify-center">
+                        <a href="{{ route('register') }}" class="bg-white text-brand-900 hover:bg-gray-50 font-bold py-3.5 px-8 rounded-lg shadow-xl transition flex items-center justify-center">
                             Get Started
                         </a>
                         <a href="#programs" class="bg-white/10 hover:bg-white/20 border border-white/20 text-white font-bold py-3.5 px-8 rounded-lg transition backdrop-blur-sm flex items-center justify-center">
@@ -197,7 +197,7 @@
                     <h2 class="text-brand-600 font-bold tracking-wider uppercase text-sm mb-2">Learning Tracks</h2>
                     <h3 class="font-heading text-3xl md:text-4xl font-bold text-gray-900">Digital Training Programs</h3>
                 </div>
-                <a href="{{ url('login/user') }}" class="hidden md:inline-flex text-brand-600 font-semibold hover:text-brand-800 transition items-center">
+                <a href="{{ route('register') }}" class="hidden md:inline-flex text-brand-600 font-semibold hover:text-brand-800 transition items-center">
                     View All Programs <i class="fa-solid fa-arrow-right ml-2"></i>
                 </a>
             </div>
@@ -218,7 +218,7 @@
                         </div>
                         <h4 class="text-xl font-bold text-gray-900 mb-2">Digital Marketing Essentials</h4>
                         <p class="text-gray-600 text-sm flex-1 mb-6">Master SEO, content strategy, and social media management to thrive in the digital economy.</p>
-                        <a href="{{ url('login/user') }}" class="w-full text-center bg-gray-50 hover:bg-brand-50 text-brand-700 font-semibold py-2.5 rounded-lg border border-gray-200 transition">Explore Module</a>
+                        <a href="{{ route('register') }}" class="w-full text-center bg-gray-50 hover:bg-brand-50 text-brand-700 font-semibold py-2.5 rounded-lg border border-gray-200 transition">Explore Module</a>
                     </div>
                 </div>
 
@@ -237,7 +237,7 @@
                         </div>
                         <h4 class="text-xl font-bold text-gray-900 mb-2">Business Analytics Pro</h4>
                         <p class="text-gray-600 text-sm flex-1 mb-6">Learn to interpret data, generate business insights, and utilize modern reporting tools effectively.</p>
-                        <a href="{{ url('login/user') }}" class="w-full text-center bg-gray-50 hover:bg-brand-50 text-brand-700 font-semibold py-2.5 rounded-lg border border-gray-200 transition">Explore Module</a>
+                        <a href="{{ route('register') }}" class="w-full text-center bg-gray-50 hover:bg-brand-50 text-brand-700 font-semibold py-2.5 rounded-lg border border-gray-200 transition">Explore Module</a>
                     </div>
                 </div>
 
@@ -256,13 +256,13 @@
                         </div>
                         <h4 class="text-xl font-bold text-gray-900 mb-2">Corporate Leadership</h4>
                         <p class="text-gray-600 text-sm flex-1 mb-6">Develop critical thinking, team management, and strategic planning skills for modern workplaces.</p>
-                        <a href="{{ url('login/user') }}" class="w-full text-center bg-gray-50 hover:bg-brand-50 text-brand-700 font-semibold py-2.5 rounded-lg border border-gray-200 transition">Explore Module</a>
+                        <a href="{{ route('register') }}" class="w-full text-center bg-gray-50 hover:bg-brand-50 text-brand-700 font-semibold py-2.5 rounded-lg border border-gray-200 transition">Explore Module</a>
                     </div>
                 </div>
             </div>
             
             <div class="mt-8 text-center md:hidden">
-                <a href="{{ url('login/user') }}" class="inline-flex text-brand-600 font-semibold hover:text-brand-800 transition items-center">
+                <a href="{{ route('register') }}" class="inline-flex text-brand-600 font-semibold hover:text-brand-800 transition items-center">
                     View All Programs <i class="fa-solid fa-arrow-right ml-2"></i>
                 </a>
             </div>
@@ -460,7 +460,7 @@
                             <li class="flex items-center text-gray-700"><i class="fa-solid fa-check text-green-500 mr-3"></i> Unique verification ID</li>
                             <li class="flex items-center text-gray-700"><i class="fa-solid fa-check text-green-500 mr-3"></i> Instantly shareable online</li>
                         </ul>
-                        <a href="{{ url('login/user') }}" class="bg-brand-600 hover:bg-brand-700 text-white font-bold py-3 px-8 rounded-lg shadow-md transition inline-flex items-center">
+                        <a href="{{ route('register') }}" class="bg-brand-600 hover:bg-brand-700 text-white font-bold py-3 px-8 rounded-lg shadow-md transition inline-flex items-center">
                             Start Learning <i class="fa-solid fa-arrow-right ml-2"></i>
                         </a>
                     </div>

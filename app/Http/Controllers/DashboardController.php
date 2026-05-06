@@ -36,12 +36,13 @@ class DashboardController extends Controller
     {
         $title = ucfirst($section) . ($subsection ? ' - ' . ucfirst($subsection) : '');
         $path = $subsection ? "{$section} / {$subsection}" : $section;
+        $user = Auth::user();
         
         $viewPath = $subsection ? "user.{$section}.{$subsection}" : "user.{$section}";
         if (view()->exists($viewPath)) {
-            return view($viewPath, compact('title', 'path'));
+            return view($viewPath, compact('title', 'path', 'user'));
         }
         
-        return view('user.placeholder', compact('title', 'path'));
+        return view('user.placeholder', compact('title', 'path', 'user'));
     }
 }

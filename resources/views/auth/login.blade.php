@@ -1,23 +1,80 @@
 <!DOCTYPE html>
-<html lang="en" data-bs-theme="dark">
+<html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Login - XVolty Trade</title>
-    <link rel="stylesheet" href="{{ asset('assets/My Dashboard â€” XVolty Trade_files/bootstrap.min.css') }}">
-    <link rel="stylesheet" href="{{ asset('assets/My Dashboard â€” XVolty Trade_files/theme.css') }}">
+    <title>Sign In - Samarth Digital</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Outfit:wght@500;600;700;800;900&display=swap" rel="stylesheet">
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['Inter', 'sans-serif'],
+                        heading: ['Outfit', 'sans-serif'],
+                    },
+                    colors: {
+                        brand: {
+                            50: '#f0fdfa',
+                            100: '#e0e7ff',
+                            500: '#6366f1',
+                            600: '#4f46e5',
+                            700: '#4338ca',
+                            800: '#1e1b4b',
+                            900: '#0f172a',
+                        }
+                    }
+                }
+            }
+        }
+    </script>
 </head>
-<body style="background: #0b1220; display: flex; align-items: center; justify-content: center; height: 100vh;">
-    <div class="card border-themed" style="width: 100%; max-width: 400px; background: #1a222d;">
-        <div class="card-body p-4">
-            <div class="text-center mb-4">
-                <h4 class="text-white">Welcome Back</h4>
-                <p class="text-muted small">Login to access your dashboard</p>
+<body class="antialiased font-sans bg-gray-50 text-gray-800 flex min-h-screen">
+
+    <!-- Left Panel -->
+    <div class="hidden lg:flex lg:w-1/2 bg-brand-900 relative flex-col justify-between p-12 overflow-hidden">
+        <!-- Background graphics -->
+        <div class="absolute inset-0 z-0">
+            <div class="absolute inset-0 bg-[url('https://images.unsplash.com/photo-1516321318423-f06f85e504b3?q=80&w=2070&auto=format&fit=crop')] bg-cover bg-center opacity-20 mix-blend-overlay"></div>
+            <div class="absolute inset-0 bg-gradient-to-t from-brand-900 via-brand-900/80 to-transparent"></div>
+            <!-- Decorative gradient blobs -->
+            <div class="absolute top-0 right-0 -mr-40 -mt-40 w-96 h-96 rounded-full bg-brand-600/30 blur-3xl"></div>
+            <div class="absolute bottom-0 left-0 -ml-40 -mb-40 w-96 h-96 rounded-full bg-purple-600/30 blur-3xl"></div>
+        </div>
+
+        <div class="relative z-10">
+            <a href="{{ url('/') }}" class="flex items-center gap-3 inline-flex">
+                <div class="w-10 h-10 rounded-lg bg-gradient-to-br from-brand-600 to-purple-600 flex items-center justify-center text-white font-heading font-black text-xl shadow-lg">SD</div>
+                <span class="font-heading font-bold text-2xl text-white tracking-tight">Samarth Digital</span>
+            </a>
+        </div>
+
+        <div class="relative z-10 text-white max-w-lg">
+            <h1 class="font-heading text-4xl font-bold mb-6 leading-tight">Welcome back to your professional growth journey.</h1>
+            <p class="text-gray-300 text-lg leading-relaxed">
+                Access your premium training modules, track your progress, and unlock new career opportunities through our digital ecosystem.
+            </p>
+        </div>
+    </div>
+
+    <!-- Right Panel (Form) -->
+    <div class="w-full lg:w-1/2 flex items-center justify-center p-8 sm:p-12">
+        <div class="w-full max-w-md">
+            <!-- Mobile Logo -->
+            <div class="lg:hidden flex items-center justify-center gap-3 mb-10">
+                <div class="w-10 h-10 rounded-lg bg-gradient-to-br from-brand-600 to-purple-600 flex items-center justify-center text-white font-heading font-black text-xl shadow-lg shadow-brand-500/30">SD</div>
+                <span class="font-heading font-bold text-2xl text-brand-900 tracking-tight">Samarth Digital</span>
+            </div>
+
+            <div class="text-center mb-10 lg:text-left">
+                <h2 class="font-heading text-3xl font-bold text-gray-900 mb-2">Sign In</h2>
+                <p class="text-gray-500">Please enter your credentials to access your account.</p>
             </div>
 
             @if($errors->any())
-                <div class="alert alert-danger small">
-                    <ul class="mb-0">
+                <div class="bg-red-50 text-red-600 p-4 rounded-lg text-sm mb-6 border border-red-100">
+                    <ul class="list-disc pl-5">
                         @foreach($errors->all() as $error)
                             <li>{{ $error }}</li>
                         @endforeach
@@ -25,27 +82,43 @@
                 </div>
             @endif
 
-            <form method="POST" action="{{ route('login') }}">
+            <form method="POST" action="{{ route('login') }}" class="space-y-6">
                 @csrf
-                <div class="mb-3">
-                    <label class="form-label text-white">Email Address</label>
-                    <input type="email" name="email" class="form-control" required value="{{ old('email') }}">
+                <div>
+                    <label class="block text-sm font-medium text-gray-700 mb-2">Email Address</label>
+                    <input type="email" name="email" class="w-full px-4 py-3 rounded-lg border border-gray-300 focus:ring-2 focus:ring-brand-500 focus:border-brand-500 outline-none transition bg-white" required value="{{ old('email') }}" placeholder="you@example.com">
                 </div>
-                <div class="mb-3">
-                    <label class="form-label text-white">Password</label>
-                    <input type="password" name="password" class="form-control" required>
+                
+                <div>
+                    <div class="flex justify-between items-center mb-2">
+                        <label class="block text-sm font-medium text-gray-700">Password</label>
+                        <a href="#" class="text-sm text-brand-600 hover:text-brand-800 font-medium transition">Forgot password?</a>
+                    </div>
+                    <input type="password" name="password" class="w-full px-4 py-3 rounded-lg border border-gray-300 focus:ring-2 focus:ring-brand-500 focus:border-brand-500 outline-none transition bg-white" required placeholder="••••••••">
                 </div>
-                <button type="submit" class="btn btn-primary w-100">Sign In</button>
+
+                <div class="flex items-center">
+                    <input type="checkbox" id="remember" class="h-4 w-4 text-brand-600 focus:ring-brand-500 border-gray-300 rounded">
+                    <label for="remember" class="ml-2 block text-sm text-gray-700">Remember me</label>
+                </div>
+
+                <button type="submit" class="w-full bg-brand-600 hover:bg-brand-700 text-white font-bold py-3.5 rounded-lg shadow-md transition transform hover:-translate-y-0.5">
+                    Sign In
+                </button>
             </form>
 
-            <div class="mt-3 text-center small">
-                <p class="text-muted">Don't have an account? <a href="{{ route('register') }}" class="text-primary">Register</a></p>
-                <div class="mt-2 text-warning" style="font-size: 0.8rem;">
-                    Admin Login: admin@xvoltytrade.com / password<br>
-                    User Login: user@xvoltytrade.com / password
-                </div>
+            <div class="mt-8 text-center">
+                <p class="text-gray-600">Don't have an account? <a href="{{ route('register') }}" class="text-brand-600 font-bold hover:text-brand-800 transition">Create Account</a></p>
+            </div>
+            
+            <!-- Demo Info (Keep from original, just make it subtle) -->
+            <div class="mt-8 pt-6 border-t border-gray-200 text-center text-xs text-gray-400">
+                <p class="mb-1">Demo Login Details:</p>
+                <p>User: user@samarth.digital / password</p>
+                <p>Admin: admin@samarth.digital / password</p>
             </div>
         </div>
     </div>
+
 </body>
 </html>

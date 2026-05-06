@@ -8,6 +8,14 @@ Route::get('/', function () {
 });
 
 // Authentication & Registration
+Route::get('/login', [\App\Http\Controllers\AuthController::class, 'showLogin'])->name('login');
+Route::post('/login', [\App\Http\Controllers\AuthController::class, 'login']);
+Route::get('/register', [\App\Http\Controllers\AuthController::class, 'showRegister'])->name('register');
+Route::post('/register', [\App\Http\Controllers\AuthController::class, 'register']);
+Route::post('/logout', [\App\Http\Controllers\AuthController::class, 'logout'])->name('logout');
+Route::get('/logout', [\App\Http\Controllers\AuthController::class, 'logout']); // Fallback GET logout
+
+// Demo Routes
 Route::get('/login/admin', function () {
     auth()->login(\App\Models\User::where('email', 'admin@example.com')->first());
     return redirect()->route('admin.dashboard');
@@ -16,10 +24,6 @@ Route::get('/login/user', function () {
     auth()->login(\App\Models\User::where('email', 'user@example.com')->first());
     return redirect()->route('dashboard');
 });
-Route::get('/logout', function () {
-    auth()->logout();
-    return redirect('/');
-})->name('logout');
 
 // User Dashboard & Flow
 Route::middleware(['auth'])->group(function () {

@@ -25,9 +25,9 @@ class AuthController extends Controller
             $request->session()->regenerate();
             
             if (Auth::user()->role === 'admin') {
-                return redirect()->intended('/admin');
+                return redirect()->intended('/admin/dashboard');
             }
-            return redirect()->intended('/user');
+            return redirect()->route('dashboard');
         }
 
         return back()->withErrors([
@@ -46,6 +46,10 @@ class AuthController extends Controller
             'name' => 'required|string|max:255',
             'email' => 'required|string|email|max:255|unique:users',
             'password' => 'required|string|min:8|confirmed',
+            'sponsor_id' => 'required|string|exists:users,referral_code',
+        ], [
+            'sponsor_id.required' => 'A Referral Code is required to join the platform.',
+            'sponsor_id.exists' => 'The provided Referral Code is invalid. Please check and try again.',
         ]);
 
         $user = User::create([
@@ -53,12 +57,13 @@ class AuthController extends Controller
             'email' => $request->email,
             'password' => Hash::make($request->password),
             'role' => 'user',
-            'referral_code' => 'XV-' . strtoupper(substr(md5(uniqid()), 0, 6)),
+            'sponsor_id' => $request->sponsor_id,
+            'referral_code' => 'SD-' . strtoupper(substr(md5(uniqid()), 0, 6)),
         ]);
 
         Auth::login($user);
 
-        return redirect('/user');
+        return redirect()->route('dashboard');
     }
 
     public function logout(Request $request)
