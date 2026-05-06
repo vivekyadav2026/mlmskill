@@ -1,0 +1,412 @@
+﻿<!DOCTYPE html>
+<!-- saved from url=(0055)../admin/settings-packages.html -->
+<html lang="en" data-bs-theme="dark"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Package Settings — XVolty Trade</title>
+  
+  <link rel="preconnect" href="https://fonts.googleapis.com/">
+  <link rel="preconnect" href="https://fonts.gstatic.com/" crossorigin="">
+  <link href="../assets/Package Settings — XVolty Trade_files/css2" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+  <!-- Bootstrap (local) -->
+  <link rel="stylesheet" href="../assets/Package Settings — XVolty Trade_files/bootstrap.min.css">
+
+  <!-- Theme variables (from site_settings) -->
+  <style id="xvt-theme-vars">
+  :root,
+  [data-bs-theme="dark"] {
+    --xvt-primary: #f24a4a;
+    --xvt-accent:  #8c54c4;
+    --xvt-radius:  8px;
+    --xvt-body-bg: #0b1220;
+    --xvt-card-bg: #1a222d;
+    --xvt-sidebar-bg: #14172a;
+    --xvt-topbar-bg:  #161f2d;
+    --xvt-text:    #e2e8f0;
+    --xvt-muted:   #94a3b8;
+    --xvt-border:  #334155;
+
+    /* Bootstrap overrides */
+    --bs-primary: var(--xvt-primary);
+    --bs-primary-rgb: 8, 126, 139;
+    --bs-link-color: var(--xvt-primary);
+    --bs-link-hover-color: var(--xvt-accent);
+    --bs-body-bg: var(--xvt-body-bg);
+    --bs-body-color: var(--xvt-text);
+    --bs-border-color: var(--xvt-border);
+    --bs-border-radius: var(--xvt-radius);
+    --bs-border-radius-sm: calc(var(--xvt-radius) * 0.625);
+    --bs-border-radius-lg: calc(var(--xvt-radius) * 1.25);
+  }
+</style>
+
+  <!-- Constant theme CSS (Bootstrap overrides + bespoke components) -->
+  <link rel="stylesheet" href="../assets/Package Settings — XVolty Trade_files/theme.css">
+</head>
+<body>
+  <!-- ===== App Shell starts here ===== -->
+<div class="app-shell">
+
+  <!-- ===== Admin Sidebar ===== -->
+  <aside id="appSidebar" class="app-sidebar">
+        <a href="../admin/index.html" class="sidebar-brand">
+              <i class="fa-solid fa-bolt-lightning"></i>
+        <span>X VOLTY TRADE</span>
+          </a>
+    <ul class="list-unstyled mb-0 pb-3">
+      <li class="nav-section">Main</li>
+      <li><a href="../admin/index.html" class="nav-link"><i class="fa-solid fa-chart-pie"></i><span>Dashboard</span></a></li>
+      <li><a href="../admin/users.html" class="nav-link"><i class="fa-solid fa-users"></i><span>Users</span></a></li>
+
+      <li><a href="../admin/deposits.html" class="nav-link"><i class="fa-solid fa-arrow-down"></i><span>Deposits</span></a></li>
+      <li><a href="../admin/withdrawals.html" class="nav-link"><i class="fa-solid fa-arrow-up"></i><span>Withdrawals</span></a></li>
+      <li><a href="../admin/investments.html" class="nav-link"><i class="fa-solid fa-coins"></i><span>Investments</span></a></li>
+      <li><a href="../admin/plans.html" class="nav-link"><i class="fa-solid fa-layer-group"></i><span>Plans</span></a></li>
+      <li><a href="../admin/network-tree.html" class="nav-link"><i class="fa-solid fa-sitemap"></i><span>Network Tree</span></a></li>
+
+      <li class="nav-section">KYC Management</li>
+      <li><a href="../admin/kyc-approvals.html" class="nav-link"><i class="fa-solid fa-id-card"></i><span>KYC Approvals</span></a></li>
+
+      <li class="nav-section">Reports</li>
+      <li><a href="../admin/transactions.html" class="nav-link"><i class="fa-solid fa-receipt"></i><span>Transactions</span></a></li>
+      <li><a href="../admin/reports.html" class="nav-link"><i class="fa-solid fa-chart-line"></i><span>Reports</span></a></li>
+
+      <li class="nav-section">Wallet Management</li>
+            <li><a href="../admin/deposit-wallets.html" class="nav-link"><i class="fa-solid fa-building-columns"></i><span>Deposit Wallets</span></a></li>
+      <li><a href="../admin/deposit-requests.html" class="nav-link"><i class="fa-solid fa-file-invoice-dollar"></i><span>Deposit Requests</span></a></li>
+      <li><a href="../admin/payout-directory.html" class="nav-link"><i class="fa-solid fa-address-book"></i><span>Payout Directory</span></a></li>
+
+      <li class="nav-section">Automation</li>
+      <li><a href="../admin/cron-manager.html" class="nav-link"><i class="fa-solid fa-clock-rotate-left"></i><span>Cron Manager</span></a></li>
+
+      <li class="nav-section">Settings</li>
+            <li>
+        <a href="../admin/settings-packages.html#settingsSubmenu" class="nav-link d-flex align-items-center justify-content-between active" data-bs-toggle="collapse" role="button" aria-expanded="true" aria-controls="settingsSubmenu">
+          <span><i class="fa-solid fa-gear"></i><span>Settings</span></span>
+          <i class="fa-solid fa-chevron-down small ms-auto"></i>
+        </a>
+        <ul class="list-unstyled collapse show" id="settingsSubmenu" style="padding-left:1.5rem;">
+          <li><a href="../admin/settings-overview.html" class="nav-link"><i class="fa-solid fa-chart-pie"></i><span>Income Overview</span></a></li>
+          <li><a href="../admin/settings-packages.html" class="nav-link active"><i class="fa-solid fa-box"></i><span>Package Settings</span></a></li>
+          <li><a href="../admin/settings-roi.html" class="nav-link"><i class="fa-solid fa-chart-line"></i><span>ROI Settings</span></a></li>
+          <li><a href="../admin/settings-direct.html" class="nav-link"><i class="fa-solid fa-handshake"></i><span>Direct Income</span></a></li>
+          <li><a href="../admin/settings-level.html" class="nav-link"><i class="fa-solid fa-layer-group"></i><span>Level Income</span></a></li>
+          <li><a href="../admin/settings-salary.html" class="nav-link"><i class="fa-solid fa-money-bill"></i><span>Weekly Salary</span></a></li>
+          <li><a href="../admin/settings-rewards.html" class="nav-link"><i class="fa-solid fa-trophy"></i><span>Rank Rewards</span></a></li>
+          <li><a href="../admin/settings-ranks.html" class="nav-link"><i class="fa-solid fa-ranking-star"></i><span>Rank Management</span></a></li>
+          <li><a href="../admin/settings-capping.html" class="nav-link"><i class="fa-solid fa-shield"></i><span>Capping</span></a></li>
+          <li><a href="../admin/settings-withdrawal.html" class="nav-link"><i class="fa-solid fa-arrow-up"></i><span>Withdrawal</span></a></li>
+          <li><a href="../admin/settings-engines.html" class="nav-link"><i class="fa-solid fa-power-off"></i><span>Engine Controls</span></a></li>
+          <li><a href="../admin/site-settings.html" class="nav-link"><i class="fa-solid fa-id-card"></i><span>Site Settings</span></a></li>
+        </ul>
+      </li>
+      <li><a href="../admin/logout.html" class="nav-link"><i class="fa-solid fa-right-from-bracket"></i><span>Log Out</span></a></li>
+    </ul>
+  </aside>
+  <div class="app-sidebar-backdrop" id="appSidebarBackdrop"></div>
+
+  <!-- ===== Main column ===== -->
+  <div class="app-main">
+    <!-- ===== Topbar ===== -->
+    <nav class="app-topbar d-flex align-items-center justify-content-between">
+      <div class="d-flex align-items-center gap-2">
+        <button class="btn btn-sm btn-outline-secondary d-lg-none" id="sidebarMobileBtn" aria-label="Open sidebar">
+          <i class="fa-solid fa-bars"></i>
+        </button>
+        <h6 class="mb-0 fw-heading d-none d-md-block">Package Settings</h6>
+      </div>
+
+      <div class="d-flex align-items-center gap-2">
+        <!-- Notifications dropdown -->
+        <!-- <div class="dropdown">
+          <button class="btn btn-sm btn-outline-secondary position-relative" data-bs-toggle="dropdown" aria-expanded="false">
+            <i class="fa-solid fa-bell"></i>
+            <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger" style="font-size:0.6rem;">3</span>
+          </button>
+          <div class="dropdown-menu dropdown-menu-end p-0" style="min-width:320px;">
+            <h6 class="dropdown-header">Notifications</h6>
+            <a class="dropdown-item d-flex gap-2 py-2" href="#">
+              <span class="xvt-avatar" style="background:#10b981;"><i class="fa-solid fa-arrow-down"></i></span>
+              <span class="small"><strong>$5,200</strong> deposit received<br><span class="text-muted">2 minutes ago</span></span>
+            </a>
+            <a class="dropdown-item d-flex gap-2 py-2" href="#">
+              <span class="xvt-avatar"><i class="fa-solid fa-user-plus"></i></span>
+              <span class="small"><strong>John D.</strong> registered<br><span class="text-muted">15 minutes ago</span></span>
+            </a>
+            <div class="dropdown-divider"></div>
+            <a class="dropdown-item text-center small" href="#">View all</a>
+          </div>
+        </div> -->
+
+        <!-- Theme customizer trigger -->
+        <button class="btn btn-sm btn-outline-secondary" data-bs-toggle="offcanvas" data-bs-target="#themeCustomizer" aria-label="Theme settings">
+          <i class="fa-solid fa-palette"></i>
+        </button>
+
+        <!-- Admin profile dropdown -->
+        <div class="dropdown">
+          <button class="btn btn-sm btn-outline-secondary d-flex align-items-center gap-2" data-bs-toggle="dropdown" aria-expanded="false">
+            <span class="xvt-avatar" style="width:28px; height:28px; font-size:0.75rem;">AD</span>
+            <span class="d-none d-md-inline">Admin</span>
+            <i class="fa-solid fa-chevron-down small"></i>
+          </button>
+          <ul class="dropdown-menu dropdown-menu-end">
+            <li><h6 class="dropdown-header">Admin User<br><small class="text-muted">admin</small></h6></li>
+            <li><hr class="dropdown-divider"></li>
+            <li><a class="dropdown-item" href="../admin/settings.html"><i class="fa-solid fa-gear me-2"></i>Settings</a></li>
+            <li><a class="dropdown-item" href="../admin/logout.html"><i class="fa-solid fa-right-from-bracket me-2"></i>Log Out</a></li>
+          </ul>
+        </div>
+      </div>
+    </nav>
+
+    <!-- ===== Theme Customizer Offcanvas ===== -->
+        <div class="offcanvas offcanvas-end" tabindex="-1" id="themeCustomizer">
+      <div class="offcanvas-header border-bottom border-themed">
+        <h5 class="offcanvas-title"><i class="fa-solid fa-palette me-2"></i>Theme Customizer</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="offcanvas"></button>
+      </div>
+      <div class="offcanvas-body">
+        <p class="text-muted small">Changes apply site-wide and are saved to the database.</p>
+        <form id="themeForm">
+          <div class="mb-3">
+            <label class="form-label">Primary color</label>
+            <input type="color" name="theme_primary" class="form-control form-control-color w-100" value="#f24a4a">
+          </div>
+          <div class="mb-3">
+            <label class="form-label">Accent color</label>
+            <input type="color" name="theme_accent" class="form-control form-control-color w-100" value="#8c54c4">
+          </div>
+          <div class="mb-3">
+            <label class="form-label">Mode</label>
+            <select name="theme_mode" class="form-select">
+              <option value="dark" selected="">Dark</option>
+              <option value="light">Light</option>
+            </select>
+          </div>
+          <div class="mb-3">
+            <label class="form-label">Corner radius</label>
+            <select name="theme_radius" class="form-select">
+              <option value="4px">Small (4px)</option>
+              <option value="8px" selected="">Medium (8px)</option>
+              <option value="12px">Large (12px)</option>
+              <option value="16px">Extra Large (16px)</option>
+            </select>
+          </div>
+          <details class="mb-3">
+            <summary class="small text-muted mb-2">Advanced colors</summary>
+            <div class="mb-2"><label class="form-label small">Body background</label>
+              <input type="color" name="theme_body_bg" class="form-control form-control-color w-100" value="#0b1220"></div>
+            <div class="mb-2"><label class="form-label small">Card background</label>
+              <input type="color" name="theme_card_bg" class="form-control form-control-color w-100" value="#1a222d"></div>
+            <div class="mb-2"><label class="form-label small">Sidebar background</label>
+              <input type="color" name="theme_sidebar_bg" class="form-control form-control-color w-100" value="#14172a"></div>
+            <div class="mb-2"><label class="form-label small">Topbar background</label>
+              <input type="color" name="theme_topbar_bg" class="form-control form-control-color w-100" value="#161f2d"></div>
+          </details>
+          <button type="submit" class="btn btn-primary w-100"><i class="fa-solid fa-check me-1"></i> Save &amp; Reload</button>
+        </form>
+        <div id="themeMsg" class="small mt-3"></div>
+      </div>
+    </div>
+
+    <!-- ===== Start page content ===== -->
+    <main class="app-content">
+<div class="d-flex align-items-center justify-content-between mb-4"><div><h3 class="fw-heading mb-1"><i class="fa-solid fa-box me-2"></i>Package Settings</h3><p class="text-muted mb-0 small">Manage investment packages — 8 presets preloaded from the compensation document.</p></div></div>
+<form method="POST">
+  <input type="hidden" name="action" value="update_bulk">
+  <div class="card border-themed mb-4">
+    <div class="card-header d-flex align-items-center justify-content-between">
+      <h6 class="mb-0"><i class="fa-solid fa-list me-2"></i>All Packages</h6>
+      <a href="../admin/plans.html" class="btn btn-sm btn-outline-primary"><i class="fa-solid fa-image me-1"></i> Manage Images</a>
+    </div>
+    <div class="card-body p-0">
+      <div class="table-responsive">
+        <table class="table table-hover align-middle mb-0">
+          <thead class="table-light">
+            <tr>
+              <th class="ps-3">Package Name</th>
+              <th>Amount ($/$)</th>
+              <th>Daily ROI %</th>
+              <th>Status</th>
+            </tr>
+          </thead>
+          <tbody>
+                          <tr>
+                <td class="ps-3"><input type="text" name="pkg[1][name]" class="form-control form-control-sm" value="Starter Pack" required=""></td>
+                <td><input type="number" step="0.01" min="0" name="pkg[1][amount]" class="form-control form-control-sm" style="max-width:150px;" value="21.00" required=""></td>
+                <td><input type="number" step="0.0001" min="0" max="100" name="pkg[1][roi]" class="form-control form-control-sm" style="max-width:120px;" value="1.0000"></td>
+                <td>
+                  <select name="pkg[1][status]" class="form-select form-select-sm" style="max-width:120px;">
+                    <option value="active" selected="">Active</option>
+                    <option value="inactive">Inactive</option>
+                  </select>
+                </td>
+              </tr>
+                          <tr>
+                <td class="ps-3"><input type="text" name="pkg[2][name]" class="form-control form-control-sm" value="Beginner Pack" required=""></td>
+                <td><input type="number" step="0.01" min="0" name="pkg[2][amount]" class="form-control form-control-sm" style="max-width:150px;" value="50.00" required=""></td>
+                <td><input type="number" step="0.0001" min="0" max="100" name="pkg[2][roi]" class="form-control form-control-sm" style="max-width:120px;" value="1.0000"></td>
+                <td>
+                  <select name="pkg[2][status]" class="form-select form-select-sm" style="max-width:120px;">
+                    <option value="active" selected="">Active</option>
+                    <option value="inactive">Inactive</option>
+                  </select>
+                </td>
+              </tr>
+                          <tr>
+                <td class="ps-3"><input type="text" name="pkg[3][name]" class="form-control form-control-sm" value="Learner Pack" required=""></td>
+                <td><input type="number" step="0.01" min="0" name="pkg[3][amount]" class="form-control form-control-sm" style="max-width:150px;" value="100.00" required=""></td>
+                <td><input type="number" step="0.0001" min="0" max="100" name="pkg[3][roi]" class="form-control form-control-sm" style="max-width:120px;" value="1.0000"></td>
+                <td>
+                  <select name="pkg[3][status]" class="form-select form-select-sm" style="max-width:120px;">
+                    <option value="active" selected="">Active</option>
+                    <option value="inactive">Inactive</option>
+                  </select>
+                </td>
+              </tr>
+                          <tr>
+                <td class="ps-3"><input type="text" name="pkg[4][name]" class="form-control form-control-sm" value="Trader Pack" required=""></td>
+                <td><input type="number" step="0.01" min="0" name="pkg[4][amount]" class="form-control form-control-sm" style="max-width:150px;" value="250.00" required=""></td>
+                <td><input type="number" step="0.0001" min="0" max="100" name="pkg[4][roi]" class="form-control form-control-sm" style="max-width:120px;" value="1.0000"></td>
+                <td>
+                  <select name="pkg[4][status]" class="form-select form-select-sm" style="max-width:120px;">
+                    <option value="active" selected="">Active</option>
+                    <option value="inactive">Inactive</option>
+                  </select>
+                </td>
+              </tr>
+                          <tr>
+                <td class="ps-3"><input type="text" name="pkg[5][name]" class="form-control form-control-sm" value="Investor Pack" required=""></td>
+                <td><input type="number" step="0.01" min="0" name="pkg[5][amount]" class="form-control form-control-sm" style="max-width:150px;" value="500.00" required=""></td>
+                <td><input type="number" step="0.0001" min="0" max="100" name="pkg[5][roi]" class="form-control form-control-sm" style="max-width:120px;" value="1.0000"></td>
+                <td>
+                  <select name="pkg[5][status]" class="form-select form-select-sm" style="max-width:120px;">
+                    <option value="active" selected="">Active</option>
+                    <option value="inactive">Inactive</option>
+                  </select>
+                </td>
+              </tr>
+                          <tr>
+                <td class="ps-3"><input type="text" name="pkg[6][name]" class="form-control form-control-sm" value="Pro Investor" required=""></td>
+                <td><input type="number" step="0.01" min="0" name="pkg[6][amount]" class="form-control form-control-sm" style="max-width:150px;" value="1000.00" required=""></td>
+                <td><input type="number" step="0.0001" min="0" max="100" name="pkg[6][roi]" class="form-control form-control-sm" style="max-width:120px;" value="1.0000"></td>
+                <td>
+                  <select name="pkg[6][status]" class="form-select form-select-sm" style="max-width:120px;">
+                    <option value="active" selected="">Active</option>
+                    <option value="inactive">Inactive</option>
+                  </select>
+                </td>
+              </tr>
+                          <tr>
+                <td class="ps-3"><input type="text" name="pkg[7][name]" class="form-control form-control-sm" value="Gold Investor" required=""></td>
+                <td><input type="number" step="0.01" min="0" name="pkg[7][amount]" class="form-control form-control-sm" style="max-width:150px;" value="2500.00" required=""></td>
+                <td><input type="number" step="0.0001" min="0" max="100" name="pkg[7][roi]" class="form-control form-control-sm" style="max-width:120px;" value="1.0000"></td>
+                <td>
+                  <select name="pkg[7][status]" class="form-select form-select-sm" style="max-width:120px;">
+                    <option value="active" selected="">Active</option>
+                    <option value="inactive">Inactive</option>
+                  </select>
+                </td>
+              </tr>
+                          <tr>
+                <td class="ps-3"><input type="text" name="pkg[8][name]" class="form-control form-control-sm" value="Diamond Investor" required=""></td>
+                <td><input type="number" step="0.01" min="0" name="pkg[8][amount]" class="form-control form-control-sm" style="max-width:150px;" value="5000.00" required=""></td>
+                <td><input type="number" step="0.0001" min="0" max="100" name="pkg[8][roi]" class="form-control form-control-sm" style="max-width:120px;" value="1.0000"></td>
+                <td>
+                  <select name="pkg[8][status]" class="form-select form-select-sm" style="max-width:120px;">
+                    <option value="active" selected="">Active</option>
+                    <option value="inactive">Inactive</option>
+                  </select>
+                </td>
+              </tr>
+                      </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+  <button type="submit" class="btn btn-primary"><i class="fa-solid fa-check me-1"></i> Save All Packages</button>
+</form>
+
+<!-- Add New Package -->
+<div class="card border-themed mt-4">
+  <div class="card-header"><h6 class="mb-0"><i class="fa-solid fa-plus me-2"></i>Add New Package</h6></div>
+  <div class="card-body">
+    <form method="POST" class="row g-3">
+      <input type="hidden" name="action" value="add">
+      <div class="col-md-5"><label class="form-label">Name</label><input type="text" name="new_name" class="form-control" required=""></div>
+      <div class="col-md-3"><label class="form-label">Amount</label><input type="number" step="0.01" min="0" name="new_amount" class="form-control" required=""></div>
+      <div class="col-md-2"><label class="form-label">ROI %</label><input type="number" step="0.0001" min="0" max="100" name="new_roi" class="form-control" value="1.0000"></div>
+      <div class="col-md-2 d-flex align-items-end"><button type="submit" class="btn btn-success w-100"><i class="fa-solid fa-plus me-1"></i> Add</button></div>
+    </form>
+  </div>
+</div>
+
+    </main>
+  </div><!-- /.app-main -->
+</div><!-- /.app-shell -->
+
+<!-- Bootstrap bundle -->
+<script src="../assets/Package Settings — XVolty Trade_files/bootstrap.bundle.min.js.download"></script>
+
+<!-- App-wide dashboard JS: sidebar toggle + submenu + theme form -->
+<script>
+(function(){
+  // Mobile sidebar toggle
+  const sidebar  = document.getElementById('appSidebar');
+  const backdrop = document.getElementById('appSidebarBackdrop');
+  const mobileBtn = document.getElementById('sidebarMobileBtn');
+  const openSidebar  = () => { sidebar.classList.add('show'); backdrop.classList.add('show'); };
+  const closeSidebar = () => { sidebar.classList.remove('show'); backdrop.classList.remove('show'); };
+  if (mobileBtn)   mobileBtn.addEventListener('click', openSidebar);
+  if (backdrop)    backdrop.addEventListener('click', closeSidebar);
+
+  // Sidebar collapsible submenu
+  document.querySelectorAll('.app-sidebar .nav-dropdown-toggle').forEach(a => {
+    a.addEventListener('click', (e) => {
+      e.preventDefault();
+      a.closest('.has-submenu').classList.toggle('open');
+    });
+  });
+
+  // Theme customizer AJAX save
+  const themeForm = document.getElementById('themeForm');
+  if (themeForm) {
+    themeForm.addEventListener('submit', async (e) => {
+      e.preventDefault();
+      const msg = document.getElementById('themeMsg');
+      msg.textContent = 'Saving...';
+      try {
+        const fd = new FormData(themeForm);
+        const res = await fetch('../app/Controllers/api/save_theme.php', { method: 'POST', body: fd });
+        const data = await res.json();
+        if (data.status === 'success') {
+          msg.innerHTML = '<span class="text-success"><i class="fa-solid fa-check"></i> Saved. Reloading...</span>';
+          setTimeout(() => location.reload(), 500);
+        } else {
+          msg.innerHTML = '<span class="text-danger">' + (data.message || 'Error saving theme') + '</span>';
+        }
+      } catch (err) {
+        msg.innerHTML = '<span class="text-danger">Network error: ' + err.message + '</span>';
+      }
+    });
+  }
+})();
+</script>
+
+<!-- Auto-cron beacon (runs due tasks silently in background) -->
+<script>
+(function(){
+  setTimeout(function(){
+    fetch('../cron/auto_runner.php', {credentials:'same-origin'}).catch(function(){});
+  }, 3000);
+})();
+</script>
+
+
+
+</body></html>
+
+

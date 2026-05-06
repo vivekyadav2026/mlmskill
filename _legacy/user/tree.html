@@ -1,0 +1,338 @@
+﻿<!DOCTYPE html>
+<!-- saved from url=(0041)../user/tree.html -->
+<html lang="en" data-bs-theme="dark"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>My Network — XVolty Trade</title>
+  
+  <link rel="preconnect" href="https://fonts.googleapis.com/">
+  <link rel="preconnect" href="https://fonts.gstatic.com/" crossorigin="">
+  <link href="../assets/My Network — XVolty Trade_files/css2" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+  <!-- Bootstrap (local) -->
+  <link rel="stylesheet" href="../assets/My Network — XVolty Trade_files/bootstrap.min.css">
+
+  <!-- Theme variables -->
+  <style id="xvt-theme-vars">
+  :root,
+  [data-bs-theme="dark"] {
+    --xvt-primary: #f24a4a;
+    --xvt-accent:  #8c54c4;
+    --xvt-radius:  8px;
+    --xvt-body-bg: #0b1220;
+    --xvt-card-bg: #1a222d;
+    --xvt-sidebar-bg: #14172a;
+    --xvt-topbar-bg:  #161f2d;
+    --xvt-text:    #e2e8f0;
+    --xvt-muted:   #94a3b8;
+    --xvt-border:  #334155;
+
+    /* Bootstrap overrides */
+    --bs-primary: var(--xvt-primary);
+    --bs-primary-rgb: 8, 126, 139;
+    --bs-link-color: var(--xvt-primary);
+    --bs-link-hover-color: var(--xvt-accent);
+    --bs-body-bg: var(--xvt-body-bg);
+    --bs-body-color: var(--xvt-text);
+    --bs-border-color: var(--xvt-border);
+    --bs-border-radius: var(--xvt-radius);
+    --bs-border-radius-sm: calc(var(--xvt-radius) * 0.625);
+    --bs-border-radius-lg: calc(var(--xvt-radius) * 1.25);
+  }
+</style>
+
+  <!-- Constant theme CSS -->
+  <link rel="stylesheet" href="../assets/My Network — XVolty Trade_files/theme.css">
+</head>
+<body>
+  <!-- ===== App Shell ===== -->
+<div class="app-shell">
+
+  <!-- ===== User Sidebar ===== -->
+  <aside id="appSidebar" class="app-sidebar">
+        <a href="../user/index.html" class="sidebar-brand">
+              <i class="fa-solid fa-bolt-lightning"></i>
+        <span>X VOLTY TRADE</span>
+          </a>
+    <ul class="list-unstyled mb-0 pb-3">
+      <li class="nav-section">Main</li>
+      <li><a href="../user/index.html" class="nav-link"><i class="fa-solid fa-house"></i><span>Dashboard</span></a></li>
+      <li><a href="../user/deposit.html" class="nav-link"><i class="fa-solid fa-arrow-down"></i><span>Deposit</span></a></li>
+      <li><a href="../user/withdraw.html" class="nav-link"><i class="fa-solid fa-arrow-up"></i><span>Withdraw</span></a></li>
+      <li><a href="../user/payout-wallet.html" class="nav-link"><i class="fa-solid fa-wallet"></i><span>Payout Wallet</span></a></li>
+      <li><a href="../user/invest.html" class="nav-link"><i class="fa-solid fa-coins"></i><span>Invest</span></a></li>
+
+      <li class="nav-section">Network</li>
+      <li><a href="../user/tree.html" class="nav-link active"><i class="fa-solid fa-sitemap"></i><span>Network Tree</span></a></li>
+      <li><a href="../user/referrals.html" class="nav-link"><i class="fa-solid fa-user-plus"></i><span>Direct Team</span></a></li>
+
+      <li><a href="../user/incomes.html" class="nav-link"><i class="fa-solid fa-sack-dollar"></i><span>My Incomes</span></a></li>
+
+      <li class="nav-section">History</li>
+      <li><a href="../user/transactions.html" class="nav-link"><i class="fa-solid fa-receipt"></i><span>Transactions</span></a></li>
+      <li><a href="../user/portfolio.html" class="nav-link"><i class="fa-solid fa-chart-pie"></i><span>Portfolio</span></a></li>
+
+      <li class="nav-section">Account</li>
+      <li class="has-submenu">
+        <a href="../user/tree.html#" class="nav-link nav-dropdown-toggle">
+          <i class="fa-solid fa-user-gear"></i><span>Manage Profile</span>
+          <i class="fa-solid fa-chevron-down nav-arrow"></i>
+        </a>
+        <ul class="nav-submenu list-unstyled mb-0">
+          <li><a href="../user/profile.html" class="nav-link sub-link"><i class="fa-solid fa-user"></i><span>My Profile</span></a></li>
+          <li><a href="../user/profile-image.html" class="nav-link sub-link"><i class="fa-solid fa-camera"></i><span>Profile Image</span></a></li>
+          <li><a href="../user/change-password.html" class="nav-link sub-link"><i class="fa-solid fa-key"></i><span>Change Password</span></a></li>
+          <li><a href="../user/kyc.html" class="nav-link sub-link"><i class="fa-solid fa-id-card"></i><span>KYC</span></a></li>
+        </ul>
+      </li>
+      <li><a href="../user/logout.html" class="nav-link"><i class="fa-solid fa-right-from-bracket"></i><span>Log Out</span></a></li>
+    </ul>
+  </aside>
+  <div class="app-sidebar-backdrop" id="appSidebarBackdrop"></div>
+
+  <!-- Main column -->
+  <div class="app-main">
+    <!-- ===== User Topbar ===== -->
+        <nav class="app-topbar d-flex align-items-center justify-content-between">
+      <div class="d-flex align-items-center gap-2">
+        <button class="btn btn-sm btn-outline-secondary d-lg-none" id="sidebarMobileBtn" aria-label="Open sidebar">
+          <i class="fa-solid fa-bars"></i>
+        </button>
+        <h6 class="mb-0 fw-heading d-none d-md-block">My Network</h6>
+      </div>
+
+      <div class="d-flex align-items-center gap-2">
+        <!-- Notifications -->
+        <!-- <div class="dropdown">
+          <button class="btn btn-sm btn-outline-secondary position-relative" data-bs-toggle="dropdown" aria-expanded="false">
+            <i class="fa-solid fa-bell"></i>
+            <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger" style="font-size:0.6rem;">2</span>
+          </button>
+          <div class="dropdown-menu dropdown-menu-end p-0" style="min-width:320px;">
+            <h6 class="dropdown-header">Notifications</h6>
+            <a class="dropdown-item d-flex gap-2 py-2" href="#">
+              <span class="xvt-avatar" style="background:#10b981;"><i class="fa-solid fa-check"></i></span>
+              <span class="small"><strong>$1,500</strong> deposit confirmed<br><span class="text-muted">10 minutes ago</span></span>
+            </a>
+            <a class="dropdown-item d-flex gap-2 py-2" href="#">
+              <span class="xvt-avatar"><i class="fa-solid fa-chart-line"></i></span>
+              <span class="small">Daily ROI <strong>$45.50</strong> credited<br><span class="text-muted">2 hours ago</span></span>
+            </a>
+            <div class="dropdown-divider"></div>
+            <a class="dropdown-item text-center small" href="#">View all</a>
+          </div>
+        </div> -->
+
+        <!-- Profile -->
+        <div class="dropdown">
+          <button class="btn btn-sm btn-outline-secondary d-flex align-items-center gap-2" data-bs-toggle="dropdown" aria-expanded="false">
+            <span class="xvt-avatar" style="width:28px; height:28px; font-size:0.75rem;"><img src="../assets/My Network — XVolty Trade_files/3448ce1363001e09fd873ae7a8b81485.png" alt=""></span>
+            <span class="d-none d-md-inline">XVoltyTrade</span>
+            <i class="fa-solid fa-chevron-down small"></i>
+          </button>
+          <ul class="dropdown-menu dropdown-menu-end">
+            <li><h6 class="dropdown-header">XVoltyTrade<br><small class="text-muted">user@xvoltytrade.com</small></h6></li>
+            <li><hr class="dropdown-divider"></li>
+            <li><a class="dropdown-item" href="../user/profile.html"><i class="fa-solid fa-user me-2"></i>Profile</a></li>
+            <li><a class="dropdown-item" href="../user/change-password.html"><i class="fa-solid fa-shield-halved me-2"></i>Security</a></li>
+            <li><a class="dropdown-item" href="../user/logout.html"><i class="fa-solid fa-right-from-bracket me-2"></i>Log Out</a></li>
+          </ul>
+        </div>
+      </div>
+    </nav>
+
+    <!-- Start page content -->
+    <main class="app-content">
+
+<!-- ===== Network Tree Content ===== -->
+<div class="mb-4">
+  <div class="d-flex flex-wrap align-items-center justify-content-between gap-2 mb-3">
+    <div>
+      <h3 class="fw-heading mb-1"><i class="fa-solid fa-sitemap me-2"></i>My Network</h3>
+              <p class="text-muted mb-0 small">8-Level sponsor chain network overview</p>
+          </div>
+    <!-- Search within own network -->
+    <form class="d-flex gap-2" method="GET" style="max-width:380px;width:100%;">
+            <input type="hidden" name="level" value="1">
+      <input type="text" name="search" class="form-control form-control-sm" placeholder="Search ID / Name / Mobile" value="">
+      <button class="btn btn-sm btn-primary" type="submit"><i class="fa-solid fa-search"></i></button>
+          </form>
+  </div>
+
+  <!-- ===== Level Cards ===== -->
+  <div class="row g-2 mb-4">
+        <div class="col-6 col-md-3 col-lg">
+      <a href="../user/tree.html?level=1" class="card border-themed text-decoration-none h-100 network-level-card active">
+        <div class="card-body text-center py-3 px-2">
+          <div class="small text-uppercase fw-semibold mb-1" style="letter-spacing:.5px;">Level 1</div>
+          <div class="h4 fw-bold mb-0">2</div>
+        </div>
+      </a>
+    </div>
+        <div class="col-6 col-md-3 col-lg">
+      <a href="../user/tree.html?level=2" class="card border-themed text-decoration-none h-100 network-level-card">
+        <div class="card-body text-center py-3 px-2">
+          <div class="small text-uppercase fw-semibold mb-1" style="letter-spacing:.5px;">Level 2</div>
+          <div class="h4 fw-bold mb-0">0</div>
+        </div>
+      </a>
+    </div>
+        <div class="col-6 col-md-3 col-lg">
+      <a href="../user/tree.html?level=3" class="card border-themed text-decoration-none h-100 network-level-card">
+        <div class="card-body text-center py-3 px-2">
+          <div class="small text-uppercase fw-semibold mb-1" style="letter-spacing:.5px;">Level 3</div>
+          <div class="h4 fw-bold mb-0">0</div>
+        </div>
+      </a>
+    </div>
+        <div class="col-6 col-md-3 col-lg">
+      <a href="../user/tree.html?level=4" class="card border-themed text-decoration-none h-100 network-level-card">
+        <div class="card-body text-center py-3 px-2">
+          <div class="small text-uppercase fw-semibold mb-1" style="letter-spacing:.5px;">Level 4</div>
+          <div class="h4 fw-bold mb-0">0</div>
+        </div>
+      </a>
+    </div>
+        <div class="col-6 col-md-3 col-lg">
+      <a href="../user/tree.html?level=5" class="card border-themed text-decoration-none h-100 network-level-card">
+        <div class="card-body text-center py-3 px-2">
+          <div class="small text-uppercase fw-semibold mb-1" style="letter-spacing:.5px;">Level 5</div>
+          <div class="h4 fw-bold mb-0">0</div>
+        </div>
+      </a>
+    </div>
+        <div class="col-6 col-md-3 col-lg">
+      <a href="../user/tree.html?level=6" class="card border-themed text-decoration-none h-100 network-level-card">
+        <div class="card-body text-center py-3 px-2">
+          <div class="small text-uppercase fw-semibold mb-1" style="letter-spacing:.5px;">Level 6</div>
+          <div class="h4 fw-bold mb-0">0</div>
+        </div>
+      </a>
+    </div>
+        <div class="col-6 col-md-3 col-lg">
+      <a href="../user/tree.html?level=7" class="card border-themed text-decoration-none h-100 network-level-card">
+        <div class="card-body text-center py-3 px-2">
+          <div class="small text-uppercase fw-semibold mb-1" style="letter-spacing:.5px;">Level 7</div>
+          <div class="h4 fw-bold mb-0">0</div>
+        </div>
+      </a>
+    </div>
+        <div class="col-6 col-md-3 col-lg">
+      <a href="../user/tree.html?level=8" class="card border-themed text-decoration-none h-100 network-level-card">
+        <div class="card-body text-center py-3 px-2">
+          <div class="small text-uppercase fw-semibold mb-1" style="letter-spacing:.5px;">Level 8</div>
+          <div class="h4 fw-bold mb-0">0</div>
+        </div>
+      </a>
+    </div>
+        <!-- Total Card -->
+    <div class="col-6 col-md-3 col-lg">
+      <div class="card border-themed h-100 network-level-card total">
+        <div class="card-body text-center py-3 px-2">
+          <div class="small text-uppercase fw-semibold mb-1" style="letter-spacing:.5px;">Total</div>
+          <div class="h4 fw-bold mb-0">2</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ===== Level Members Table ===== -->
+  <div class="card border-themed">
+    <div class="card-header bg-transparent border-themed d-flex align-items-center justify-content-between">
+      <strong><i class="fa-solid fa-users me-1"></i>Level 1 Members</strong>
+      <span class="badge bg-primary">2 found</span>
+    </div>
+    <div class="card-body p-0">
+      <div class="table-responsive">
+        <table class="table table-hover align-middle mb-0">
+          <thead class="table-light">
+            <tr>
+              <th class="ps-3">#</th>
+              <th>User</th>
+              <th>User ID</th>
+              <th>Mobile</th>
+              <th>Sponsor</th>
+              <th>Directs</th>
+              <th>Status</th>
+              <th>Joined</th>
+              <th class="text-end pe-3">Action</th>
+            </tr>
+          </thead>
+          <tbody>
+                          <tr>
+                <td class="ps-3 text-muted small">1</td>
+                <td>
+                  <div class="d-flex align-items-center gap-2">
+                    <span class="xvt-avatar" style="width:32px;height:32px;font-size:.75rem;">P</span>
+                    <div>
+                      <div class="fw-semibold">POONAM SINGH</div>
+                      <div class="small text-muted">berokakinz@gmail.com</div>
+                    </div>
+                  </div>
+                </td>
+                <td><span class="fw-bold" style="color:var(--xvt-primary);">XV442258</span></td>
+                <td class="small">9876543200</td>
+                <td class="small">
+                  XVoltyTrade                  <div class="text-muted" style="font-size:.75rem;">XV000001</div>
+                </td>
+                <td class="fw-semibold">0</td>
+                <td><span class="badge bg-success">Active</span></td>
+                <td class="small text-muted">Apr 21, 2026</td>
+                <td class="text-end pe-3">
+                                      <span class="btn btn-sm btn-outline-secondary disabled"><i class="fa-solid fa-sitemap"></i></span>
+                                  </td>
+              </tr>
+                          <tr>
+                <td class="ps-3 text-muted small">2</td>
+                <td>
+                  <div class="d-flex align-items-center gap-2">
+                    <span class="xvt-avatar" style="width:32px;height:32px;font-size:.75rem;">R</span>
+                    <div>
+                      <div class="fw-semibold">Ravishankar Tiwari</div>
+                      <div class="small text-muted">snikit141@gmail.com</div>
+                    </div>
+                  </div>
+                </td>
+                <td><span class="fw-bold" style="color:var(--xvt-primary);">XV528556</span></td>
+                <td class="small">9876543210</td>
+                <td class="small">
+                  XVoltyTrade                  <div class="text-muted" style="font-size:.75rem;">XV000001</div>
+                </td>
+                <td class="fw-semibold">0</td>
+                <td><span class="badge bg-secondary">Inactive</span></td>
+                <td class="small text-muted">Apr 21, 2026</td>
+                <td class="text-end pe-3">
+                                      <span class="btn btn-sm btn-outline-secondary disabled"><i class="fa-solid fa-sitemap"></i></span>
+                                  </td>
+              </tr>
+                      </tbody>
+        </table>
+      </div>
+    </div>
+
+      </div>
+</div>
+
+    </main>
+  </div><!-- /.app-main -->
+</div><!-- /.app-shell -->
+
+<script src="../assets/My Network — XVolty Trade_files/bootstrap.bundle.min.js.download"></script>
+<script>
+(function(){
+  const sidebar  = document.getElementById('appSidebar');
+  const backdrop = document.getElementById('appSidebarBackdrop');
+  const btn      = document.getElementById('sidebarMobileBtn');
+  if (btn)      btn.addEventListener('click', () => { sidebar.classList.add('show'); backdrop.classList.add('show'); });
+  if (backdrop) backdrop.addEventListener('click', () => { sidebar.classList.remove('show'); backdrop.classList.remove('show'); });
+  document.querySelectorAll('.app-sidebar .nav-dropdown-toggle').forEach(a => {
+    a.addEventListener('click', (e) => { e.preventDefault(); a.closest('.has-submenu').classList.toggle('open'); });
+  });
+})();
+</script>
+
+
+</body></html>
+
+

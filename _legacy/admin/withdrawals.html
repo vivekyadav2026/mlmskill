@@ -1,0 +1,533 @@
+﻿<!DOCTYPE html>
+<!-- saved from url=(0049)../admin/withdrawals.html -->
+<html lang="en" data-bs-theme="dark"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Withdrawals — Admin — XVolty Trade</title>
+  
+  <link rel="preconnect" href="https://fonts.googleapis.com/">
+  <link rel="preconnect" href="https://fonts.gstatic.com/" crossorigin="">
+  <link href="../assets/Withdrawals — Admin — XVolty Trade_files/css2" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+  <!-- Bootstrap (local) -->
+  <link rel="stylesheet" href="../assets/Withdrawals — Admin — XVolty Trade_files/bootstrap.min.css">
+
+  <!-- Theme variables (from site_settings) -->
+  <style id="xvt-theme-vars">
+  :root,
+  [data-bs-theme="dark"] {
+    --xvt-primary: #f24a4a;
+    --xvt-accent:  #8c54c4;
+    --xvt-radius:  8px;
+    --xvt-body-bg: #0b1220;
+    --xvt-card-bg: #1a222d;
+    --xvt-sidebar-bg: #14172a;
+    --xvt-topbar-bg:  #161f2d;
+    --xvt-text:    #e2e8f0;
+    --xvt-muted:   #94a3b8;
+    --xvt-border:  #334155;
+
+    /* Bootstrap overrides */
+    --bs-primary: var(--xvt-primary);
+    --bs-primary-rgb: 8, 126, 139;
+    --bs-link-color: var(--xvt-primary);
+    --bs-link-hover-color: var(--xvt-accent);
+    --bs-body-bg: var(--xvt-body-bg);
+    --bs-body-color: var(--xvt-text);
+    --bs-border-color: var(--xvt-border);
+    --bs-border-radius: var(--xvt-radius);
+    --bs-border-radius-sm: calc(var(--xvt-radius) * 0.625);
+    --bs-border-radius-lg: calc(var(--xvt-radius) * 1.25);
+  }
+</style>
+
+  <!-- Constant theme CSS (Bootstrap overrides + bespoke components) -->
+  <link rel="stylesheet" href="../assets/Withdrawals — Admin — XVolty Trade_files/theme.css">
+</head>
+<body>
+  <!-- ===== App Shell starts here ===== -->
+<div class="app-shell">
+
+  <!-- ===== Admin Sidebar ===== -->
+  <aside id="appSidebar" class="app-sidebar">
+        <a href="../admin/index.html" class="sidebar-brand">
+              <i class="fa-solid fa-bolt-lightning"></i>
+        <span>X VOLTY TRADE</span>
+          </a>
+    <ul class="list-unstyled mb-0 pb-3">
+      <li class="nav-section">Main</li>
+      <li><a href="../admin/index.html" class="nav-link"><i class="fa-solid fa-chart-pie"></i><span>Dashboard</span></a></li>
+      <li><a href="../admin/users.html" class="nav-link"><i class="fa-solid fa-users"></i><span>Users</span></a></li>
+
+      <li><a href="../admin/deposits.html" class="nav-link"><i class="fa-solid fa-arrow-down"></i><span>Deposits</span></a></li>
+      <li><a href="../admin/withdrawals.html" class="nav-link active"><i class="fa-solid fa-arrow-up"></i><span>Withdrawals</span></a></li>
+      <li><a href="../admin/investments.html" class="nav-link"><i class="fa-solid fa-coins"></i><span>Investments</span></a></li>
+      <li><a href="../admin/plans.html" class="nav-link"><i class="fa-solid fa-layer-group"></i><span>Plans</span></a></li>
+      <li><a href="../admin/network-tree.html" class="nav-link"><i class="fa-solid fa-sitemap"></i><span>Network Tree</span></a></li>
+
+      <li class="nav-section">KYC Management</li>
+      <li><a href="../admin/kyc-approvals.html" class="nav-link"><i class="fa-solid fa-id-card"></i><span>KYC Approvals</span></a></li>
+
+      <li class="nav-section">Reports</li>
+      <li><a href="../admin/transactions.html" class="nav-link"><i class="fa-solid fa-receipt"></i><span>Transactions</span></a></li>
+      <li><a href="../admin/reports.html" class="nav-link"><i class="fa-solid fa-chart-line"></i><span>Reports</span></a></li>
+
+      <li class="nav-section">Wallet Management</li>
+            <li><a href="../admin/deposit-wallets.html" class="nav-link"><i class="fa-solid fa-building-columns"></i><span>Deposit Wallets</span></a></li>
+      <li><a href="../admin/deposit-requests.html" class="nav-link"><i class="fa-solid fa-file-invoice-dollar"></i><span>Deposit Requests</span></a></li>
+      <li><a href="../admin/payout-directory.html" class="nav-link"><i class="fa-solid fa-address-book"></i><span>Payout Directory</span></a></li>
+
+      <li class="nav-section">Automation</li>
+      <li><a href="../admin/cron-manager.html" class="nav-link"><i class="fa-solid fa-clock-rotate-left"></i><span>Cron Manager</span></a></li>
+
+      <li class="nav-section">Settings</li>
+            <li>
+        <a href="../admin/withdrawals.html#settingsSubmenu" class="nav-link d-flex align-items-center justify-content-between" data-bs-toggle="collapse" role="button" aria-expanded="false" aria-controls="settingsSubmenu">
+          <span><i class="fa-solid fa-gear"></i><span>Settings</span></span>
+          <i class="fa-solid fa-chevron-down small ms-auto"></i>
+        </a>
+        <ul class="list-unstyled collapse" id="settingsSubmenu" style="padding-left:1.5rem;">
+          <li><a href="../admin/settings-overview.html" class="nav-link"><i class="fa-solid fa-chart-pie"></i><span>Income Overview</span></a></li>
+          <li><a href="../admin/settings-packages.html" class="nav-link"><i class="fa-solid fa-box"></i><span>Package Settings</span></a></li>
+          <li><a href="../admin/settings-roi.html" class="nav-link"><i class="fa-solid fa-chart-line"></i><span>ROI Settings</span></a></li>
+          <li><a href="../admin/settings-direct.html" class="nav-link"><i class="fa-solid fa-handshake"></i><span>Direct Income</span></a></li>
+          <li><a href="../admin/settings-level.html" class="nav-link"><i class="fa-solid fa-layer-group"></i><span>Level Income</span></a></li>
+          <li><a href="../admin/settings-salary.html" class="nav-link"><i class="fa-solid fa-money-bill"></i><span>Weekly Salary</span></a></li>
+          <li><a href="../admin/settings-rewards.html" class="nav-link"><i class="fa-solid fa-trophy"></i><span>Rank Rewards</span></a></li>
+          <li><a href="../admin/settings-ranks.html" class="nav-link"><i class="fa-solid fa-ranking-star"></i><span>Rank Management</span></a></li>
+          <li><a href="../admin/settings-capping.html" class="nav-link"><i class="fa-solid fa-shield"></i><span>Capping</span></a></li>
+          <li><a href="../admin/settings-withdrawal.html" class="nav-link"><i class="fa-solid fa-arrow-up"></i><span>Withdrawal</span></a></li>
+          <li><a href="../admin/settings-engines.html" class="nav-link"><i class="fa-solid fa-power-off"></i><span>Engine Controls</span></a></li>
+          <li><a href="../admin/site-settings.html" class="nav-link"><i class="fa-solid fa-id-card"></i><span>Site Settings</span></a></li>
+        </ul>
+      </li>
+      <li><a href="../admin/logout.html" class="nav-link"><i class="fa-solid fa-right-from-bracket"></i><span>Log Out</span></a></li>
+    </ul>
+  </aside>
+  <div class="app-sidebar-backdrop" id="appSidebarBackdrop"></div>
+
+  <!-- ===== Main column ===== -->
+  <div class="app-main">
+    <!-- ===== Topbar ===== -->
+    <nav class="app-topbar d-flex align-items-center justify-content-between">
+      <div class="d-flex align-items-center gap-2">
+        <button class="btn btn-sm btn-outline-secondary d-lg-none" id="sidebarMobileBtn" aria-label="Open sidebar">
+          <i class="fa-solid fa-bars"></i>
+        </button>
+        <h6 class="mb-0 fw-heading d-none d-md-block">Withdrawal Management</h6>
+      </div>
+
+      <div class="d-flex align-items-center gap-2">
+        <!-- Notifications dropdown -->
+        <!-- <div class="dropdown">
+          <button class="btn btn-sm btn-outline-secondary position-relative" data-bs-toggle="dropdown" aria-expanded="false">
+            <i class="fa-solid fa-bell"></i>
+            <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger" style="font-size:0.6rem;">3</span>
+          </button>
+          <div class="dropdown-menu dropdown-menu-end p-0" style="min-width:320px;">
+            <h6 class="dropdown-header">Notifications</h6>
+            <a class="dropdown-item d-flex gap-2 py-2" href="#">
+              <span class="xvt-avatar" style="background:#10b981;"><i class="fa-solid fa-arrow-down"></i></span>
+              <span class="small"><strong>$5,200</strong> deposit received<br><span class="text-muted">2 minutes ago</span></span>
+            </a>
+            <a class="dropdown-item d-flex gap-2 py-2" href="#">
+              <span class="xvt-avatar"><i class="fa-solid fa-user-plus"></i></span>
+              <span class="small"><strong>John D.</strong> registered<br><span class="text-muted">15 minutes ago</span></span>
+            </a>
+            <div class="dropdown-divider"></div>
+            <a class="dropdown-item text-center small" href="#">View all</a>
+          </div>
+        </div> -->
+
+        <!-- Theme customizer trigger -->
+        <button class="btn btn-sm btn-outline-secondary" data-bs-toggle="offcanvas" data-bs-target="#themeCustomizer" aria-label="Theme settings">
+          <i class="fa-solid fa-palette"></i>
+        </button>
+
+        <!-- Admin profile dropdown -->
+        <div class="dropdown">
+          <button class="btn btn-sm btn-outline-secondary d-flex align-items-center gap-2" data-bs-toggle="dropdown" aria-expanded="false">
+            <span class="xvt-avatar" style="width:28px; height:28px; font-size:0.75rem;">AD</span>
+            <span class="d-none d-md-inline">Admin</span>
+            <i class="fa-solid fa-chevron-down small"></i>
+          </button>
+          <ul class="dropdown-menu dropdown-menu-end">
+            <li><h6 class="dropdown-header">Admin User<br><small class="text-muted">admin</small></h6></li>
+            <li><hr class="dropdown-divider"></li>
+            <li><a class="dropdown-item" href="../admin/settings.html"><i class="fa-solid fa-gear me-2"></i>Settings</a></li>
+            <li><a class="dropdown-item" href="../admin/logout.html"><i class="fa-solid fa-right-from-bracket me-2"></i>Log Out</a></li>
+          </ul>
+        </div>
+      </div>
+    </nav>
+
+    <!-- ===== Theme Customizer Offcanvas ===== -->
+        <div class="offcanvas offcanvas-end" tabindex="-1" id="themeCustomizer">
+      <div class="offcanvas-header border-bottom border-themed">
+        <h5 class="offcanvas-title"><i class="fa-solid fa-palette me-2"></i>Theme Customizer</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="offcanvas"></button>
+      </div>
+      <div class="offcanvas-body">
+        <p class="text-muted small">Changes apply site-wide and are saved to the database.</p>
+        <form id="themeForm">
+          <div class="mb-3">
+            <label class="form-label">Primary color</label>
+            <input type="color" name="theme_primary" class="form-control form-control-color w-100" value="#f24a4a">
+          </div>
+          <div class="mb-3">
+            <label class="form-label">Accent color</label>
+            <input type="color" name="theme_accent" class="form-control form-control-color w-100" value="#8c54c4">
+          </div>
+          <div class="mb-3">
+            <label class="form-label">Mode</label>
+            <select name="theme_mode" class="form-select">
+              <option value="dark" selected="">Dark</option>
+              <option value="light">Light</option>
+            </select>
+          </div>
+          <div class="mb-3">
+            <label class="form-label">Corner radius</label>
+            <select name="theme_radius" class="form-select">
+              <option value="4px">Small (4px)</option>
+              <option value="8px" selected="">Medium (8px)</option>
+              <option value="12px">Large (12px)</option>
+              <option value="16px">Extra Large (16px)</option>
+            </select>
+          </div>
+          <details class="mb-3">
+            <summary class="small text-muted mb-2">Advanced colors</summary>
+            <div class="mb-2"><label class="form-label small">Body background</label>
+              <input type="color" name="theme_body_bg" class="form-control form-control-color w-100" value="#0b1220"></div>
+            <div class="mb-2"><label class="form-label small">Card background</label>
+              <input type="color" name="theme_card_bg" class="form-control form-control-color w-100" value="#1a222d"></div>
+            <div class="mb-2"><label class="form-label small">Sidebar background</label>
+              <input type="color" name="theme_sidebar_bg" class="form-control form-control-color w-100" value="#14172a"></div>
+            <div class="mb-2"><label class="form-label small">Topbar background</label>
+              <input type="color" name="theme_topbar_bg" class="form-control form-control-color w-100" value="#161f2d"></div>
+          </details>
+          <button type="submit" class="btn btn-primary w-100"><i class="fa-solid fa-check me-1"></i> Save &amp; Reload</button>
+        </form>
+        <div id="themeMsg" class="small mt-3"></div>
+      </div>
+    </div>
+
+    <!-- ===== Start page content ===== -->
+    <main class="app-content">
+
+
+<div class="d-flex align-items-center justify-content-between mb-4">
+  <div>
+    <h3 class="fw-heading mb-1">Withdrawals</h3>
+    <p class="text-muted mb-0 small">Review and process user withdrawal requests.</p>
+  </div>
+</div>
+
+<!-- Stats -->
+<div class="row g-3 mb-4">
+  <div class="col-6 col-lg-3">
+    <div class="card border-themed h-100"><div class="card-body text-center">
+      <div class="text-muted small">Pending</div>
+      <h3 class="fw-bold mb-0 text-warning">0</h3>
+    </div></div>
+  </div>
+  <div class="col-6 col-lg-3">
+    <div class="card border-themed h-100"><div class="card-body text-center">
+      <div class="text-muted small">Approved</div>
+      <h3 class="fw-bold mb-0 text-success">3</h3>
+    </div></div>
+  </div>
+  <div class="col-6 col-lg-3">
+    <div class="card border-themed h-100"><div class="card-body text-center">
+      <div class="text-muted small">Total Paid</div>
+      <h3 class="fw-bold mb-0">$66.50</h3>
+    </div></div>
+  </div>
+</div>
+
+<!-- Filter -->
+<div class="mb-3 d-flex gap-2">
+  <a href="../admin/withdrawals.html" class="btn btn-sm btn-primary">All</a>
+  <a href="../admin/withdrawals.html?status=pending" class="btn btn-sm btn-outline-warning">Pending</a>
+  <a href="../admin/withdrawals.html?status=approved" class="btn btn-sm btn-outline-success">Approved</a>
+  <a href="../admin/withdrawals.html?status=rejected" class="btn btn-sm btn-outline-danger">Rejected</a>
+</div>
+
+<!-- Table -->
+<div class="card border-themed">
+  <div class="card-body p-0">
+    <div class="table-responsive">
+      <table class="table table-hover mb-0">
+        <thead>
+          <tr>
+            <th>#</th><th>User</th><th>Amount</th><th>Charge</th><th>Net</th><th>Wallet</th><th>Status</th><th>Date</th><th>Actions</th>
+          </tr>
+        </thead>
+        <tbody>
+                      <tr>
+              <td>1</td>
+              <td>
+                <strong>XV000001</strong>
+                <br><small class="text-muted">XVoltyTrade</small>
+              </td>
+              <td>$29.00</td>
+              <td>$1.45</td>
+              <td class="fw-semibold">$27.55</td>
+              <td><span class="badge bg-secondary">active wallet</span></td>
+              <td>
+                <span class="badge bg-success">approved</span>              </td>
+              <td class="small">2026-04-21 05:31:23</td>
+              <td>
+                                  <small class="text-muted"></small>
+                              </td>
+            </tr>
+                      <tr>
+              <td>2</td>
+              <td>
+                <strong>XV000001</strong>
+                <br><small class="text-muted">XVoltyTrade</small>
+              </td>
+              <td>$29.00</td>
+              <td>$1.45</td>
+              <td class="fw-semibold">$27.55</td>
+              <td><span class="badge bg-secondary">active wallet</span></td>
+              <td>
+                <span class="badge bg-danger">rejected</span>              </td>
+              <td class="small">2026-04-21 05:28:05</td>
+              <td>
+                                  <small class="text-muted"></small>
+                              </td>
+            </tr>
+                      <tr>
+              <td>3</td>
+              <td>
+                <strong>XV000001</strong>
+                <br><small class="text-muted">XVoltyTrade</small>
+              </td>
+              <td>$29.00</td>
+              <td>$1.45</td>
+              <td class="fw-semibold">$27.55</td>
+              <td><span class="badge bg-secondary">active wallet</span></td>
+              <td>
+                <span class="badge bg-danger">rejected</span>              </td>
+              <td class="small">2026-04-21 05:28:02</td>
+              <td>
+                                  <small class="text-muted"></small>
+                              </td>
+            </tr>
+                      <tr>
+              <td>4</td>
+              <td>
+                <strong>XV000001</strong>
+                <br><small class="text-muted">XVoltyTrade</small>
+              </td>
+              <td>$29.00</td>
+              <td>$1.45</td>
+              <td class="fw-semibold">$27.55</td>
+              <td><span class="badge bg-secondary">active wallet</span></td>
+              <td>
+                <span class="badge bg-danger">rejected</span>              </td>
+              <td class="small">2026-04-21 05:27:48</td>
+              <td>
+                                  <small class="text-muted"></small>
+                              </td>
+            </tr>
+                      <tr>
+              <td>5</td>
+              <td>
+                <strong>XV000001</strong>
+                <br><small class="text-muted">XVoltyTrade</small>
+              </td>
+              <td>$20.99</td>
+              <td>$1.05</td>
+              <td class="fw-semibold">$19.94</td>
+              <td><span class="badge bg-secondary">active wallet</span></td>
+              <td>
+                <span class="badge bg-danger">rejected</span>              </td>
+              <td class="small">2026-04-21 05:27:04</td>
+              <td>
+                                  <small class="text-muted">ok</small>
+                              </td>
+            </tr>
+                      <tr>
+              <td>6</td>
+              <td>
+                <strong>XV000001</strong>
+                <br><small class="text-muted">XVoltyTrade</small>
+              </td>
+              <td>$20.99</td>
+              <td>$1.05</td>
+              <td class="fw-semibold">$19.94</td>
+              <td><span class="badge bg-secondary">active wallet</span></td>
+              <td>
+                <span class="badge bg-success">approved</span>              </td>
+              <td class="small">2026-04-21 05:26:30</td>
+              <td>
+                                  <small class="text-muted">ok</small>
+                              </td>
+            </tr>
+                      <tr>
+              <td>7</td>
+              <td>
+                <strong>XV000001</strong>
+                <br><small class="text-muted">XVoltyTrade</small>
+              </td>
+              <td>$20.01</td>
+              <td>$1.00</td>
+              <td class="fw-semibold">$19.01</td>
+              <td><span class="badge bg-secondary">active wallet</span></td>
+              <td>
+                <span class="badge bg-success">approved</span>              </td>
+              <td class="small">2026-04-21 05:24:28</td>
+              <td>
+                                  <small class="text-muted">ok</small>
+                              </td>
+            </tr>
+                      <tr>
+              <td>8</td>
+              <td>
+                <strong>XV000001</strong>
+                <br><small class="text-muted">XVoltyTrade</small>
+              </td>
+              <td>$100.00</td>
+              <td>$5.00</td>
+              <td class="fw-semibold">$95.00</td>
+              <td><span class="badge bg-secondary">active wallet</span></td>
+              <td>
+                <span class="badge bg-danger">rejected</span>              </td>
+              <td class="small">2026-04-21 05:21:16</td>
+              <td>
+                                  <small class="text-muted">rejected</small>
+                              </td>
+            </tr>
+                  </tbody>
+      </table>
+    </div>
+  </div>
+</div>
+
+<!-- Modal -->
+<div class="modal fade" id="wthModal" tabindex="-1">
+  <div class="modal-dialog"><div class="modal-content">
+    <form method="POST">
+      <input type="hidden" name="withdrawal_id" id="wthId">
+      <input type="hidden" name="action" id="wthAction">
+      <div class="modal-header">
+        <h5 class="modal-title" id="wthTitle">Process Withdrawal</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+      </div>
+      <div class="modal-body">
+        <p id="wthDesc"></p>
+        <div id="payoutInfo" class="mb-3"></div>
+        <div class="mb-3">
+          <label class="form-label">Admin Remark (optional)</label>
+          <textarea name="admin_remark" class="form-control" rows="2"></textarea>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+        <button type="submit" class="btn" id="wthSubmitBtn">Confirm</button>
+      </div>
+    </form>
+  </div></div>
+</div>
+
+<script>
+function openWthAction(id, action, userId, amount, payouts) {
+  document.getElementById('wthId').value = id;
+  document.getElementById('wthAction').value = action;
+  const btn = document.getElementById('wthSubmitBtn');
+  var payoutHtml = '';
+  if (action === 'approve') {
+    document.getElementById('wthTitle').textContent = 'Approve Withdrawal';
+    document.getElementById('wthDesc').innerHTML = 'Pay <strong>$' + amount + '</strong> to <strong>' + userId + '</strong>?';
+    btn.className = 'btn btn-success'; btn.textContent = 'Approve';
+    if (payouts && payouts.length > 0) {
+      payoutHtml = '<div class="card bg-body-secondary"><div class="card-body small"><h6 class="fw-semibold mb-2"><i class="fa-solid fa-wallet me-1"></i>User Payout Wallet</h6>';
+      payouts.forEach(function(p) {
+        payoutHtml += '<div class="mb-2">';
+        payoutHtml += '<strong>' + p.wallet_name + '</strong> <span class="badge bg-info text-dark">' + p.network + '</span>';
+        if (p.is_default == 1) payoutHtml += ' <span class="badge bg-success">Default</span>';
+        payoutHtml += '<br><code style="word-break:break-all;">' + p.payout_address + '</code>';
+        if (p.qr_image) payoutHtml += '<br><img src="../' + p.qr_image + '" class="img-thumbnail mt-1" style="max-width:80px;">';
+        payoutHtml += '</div>';
+      });
+      payoutHtml += '</div></div>';
+    } else {
+      payoutHtml = '<div class="alert alert-warning small mb-0"><i class="fa-solid fa-exclamation-triangle me-1"></i> No payout wallet saved by this user.</div>';
+    }
+  } else {
+    document.getElementById('wthTitle').textContent = 'Reject Withdrawal';
+    document.getElementById('wthDesc').innerHTML = 'Reject withdrawal of <strong>$' + amount + '</strong> from <strong>' + userId + '</strong>? Amount will be refunded.';
+    btn.className = 'btn btn-danger'; btn.textContent = 'Reject & Refund';
+  }
+  document.getElementById('payoutInfo').innerHTML = payoutHtml;
+}
+</script>
+
+    </main>
+  </div><!-- /.app-main -->
+</div><!-- /.app-shell -->
+
+<!-- Bootstrap bundle -->
+<script src="../assets/Withdrawals — Admin — XVolty Trade_files/bootstrap.bundle.min.js.download"></script>
+
+<!-- App-wide dashboard JS: sidebar toggle + submenu + theme form -->
+<script>
+(function(){
+  // Mobile sidebar toggle
+  const sidebar  = document.getElementById('appSidebar');
+  const backdrop = document.getElementById('appSidebarBackdrop');
+  const mobileBtn = document.getElementById('sidebarMobileBtn');
+  const openSidebar  = () => { sidebar.classList.add('show'); backdrop.classList.add('show'); };
+  const closeSidebar = () => { sidebar.classList.remove('show'); backdrop.classList.remove('show'); };
+  if (mobileBtn)   mobileBtn.addEventListener('click', openSidebar);
+  if (backdrop)    backdrop.addEventListener('click', closeSidebar);
+
+  // Sidebar collapsible submenu
+  document.querySelectorAll('.app-sidebar .nav-dropdown-toggle').forEach(a => {
+    a.addEventListener('click', (e) => {
+      e.preventDefault();
+      a.closest('.has-submenu').classList.toggle('open');
+    });
+  });
+
+  // Theme customizer AJAX save
+  const themeForm = document.getElementById('themeForm');
+  if (themeForm) {
+    themeForm.addEventListener('submit', async (e) => {
+      e.preventDefault();
+      const msg = document.getElementById('themeMsg');
+      msg.textContent = 'Saving...';
+      try {
+        const fd = new FormData(themeForm);
+        const res = await fetch('../app/Controllers/api/save_theme.php', { method: 'POST', body: fd });
+        const data = await res.json();
+        if (data.status === 'success') {
+          msg.innerHTML = '<span class="text-success"><i class="fa-solid fa-check"></i> Saved. Reloading...</span>';
+          setTimeout(() => location.reload(), 500);
+        } else {
+          msg.innerHTML = '<span class="text-danger">' + (data.message || 'Error saving theme') + '</span>';
+        }
+      } catch (err) {
+        msg.innerHTML = '<span class="text-danger">Network error: ' + err.message + '</span>';
+      }
+    });
+  }
+})();
+</script>
+
+<!-- Auto-cron beacon (runs due tasks silently in background) -->
+<script>
+(function(){
+  setTimeout(function(){
+    fetch('../cron/auto_runner.php', {credentials:'same-origin'}).catch(function(){});
+  }, 3000);
+})();
+</script>
+
+
+
+</body></html>
+
+

@@ -1,0 +1,45 @@
+<?php
+
+namespace App\Http\Controllers;
+
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
+
+class CourseController extends Controller
+{
+    public function my()
+    {
+        $user = Auth::user();
+        return view('user.course.my', compact('user'));
+    }
+
+    public function progress()
+    {
+        $user = Auth::user();
+        // Assuming progress is 100% if active
+        $progress = $user->status === 'active' ? 100 : 0;
+        return view('user.course.progress', compact('user', 'progress'));
+    }
+
+    public function completeView()
+    {
+        $user = Auth::user();
+        return view('user.course.complete', compact('user'));
+    }
+
+    public function markComplete()
+    {
+        $user = Auth::user();
+        if ($user->status === 'active' && !$user->course_completed_at) {
+            $user->course_completed_at = now();
+            $user->save();
+        }
+        return redirect()->back()->with('success', 'Congratulations! Course marked as completed!');
+    }
+
+    public function certificate()
+    {
+        $user = Auth::user();
+        return view('user.course.certificate', compact('user'));
+    }
+}

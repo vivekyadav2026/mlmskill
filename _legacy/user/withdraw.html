@@ -1,0 +1,333 @@
+﻿<!DOCTYPE html>
+<!-- saved from url=(0045)../user/withdraw.html -->
+<html lang="en" data-bs-theme="dark"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Withdraw — XVolty Trade</title>
+  
+  <link rel="preconnect" href="https://fonts.googleapis.com/">
+  <link rel="preconnect" href="https://fonts.gstatic.com/" crossorigin="">
+  <link href="../assets/Withdraw — XVolty Trade_files/css2" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+  <!-- Bootstrap (local) -->
+  <link rel="stylesheet" href="../assets/Withdraw — XVolty Trade_files/bootstrap.min.css">
+
+  <!-- Theme variables -->
+  <style id="xvt-theme-vars">
+  :root,
+  [data-bs-theme="dark"] {
+    --xvt-primary: #f24a4a;
+    --xvt-accent:  #8c54c4;
+    --xvt-radius:  8px;
+    --xvt-body-bg: #0b1220;
+    --xvt-card-bg: #1a222d;
+    --xvt-sidebar-bg: #14172a;
+    --xvt-topbar-bg:  #161f2d;
+    --xvt-text:    #e2e8f0;
+    --xvt-muted:   #94a3b8;
+    --xvt-border:  #334155;
+
+    /* Bootstrap overrides */
+    --bs-primary: var(--xvt-primary);
+    --bs-primary-rgb: 8, 126, 139;
+    --bs-link-color: var(--xvt-primary);
+    --bs-link-hover-color: var(--xvt-accent);
+    --bs-body-bg: var(--xvt-body-bg);
+    --bs-body-color: var(--xvt-text);
+    --bs-border-color: var(--xvt-border);
+    --bs-border-radius: var(--xvt-radius);
+    --bs-border-radius-sm: calc(var(--xvt-radius) * 0.625);
+    --bs-border-radius-lg: calc(var(--xvt-radius) * 1.25);
+  }
+</style>
+
+  <!-- Constant theme CSS -->
+  <link rel="stylesheet" href="../assets/Withdraw — XVolty Trade_files/theme.css">
+</head>
+<body>
+  <!-- ===== App Shell ===== -->
+<div class="app-shell">
+
+  <!-- ===== User Sidebar ===== -->
+  <aside id="appSidebar" class="app-sidebar">
+        <a href="../user/index.html" class="sidebar-brand">
+              <i class="fa-solid fa-bolt-lightning"></i>
+        <span>X VOLTY TRADE</span>
+          </a>
+    <ul class="list-unstyled mb-0 pb-3">
+      <li class="nav-section">Main</li>
+      <li><a href="../user/index.html" class="nav-link"><i class="fa-solid fa-house"></i><span>Dashboard</span></a></li>
+      <li><a href="../user/deposit.html" class="nav-link"><i class="fa-solid fa-arrow-down"></i><span>Deposit</span></a></li>
+      <li><a href="../user/withdraw.html" class="nav-link active"><i class="fa-solid fa-arrow-up"></i><span>Withdraw</span></a></li>
+      <li><a href="../user/payout-wallet.html" class="nav-link"><i class="fa-solid fa-wallet"></i><span>Payout Wallet</span></a></li>
+      <li><a href="../user/invest.html" class="nav-link"><i class="fa-solid fa-coins"></i><span>Invest</span></a></li>
+
+      <li class="nav-section">Network</li>
+      <li><a href="../user/tree.html" class="nav-link"><i class="fa-solid fa-sitemap"></i><span>Network Tree</span></a></li>
+      <li><a href="../user/referrals.html" class="nav-link"><i class="fa-solid fa-user-plus"></i><span>Direct Team</span></a></li>
+
+      <li><a href="../user/incomes.html" class="nav-link"><i class="fa-solid fa-sack-dollar"></i><span>My Incomes</span></a></li>
+
+      <li class="nav-section">History</li>
+      <li><a href="../user/transactions.html" class="nav-link"><i class="fa-solid fa-receipt"></i><span>Transactions</span></a></li>
+      <li><a href="../user/portfolio.html" class="nav-link"><i class="fa-solid fa-chart-pie"></i><span>Portfolio</span></a></li>
+
+      <li class="nav-section">Account</li>
+      <li class="has-submenu">
+        <a href="../user/withdraw.html#" class="nav-link nav-dropdown-toggle">
+          <i class="fa-solid fa-user-gear"></i><span>Manage Profile</span>
+          <i class="fa-solid fa-chevron-down nav-arrow"></i>
+        </a>
+        <ul class="nav-submenu list-unstyled mb-0">
+          <li><a href="../user/profile.html" class="nav-link sub-link"><i class="fa-solid fa-user"></i><span>My Profile</span></a></li>
+          <li><a href="../user/profile-image.html" class="nav-link sub-link"><i class="fa-solid fa-camera"></i><span>Profile Image</span></a></li>
+          <li><a href="../user/change-password.html" class="nav-link sub-link"><i class="fa-solid fa-key"></i><span>Change Password</span></a></li>
+          <li><a href="../user/kyc.html" class="nav-link sub-link"><i class="fa-solid fa-id-card"></i><span>KYC</span></a></li>
+        </ul>
+      </li>
+      <li><a href="../user/logout.html" class="nav-link"><i class="fa-solid fa-right-from-bracket"></i><span>Log Out</span></a></li>
+    </ul>
+  </aside>
+  <div class="app-sidebar-backdrop" id="appSidebarBackdrop"></div>
+
+  <!-- Main column -->
+  <div class="app-main">
+    <!-- ===== User Topbar ===== -->
+        <nav class="app-topbar d-flex align-items-center justify-content-between">
+      <div class="d-flex align-items-center gap-2">
+        <button class="btn btn-sm btn-outline-secondary d-lg-none" id="sidebarMobileBtn" aria-label="Open sidebar">
+          <i class="fa-solid fa-bars"></i>
+        </button>
+        <h6 class="mb-0 fw-heading d-none d-md-block">Withdraw Funds</h6>
+      </div>
+
+      <div class="d-flex align-items-center gap-2">
+        <!-- Notifications -->
+        <!-- <div class="dropdown">
+          <button class="btn btn-sm btn-outline-secondary position-relative" data-bs-toggle="dropdown" aria-expanded="false">
+            <i class="fa-solid fa-bell"></i>
+            <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger" style="font-size:0.6rem;">2</span>
+          </button>
+          <div class="dropdown-menu dropdown-menu-end p-0" style="min-width:320px;">
+            <h6 class="dropdown-header">Notifications</h6>
+            <a class="dropdown-item d-flex gap-2 py-2" href="#">
+              <span class="xvt-avatar" style="background:#10b981;"><i class="fa-solid fa-check"></i></span>
+              <span class="small"><strong>$1,500</strong> deposit confirmed<br><span class="text-muted">10 minutes ago</span></span>
+            </a>
+            <a class="dropdown-item d-flex gap-2 py-2" href="#">
+              <span class="xvt-avatar"><i class="fa-solid fa-chart-line"></i></span>
+              <span class="small">Daily ROI <strong>$45.50</strong> credited<br><span class="text-muted">2 hours ago</span></span>
+            </a>
+            <div class="dropdown-divider"></div>
+            <a class="dropdown-item text-center small" href="#">View all</a>
+          </div>
+        </div> -->
+
+        <!-- Profile -->
+        <div class="dropdown">
+          <button class="btn btn-sm btn-outline-secondary d-flex align-items-center gap-2" data-bs-toggle="dropdown" aria-expanded="false">
+            <span class="xvt-avatar" style="width:28px; height:28px; font-size:0.75rem;"><img src="../assets/Withdraw — XVolty Trade_files/3448ce1363001e09fd873ae7a8b81485.png" alt=""></span>
+            <span class="d-none d-md-inline">XVoltyTrade</span>
+            <i class="fa-solid fa-chevron-down small"></i>
+          </button>
+          <ul class="dropdown-menu dropdown-menu-end">
+            <li><h6 class="dropdown-header">XVoltyTrade<br><small class="text-muted">user@xvoltytrade.com</small></h6></li>
+            <li><hr class="dropdown-divider"></li>
+            <li><a class="dropdown-item" href="../user/profile.html"><i class="fa-solid fa-user me-2"></i>Profile</a></li>
+            <li><a class="dropdown-item" href="../user/change-password.html"><i class="fa-solid fa-shield-halved me-2"></i>Security</a></li>
+            <li><a class="dropdown-item" href="../user/logout.html"><i class="fa-solid fa-right-from-bracket me-2"></i>Log Out</a></li>
+          </ul>
+        </div>
+      </div>
+    </nav>
+
+    <!-- Start page content -->
+    <main class="app-content">
+
+
+<div class="row g-4">
+  <!-- Wallet Balances -->
+  <div class="col-lg-4">
+    <div class="card border-themed mb-3">
+      <div class="card-header"><h6 class="mb-0"><i class="fa-solid fa-wallet me-2"></i>Your Wallets</h6></div>
+      <div class="card-body">
+        <div class="d-flex justify-content-between mb-2">
+          <span>Active Wallet</span>
+          <strong class="text-success">$436.50</strong>
+        </div>
+        <div class="d-flex justify-content-between mb-2">
+          <span>ROI Wallet</span>
+          <strong class="text-info">$15.00</strong>
+        </div>
+        <div class="d-flex justify-content-between">
+          <span>Inactive Wallet</span>
+          <strong class="text-warning">$0.00</strong>
+        </div>
+        <hr>
+        <div class="small text-muted">
+          <i class="fa-solid fa-info-circle me-1"></i>
+          Withdrawal charge: <strong>5%</strong>. Min: $20.00        </div>
+      </div>
+    </div>
+
+    <!-- Withdraw Form -->
+    <div class="card border-themed">
+      <div class="card-header"><h6 class="mb-0"><i class="fa-solid fa-arrow-up me-2"></i>Request Withdrawal</h6></div>
+      <div class="card-body">
+                <!-- Payout Wallet Preview -->
+        <div class="card bg-body-secondary mb-3">
+          <div class="card-body small">
+            <div class="d-flex justify-content-between align-items-center mb-1">
+              <h6 class="fw-semibold mb-0"><i class="fa-solid fa-wallet me-1"></i>Payout To</h6>
+              <a href="../user/payout-wallet.html" class="btn btn-outline-primary btn-sm py-0 px-2"><i class="fa-solid fa-pen me-1"></i>Change</a>
+            </div>
+            <div><strong>My Wallet</strong> <span class="badge bg-info text-dark">ERC20</span></div>
+            <code class="small" style="word-break:break-all;">test</code>
+          </div>
+        </div>
+        <form method="POST">
+          <input type="hidden" name="payout_wallet_id" value="3">
+          <div class="mb-3">
+            <label class="form-label">Select Wallet <span class="text-danger">*</span></label>
+            <select name="wallet_source" class="form-select" id="walletSelect" required="">
+              <option value="active_wallet">Active Wallet ($436.50)</option>
+              <option value="roi_wallet">ROI Wallet ($15.00)</option>
+            </select>
+          </div>
+          <div class="mb-3">
+            <label class="form-label">Amount ($) <span class="text-danger">*</span></label>
+            <input type="number" name="amount" min="20" step="0.01" class="form-control" id="wthAmount" required="">
+          </div>
+          <div class="mb-3">
+            <div class="d-flex justify-content-between small text-muted">
+              <span>Charge (5%)</span>
+              <span id="chargeDisplay">$0.00</span>
+            </div>
+            <div class="d-flex justify-content-between small fw-semibold">
+              <span>You'll Receive</span>
+              <span id="netDisplay">$0.00</span>
+            </div>
+          </div>
+          <button type="submit" class="btn btn-warning w-100"><i class="fa-solid fa-paper-plane me-1"></i> Submit Withdrawal</button>
+        </form>
+              </div>
+    </div>
+  </div>
+
+  <!-- History -->
+  <div class="col-lg-8">
+    <div class="card border-themed">
+      <div class="card-header"><h6 class="mb-0"><i class="fa-solid fa-clock-rotate-left me-2"></i>Withdrawal History</h6></div>
+      <div class="card-body p-0">
+        <div class="table-responsive">
+          <table class="table table-sm table-hover mb-0">
+            <thead><tr><th>Amount</th><th>Charge</th><th>Net</th><th>Wallet</th><th>Status</th><th>Date</th></tr></thead>
+            <tbody>
+                              <tr>
+                  <td>$29.00</td>
+                  <td>$1.45</td>
+                  <td class="fw-semibold">$27.55</td>
+                  <td class="small">active wallet</td>
+                  <td><span class="badge bg-success">approved</span></td>
+                  <td class="small">2026-04-21 05:31:23</td>
+                </tr>
+                              <tr>
+                  <td>$29.00</td>
+                  <td>$1.45</td>
+                  <td class="fw-semibold">$27.55</td>
+                  <td class="small">active wallet</td>
+                  <td><span class="badge bg-danger">rejected</span></td>
+                  <td class="small">2026-04-21 05:28:05</td>
+                </tr>
+                              <tr>
+                  <td>$29.00</td>
+                  <td>$1.45</td>
+                  <td class="fw-semibold">$27.55</td>
+                  <td class="small">active wallet</td>
+                  <td><span class="badge bg-danger">rejected</span></td>
+                  <td class="small">2026-04-21 05:28:02</td>
+                </tr>
+                              <tr>
+                  <td>$29.00</td>
+                  <td>$1.45</td>
+                  <td class="fw-semibold">$27.55</td>
+                  <td class="small">active wallet</td>
+                  <td><span class="badge bg-danger">rejected</span></td>
+                  <td class="small">2026-04-21 05:27:48</td>
+                </tr>
+                              <tr>
+                  <td>$20.99</td>
+                  <td>$1.05</td>
+                  <td class="fw-semibold">$19.94</td>
+                  <td class="small">active wallet</td>
+                  <td><span class="badge bg-danger">rejected</span></td>
+                  <td class="small">2026-04-21 05:27:04</td>
+                </tr>
+                              <tr>
+                  <td>$20.99</td>
+                  <td>$1.05</td>
+                  <td class="fw-semibold">$19.94</td>
+                  <td class="small">active wallet</td>
+                  <td><span class="badge bg-success">approved</span></td>
+                  <td class="small">2026-04-21 05:26:30</td>
+                </tr>
+                              <tr>
+                  <td>$20.01</td>
+                  <td>$1.00</td>
+                  <td class="fw-semibold">$19.01</td>
+                  <td class="small">active wallet</td>
+                  <td><span class="badge bg-success">approved</span></td>
+                  <td class="small">2026-04-21 05:24:28</td>
+                </tr>
+                              <tr>
+                  <td>$100.00</td>
+                  <td>$5.00</td>
+                  <td class="fw-semibold">$95.00</td>
+                  <td class="small">active wallet</td>
+                  <td><span class="badge bg-danger">rejected</span></td>
+                  <td class="small">2026-04-21 05:21:16</td>
+                </tr>
+                          </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+(function(){
+  const amt = document.getElementById('wthAmount');
+  const rate = 5;
+  amt.addEventListener('input', function(){
+    const a = parseFloat(this.value) || 0;
+    const c = Math.round(a * rate) / 100;
+    document.getElementById('chargeDisplay').textContent = '$' + c.toFixed(2);
+    document.getElementById('netDisplay').textContent = '$' + (a - c).toFixed(2);
+  });
+})();
+</script>
+
+    </main>
+  </div><!-- /.app-main -->
+</div><!-- /.app-shell -->
+
+<script src="../assets/Withdraw — XVolty Trade_files/bootstrap.bundle.min.js.download"></script>
+<script>
+(function(){
+  const sidebar  = document.getElementById('appSidebar');
+  const backdrop = document.getElementById('appSidebarBackdrop');
+  const btn      = document.getElementById('sidebarMobileBtn');
+  if (btn)      btn.addEventListener('click', () => { sidebar.classList.add('show'); backdrop.classList.add('show'); });
+  if (backdrop) backdrop.addEventListener('click', () => { sidebar.classList.remove('show'); backdrop.classList.remove('show'); });
+  document.querySelectorAll('.app-sidebar .nav-dropdown-toggle').forEach(a => {
+    a.addEventListener('click', (e) => { e.preventDefault(); a.closest('.has-submenu').classList.toggle('open'); });
+  });
+})();
+</script>
+
+
+</body></html>
+
+

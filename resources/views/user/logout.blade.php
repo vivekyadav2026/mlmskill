@@ -1,0 +1,11 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta http-equiv="refresh" content="1;url=../front/index.html" />
+    <title>Logging Out...</title>
+</head>
+<body style="background: #0b1220; color: white; display: flex; justify-content: center; align-items: center; height: 100vh; font-family: sans-serif;">
+    <h2>Logging out...</h2>
+</body>
+</html>
+

@@ -1,0 +1,221 @@
+/* User Management — Bootstrap-based (admin/users.php) */
+(function () {
+  const ACTION_URL = window.UM_ACTION_URL;
+  const DETAIL_URL = window.UM_DETAIL_URL;
+
+  // Enable tooltips on action buttons (if any)
+  document.querySelectorAll('[data-bs-toggle="tooltip"]').forEach(function (el) {
+    try { new bootstrap.Tooltip(el, { trigger: 'hover' }); } catch (e) { }
+  });
+
+  const $ = (id) => document.getElementById(id);
+  const mkModal = (id) => {
+    const el = $(id);
+    return el ? bootstrap.Modal.getOrCreateInstance(el) : null;
+  };
+
+  const profileModal = mkModal('profileModal');
+  const blockModal = mkModal('blockModal');
+  const passwordModal = mkModal('passwordModal');
+  const toastEl = $('umToast');
+  const toastBody = $('umToastBody');
+  const toast = toastEl ? bootstrap.Toast.getOrCreateInstance(toastEl, { delay: 3500 }) : null;
+
+  function showToast(msg, kind = 'success') {
+    if (!toast || !toastEl || !toastBody) { alert(msg); return; }
+    toastEl.className = 'toast text-white border-0 ' + (kind === 'success' ? 'bg-success' : 'bg-danger');
+    toastBody.innerHTML = '<i class="fa-solid fa-' + (kind === 'success' ? 'check' : 'exclamation-circle') + '"></i><span>' + msg + '</span>';
+    toast.show();
+  }
+
+  // ─── Action dispatch (delegation) ───
+  document.addEventListener('click', (e) => {
+    const btn = e.target.closest('[data-act]');
+    if (!btn) return;
+    e.preventDefault();
+    const act = btn.dataset.act;
+    const uid = btn.dataset.uid;
+    if (act === 'view') openViewProfile(uid);
+    else if (act === 'block') openBlockUser(uid);
+    else if (act === 'unblock') confirmUnblock(uid);
+    else if (act === 'change_password') openChangePassword(uid);
+  });
+
+  // ─── View profile ───
+  async function openViewProfile(uid) {
+    const body = document.getElementById('profileModalBody');
+    body.innerHTML = '<div class="text-center py-5 text-muted"><i class="fa-solid fa-spinner fa-spin"></i> Loading...</div>';
+    profileModal.show();
+    try {
+      const res = await fetch(DETAIL_URL + '?user_id=' + encodeURIComponent(uid));
+      const data = await res.json();
+      if (data && data.user_id) {
+        body.innerHTML = renderProfile(data);
+      } else {
+        body.innerHTML = '<div class="alert alert-danger">' + (data.error || data.message || 'Failed to load user') + '</div>';
+      }
+    } catch (err) {
+      body.innerHTML = '<div class="alert alert-danger">Network error: ' + err.message + '</div>';
+    }
+  }
+
+  function renderProfile(u) {
+    const init = (u.name || 'U').split(' ').map(p => p[0]).slice(0, 2).join('').toUpperCase();
+    return `
+      <div class="d-flex align-items-center gap-3 mb-4 pb-3 border-bottom border-themed">
+        <span class="xvt-avatar lg">${esc(init)}</span>
+        <div>
+          <h5 class="mb-1">${esc(u.name || '')}</h5>
+          <div class="small" style="color:var(--xvt-primary);">${esc(u.user_id || '')}</div>
+          <div class="small text-muted">${esc(u.email || '')}</div>
+        </div>
+      </div>
+      <div class="row g-3">
+        ${infoRow('Mobile', u.mobile)}
+        ${infoRow('Package', u.package || '$0')}
+        ${infoRow('Status', cap(u.status))}
+        ${infoRow('KYC', cap(u.kyc_status))}
+        ${infoRow('Sponsor', u.sponsor_id || '—')}
+        ${infoRow('Placement', u.placement_id || '—')}
+        ${infoRow('Position', cap(u.position) || '—')}
+        ${infoRow('Joined', u.created_at ? new Date(u.created_at).toLocaleString() : '—')}
+      </div>
+      ${u.block_reason ? `<div class="alert alert-danger mt-3"><strong>Block reason:</strong> ${esc(u.block_reason)}</div>` : ''}
+    `;
+  }
+  const infoRow = (l, v) => `
+    <div class="col-md-6">
+      <div class="card border-themed"><div class="card-body py-2 px-3">
+        <div class="text-muted small text-uppercase">${esc(l)}</div>
+        <div class="fw-semibold">${esc(v || '—')}</div>
+      </div></div>
+    </div>`;
+
+  // ─── Block ───
+  function openBlockUser(uid) {
+    if (!blockModal) return;
+    const lbl = $('blockUserId'), h = $('blockFormUserId'), r = $('block_reason');
+    if (lbl) lbl.textContent = uid;
+    if (h) h.value = uid;
+    if (r) r.value = '';
+    blockModal.show();
+  }
+  const blockForm = $('blockForm');
+  if (blockForm) {
+    blockForm.addEventListener('submit', async (e) => {
+      e.preventDefault();
+      const fd = new FormData(e.target);
+      fd.append('action', 'block');
+      const data = await postAction(fd);
+      if (data && data.status === 'success') {
+        showToast(data.message || 'User blocked');
+        if (blockModal) blockModal.hide();
+        setTimeout(() => location.reload(), 800);
+      } else {
+        console.error('[UM] block failed:', data);
+        showToast((data && data.message) || 'Failed to block', 'error');
+      }
+    });
+  }
+
+  // ─── Unblock ───
+  async function confirmUnblock(uid) {
+    if (!confirm('Unblock user ' + uid + '?')) return;
+    const fd = new FormData();
+    fd.append('action', 'unblock');
+    fd.append('user_id', uid);
+    const data = await postAction(fd);
+    if (data.status === 'success') {
+      showToast(data.message || 'User unblocked');
+      setTimeout(() => location.reload(), 800);
+    } else {
+      showToast(data.message || 'Error', 'error');
+    }
+  }
+
+  // ─── Change password ───
+  function openChangePassword(uid) {
+    if (!passwordModal) { console.error('[UM] passwordModal not found on page'); return; }
+    const pwdLabel = $('pwdUserId');
+    const pwdHidden = $('pwdFormUserId');
+    const np = $('new_password');
+    const cp = $('confirm_password');
+    if (pwdLabel) pwdLabel.textContent = uid;
+    if (pwdHidden) pwdHidden.value = uid;
+    if (np) np.value = '';
+    if (cp) cp.value = '';
+    passwordModal.show();
+  }
+  const passwordForm = $('passwordForm');
+  if (passwordForm) {
+    passwordForm.addEventListener('submit', async (e) => {
+      e.preventDefault();
+      const fd = new FormData(e.target);
+      const uid = (fd.get('user_id') || '').toString().trim();
+      const np = (fd.get('new_password') || '').toString();
+      const cp = (fd.get('confirm_password') || '').toString();
+      if (!uid) { showToast('Missing user_id', 'error'); return; }
+      if (np.length < 6) { showToast('Password must be at least 6 characters', 'error'); return; }
+      if (np !== cp) { showToast('Passwords do not match', 'error'); return; }
+      fd.append('action', 'change_password');
+      const submitBtn = passwordForm.querySelector('button[type="submit"]');
+      if (submitBtn) submitBtn.disabled = true;
+      const data = await postAction(fd);
+      if (submitBtn) submitBtn.disabled = false;
+      if (data && data.status === 'success') {
+        showToast(data.message || 'Password updated');
+        passwordForm.reset();
+        if (passwordModal) passwordModal.hide();
+        setTimeout(() => location.reload(), 800);
+      } else {
+        console.error('[UM] change_password failed:', data);
+        showToast((data && data.message) || 'Failed to update password', 'error');
+      }
+    });
+  }
+
+  // ─── Filters ───
+  const search = document.getElementById('userSearch');
+  const statusF = document.getElementById('statusFilter');
+  const kycF = document.getElementById('kycFilter');
+  const applyFilters = () => {
+    const q = (search.value || '').trim().toLowerCase();
+    const s = statusF.value;
+    const k = kycF.value;
+    document.querySelectorAll('#usersTableBody tr[data-user-id]').forEach(tr => {
+      const hitQ = !q || tr.dataset.userId.toLowerCase().includes(q)
+        || (tr.dataset.name || '').includes(q)
+        || (tr.dataset.email || '').includes(q);
+      const hitS = !s || tr.dataset.status === s;
+      const hitK = !k || tr.dataset.kyc === k;
+      tr.style.display = (hitQ && hitS && hitK) ? '' : 'none';
+    });
+  };
+  if (search) search.addEventListener('input', applyFilters);
+  if (statusF) statusF.addEventListener('change', applyFilters);
+  if (kycF) kycF.addEventListener('change', applyFilters);
+
+  async function postAction(fd) {
+    console.log('[UM] Sending request to', ACTION_URL);
+    try {
+      const res = await fetch(ACTION_URL, { method: 'POST', body: fd, credentials: 'include' });
+      console.log('[UM] Response status:', res.status);
+      const text = await res.text();
+      console.log('[UM] Response text:', text.slice(0, 200));
+      try {
+        const data = JSON.parse(text);
+        console.log('[UM] Parsed data:', data);
+        return data;
+      } catch (parseErr) {
+        console.error('[UM] Non-JSON response from API:', res.status, text.slice(0, 500));
+        return { status: 'error', message: 'Server returned invalid response (HTTP ' + res.status + ')' };
+      }
+    } catch (err) {
+      console.error('[UM] Network error:', err);
+      return { status: 'error', message: err.message };
+    }
+  }
+
+  function esc(s) { return String(s ?? '').replace(/[&<>"']/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c])); }
+  function cap(s) { return s ? String(s).charAt(0).toUpperCase() + String(s).slice(1) : ''; }
+})();

@@ -1,0 +1,865 @@
+﻿<!DOCTYPE html>
+<!-- saved from url=(0050)../admin/cron-manager.html -->
+<html lang="en" data-bs-theme="dark"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Cron Manager — Admin — XVolty Trade</title>
+  
+  <link rel="preconnect" href="https://fonts.googleapis.com/">
+  <link rel="preconnect" href="https://fonts.gstatic.com/" crossorigin="">
+  <link href="../assets/Cron Manager — Admin — XVolty Trade_files/css2" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+  <!-- Bootstrap (local) -->
+  <link rel="stylesheet" href="../assets/Cron Manager — Admin — XVolty Trade_files/bootstrap.min.css">
+
+  <!-- Theme variables (from site_settings) -->
+  <style id="xvt-theme-vars">
+  :root,
+  [data-bs-theme="dark"] {
+    --xvt-primary: #f24a4a;
+    --xvt-accent:  #8c54c4;
+    --xvt-radius:  8px;
+    --xvt-body-bg: #0b1220;
+    --xvt-card-bg: #1a222d;
+    --xvt-sidebar-bg: #14172a;
+    --xvt-topbar-bg:  #161f2d;
+    --xvt-text:    #e2e8f0;
+    --xvt-muted:   #94a3b8;
+    --xvt-border:  #334155;
+
+    /* Bootstrap overrides */
+    --bs-primary: var(--xvt-primary);
+    --bs-primary-rgb: 8, 126, 139;
+    --bs-link-color: var(--xvt-primary);
+    --bs-link-hover-color: var(--xvt-accent);
+    --bs-body-bg: var(--xvt-body-bg);
+    --bs-body-color: var(--xvt-text);
+    --bs-border-color: var(--xvt-border);
+    --bs-border-radius: var(--xvt-radius);
+    --bs-border-radius-sm: calc(var(--xvt-radius) * 0.625);
+    --bs-border-radius-lg: calc(var(--xvt-radius) * 1.25);
+  }
+</style>
+
+  <!-- Constant theme CSS (Bootstrap overrides + bespoke components) -->
+  <link rel="stylesheet" href="../assets/Cron Manager — Admin — XVolty Trade_files/theme.css">
+</head>
+<body>
+  <!-- ===== App Shell starts here ===== -->
+<div class="app-shell">
+
+  <!-- ===== Admin Sidebar ===== -->
+  <aside id="appSidebar" class="app-sidebar">
+        <a href="../admin/index.html" class="sidebar-brand">
+              <i class="fa-solid fa-bolt-lightning"></i>
+        <span>X VOLTY TRADE</span>
+          </a>
+    <ul class="list-unstyled mb-0 pb-3">
+      <li class="nav-section">Main</li>
+      <li><a href="../admin/index.html" class="nav-link"><i class="fa-solid fa-chart-pie"></i><span>Dashboard</span></a></li>
+      <li><a href="../admin/users.html" class="nav-link"><i class="fa-solid fa-users"></i><span>Users</span></a></li>
+
+      <li><a href="../admin/deposits.html" class="nav-link"><i class="fa-solid fa-arrow-down"></i><span>Deposits</span></a></li>
+      <li><a href="../admin/withdrawals.html" class="nav-link"><i class="fa-solid fa-arrow-up"></i><span>Withdrawals</span></a></li>
+      <li><a href="../admin/investments.html" class="nav-link"><i class="fa-solid fa-coins"></i><span>Investments</span></a></li>
+      <li><a href="../admin/plans.html" class="nav-link"><i class="fa-solid fa-layer-group"></i><span>Plans</span></a></li>
+      <li><a href="../admin/network-tree.html" class="nav-link"><i class="fa-solid fa-sitemap"></i><span>Network Tree</span></a></li>
+
+      <li class="nav-section">KYC Management</li>
+      <li><a href="../admin/kyc-approvals.html" class="nav-link"><i class="fa-solid fa-id-card"></i><span>KYC Approvals</span></a></li>
+
+      <li class="nav-section">Reports</li>
+      <li><a href="../admin/transactions.html" class="nav-link"><i class="fa-solid fa-receipt"></i><span>Transactions</span></a></li>
+      <li><a href="../admin/reports.html" class="nav-link"><i class="fa-solid fa-chart-line"></i><span>Reports</span></a></li>
+
+      <li class="nav-section">Wallet Management</li>
+            <li><a href="../admin/deposit-wallets.html" class="nav-link"><i class="fa-solid fa-building-columns"></i><span>Deposit Wallets</span></a></li>
+      <li><a href="../admin/deposit-requests.html" class="nav-link"><i class="fa-solid fa-file-invoice-dollar"></i><span>Deposit Requests</span></a></li>
+      <li><a href="../admin/payout-directory.html" class="nav-link"><i class="fa-solid fa-address-book"></i><span>Payout Directory</span></a></li>
+
+      <li class="nav-section">Automation</li>
+      <li><a href="../admin/cron-manager.html" class="nav-link active"><i class="fa-solid fa-clock-rotate-left"></i><span>Cron Manager</span></a></li>
+
+      <li class="nav-section">Settings</li>
+            <li>
+        <a href="../admin/cron-manager.html#settingsSubmenu" class="nav-link d-flex align-items-center justify-content-between" data-bs-toggle="collapse" role="button" aria-expanded="false" aria-controls="settingsSubmenu">
+          <span><i class="fa-solid fa-gear"></i><span>Settings</span></span>
+          <i class="fa-solid fa-chevron-down small ms-auto"></i>
+        </a>
+        <ul class="list-unstyled collapse" id="settingsSubmenu" style="padding-left:1.5rem;">
+          <li><a href="../admin/settings-overview.html" class="nav-link"><i class="fa-solid fa-chart-pie"></i><span>Income Overview</span></a></li>
+          <li><a href="../admin/settings-packages.html" class="nav-link"><i class="fa-solid fa-box"></i><span>Package Settings</span></a></li>
+          <li><a href="../admin/settings-roi.html" class="nav-link"><i class="fa-solid fa-chart-line"></i><span>ROI Settings</span></a></li>
+          <li><a href="../admin/settings-direct.html" class="nav-link"><i class="fa-solid fa-handshake"></i><span>Direct Income</span></a></li>
+          <li><a href="../admin/settings-level.html" class="nav-link"><i class="fa-solid fa-layer-group"></i><span>Level Income</span></a></li>
+          <li><a href="../admin/settings-salary.html" class="nav-link"><i class="fa-solid fa-money-bill"></i><span>Weekly Salary</span></a></li>
+          <li><a href="../admin/settings-rewards.html" class="nav-link"><i class="fa-solid fa-trophy"></i><span>Rank Rewards</span></a></li>
+          <li><a href="../admin/settings-ranks.html" class="nav-link"><i class="fa-solid fa-ranking-star"></i><span>Rank Management</span></a></li>
+          <li><a href="../admin/settings-capping.html" class="nav-link"><i class="fa-solid fa-shield"></i><span>Capping</span></a></li>
+          <li><a href="../admin/settings-withdrawal.html" class="nav-link"><i class="fa-solid fa-arrow-up"></i><span>Withdrawal</span></a></li>
+          <li><a href="../admin/settings-engines.html" class="nav-link"><i class="fa-solid fa-power-off"></i><span>Engine Controls</span></a></li>
+          <li><a href="../admin/site-settings.html" class="nav-link"><i class="fa-solid fa-id-card"></i><span>Site Settings</span></a></li>
+        </ul>
+      </li>
+      <li><a href="../admin/logout.html" class="nav-link"><i class="fa-solid fa-right-from-bracket"></i><span>Log Out</span></a></li>
+    </ul>
+  </aside>
+  <div class="app-sidebar-backdrop" id="appSidebarBackdrop"></div>
+
+  <!-- ===== Main column ===== -->
+  <div class="app-main">
+    <!-- ===== Topbar ===== -->
+    <nav class="app-topbar d-flex align-items-center justify-content-between">
+      <div class="d-flex align-items-center gap-2">
+        <button class="btn btn-sm btn-outline-secondary d-lg-none" id="sidebarMobileBtn" aria-label="Open sidebar">
+          <i class="fa-solid fa-bars"></i>
+        </button>
+        <h6 class="mb-0 fw-heading d-none d-md-block">Cron Job Manager</h6>
+      </div>
+
+      <div class="d-flex align-items-center gap-2">
+        <!-- Notifications dropdown -->
+        <!-- <div class="dropdown">
+          <button class="btn btn-sm btn-outline-secondary position-relative" data-bs-toggle="dropdown" aria-expanded="false">
+            <i class="fa-solid fa-bell"></i>
+            <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger" style="font-size:0.6rem;">3</span>
+          </button>
+          <div class="dropdown-menu dropdown-menu-end p-0" style="min-width:320px;">
+            <h6 class="dropdown-header">Notifications</h6>
+            <a class="dropdown-item d-flex gap-2 py-2" href="#">
+              <span class="xvt-avatar" style="background:#10b981;"><i class="fa-solid fa-arrow-down"></i></span>
+              <span class="small"><strong>$5,200</strong> deposit received<br><span class="text-muted">2 minutes ago</span></span>
+            </a>
+            <a class="dropdown-item d-flex gap-2 py-2" href="#">
+              <span class="xvt-avatar"><i class="fa-solid fa-user-plus"></i></span>
+              <span class="small"><strong>John D.</strong> registered<br><span class="text-muted">15 minutes ago</span></span>
+            </a>
+            <div class="dropdown-divider"></div>
+            <a class="dropdown-item text-center small" href="#">View all</a>
+          </div>
+        </div> -->
+
+        <!-- Theme customizer trigger -->
+        <button class="btn btn-sm btn-outline-secondary" data-bs-toggle="offcanvas" data-bs-target="#themeCustomizer" aria-label="Theme settings">
+          <i class="fa-solid fa-palette"></i>
+        </button>
+
+        <!-- Admin profile dropdown -->
+        <div class="dropdown">
+          <button class="btn btn-sm btn-outline-secondary d-flex align-items-center gap-2" data-bs-toggle="dropdown" aria-expanded="false">
+            <span class="xvt-avatar" style="width:28px; height:28px; font-size:0.75rem;">AD</span>
+            <span class="d-none d-md-inline">Admin</span>
+            <i class="fa-solid fa-chevron-down small"></i>
+          </button>
+          <ul class="dropdown-menu dropdown-menu-end">
+            <li><h6 class="dropdown-header">Admin User<br><small class="text-muted">admin</small></h6></li>
+            <li><hr class="dropdown-divider"></li>
+            <li><a class="dropdown-item" href="../admin/settings.html"><i class="fa-solid fa-gear me-2"></i>Settings</a></li>
+            <li><a class="dropdown-item" href="../admin/logout.html"><i class="fa-solid fa-right-from-bracket me-2"></i>Log Out</a></li>
+          </ul>
+        </div>
+      </div>
+    </nav>
+
+    <!-- ===== Theme Customizer Offcanvas ===== -->
+        <div class="offcanvas offcanvas-end" tabindex="-1" id="themeCustomizer">
+      <div class="offcanvas-header border-bottom border-themed">
+        <h5 class="offcanvas-title"><i class="fa-solid fa-palette me-2"></i>Theme Customizer</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="offcanvas"></button>
+      </div>
+      <div class="offcanvas-body">
+        <p class="text-muted small">Changes apply site-wide and are saved to the database.</p>
+        <form id="themeForm">
+          <div class="mb-3">
+            <label class="form-label">Primary color</label>
+            <input type="color" name="theme_primary" class="form-control form-control-color w-100" value="#f24a4a">
+          </div>
+          <div class="mb-3">
+            <label class="form-label">Accent color</label>
+            <input type="color" name="theme_accent" class="form-control form-control-color w-100" value="#8c54c4">
+          </div>
+          <div class="mb-3">
+            <label class="form-label">Mode</label>
+            <select name="theme_mode" class="form-select">
+              <option value="dark" selected="">Dark</option>
+              <option value="light">Light</option>
+            </select>
+          </div>
+          <div class="mb-3">
+            <label class="form-label">Corner radius</label>
+            <select name="theme_radius" class="form-select">
+              <option value="4px">Small (4px)</option>
+              <option value="8px" selected="">Medium (8px)</option>
+              <option value="12px">Large (12px)</option>
+              <option value="16px">Extra Large (16px)</option>
+            </select>
+          </div>
+          <details class="mb-3">
+            <summary class="small text-muted mb-2">Advanced colors</summary>
+            <div class="mb-2"><label class="form-label small">Body background</label>
+              <input type="color" name="theme_body_bg" class="form-control form-control-color w-100" value="#0b1220"></div>
+            <div class="mb-2"><label class="form-label small">Card background</label>
+              <input type="color" name="theme_card_bg" class="form-control form-control-color w-100" value="#1a222d"></div>
+            <div class="mb-2"><label class="form-label small">Sidebar background</label>
+              <input type="color" name="theme_sidebar_bg" class="form-control form-control-color w-100" value="#14172a"></div>
+            <div class="mb-2"><label class="form-label small">Topbar background</label>
+              <input type="color" name="theme_topbar_bg" class="form-control form-control-color w-100" value="#161f2d"></div>
+          </details>
+          <button type="submit" class="btn btn-primary w-100"><i class="fa-solid fa-check me-1"></i> Save &amp; Reload</button>
+        </form>
+        <div id="themeMsg" class="small mt-3"></div>
+      </div>
+    </div>
+
+    <!-- ===== Start page content ===== -->
+    <main class="app-content">
+
+
+<div class="d-flex align-items-center justify-content-between mb-4 flex-wrap gap-2">
+  <div>
+    <h3 class="fw-heading mb-1"><i class="fa-solid fa-clock-rotate-left me-2"></i>Cron Job Manager</h3>
+    <p class="text-muted mb-0 small">Configure, schedule, and manually run automated tasks.</p>
+  </div>
+  <form method="POST" class="d-inline">
+    <input type="hidden" name="action" value="run_all">
+    <button type="submit" class="btn btn-primary" onclick="return confirm(&#39;Run ALL enabled cron tasks now?&#39;)">
+      <i class="fa-solid fa-play me-1"></i> Run All Now
+    </button>
+  </form>
+</div>
+
+<!-- Auto-Cron Status -->
+<div class="card border-themed mb-4">
+  <div class="card-body">
+    <div class="d-flex align-items-center justify-content-between flex-wrap gap-2">
+      <div>
+        <h6 class="fw-heading mb-1"><i class="fa-solid fa-robot me-2 text-info"></i>Auto-Cron Engine</h6>
+        <p class="text-muted small mb-0">
+          When tasks are set to <strong>Auto</strong> mode, they run automatically via a background beacon. 
+          The engine checks every 60 seconds when admin/user pages are active.
+        </p>
+      </div>
+      <div>
+        <span class="badge bg-success"><i class="fa-solid fa-circle-check me-1"></i>Active</span>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Task Cards -->
+<div class="row g-3 mb-4">
+      <div class="col-12">
+      <div class="card border-themed">
+        <div class="card-body">
+          <div class="row align-items-center g-3">
+            <!-- Task Info -->
+            <div class="col-lg-4">
+              <div class="d-flex align-items-center gap-3">
+                <span class="xvt-avatar lg" style="background:#10b98122;color:#10b981;">
+                  <i class="fa-solid fa-chart-line"></i>
+                </span>
+                <div>
+                  <h6 class="fw-heading mb-0">Daily ROI Distribution</h6>
+                  <p class="text-muted small mb-1">Credits daily ROI to all users with active package activations.</p>
+                  <div class="d-flex gap-2 flex-wrap">
+                    <span class="badge bg-success">
+                      Enabled                    </span>
+                    <span class="badge bg-info">
+                      <i class="fa-solid fa-robot me-1"></i>Auto                    </span>
+                    <span class="badge bg-secondary">
+                      <i class="fa-regular fa-clock me-1"></i>Daily @ 00:01                    </span>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- Schedule Config -->
+            <div class="col-lg-5">
+              <form method="POST" class="row g-2 align-items-end">
+                <input type="hidden" name="action" value="update">
+                <input type="hidden" name="task" value="daily_roi">
+                
+                <div class="col-auto">
+                  <div class="form-check form-switch">
+                    <input class="form-check-input" type="checkbox" name="enabled" id="en_daily_roi" checked="">
+                    <label class="form-check-label small" for="en_daily_roi">On</label>
+                  </div>
+                </div>
+
+                <div class="col">
+                  <label class="form-label small text-muted mb-0">Mode</label>
+                  <select name="mode" class="form-select form-select-sm" onchange="toggleDayField(this, &#39;daily_roi&#39;)">
+                    <option value="manual">Manual</option>
+                    <option value="auto" selected="">Auto</option>
+                  </select>
+                </div>
+
+                <div class="col">
+                  <label class="form-label small text-muted mb-0">Frequency</label>
+                  <select name="frequency" class="form-select form-select-sm" onchange="toggleDayField(this, &#39;daily_roi&#39;)">
+                    <option value="daily" selected="">Daily</option>
+                    <option value="weekly">Weekly</option>
+                    <option value="monthly">Monthly</option>
+                  </select>
+                </div>
+
+                <div class="col-auto">
+                  <label class="form-label small text-muted mb-0">Time</label>
+                  <input type="time" name="time" class="form-control form-control-sm" value="00:01" style="width:110px;">
+                </div>
+
+                <div class="col-auto" id="dayCol_daily_roi" style="display:none;">
+                  <label class="form-label small text-muted mb-0">Day</label>
+                  <input type="number" name="day" class="form-control form-control-sm" value="1" min="1" max="28" style="width:70px;">
+                </div>
+
+                <div class="col-auto">
+                  <button type="submit" class="btn btn-sm btn-outline-primary" title="Save">
+                    <i class="fa-solid fa-save"></i>
+                  </button>
+                </div>
+              </form>
+            </div>
+
+            <!-- Actions -->
+            <div class="col-lg-3 text-lg-end">
+              <div class="d-flex gap-2 justify-content-lg-end flex-wrap align-items-center">
+                                  <div class="small text-muted">
+                    <i class="fa-regular fa-clock me-1"></i>Last: 01 May, 10:31                  </div>
+                                <form method="POST" class="d-inline">
+                  <input type="hidden" name="action" value="run">
+                  <input type="hidden" name="task" value="daily_roi">
+                  <button type="submit" class="btn btn-sm btn-success" onclick="return confirm(&#39;Run Daily ROI Distribution now?&#39;)">
+                    <i class="fa-solid fa-play me-1"></i> Run Now
+                  </button>
+                </form>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+      <div class="col-12">
+      <div class="card border-themed">
+        <div class="card-body">
+          <div class="row align-items-center g-3">
+            <!-- Task Info -->
+            <div class="col-lg-4">
+              <div class="d-flex align-items-center gap-3">
+                <span class="xvt-avatar lg" style="background:#f59e0b22;color:#f59e0b;">
+                  <i class="fa-solid fa-money-bill-wave"></i>
+                </span>
+                <div>
+                  <h6 class="fw-heading mb-0">Weekly Salary Payout</h6>
+                  <p class="text-muted small mb-1">Pays weekly salary to ranked users based on their achieved rank.</p>
+                  <div class="d-flex gap-2 flex-wrap">
+                    <span class="badge bg-success">
+                      Enabled                    </span>
+                    <span class="badge bg-info">
+                      <i class="fa-solid fa-robot me-1"></i>Auto                    </span>
+                    <span class="badge bg-secondary">
+                      <i class="fa-regular fa-clock me-1"></i>Weekly @ 00:01                    </span>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- Schedule Config -->
+            <div class="col-lg-5">
+              <form method="POST" class="row g-2 align-items-end">
+                <input type="hidden" name="action" value="update">
+                <input type="hidden" name="task" value="weekly_salary">
+                
+                <div class="col-auto">
+                  <div class="form-check form-switch">
+                    <input class="form-check-input" type="checkbox" name="enabled" id="en_weekly_salary" checked="">
+                    <label class="form-check-label small" for="en_weekly_salary">On</label>
+                  </div>
+                </div>
+
+                <div class="col">
+                  <label class="form-label small text-muted mb-0">Mode</label>
+                  <select name="mode" class="form-select form-select-sm" onchange="toggleDayField(this, &#39;weekly_salary&#39;)">
+                    <option value="manual">Manual</option>
+                    <option value="auto" selected="">Auto</option>
+                  </select>
+                </div>
+
+                <div class="col">
+                  <label class="form-label small text-muted mb-0">Frequency</label>
+                  <select name="frequency" class="form-select form-select-sm" onchange="toggleDayField(this, &#39;weekly_salary&#39;)">
+                    <option value="daily">Daily</option>
+                    <option value="weekly" selected="">Weekly</option>
+                    <option value="monthly">Monthly</option>
+                  </select>
+                </div>
+
+                <div class="col-auto">
+                  <label class="form-label small text-muted mb-0">Time</label>
+                  <input type="time" name="time" class="form-control form-control-sm" value="00:01" style="width:110px;">
+                </div>
+
+                <div class="col-auto" id="dayCol_weekly_salary" style="">
+                  <label class="form-label small text-muted mb-0">Day</label>
+                  <input type="number" name="day" class="form-control form-control-sm" value="1" min="1" max="28" style="width:70px;">
+                </div>
+
+                <div class="col-auto">
+                  <button type="submit" class="btn btn-sm btn-outline-primary" title="Save">
+                    <i class="fa-solid fa-save"></i>
+                  </button>
+                </div>
+              </form>
+            </div>
+
+            <!-- Actions -->
+            <div class="col-lg-3 text-lg-end">
+              <div class="d-flex gap-2 justify-content-lg-end flex-wrap align-items-center">
+                                  <div class="small text-muted">
+                    <i class="fa-regular fa-clock me-1"></i>Last: 25 Apr, 10:35                  </div>
+                                <form method="POST" class="d-inline">
+                  <input type="hidden" name="action" value="run">
+                  <input type="hidden" name="task" value="weekly_salary">
+                  <button type="submit" class="btn btn-sm btn-success" onclick="return confirm(&#39;Run Weekly Salary Payout now?&#39;)">
+                    <i class="fa-solid fa-play me-1"></i> Run Now
+                  </button>
+                </form>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+      <div class="col-12">
+      <div class="card border-themed">
+        <div class="card-body">
+          <div class="row align-items-center g-3">
+            <!-- Task Info -->
+            <div class="col-lg-4">
+              <div class="d-flex align-items-center gap-3">
+                <span class="xvt-avatar lg" style="background:#8b5cf622;color:#8b5cf6;">
+                  <i class="fa-solid fa-trophy"></i>
+                </span>
+                <div>
+                  <h6 class="fw-heading mb-0">Rank Evaluation &amp; Rewards</h6>
+                  <p class="text-muted small mb-1">Evaluates all users for rank upgrades and credits one-time rewards.</p>
+                  <div class="d-flex gap-2 flex-wrap">
+                    <span class="badge bg-success">
+                      Enabled                    </span>
+                    <span class="badge bg-info">
+                      <i class="fa-solid fa-robot me-1"></i>Auto                    </span>
+                    <span class="badge bg-secondary">
+                      <i class="fa-regular fa-clock me-1"></i>Daily @ 00:05                    </span>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- Schedule Config -->
+            <div class="col-lg-5">
+              <form method="POST" class="row g-2 align-items-end">
+                <input type="hidden" name="action" value="update">
+                <input type="hidden" name="task" value="rank_reward">
+                
+                <div class="col-auto">
+                  <div class="form-check form-switch">
+                    <input class="form-check-input" type="checkbox" name="enabled" id="en_rank_reward" checked="">
+                    <label class="form-check-label small" for="en_rank_reward">On</label>
+                  </div>
+                </div>
+
+                <div class="col">
+                  <label class="form-label small text-muted mb-0">Mode</label>
+                  <select name="mode" class="form-select form-select-sm" onchange="toggleDayField(this, &#39;rank_reward&#39;)">
+                    <option value="manual">Manual</option>
+                    <option value="auto" selected="">Auto</option>
+                  </select>
+                </div>
+
+                <div class="col">
+                  <label class="form-label small text-muted mb-0">Frequency</label>
+                  <select name="frequency" class="form-select form-select-sm" onchange="toggleDayField(this, &#39;rank_reward&#39;)">
+                    <option value="daily" selected="">Daily</option>
+                    <option value="weekly">Weekly</option>
+                    <option value="monthly">Monthly</option>
+                  </select>
+                </div>
+
+                <div class="col-auto">
+                  <label class="form-label small text-muted mb-0">Time</label>
+                  <input type="time" name="time" class="form-control form-control-sm" value="00:05" style="width:110px;">
+                </div>
+
+                <div class="col-auto" id="dayCol_rank_reward" style="display:none;">
+                  <label class="form-label small text-muted mb-0">Day</label>
+                  <input type="number" name="day" class="form-control form-control-sm" value="1" min="1" max="28" style="width:70px;">
+                </div>
+
+                <div class="col-auto">
+                  <button type="submit" class="btn btn-sm btn-outline-primary" title="Save">
+                    <i class="fa-solid fa-save"></i>
+                  </button>
+                </div>
+              </form>
+            </div>
+
+            <!-- Actions -->
+            <div class="col-lg-3 text-lg-end">
+              <div class="d-flex gap-2 justify-content-lg-end flex-wrap align-items-center">
+                                  <div class="small text-muted">
+                    <i class="fa-regular fa-clock me-1"></i>Last: 25 Apr, 10:35                  </div>
+                                <form method="POST" class="d-inline">
+                  <input type="hidden" name="action" value="run">
+                  <input type="hidden" name="task" value="rank_reward">
+                  <button type="submit" class="btn btn-sm btn-success" onclick="return confirm(&#39;Run Rank Evaluation &amp; Rewards now?&#39;)">
+                    <i class="fa-solid fa-play me-1"></i> Run Now
+                  </button>
+                </form>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+<!-- Execution Logs -->
+<div class="card border-themed">
+  <div class="card-header bg-transparent border-themed d-flex justify-content-between align-items-center">
+    <h6 class="mb-0"><i class="fa-solid fa-list-check me-2"></i>Recent Execution Logs</h6>
+    <span class="badge bg-secondary">16 entries</span>
+  </div>
+  <div class="table-responsive">
+    <table class="table table-hover mb-0 align-middle">
+      <thead class="small text-uppercase text-muted">
+        <tr>
+          <th class="ps-3">#</th>
+          <th>Task</th>
+          <th>Status</th>
+          <th>Records</th>
+          <th>Started</th>
+          <th>Finished</th>
+          <th class="pe-3">Error</th>
+        </tr>
+      </thead>
+      <tbody>
+                  <tr>
+            <td class="ps-3 small text-muted">1</td>
+            <td>
+              <span class="fw-semibold">Rank Evaluation</span>
+              <div class="text-muted small">rank_reward</div>
+            </td>
+            <td><span class="badge bg-danger">Failed</span></td>
+            <td class="small">0</td>
+            <td class="small text-muted">2026-05-01 10:42:40</td>
+            <td class="small text-muted">2026-05-01 10:42:40</td>
+            <td class="pe-3 small text-danger">
+                              <span title="SQLSTATE[42S22]: Column not found: 1054 Unknown column &#39;u.user_id&#39; in &#39;WHERE&#39;" data-bs-toggle="tooltip">
+                  SQLSTATE[42S22]: Column not found: 1054 Unknown column 'u.us…                </span>
+                          </td>
+          </tr>
+                  <tr>
+            <td class="ps-3 small text-muted">2</td>
+            <td>
+              <span class="fw-semibold">Rank Evaluation</span>
+              <div class="text-muted small">rank_reward</div>
+            </td>
+            <td><span class="badge bg-danger">Failed</span></td>
+            <td class="small">0</td>
+            <td class="small text-muted">2026-05-01 10:41:36</td>
+            <td class="small text-muted">2026-05-01 10:41:36</td>
+            <td class="pe-3 small text-danger">
+                              <span title="SQLSTATE[42S22]: Column not found: 1054 Unknown column &#39;u.user_id&#39; in &#39;WHERE&#39;" data-bs-toggle="tooltip">
+                  SQLSTATE[42S22]: Column not found: 1054 Unknown column 'u.us…                </span>
+                          </td>
+          </tr>
+                  <tr>
+            <td class="ps-3 small text-muted">3</td>
+            <td>
+              <span class="fw-semibold">Rank Evaluation</span>
+              <div class="text-muted small">rank_reward</div>
+            </td>
+            <td><span class="badge bg-danger">Failed</span></td>
+            <td class="small">0</td>
+            <td class="small text-muted">2026-05-01 10:40:18</td>
+            <td class="small text-muted">2026-05-01 10:40:18</td>
+            <td class="pe-3 small text-danger">
+                              <span title="SQLSTATE[42S22]: Column not found: 1054 Unknown column &#39;u.user_id&#39; in &#39;WHERE&#39;" data-bs-toggle="tooltip">
+                  SQLSTATE[42S22]: Column not found: 1054 Unknown column 'u.us…                </span>
+                          </td>
+          </tr>
+                  <tr>
+            <td class="ps-3 small text-muted">4</td>
+            <td>
+              <span class="fw-semibold">Rank Evaluation</span>
+              <div class="text-muted small">rank_reward</div>
+            </td>
+            <td><span class="badge bg-danger">Failed</span></td>
+            <td class="small">0</td>
+            <td class="small text-muted">2026-05-01 10:35:54</td>
+            <td class="small text-muted">2026-05-01 10:35:54</td>
+            <td class="pe-3 small text-danger">
+                              <span title="SQLSTATE[42S22]: Column not found: 1054 Unknown column &#39;u.user_id&#39; in &#39;WHERE&#39;" data-bs-toggle="tooltip">
+                  SQLSTATE[42S22]: Column not found: 1054 Unknown column 'u.us…                </span>
+                          </td>
+          </tr>
+                  <tr>
+            <td class="ps-3 small text-muted">5</td>
+            <td>
+              <span class="fw-semibold">Rank Evaluation</span>
+              <div class="text-muted small">rank_reward</div>
+            </td>
+            <td><span class="badge bg-danger">Failed</span></td>
+            <td class="small">0</td>
+            <td class="small text-muted">2026-05-01 10:34:49</td>
+            <td class="small text-muted">2026-05-01 10:34:49</td>
+            <td class="pe-3 small text-danger">
+                              <span title="SQLSTATE[42S22]: Column not found: 1054 Unknown column &#39;u.user_id&#39; in &#39;WHERE&#39;" data-bs-toggle="tooltip">
+                  SQLSTATE[42S22]: Column not found: 1054 Unknown column 'u.us…                </span>
+                          </td>
+          </tr>
+                  <tr>
+            <td class="ps-3 small text-muted">6</td>
+            <td>
+              <span class="fw-semibold">Rank Evaluation</span>
+              <div class="text-muted small">rank_reward</div>
+            </td>
+            <td><span class="badge bg-danger">Failed</span></td>
+            <td class="small">0</td>
+            <td class="small text-muted">2026-05-01 10:33:48</td>
+            <td class="small text-muted">2026-05-01 10:33:48</td>
+            <td class="pe-3 small text-danger">
+                              <span title="SQLSTATE[42S22]: Column not found: 1054 Unknown column &#39;u.user_id&#39; in &#39;WHERE&#39;" data-bs-toggle="tooltip">
+                  SQLSTATE[42S22]: Column not found: 1054 Unknown column 'u.us…                </span>
+                          </td>
+          </tr>
+                  <tr>
+            <td class="ps-3 small text-muted">7</td>
+            <td>
+              <span class="fw-semibold">Rank Evaluation</span>
+              <div class="text-muted small">rank_reward</div>
+            </td>
+            <td><span class="badge bg-danger">Failed</span></td>
+            <td class="small">0</td>
+            <td class="small text-muted">2026-05-01 10:32:20</td>
+            <td class="small text-muted">2026-05-01 10:32:20</td>
+            <td class="pe-3 small text-danger">
+                              <span title="SQLSTATE[42S22]: Column not found: 1054 Unknown column &#39;u.user_id&#39; in &#39;WHERE&#39;" data-bs-toggle="tooltip">
+                  SQLSTATE[42S22]: Column not found: 1054 Unknown column 'u.us…                </span>
+                          </td>
+          </tr>
+                  <tr>
+            <td class="ps-3 small text-muted">8</td>
+            <td>
+              <span class="fw-semibold">Rank Evaluation</span>
+              <div class="text-muted small">rank_reward</div>
+            </td>
+            <td><span class="badge bg-danger">Failed</span></td>
+            <td class="small">0</td>
+            <td class="small text-muted">2026-05-01 10:31:21</td>
+            <td class="small text-muted">2026-05-01 10:31:21</td>
+            <td class="pe-3 small text-danger">
+                              <span title="SQLSTATE[42S22]: Column not found: 1054 Unknown column &#39;u.user_id&#39; in &#39;WHERE&#39;" data-bs-toggle="tooltip">
+                  SQLSTATE[42S22]: Column not found: 1054 Unknown column 'u.us…                </span>
+                          </td>
+          </tr>
+                  <tr>
+            <td class="ps-3 small text-muted">9</td>
+            <td>
+              <span class="fw-semibold">Daily ROI</span>
+              <div class="text-muted small">daily_roi</div>
+            </td>
+            <td><span class="badge bg-success">Success</span></td>
+            <td class="small">6</td>
+            <td class="small text-muted">2026-05-01 10:31:20</td>
+            <td class="small text-muted">2026-05-01 10:31:21</td>
+            <td class="pe-3 small text-danger">
+                              —
+                          </td>
+          </tr>
+                  <tr>
+            <td class="ps-3 small text-muted">10</td>
+            <td>
+              <span class="fw-semibold">Daily ROI</span>
+              <div class="text-muted small">daily_roi</div>
+            </td>
+            <td><span class="badge bg-success">Success</span></td>
+            <td class="small">6</td>
+            <td class="small text-muted">2026-04-29 11:00:54</td>
+            <td class="small text-muted">2026-04-29 11:00:54</td>
+            <td class="pe-3 small text-danger">
+                              —
+                          </td>
+          </tr>
+                  <tr>
+            <td class="ps-3 small text-muted">11</td>
+            <td>
+              <span class="fw-semibold">Rank Evaluation</span>
+              <div class="text-muted small">rank_reward</div>
+            </td>
+            <td><span class="badge bg-danger">Failed</span></td>
+            <td class="small">0</td>
+            <td class="small text-muted">2026-04-29 11:00:54</td>
+            <td class="small text-muted">2026-04-29 11:00:54</td>
+            <td class="pe-3 small text-danger">
+                              <span title="SQLSTATE[42S22]: Column not found: 1054 Unknown column &#39;u.user_id&#39; in &#39;WHERE&#39;" data-bs-toggle="tooltip">
+                  SQLSTATE[42S22]: Column not found: 1054 Unknown column 'u.us…                </span>
+                          </td>
+          </tr>
+                  <tr>
+            <td class="ps-3 small text-muted">12</td>
+            <td>
+              <span class="fw-semibold">Daily ROI</span>
+              <div class="text-muted small">daily_roi</div>
+            </td>
+            <td><span class="badge bg-success">Success</span></td>
+            <td class="small">0</td>
+            <td class="small text-muted">2026-04-26 01:24:45</td>
+            <td class="small text-muted">2026-04-26 01:24:45</td>
+            <td class="pe-3 small text-danger">
+                              —
+                          </td>
+          </tr>
+                  <tr>
+            <td class="ps-3 small text-muted">13</td>
+            <td>
+              <span class="fw-semibold">Rank Evaluation</span>
+              <div class="text-muted small">rank_reward</div>
+            </td>
+            <td><span class="badge bg-danger">Failed</span></td>
+            <td class="small">0</td>
+            <td class="small text-muted">2026-04-26 01:24:45</td>
+            <td class="small text-muted">2026-04-26 01:24:45</td>
+            <td class="pe-3 small text-danger">
+                              <span title="SQLSTATE[42S22]: Column not found: 1054 Unknown column &#39;u.user_id&#39; in &#39;WHERE&#39;" data-bs-toggle="tooltip">
+                  SQLSTATE[42S22]: Column not found: 1054 Unknown column 'u.us…                </span>
+                          </td>
+          </tr>
+                  <tr>
+            <td class="ps-3 small text-muted">14</td>
+            <td>
+              <span class="fw-semibold">Daily ROI</span>
+              <div class="text-muted small">daily_roi</div>
+            </td>
+            <td><span class="badge bg-success">Success</span></td>
+            <td class="small">6</td>
+            <td class="small text-muted">2026-04-25 10:35:57</td>
+            <td class="small text-muted">2026-04-25 10:35:57</td>
+            <td class="pe-3 small text-danger">
+                              —
+                          </td>
+          </tr>
+                  <tr>
+            <td class="ps-3 small text-muted">15</td>
+            <td>
+              <span class="fw-semibold">Weekly Salary</span>
+              <div class="text-muted small">weekly_salary</div>
+            </td>
+            <td><span class="badge bg-success">Success</span></td>
+            <td class="small">0</td>
+            <td class="small text-muted">2026-04-25 10:35:57</td>
+            <td class="small text-muted">2026-04-25 10:35:57</td>
+            <td class="pe-3 small text-danger">
+                              —
+                          </td>
+          </tr>
+                  <tr>
+            <td class="ps-3 small text-muted">16</td>
+            <td>
+              <span class="fw-semibold">Rank Evaluation</span>
+              <div class="text-muted small">rank_reward</div>
+            </td>
+            <td><span class="badge bg-success">Success</span></td>
+            <td class="small">0</td>
+            <td class="small text-muted">2026-04-25 10:35:57</td>
+            <td class="small text-muted">2026-04-25 10:35:57</td>
+            <td class="pe-3 small text-danger">
+                              —
+                          </td>
+          </tr>
+              </tbody>
+    </table>
+  </div>
+</div>
+
+<script>
+function toggleDayField(el, key) {
+  const row = el.closest('form');
+  const freqSelect = row.querySelector('select[name="frequency"]');
+  const dayCol = document.getElementById('dayCol_' + key);
+  if (dayCol) {
+    dayCol.style.display = (freqSelect && freqSelect.value !== 'daily') ? '' : 'none';
+  }
+}
+// Init tooltips
+document.querySelectorAll('[data-bs-toggle="tooltip"]').forEach(el => new bootstrap.Tooltip(el));
+</script>
+
+
+    </main>
+  </div><!-- /.app-main -->
+</div><!-- /.app-shell -->
+
+<!-- Bootstrap bundle -->
+<script src="../assets/Cron Manager — Admin — XVolty Trade_files/bootstrap.bundle.min.js.download"></script>
+
+<!-- App-wide dashboard JS: sidebar toggle + submenu + theme form -->
+<script>
+(function(){
+  // Mobile sidebar toggle
+  const sidebar  = document.getElementById('appSidebar');
+  const backdrop = document.getElementById('appSidebarBackdrop');
+  const mobileBtn = document.getElementById('sidebarMobileBtn');
+  const openSidebar  = () => { sidebar.classList.add('show'); backdrop.classList.add('show'); };
+  const closeSidebar = () => { sidebar.classList.remove('show'); backdrop.classList.remove('show'); };
+  if (mobileBtn)   mobileBtn.addEventListener('click', openSidebar);
+  if (backdrop)    backdrop.addEventListener('click', closeSidebar);
+
+  // Sidebar collapsible submenu
+  document.querySelectorAll('.app-sidebar .nav-dropdown-toggle').forEach(a => {
+    a.addEventListener('click', (e) => {
+      e.preventDefault();
+      a.closest('.has-submenu').classList.toggle('open');
+    });
+  });
+
+  // Theme customizer AJAX save
+  const themeForm = document.getElementById('themeForm');
+  if (themeForm) {
+    themeForm.addEventListener('submit', async (e) => {
+      e.preventDefault();
+      const msg = document.getElementById('themeMsg');
+      msg.textContent = 'Saving...';
+      try {
+        const fd = new FormData(themeForm);
+        const res = await fetch('../app/Controllers/api/save_theme.php', { method: 'POST', body: fd });
+        const data = await res.json();
+        if (data.status === 'success') {
+          msg.innerHTML = '<span class="text-success"><i class="fa-solid fa-check"></i> Saved. Reloading...</span>';
+          setTimeout(() => location.reload(), 500);
+        } else {
+          msg.innerHTML = '<span class="text-danger">' + (data.message || 'Error saving theme') + '</span>';
+        }
+      } catch (err) {
+        msg.innerHTML = '<span class="text-danger">Network error: ' + err.message + '</span>';
+      }
+    });
+  }
+})();
+</script>
+
+<!-- Auto-cron beacon (runs due tasks silently in background) -->
+<script>
+(function(){
+  setTimeout(function(){
+    fetch('../cron/auto_runner.php', {credentials:'same-origin'}).catch(function(){});
+  }, 3000);
+})();
+</script>
+
+
+
+</body></html>
+
+

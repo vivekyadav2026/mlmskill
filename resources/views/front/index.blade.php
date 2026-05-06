@@ -1,0 +1,252 @@
+<!DOCTYPE html>
+<!-- saved from url=(0028)https://xvoltytrade.bgtl.in/ -->
+<html lang="en" data-bs-theme="dark"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>XVolty Trade — Secure Crypto Trading &amp; Investment</title>
+  
+  <link rel="preconnect" href="https://fonts.googleapis.com/">
+  <link rel="preconnect" href="https://fonts.gstatic.com/" crossorigin="">
+  <link href="{{ asset('assets/XVolty Trade — Secure Crypto Trading & Investment_files/css2') }}" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+  <!-- Bootstrap (local) -->
+  <link rel="stylesheet" href="{{ asset('assets/XVolty Trade — Secure Crypto Trading & Investment_files/bootstrap.min.css') }}">
+
+  <!-- Theme vars -->
+  <style id="xvt-theme-vars">
+  :root,
+  [data-bs-theme="dark"] {
+    --xvt-primary: #f24a4a;
+    --xvt-accent:  #8c54c4;
+    --xvt-radius:  8px;
+    --xvt-body-bg: #0b1220;
+    --xvt-card-bg: #1a222d;
+    --xvt-sidebar-bg: #14172a;
+    --xvt-topbar-bg:  #161f2d;
+    --xvt-text:    #e2e8f0;
+    --xvt-muted:   #94a3b8;
+    --xvt-border:  #334155;
+
+    /* Bootstrap overrides */
+    --bs-primary: var(--xvt-primary);
+    --bs-primary-rgb: 8, 126, 139;
+    --bs-link-color: var(--xvt-primary);
+    --bs-link-hover-color: var(--xvt-accent);
+    --bs-body-bg: var(--xvt-body-bg);
+    --bs-body-color: var(--xvt-text);
+    --bs-border-color: var(--xvt-border);
+    --bs-border-radius: var(--xvt-radius);
+    --bs-border-radius-sm: calc(var(--xvt-radius) * 0.625);
+    --bs-border-radius-lg: calc(var(--xvt-radius) * 1.25);
+  }
+</style>
+
+  <!-- Constant theme CSS -->
+  <link rel="stylesheet" href="{{ asset('assets/XVolty Trade — Secure Crypto Trading & Investment_files/theme.css') }}">
+</head>
+<body>
+<!-- ===== Public Navbar (Bootstrap) ===== -->
+<nav class="navbar navbar-expand-lg border-bottom border-themed sticky-top" style="background: var(--xvt-topbar-bg);">
+  <div class="container">
+    <a class="navbar-brand d-flex align-items-center gap-2" href="{{ url('/') }}">
+              <i class="fa-solid fa-bolt-lightning text-accent"></i>
+        <span class="fw-heading">X VOLTY TRADE</span>
+          </a>
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#publicNav" aria-controls="publicNav" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="publicNav">
+      <ul class="navbar-nav mx-auto mb-2 mb-lg-0">
+        <li class="nav-item"><a class="nav-link active" href="{{ url('/') }}">Home</a></li>
+        <li class="nav-item"><a class="nav-link" href="#">About</a></li>
+        <li class="nav-item"><a class="nav-link" href="#">Contact</a></li>
+      </ul>
+      <div class="d-flex gap-2">
+        <a href="{{ route('login') }}" class="btn btn-outline-primary">Login</a>
+        <a href="{{ route('register') }}" class="btn btn-primary">Sign Up</a>
+      </div>
+    </div>
+  </div>
+</nav>
+
+<!-- Hero -->
+<section class="py-5 py-lg-6" style="background:var(--xvt-body-bg);">
+  <div class="container py-5">
+    <div class="row align-items-center g-5">
+      <div class="col-lg-6">
+        <span class="badge rounded-pill mb-3 px-3 py-2" style="background:rgba(var(--bs-primary-rgb),.15);color:var(--xvt-accent);">
+          <i class="fa-solid fa-shield-halved me-1"></i>Trusted by 50,000+ Investors Worldwide
+        </span>
+        <h1 class="display-4 fw-bold mb-3">Trade Smarter.<br>Invest with <span class="text-accent">Confidence.</span></h1>
+        <p class="lead text-muted mb-4">XVolty Trade empowers you to build real wealth through secure crypto trading, smart investment plans, and lightning-fast transactions — all in one powerful platform.</p>
+        <div class="d-flex flex-wrap gap-2 mb-4">
+          <a href="{{ route('register') }}" class="btn btn-primary btn-lg">Get Started <i class="fa-solid fa-arrow-right ms-1"></i></a>
+          <a href="#" class="btn btn-outline-primary btn-lg">Learn More</a>
+        </div>
+        <div class="d-flex flex-wrap gap-4 small text-muted">
+          <span><i class="fa-solid fa-lock me-1 text-accent"></i>SSL Secured</span>
+          <span><i class="fa-solid fa-certificate me-1 text-accent"></i>Licensed Platform</span>
+          <span><i class="fa-solid fa-clock me-1 text-accent"></i>24/7 Active</span>
+        </div>
+      </div>
+      <div class="col-lg-6 text-center">
+        <div class="position-relative d-inline-block" style="width:400px;max-width:100%;height:400px;">
+          <div class="position-absolute top-50 start-50 translate-middle rounded-circle border" style="width:320px;height:320px;border-color:var(--xvt-primary) !important;opacity:.3;"></div>
+          <div class="position-absolute top-50 start-50 translate-middle rounded-circle border" style="width:220px;height:220px;border-color:var(--xvt-accent) !important;opacity:.5;"></div>
+          <div class="position-absolute top-50 start-50 translate-middle d-flex align-items-center justify-content-center rounded-circle" style="width:120px;height:120px;background:linear-gradient(135deg,var(--xvt-primary),var(--xvt-accent));box-shadow:0 20px 60px rgba(var(--bs-primary-rgb),.5);">
+            <i class="fa-brands fa-bitcoin text-white" style="font-size:3.5rem;"></i>
+          </div>
+          <div class="card border-themed position-absolute" style="top:10%;left:-5%;animation:float 3s ease-in-out infinite;"><div class="card-body py-2 px-3"><div class="small text-muted">BTC / USD</div><div class="fw-bold text-success">+12.4% <i class="fa-solid fa-arrow-trend-up"></i></div></div></div>
+          <div class="card border-themed position-absolute" style="bottom:15%;right:-5%;animation:float 3.5s ease-in-out infinite 0.5s;"><div class="card-body py-2 px-3"><div class="small text-muted">Portfolio</div><div class="fw-bold">$48,250</div></div></div>
+          <div class="card border-themed position-absolute" style="top:55%;left:-10%;animation:float 4s ease-in-out infinite 1s;"><div class="card-body py-2 px-3"><div class="small text-muted">Profit</div><div class="fw-bold text-accent">+$3,820</div></div></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+<style>@keyframes float { 0%,100% { transform:translateY(0); } 50% { transform:translateY(-12px); } }</style>
+
+<!-- Features -->
+<section class="py-5 bg-surface" id="features">
+  <div class="container py-4">
+    <div class="text-center mb-5">
+      <h2 class="fw-bold">Powerful Features for <span class="text-accent">Smart Traders</span></h2>
+      <p class="text-muted">Everything you need to trade, invest, and grow your crypto portfolio.</p>
+    </div>
+    <div class="row g-4">
+              <div class="col-md-6 col-lg-4">
+          <div class="card h-100 border-themed">
+            <div class="card-body p-4">
+              <span class="xvt-avatar lg mb-3"><i class="fa-solid fa-shield-halved"></i></span>
+              <h5 class="fw-heading">Secure Trading</h5>
+              <p class="text-muted mb-0 small">Industry-leading encryption and multi-layer security protocols keep your assets protected at all times.</p>
+            </div>
+          </div>
+        </div>
+              <div class="col-md-6 col-lg-4">
+          <div class="card h-100 border-themed">
+            <div class="card-body p-4">
+              <span class="xvt-avatar lg mb-3"><i class="fa-solid fa-bolt"></i></span>
+              <h5 class="fw-heading">Fast Deposits</h5>
+              <p class="text-muted mb-0 small">Fund your account instantly with multiple payment methods including crypto, bank transfer, and cards.</p>
+            </div>
+          </div>
+        </div>
+              <div class="col-md-6 col-lg-4">
+          <div class="card h-100 border-themed">
+            <div class="card-body p-4">
+              <span class="xvt-avatar lg mb-3"><i class="fa-solid fa-money-bill-transfer"></i></span>
+              <h5 class="fw-heading">Instant Withdrawals</h5>
+              <p class="text-muted mb-0 small">Access your profits whenever you need them with our fast withdrawal processing system.</p>
+            </div>
+          </div>
+        </div>
+              <div class="col-md-6 col-lg-4">
+          <div class="card h-100 border-themed">
+            <div class="card-body p-4">
+              <span class="xvt-avatar lg mb-3"><i class="fa-solid fa-chart-line"></i></span>
+              <h5 class="fw-heading">Live Market Insights</h5>
+              <p class="text-muted mb-0 small">Stay ahead with real-time market data, advanced charts, and AI-powered price alerts.</p>
+            </div>
+          </div>
+        </div>
+              <div class="col-md-6 col-lg-4">
+          <div class="card h-100 border-themed">
+            <div class="card-body p-4">
+              <span class="xvt-avatar lg mb-3"><i class="fa-solid fa-coins"></i></span>
+              <h5 class="fw-heading">Investment Plans</h5>
+              <p class="text-muted mb-0 small">Choose from flexible investment plans tailored to match your risk appetite and financial goals.</p>
+            </div>
+          </div>
+        </div>
+              <div class="col-md-6 col-lg-4">
+          <div class="card h-100 border-themed">
+            <div class="card-body p-4">
+              <span class="xvt-avatar lg mb-3"><i class="fa-solid fa-headset"></i></span>
+              <h5 class="fw-heading">24/7 Support</h5>
+              <p class="text-muted mb-0 small">Our dedicated support team is available around the clock to assist you with any questions or issues.</p>
+            </div>
+          </div>
+        </div>
+          </div>
+  </div>
+</section>
+
+<!-- CTA -->
+<section class="py-5" style="background:linear-gradient(135deg,var(--xvt-primary),var(--xvt-accent));">
+  <div class="container text-center py-4 text-white">
+    <h2 class="fw-bold mb-3">Ready to Start Trading?</h2>
+    <p class="lead mb-4 opacity-75">Join 50,000+ traders building wealth on XVolty Trade.</p>
+    <a href="{{ route('register') }}" class="btn btn-light btn-lg">Create Free Account <i class="fa-solid fa-arrow-right ms-1"></i></a>
+  </div>
+</section>
+
+<!-- ===== Public Footer (Bootstrap) ===== -->
+<footer class="border-top border-themed mt-5 pt-5 pb-4" style="background: var(--xvt-topbar-bg);">
+  <div class="container">
+    <div class="row g-4">
+      <div class="col-md-4">
+        <a href="{{ url('/') }}" class="navbar-brand d-flex align-items-center gap-2 mb-3">
+                      <i class="fa-solid fa-bolt-lightning text-accent"></i>
+            <span class="fw-heading">X VOLTY TRADE</span>
+                  </a>
+        <p class="text-muted small">Secure Crypto Trading &amp; Investment</p>
+        <ul class="list-unstyled small text-muted mb-0">
+          <li class="mb-1"><i class="fa-solid fa-envelope me-2"></i><a class="text-muted text-decoration-none" href="mailto:support@xvoltytrade.com">support@xvoltytrade.com</a></li>          <li class="mb-1"><i class="fa-solid fa-phone me-2"></i><a class="text-muted text-decoration-none" href="tel:+15559876543">+1 (555) 987-6543</a></li>                    <li class="mb-1"><i class="fa-solid fa-location-dot me-2"></i>45 Finance Tower, New York, NY</li>        </ul>
+        <div class="d-flex gap-2 mt-3 flex-wrap">
+                      <a href="http://localhost/Xvoltytrade/admin/site-settings.php" target="_blank" rel="noopener" class="btn btn-sm btn-outline-secondary rounded-circle" aria-label="Facebook" title="Facebook"><i class="fa-brands fa-facebook-f"></i></a>
+                      <a href="http://localhost/Xvoltytrade/admin/site-settings.php" target="_blank" rel="noopener" class="btn btn-sm btn-outline-secondary rounded-circle" aria-label="Telegram" title="Telegram"><i class="fa-brands fa-telegram"></i></a>
+                      <a href="http://localhost/Xvoltytrade/admin/site-settings.php" target="_blank" rel="noopener" class="btn btn-sm btn-outline-secondary rounded-circle" aria-label="YouTube" title="YouTube"><i class="fa-brands fa-youtube"></i></a>
+                  </div>
+      </div>
+      <div class="col-6 col-md-2">
+        <h6 class="fw-heading mb-3">Quick Links</h6>
+        <ul class="list-unstyled small">
+          <li class="mb-2"><a href="{{ url('/') }}" class="text-muted text-decoration-none">Home</a></li>
+          <li class="mb-2"><a href="#" class="text-muted text-decoration-none">About Us</a></li>
+          <li class="mb-2"><a href="#" class="text-muted text-decoration-none">Contact</a></li>
+          <li class="mb-2"><a href="{{ route('login') }}" class="text-muted text-decoration-none">Login</a></li>
+          <li class="mb-2"><a href="{{ route('register') }}" class="text-muted text-decoration-none">Sign Up</a></li>
+        </ul>
+      </div>
+      <div class="col-6 col-md-3">
+        <h6 class="fw-heading mb-3">Platform</h6>
+        <ul class="list-unstyled small">
+          <li class="mb-2"><a href="https://xvoltytrade.bgtl.in/#" class="text-muted text-decoration-none">Live Trading</a></li>
+          <li class="mb-2"><a href="https://xvoltytrade.bgtl.in/#" class="text-muted text-decoration-none">Investment Plans</a></li>
+          <li class="mb-2"><a href="https://xvoltytrade.bgtl.in/#" class="text-muted text-decoration-none">Market Analysis</a></li>
+          <li class="mb-2"><a href="https://xvoltytrade.bgtl.in/#" class="text-muted text-decoration-none">Portfolio Tracker</a></li>
+          <li class="mb-2"><a href="https://xvoltytrade.bgtl.in/#" class="text-muted text-decoration-none">API Access</a></li>
+        </ul>
+      </div>
+      <div class="col-md-3">
+        <h6 class="fw-heading mb-3">Legal</h6>
+        <ul class="list-unstyled small">
+          <li class="mb-2"><a href="https://xvoltytrade.bgtl.in/#" class="text-muted text-decoration-none">Privacy Policy</a></li>
+          <li class="mb-2"><a href="https://xvoltytrade.bgtl.in/#" class="text-muted text-decoration-none">Terms of Service</a></li>
+          <li class="mb-2"><a href="https://xvoltytrade.bgtl.in/#" class="text-muted text-decoration-none">Cookie Policy</a></li>
+          <li class="mb-2"><a href="https://xvoltytrade.bgtl.in/#" class="text-muted text-decoration-none">Risk Disclosure</a></li>
+          <li class="mb-2"><a href="https://xvoltytrade.bgtl.in/#" class="text-muted text-decoration-none">AML Policy</a></li>
+        </ul>
+      </div>
+    </div>
+    <hr class="my-4 border-themed">
+    <div class="d-flex flex-column flex-md-row justify-content-between align-items-center small text-muted">
+      <span>© 2026 X VOLTY TRADE. All rights reserved.</span>
+      <div class="d-flex gap-3 mt-2 mt-md-0">
+        <a href="https://xvoltytrade.bgtl.in/#" class="text-muted text-decoration-none">Privacy</a>
+        <a href="https://xvoltytrade.bgtl.in/#" class="text-muted text-decoration-none">Terms</a>
+        <a href="https://xvoltytrade.bgtl.in/#" class="text-muted text-decoration-none">Cookies</a>
+      </div>
+    </div>
+  </div>
+</footer>
+
+<script src="{{ asset('assets/XVolty Trade — Secure Crypto Trading & Investment_files/bootstrap.bundle.min.js.download') }}"></script>
+
+
+</body></html>
+
+
+

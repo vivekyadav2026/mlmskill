@@ -1,0 +1,978 @@
+﻿<!DOCTYPE html>
+<!-- saved from url=(0054)../admin/deposit-requests.html -->
+<html lang="en" data-bs-theme="dark"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Deposit Requests — Admin — XVolty Trade</title>
+  
+  <link rel="preconnect" href="https://fonts.googleapis.com/">
+  <link rel="preconnect" href="https://fonts.gstatic.com/" crossorigin="">
+  <link href="../assets/Deposit Requests — Admin — XVolty Trade_files/css2" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+  <!-- Bootstrap (local) -->
+  <link rel="stylesheet" href="../assets/Deposit Requests — Admin — XVolty Trade_files/bootstrap.min.css">
+
+  <!-- Theme variables (from site_settings) -->
+  <style id="xvt-theme-vars">
+  :root,
+  [data-bs-theme="dark"] {
+    --xvt-primary: #f24a4a;
+    --xvt-accent:  #8c54c4;
+    --xvt-radius:  8px;
+    --xvt-body-bg: #0b1220;
+    --xvt-card-bg: #1a222d;
+    --xvt-sidebar-bg: #14172a;
+    --xvt-topbar-bg:  #161f2d;
+    --xvt-text:    #e2e8f0;
+    --xvt-muted:   #94a3b8;
+    --xvt-border:  #334155;
+
+    /* Bootstrap overrides */
+    --bs-primary: var(--xvt-primary);
+    --bs-primary-rgb: 8, 126, 139;
+    --bs-link-color: var(--xvt-primary);
+    --bs-link-hover-color: var(--xvt-accent);
+    --bs-body-bg: var(--xvt-body-bg);
+    --bs-body-color: var(--xvt-text);
+    --bs-border-color: var(--xvt-border);
+    --bs-border-radius: var(--xvt-radius);
+    --bs-border-radius-sm: calc(var(--xvt-radius) * 0.625);
+    --bs-border-radius-lg: calc(var(--xvt-radius) * 1.25);
+  }
+</style>
+
+  <!-- Constant theme CSS (Bootstrap overrides + bespoke components) -->
+  <link rel="stylesheet" href="../assets/Deposit Requests — Admin — XVolty Trade_files/theme.css">
+</head>
+<body>
+  <!-- ===== App Shell starts here ===== -->
+<div class="app-shell">
+
+  <!-- ===== Admin Sidebar ===== -->
+  <aside id="appSidebar" class="app-sidebar">
+        <a href="../admin/index.html" class="sidebar-brand">
+              <i class="fa-solid fa-bolt-lightning"></i>
+        <span>X VOLTY TRADE</span>
+          </a>
+    <ul class="list-unstyled mb-0 pb-3">
+      <li class="nav-section">Main</li>
+      <li><a href="../admin/index.html" class="nav-link"><i class="fa-solid fa-chart-pie"></i><span>Dashboard</span></a></li>
+      <li><a href="../admin/users.html" class="nav-link"><i class="fa-solid fa-users"></i><span>Users</span></a></li>
+
+      <li><a href="../admin/deposits.html" class="nav-link"><i class="fa-solid fa-arrow-down"></i><span>Deposits</span></a></li>
+      <li><a href="../admin/withdrawals.html" class="nav-link"><i class="fa-solid fa-arrow-up"></i><span>Withdrawals</span></a></li>
+      <li><a href="../admin/investments.html" class="nav-link"><i class="fa-solid fa-coins"></i><span>Investments</span></a></li>
+      <li><a href="../admin/plans.html" class="nav-link"><i class="fa-solid fa-layer-group"></i><span>Plans</span></a></li>
+      <li><a href="../admin/network-tree.html" class="nav-link"><i class="fa-solid fa-sitemap"></i><span>Network Tree</span></a></li>
+
+      <li class="nav-section">KYC Management</li>
+      <li><a href="../admin/kyc-approvals.html" class="nav-link"><i class="fa-solid fa-id-card"></i><span>KYC Approvals</span></a></li>
+
+      <li class="nav-section">Reports</li>
+      <li><a href="../admin/transactions.html" class="nav-link"><i class="fa-solid fa-receipt"></i><span>Transactions</span></a></li>
+      <li><a href="../admin/reports.html" class="nav-link"><i class="fa-solid fa-chart-line"></i><span>Reports</span></a></li>
+
+      <li class="nav-section">Wallet Management</li>
+            <li><a href="../admin/deposit-wallets.html" class="nav-link"><i class="fa-solid fa-building-columns"></i><span>Deposit Wallets</span></a></li>
+      <li><a href="../admin/deposit-requests.html" class="nav-link active"><i class="fa-solid fa-file-invoice-dollar"></i><span>Deposit Requests</span></a></li>
+      <li><a href="../admin/payout-directory.html" class="nav-link"><i class="fa-solid fa-address-book"></i><span>Payout Directory</span></a></li>
+
+      <li class="nav-section">Automation</li>
+      <li><a href="../admin/cron-manager.html" class="nav-link"><i class="fa-solid fa-clock-rotate-left"></i><span>Cron Manager</span></a></li>
+
+      <li class="nav-section">Settings</li>
+            <li>
+        <a href="../admin/deposit-requests.html#settingsSubmenu" class="nav-link d-flex align-items-center justify-content-between" data-bs-toggle="collapse" role="button" aria-expanded="false" aria-controls="settingsSubmenu">
+          <span><i class="fa-solid fa-gear"></i><span>Settings</span></span>
+          <i class="fa-solid fa-chevron-down small ms-auto"></i>
+        </a>
+        <ul class="list-unstyled collapse" id="settingsSubmenu" style="padding-left:1.5rem;">
+          <li><a href="../admin/settings-overview.html" class="nav-link"><i class="fa-solid fa-chart-pie"></i><span>Income Overview</span></a></li>
+          <li><a href="../admin/settings-packages.html" class="nav-link"><i class="fa-solid fa-box"></i><span>Package Settings</span></a></li>
+          <li><a href="../admin/settings-roi.html" class="nav-link"><i class="fa-solid fa-chart-line"></i><span>ROI Settings</span></a></li>
+          <li><a href="../admin/settings-direct.html" class="nav-link"><i class="fa-solid fa-handshake"></i><span>Direct Income</span></a></li>
+          <li><a href="../admin/settings-level.html" class="nav-link"><i class="fa-solid fa-layer-group"></i><span>Level Income</span></a></li>
+          <li><a href="../admin/settings-salary.html" class="nav-link"><i class="fa-solid fa-money-bill"></i><span>Weekly Salary</span></a></li>
+          <li><a href="../admin/settings-rewards.html" class="nav-link"><i class="fa-solid fa-trophy"></i><span>Rank Rewards</span></a></li>
+          <li><a href="../admin/settings-ranks.html" class="nav-link"><i class="fa-solid fa-ranking-star"></i><span>Rank Management</span></a></li>
+          <li><a href="../admin/settings-capping.html" class="nav-link"><i class="fa-solid fa-shield"></i><span>Capping</span></a></li>
+          <li><a href="../admin/settings-withdrawal.html" class="nav-link"><i class="fa-solid fa-arrow-up"></i><span>Withdrawal</span></a></li>
+          <li><a href="../admin/settings-engines.html" class="nav-link"><i class="fa-solid fa-power-off"></i><span>Engine Controls</span></a></li>
+          <li><a href="../admin/site-settings.html" class="nav-link"><i class="fa-solid fa-id-card"></i><span>Site Settings</span></a></li>
+        </ul>
+      </li>
+      <li><a href="../admin/logout.html" class="nav-link"><i class="fa-solid fa-right-from-bracket"></i><span>Log Out</span></a></li>
+    </ul>
+  </aside>
+  <div class="app-sidebar-backdrop" id="appSidebarBackdrop"></div>
+
+  <!-- ===== Main column ===== -->
+  <div class="app-main">
+    <!-- ===== Topbar ===== -->
+    <nav class="app-topbar d-flex align-items-center justify-content-between">
+      <div class="d-flex align-items-center gap-2">
+        <button class="btn btn-sm btn-outline-secondary d-lg-none" id="sidebarMobileBtn" aria-label="Open sidebar">
+          <i class="fa-solid fa-bars"></i>
+        </button>
+        <h6 class="mb-0 fw-heading d-none d-md-block">Deposit Requests</h6>
+      </div>
+
+      <div class="d-flex align-items-center gap-2">
+        <!-- Notifications dropdown -->
+        <!-- <div class="dropdown">
+          <button class="btn btn-sm btn-outline-secondary position-relative" data-bs-toggle="dropdown" aria-expanded="false">
+            <i class="fa-solid fa-bell"></i>
+            <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger" style="font-size:0.6rem;">3</span>
+          </button>
+          <div class="dropdown-menu dropdown-menu-end p-0" style="min-width:320px;">
+            <h6 class="dropdown-header">Notifications</h6>
+            <a class="dropdown-item d-flex gap-2 py-2" href="#">
+              <span class="xvt-avatar" style="background:#10b981;"><i class="fa-solid fa-arrow-down"></i></span>
+              <span class="small"><strong>$5,200</strong> deposit received<br><span class="text-muted">2 minutes ago</span></span>
+            </a>
+            <a class="dropdown-item d-flex gap-2 py-2" href="#">
+              <span class="xvt-avatar"><i class="fa-solid fa-user-plus"></i></span>
+              <span class="small"><strong>John D.</strong> registered<br><span class="text-muted">15 minutes ago</span></span>
+            </a>
+            <div class="dropdown-divider"></div>
+            <a class="dropdown-item text-center small" href="#">View all</a>
+          </div>
+        </div> -->
+
+        <!-- Theme customizer trigger -->
+        <button class="btn btn-sm btn-outline-secondary" data-bs-toggle="offcanvas" data-bs-target="#themeCustomizer" aria-label="Theme settings">
+          <i class="fa-solid fa-palette"></i>
+        </button>
+
+        <!-- Admin profile dropdown -->
+        <div class="dropdown">
+          <button class="btn btn-sm btn-outline-secondary d-flex align-items-center gap-2" data-bs-toggle="dropdown" aria-expanded="false">
+            <span class="xvt-avatar" style="width:28px; height:28px; font-size:0.75rem;">AD</span>
+            <span class="d-none d-md-inline">Admin</span>
+            <i class="fa-solid fa-chevron-down small"></i>
+          </button>
+          <ul class="dropdown-menu dropdown-menu-end">
+            <li><h6 class="dropdown-header">Admin User<br><small class="text-muted">admin</small></h6></li>
+            <li><hr class="dropdown-divider"></li>
+            <li><a class="dropdown-item" href="../admin/settings.html"><i class="fa-solid fa-gear me-2"></i>Settings</a></li>
+            <li><a class="dropdown-item" href="../admin/logout.html"><i class="fa-solid fa-right-from-bracket me-2"></i>Log Out</a></li>
+          </ul>
+        </div>
+      </div>
+    </nav>
+
+    <!-- ===== Theme Customizer Offcanvas ===== -->
+        <div class="offcanvas offcanvas-end" tabindex="-1" id="themeCustomizer">
+      <div class="offcanvas-header border-bottom border-themed">
+        <h5 class="offcanvas-title"><i class="fa-solid fa-palette me-2"></i>Theme Customizer</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="offcanvas"></button>
+      </div>
+      <div class="offcanvas-body">
+        <p class="text-muted small">Changes apply site-wide and are saved to the database.</p>
+        <form id="themeForm">
+          <div class="mb-3">
+            <label class="form-label">Primary color</label>
+            <input type="color" name="theme_primary" class="form-control form-control-color w-100" value="#f24a4a">
+          </div>
+          <div class="mb-3">
+            <label class="form-label">Accent color</label>
+            <input type="color" name="theme_accent" class="form-control form-control-color w-100" value="#8c54c4">
+          </div>
+          <div class="mb-3">
+            <label class="form-label">Mode</label>
+            <select name="theme_mode" class="form-select">
+              <option value="dark" selected="">Dark</option>
+              <option value="light">Light</option>
+            </select>
+          </div>
+          <div class="mb-3">
+            <label class="form-label">Corner radius</label>
+            <select name="theme_radius" class="form-select">
+              <option value="4px">Small (4px)</option>
+              <option value="8px" selected="">Medium (8px)</option>
+              <option value="12px">Large (12px)</option>
+              <option value="16px">Extra Large (16px)</option>
+            </select>
+          </div>
+          <details class="mb-3">
+            <summary class="small text-muted mb-2">Advanced colors</summary>
+            <div class="mb-2"><label class="form-label small">Body background</label>
+              <input type="color" name="theme_body_bg" class="form-control form-control-color w-100" value="#0b1220"></div>
+            <div class="mb-2"><label class="form-label small">Card background</label>
+              <input type="color" name="theme_card_bg" class="form-control form-control-color w-100" value="#1a222d"></div>
+            <div class="mb-2"><label class="form-label small">Sidebar background</label>
+              <input type="color" name="theme_sidebar_bg" class="form-control form-control-color w-100" value="#14172a"></div>
+            <div class="mb-2"><label class="form-label small">Topbar background</label>
+              <input type="color" name="theme_topbar_bg" class="form-control form-control-color w-100" value="#161f2d"></div>
+          </details>
+          <button type="submit" class="btn btn-primary w-100"><i class="fa-solid fa-check me-1"></i> Save &amp; Reload</button>
+        </form>
+        <div id="themeMsg" class="small mt-3"></div>
+      </div>
+    </div>
+
+    <!-- ===== Start page content ===== -->
+    <main class="app-content">
+
+
+<div class="d-flex align-items-center justify-content-between mb-4">
+  <div>
+    <h3 class="fw-heading mb-1">Deposit Requests</h3>
+    <p class="text-muted mb-0 small">Verify TXID and approve or reject user crypto deposits.</p>
+  </div>
+</div>
+
+<!-- Stats -->
+<div class="row g-3 mb-4">
+  <div class="col-6 col-lg-3">
+    <div class="card border-themed h-100"><div class="card-body text-center">
+      <div class="text-muted small">Pending</div>
+      <h3 class="fw-bold mb-0 text-warning">0</h3>
+    </div></div>
+  </div>
+  <div class="col-6 col-lg-3">
+    <div class="card border-themed h-100"><div class="card-body text-center">
+      <div class="text-muted small">Approved</div>
+      <h3 class="fw-bold mb-0 text-success">21</h3>
+    </div></div>
+  </div>
+  <div class="col-6 col-lg-3">
+    <div class="card border-themed h-100"><div class="card-body text-center">
+      <div class="text-muted small">Rejected</div>
+      <h3 class="fw-bold mb-0 text-danger">6</h3>
+    </div></div>
+  </div>
+</div>
+
+<!-- Filter Tabs -->
+<div class="mb-3 d-flex gap-2">
+  <a href="../admin/deposit-requests.html" class="btn btn-sm btn-primary">All</a>
+  <a href="../admin/deposit-requests.html?status=pending" class="btn btn-sm btn-outline-warning">Pending</a>
+  <a href="../admin/deposit-requests.html?status=approved" class="btn btn-sm btn-outline-success">Approved</a>
+  <a href="../admin/deposit-requests.html?status=rejected" class="btn btn-sm btn-outline-danger">Rejected</a>
+</div>
+
+<!-- Table -->
+<div class="card border-themed">
+  <div class="card-body p-0">
+    <div class="table-responsive">
+      <table class="table table-hover align-middle mb-0">
+        <thead>
+          <tr>
+            <th>#</th><th>User</th><th>Wallet</th><th>Network</th><th>Amount</th>
+            <th>TX Hash</th><th>Receipt</th><th>Status</th><th>Date</th><th>Actions</th>
+          </tr>
+        </thead>
+        <tbody>
+                      <tr>
+              <td>1</td>
+              <td>
+                <strong>XV442258</strong>
+                <br><small class="text-muted">POONAM SINGH</small>
+              </td>
+              <td class="small">demo</td>
+              <td><span class="badge bg-info text-dark">BEP20</span></td>
+              <td class="fw-semibold">$1,000.00</td>
+              <td>
+                                  <code class="small" style="word-break:break-all;" title="test">test…</code>
+                              </td>
+              <td>
+                                  <a href="https://xvoltytrade.bgtl.in/uploads/deposit_receipts/wqr_48ef9a4b9cb740881295fc9cc44098fb.png" target="_blank" class="btn btn-outline-secondary btn-sm"><i class="fa-solid fa-image"></i></a>
+                              </td>
+              <td>
+                <span class="badge bg-success">approved</span>              </td>
+              <td class="small">2026-04-24 08:36:23</td>
+              <td>
+                                  <small class="text-muted"></small>
+                              </td>
+            </tr>
+                      <tr>
+              <td>2</td>
+              <td>
+                <strong>XV653796</strong>
+                <br><small class="text-muted">werweqerweerweer</small>
+              </td>
+              <td class="small">demo</td>
+              <td><span class="badge bg-info text-dark">BEP20</span></td>
+              <td class="fw-semibold">$100.00</td>
+              <td>
+                                  <code class="small" style="word-break:break-all;" title="werwfdsfsfdsdfsf">werwfdsfsfdsdfsf…</code>
+                              </td>
+              <td>
+                                  <a href="https://xvoltytrade.bgtl.in/uploads/deposit_receipts/wqr_1edcd8b9c1afe372bc4653955be733c4.jpg" target="_blank" class="btn btn-outline-secondary btn-sm"><i class="fa-solid fa-image"></i></a>
+                              </td>
+              <td>
+                <span class="badge bg-success">approved</span>              </td>
+              <td class="small">2026-04-22 10:48:54</td>
+              <td>
+                                  <small class="text-muted"></small>
+                              </td>
+            </tr>
+                      <tr>
+              <td>3</td>
+              <td>
+                <strong>XV406921</strong>
+                <br><small class="text-muted">werwersfsdfwer</small>
+              </td>
+              <td class="small">demo</td>
+              <td><span class="badge bg-info text-dark">BEP20</span></td>
+              <td class="fw-semibold">$100.00</td>
+              <td>
+                                  <code class="small" style="word-break:break-all;" title="dgterwtgbcvbrgfsdfgfdfgdffgsdff">dgterwtgbcvbrgfs…</code>
+                              </td>
+              <td>
+                                  <a href="https://xvoltytrade.bgtl.in/uploads/deposit_receipts/wqr_fda4f4e86ec121e1ee21e866f7606dae.jpg" target="_blank" class="btn btn-outline-secondary btn-sm"><i class="fa-solid fa-image"></i></a>
+                              </td>
+              <td>
+                <span class="badge bg-success">approved</span>              </td>
+              <td class="small">2026-04-22 10:47:36</td>
+              <td>
+                                  <small class="text-muted"></small>
+                              </td>
+            </tr>
+                      <tr>
+              <td>4</td>
+              <td>
+                <strong>XV698744</strong>
+                <br><small class="text-muted">qwewqrwerwtert</small>
+              </td>
+              <td class="small">demo</td>
+              <td><span class="badge bg-info text-dark">BEP20</span></td>
+              <td class="fw-semibold">$100.00</td>
+              <td>
+                                  <code class="small" style="word-break:break-all;" title="erterrterrtdfbcvbvcxb">erterrterrtdfbcv…</code>
+                              </td>
+              <td>
+                                  <a href="https://xvoltytrade.bgtl.in/uploads/deposit_receipts/wqr_947f2c72376d542da7314019edf15363.jpg" target="_blank" class="btn btn-outline-secondary btn-sm"><i class="fa-solid fa-image"></i></a>
+                              </td>
+              <td>
+                <span class="badge bg-success">approved</span>              </td>
+              <td class="small">2026-04-22 10:47:19</td>
+              <td>
+                                  <small class="text-muted"></small>
+                              </td>
+            </tr>
+                      <tr>
+              <td>5</td>
+              <td>
+                <strong>XV698744</strong>
+                <br><small class="text-muted">qwewqrwerwtert</small>
+              </td>
+              <td class="small">demo</td>
+              <td><span class="badge bg-info text-dark">BEP20</span></td>
+              <td class="fw-semibold">$100.00</td>
+              <td>
+                                  <code class="small" style="word-break:break-all;" title="erterrterrtdfbcvbvcxb">erterrterrtdfbcv…</code>
+                              </td>
+              <td>
+                                  <a href="https://xvoltytrade.bgtl.in/uploads/deposit_receipts/wqr_f0075ceeb1d1387755e531cc74e4000f.jpg" target="_blank" class="btn btn-outline-secondary btn-sm"><i class="fa-solid fa-image"></i></a>
+                              </td>
+              <td>
+                <span class="badge bg-success">approved</span>              </td>
+              <td class="small">2026-04-22 10:47:19</td>
+              <td>
+                                  <small class="text-muted"></small>
+                              </td>
+            </tr>
+                      <tr>
+              <td>6</td>
+              <td>
+                <strong>XV906404</strong>
+                <br><small class="text-muted">werwerwrwerwsdfsdf</small>
+              </td>
+              <td class="small">demo</td>
+              <td><span class="badge bg-info text-dark">BEP20</span></td>
+              <td class="fw-semibold">$100.00</td>
+              <td>
+                                  <code class="small" style="word-break:break-all;" title="er4fetfdfgdfgerter">er4fetfdfgdfgert…</code>
+                              </td>
+              <td>
+                                  <a href="https://xvoltytrade.bgtl.in/uploads/deposit_receipts/wqr_8de3d9329f68389fadff917770c1ddff.jpg" target="_blank" class="btn btn-outline-secondary btn-sm"><i class="fa-solid fa-image"></i></a>
+                              </td>
+              <td>
+                <span class="badge bg-success">approved</span>              </td>
+              <td class="small">2026-04-22 10:46:59</td>
+              <td>
+                                  <small class="text-muted"></small>
+                              </td>
+            </tr>
+                      <tr>
+              <td>7</td>
+              <td>
+                <strong>XV939801</strong>
+                <br><small class="text-muted">ertertertert</small>
+              </td>
+              <td class="small">demo</td>
+              <td><span class="badge bg-info text-dark">BEP20</span></td>
+              <td class="fw-semibold">$100.00</td>
+              <td>
+                                  <code class="small" style="word-break:break-all;" title="e44rtfetfgdgfdg">e44rtfetfgdgfdg…</code>
+                              </td>
+              <td>
+                                  <a href="https://xvoltytrade.bgtl.in/uploads/deposit_receipts/wqr_7c4d678976d1213e43635493ebfa6a4f.jpg" target="_blank" class="btn btn-outline-secondary btn-sm"><i class="fa-solid fa-image"></i></a>
+                              </td>
+              <td>
+                <span class="badge bg-success">approved</span>              </td>
+              <td class="small">2026-04-22 10:46:05</td>
+              <td>
+                                  <small class="text-muted"></small>
+                              </td>
+            </tr>
+                      <tr>
+              <td>8</td>
+              <td>
+                <strong>XV937656</strong>
+                <br><small class="text-muted">rtyryhfrhgbfgh</small>
+              </td>
+              <td class="small">demo</td>
+              <td><span class="badge bg-info text-dark">BEP20</span></td>
+              <td class="fw-semibold">$100.00</td>
+              <td>
+                                  <code class="small" style="word-break:break-all;" title="eredgffdfgertgdfgergergtgtt">eredgffdfgertgdf…</code>
+                              </td>
+              <td>
+                                  <a href="https://xvoltytrade.bgtl.in/uploads/deposit_receipts/wqr_abb64d5966f55dd691d01a14db010e98.jpg" target="_blank" class="btn btn-outline-secondary btn-sm"><i class="fa-solid fa-image"></i></a>
+                              </td>
+              <td>
+                <span class="badge bg-success">approved</span>              </td>
+              <td class="small">2026-04-22 10:45:52</td>
+              <td>
+                                  <small class="text-muted"></small>
+                              </td>
+            </tr>
+                      <tr>
+              <td>9</td>
+              <td>
+                <strong>XV226535</strong>
+                <br><small class="text-muted">wteregvfdg</small>
+              </td>
+              <td class="small">demo</td>
+              <td><span class="badge bg-info text-dark">BEP20</span></td>
+              <td class="fw-semibold">$100.00</td>
+              <td>
+                                  <code class="small" style="word-break:break-all;" title="ertdfgsdffgdfgfdfgvcb">ertdfgsdffgdfgfd…</code>
+                              </td>
+              <td>
+                                  <a href="https://xvoltytrade.bgtl.in/uploads/deposit_receipts/wqr_05812429303dc58104dbb58dc7fb7935.jpg" target="_blank" class="btn btn-outline-secondary btn-sm"><i class="fa-solid fa-image"></i></a>
+                              </td>
+              <td>
+                <span class="badge bg-success">approved</span>              </td>
+              <td class="small">2026-04-22 10:45:36</td>
+              <td>
+                                  <small class="text-muted"></small>
+                              </td>
+            </tr>
+                      <tr>
+              <td>10</td>
+              <td>
+                <strong>XV963517</strong>
+                <br><small class="text-muted">erwerweerwerwer</small>
+              </td>
+              <td class="small">demo</td>
+              <td><span class="badge bg-info text-dark">BEP20</span></td>
+              <td class="fw-semibold">$100.00</td>
+              <td>
+                                  <code class="small" style="word-break:break-all;" title="dfgdffgdfgdfgdfgfsdfg">dfgdffgdfgdfgdfg…</code>
+                              </td>
+              <td>
+                                  <a href="https://xvoltytrade.bgtl.in/uploads/deposit_receipts/wqr_55b4d52e647d95fde637bbf386662240.jpg" target="_blank" class="btn btn-outline-secondary btn-sm"><i class="fa-solid fa-image"></i></a>
+                              </td>
+              <td>
+                <span class="badge bg-success">approved</span>              </td>
+              <td class="small">2026-04-22 10:45:20</td>
+              <td>
+                                  <small class="text-muted"></small>
+                              </td>
+            </tr>
+                      <tr>
+              <td>11</td>
+              <td>
+                <strong>XV298561</strong>
+                <br><small class="text-muted">qdsaxzv cbz</small>
+              </td>
+              <td class="small">demo</td>
+              <td><span class="badge bg-info text-dark">BEP20</span></td>
+              <td class="fw-semibold">$100.00</td>
+              <td>
+                                  <code class="small" style="word-break:break-all;" title="fgtdgdfgdfgdfggdgs">fgtdgdfgdfgdfggd…</code>
+                              </td>
+              <td>
+                                  <a href="https://xvoltytrade.bgtl.in/uploads/deposit_receipts/wqr_02230c5c5436964926e103891b187c56.jpg" target="_blank" class="btn btn-outline-secondary btn-sm"><i class="fa-solid fa-image"></i></a>
+                              </td>
+              <td>
+                <span class="badge bg-success">approved</span>              </td>
+              <td class="small">2026-04-22 10:45:03</td>
+              <td>
+                                  <small class="text-muted"></small>
+                              </td>
+            </tr>
+                      <tr>
+              <td>12</td>
+              <td>
+                <strong>XV430358</strong>
+                <br><small class="text-muted">fdgfdgfdgd</small>
+              </td>
+              <td class="small">demo</td>
+              <td><span class="badge bg-info text-dark">BEP20</span></td>
+              <td class="fw-semibold">$212,312.00</td>
+              <td>
+                                  <code class="small" style="word-break:break-all;" title="sfsdffsfsfsfwerwevsdfsdffds">sfsdffsfsfsfwerw…</code>
+                              </td>
+              <td>
+                                  <a href="https://xvoltytrade.bgtl.in/uploads/deposit_receipts/wqr_abe6fb4c21a238cf567e8420a101829d.jpg" target="_blank" class="btn btn-outline-secondary btn-sm"><i class="fa-solid fa-image"></i></a>
+                              </td>
+              <td>
+                <span class="badge bg-success">approved</span>              </td>
+              <td class="small">2026-04-22 10:18:26</td>
+              <td>
+                                  <small class="text-muted"></small>
+                              </td>
+            </tr>
+                      <tr>
+              <td>13</td>
+              <td>
+                <strong>XV187153</strong>
+                <br><small class="text-muted">qweqweqw</small>
+              </td>
+              <td class="small">demo</td>
+              <td><span class="badge bg-info text-dark">BEP20</span></td>
+              <td class="fw-semibold">$210.00</td>
+              <td>
+                                  <code class="small" style="word-break:break-all;" title="88fyuvhgjrtfxsdcgtyfghcvtfyjgh">88fyuvhgjrtfxsdc…</code>
+                              </td>
+              <td>
+                                  <a href="https://xvoltytrade.bgtl.in/uploads/deposit_receipts/wqr_5faeb9ac77b4ac3fa56126edb98fa0bf.jpg" target="_blank" class="btn btn-outline-secondary btn-sm"><i class="fa-solid fa-image"></i></a>
+                              </td>
+              <td>
+                <span class="badge bg-success">approved</span>              </td>
+              <td class="small">2026-04-22 10:14:53</td>
+              <td>
+                                  <small class="text-muted"></small>
+                              </td>
+            </tr>
+                      <tr>
+              <td>14</td>
+              <td>
+                <strong>XV187153</strong>
+                <br><small class="text-muted">qweqweqw</small>
+              </td>
+              <td class="small">demo</td>
+              <td><span class="badge bg-info text-dark">BEP20</span></td>
+              <td class="fw-semibold">$500.00</td>
+              <td>
+                                  <code class="small" style="word-break:break-all;" title="rurcfvhg bn8yyhk jmbn">rurcfvhg bn8yyhk…</code>
+                              </td>
+              <td>
+                                  <a href="https://xvoltytrade.bgtl.in/uploads/deposit_receipts/wqr_080fc102cc9adb2a84dae48ba365dc00.jpg" target="_blank" class="btn btn-outline-secondary btn-sm"><i class="fa-solid fa-image"></i></a>
+                              </td>
+              <td>
+                <span class="badge bg-success">approved</span>              </td>
+              <td class="small">2026-04-22 10:14:40</td>
+              <td>
+                                  <small class="text-muted"></small>
+                              </td>
+            </tr>
+                      <tr>
+              <td>15</td>
+              <td>
+                <strong>XV152488</strong>
+                <br><small class="text-muted">TestUser1</small>
+              </td>
+              <td class="small">demo</td>
+              <td><span class="badge bg-info text-dark">BEP20</span></td>
+              <td class="fw-semibold">$11.00</td>
+              <td>
+                                  <code class="small" style="word-break:break-all;" title="ewwrefsdfsdfdstrrertefdsfsd">ewwrefsdfsdfdstr…</code>
+                              </td>
+              <td>
+                                  <a href="https://xvoltytrade.bgtl.in/uploads/deposit_receipts/wqr_95899e9555b4a1fb324aecaff465cdc4.png" target="_blank" class="btn btn-outline-secondary btn-sm"><i class="fa-solid fa-image"></i></a>
+                              </td>
+              <td>
+                <span class="badge bg-success">approved</span>              </td>
+              <td class="small">2026-04-22 10:11:19</td>
+              <td>
+                                  <small class="text-muted"></small>
+                              </td>
+            </tr>
+                      <tr>
+              <td>16</td>
+              <td>
+                <strong>XV152488</strong>
+                <br><small class="text-muted">TestUser1</small>
+              </td>
+              <td class="small">demo</td>
+              <td><span class="badge bg-info text-dark">BEP20</span></td>
+              <td class="fw-semibold">$500.00</td>
+              <td>
+                                  <code class="small" style="word-break:break-all;" title="324rwe234wecdsarew34wersdcdsrewt43">324rwe234wecdsar…</code>
+                              </td>
+              <td>
+                                  <a href="https://xvoltytrade.bgtl.in/uploads/deposit_receipts/wqr_0775ad8fa71d77c294948c10cd773b69.png" target="_blank" class="btn btn-outline-secondary btn-sm"><i class="fa-solid fa-image"></i></a>
+                              </td>
+              <td>
+                <span class="badge bg-success">approved</span>              </td>
+              <td class="small">2026-04-22 10:11:03</td>
+              <td>
+                                  <small class="text-muted"></small>
+                              </td>
+            </tr>
+                      <tr>
+              <td>17</td>
+              <td>
+                <strong>XV152488</strong>
+                <br><small class="text-muted">TestUser1</small>
+              </td>
+              <td class="small">demo</td>
+              <td><span class="badge bg-info text-dark">BEP20</span></td>
+              <td class="fw-semibold">$500.00</td>
+              <td>
+                                  <code class="small" style="word-break:break-all;" title="tdryxfhcvbhnjyuitgfvbnm,">tdryxfhcvbhnjyui…</code>
+                              </td>
+              <td>
+                                  <a href="https://xvoltytrade.bgtl.in/uploads/deposit_receipts/wqr_be0902d67162f432e155cf7eab172470.png" target="_blank" class="btn btn-outline-secondary btn-sm"><i class="fa-solid fa-image"></i></a>
+                              </td>
+              <td>
+                <span class="badge bg-success">approved</span>              </td>
+              <td class="small">2026-04-22 10:08:58</td>
+              <td>
+                                  <small class="text-muted"></small>
+                              </td>
+            </tr>
+                      <tr>
+              <td>18</td>
+              <td>
+                <strong>XV187153</strong>
+                <br><small class="text-muted">qweqweqw</small>
+              </td>
+              <td class="small">demo</td>
+              <td><span class="badge bg-info text-dark">BEP20</span></td>
+              <td class="fw-semibold">$50.00</td>
+              <td>
+                                  <code class="small" style="word-break:break-all;" title="875t8y7uhtg9jbbvjhjhgjhjhjhjhv">875t8y7uhtg9jbbv…</code>
+                              </td>
+              <td>
+                                  <a href="https://xvoltytrade.bgtl.in/uploads/deposit_receipts/wqr_229f5408e09c3075cd517d891ce1ffcf.jpg" target="_blank" class="btn btn-outline-secondary btn-sm"><i class="fa-solid fa-image"></i></a>
+                              </td>
+              <td>
+                <span class="badge bg-success">approved</span>              </td>
+              <td class="small">2026-04-22 08:27:43</td>
+              <td>
+                                  <small class="text-muted"></small>
+                              </td>
+            </tr>
+                      <tr>
+              <td>19</td>
+              <td>
+                <strong>XV000001</strong>
+                <br><small class="text-muted">XVoltyTrade</small>
+              </td>
+              <td class="small">test 2</td>
+              <td><span class="badge bg-info text-dark">TRC20</span></td>
+              <td class="fw-semibold">$1,000.00</td>
+              <td>
+                                  <code class="small" style="word-break:break-all;" title="test 2">test 2…</code>
+                              </td>
+              <td>
+                                  <a href="https://xvoltytrade.bgtl.in/uploads/deposit_receipts/wqr_acbd6ee0d8c5cd6307380cb4837d6c16.png" target="_blank" class="btn btn-outline-secondary btn-sm"><i class="fa-solid fa-image"></i></a>
+                              </td>
+              <td>
+                <span class="badge bg-success">approved</span>              </td>
+              <td class="small">2026-04-21 05:20:20</td>
+              <td>
+                                  <small class="text-muted">ok</small>
+                              </td>
+            </tr>
+                      <tr>
+              <td>20</td>
+              <td>
+                <strong>XV000001</strong>
+                <br><small class="text-muted">XVoltyTrade</small>
+              </td>
+              <td class="small">test 2</td>
+              <td><span class="badge bg-info text-dark">TRC20</span></td>
+              <td class="fw-semibold">$1,000.00</td>
+              <td>
+                                  <code class="small" style="word-break:break-all;" title="test">test…</code>
+                              </td>
+              <td>
+                                  <span class="text-muted">—</span>
+                              </td>
+              <td>
+                <span class="badge bg-danger">rejected</span>              </td>
+              <td class="small">2026-04-21 05:19:10</td>
+              <td>
+                                  <small class="text-muted">failed</small>
+                              </td>
+            </tr>
+                      <tr>
+              <td>21</td>
+              <td>
+                <strong>XV000001</strong>
+                <br><small class="text-muted">XVoltyTrade</small>
+              </td>
+              <td class="small">demo</td>
+              <td><span class="badge bg-info text-dark">BEP20</span></td>
+              <td class="fw-semibold">$10.00</td>
+              <td>
+                                  <code class="small" style="word-break:break-all;" title="test user">test user…</code>
+                              </td>
+              <td>
+                                  <a href="https://xvoltytrade.bgtl.in/uploads/deposit_receipts/wqr_5fe44e347e5d0b8778c8f78fdcb887d8.png" target="_blank" class="btn btn-outline-secondary btn-sm"><i class="fa-solid fa-image"></i></a>
+                              </td>
+              <td>
+                <span class="badge bg-danger">rejected</span>              </td>
+              <td class="small">2026-04-20 11:24:05</td>
+              <td>
+                                  <small class="text-muted"></small>
+                              </td>
+            </tr>
+                      <tr>
+              <td>22</td>
+              <td>
+                <strong>XV000001</strong>
+                <br><small class="text-muted">XVoltyTrade</small>
+              </td>
+              <td class="small">demo</td>
+              <td><span class="badge bg-info text-dark">BEP20</span></td>
+              <td class="fw-semibold">$10.00</td>
+              <td>
+                                  <code class="small" style="word-break:break-all;" title="test user">test user…</code>
+                              </td>
+              <td>
+                                  <a href="https://xvoltytrade.bgtl.in/uploads/deposit_receipts/wqr_1ec19db9079ba16807399318cb4bd00f.png" target="_blank" class="btn btn-outline-secondary btn-sm"><i class="fa-solid fa-image"></i></a>
+                              </td>
+              <td>
+                <span class="badge bg-danger">rejected</span>              </td>
+              <td class="small">2026-04-20 11:20:53</td>
+              <td>
+                                  <small class="text-muted"></small>
+                              </td>
+            </tr>
+                      <tr>
+              <td>23</td>
+              <td>
+                <strong>XV000001</strong>
+                <br><small class="text-muted">XVoltyTrade</small>
+              </td>
+              <td class="small">demo</td>
+              <td><span class="badge bg-info text-dark">BEP20</span></td>
+              <td class="fw-semibold">$10.00</td>
+              <td>
+                                  <code class="small" style="word-break:break-all;" title="test user">test user…</code>
+                              </td>
+              <td>
+                                  <a href="https://xvoltytrade.bgtl.in/uploads/deposit_receipts/wqr_5a3e23c5b142cac091135d4670d2486f.png" target="_blank" class="btn btn-outline-secondary btn-sm"><i class="fa-solid fa-image"></i></a>
+                              </td>
+              <td>
+                <span class="badge bg-danger">rejected</span>              </td>
+              <td class="small">2026-04-20 11:17:42</td>
+              <td>
+                                  <small class="text-muted">false</small>
+                              </td>
+            </tr>
+                      <tr>
+              <td>24</td>
+              <td>
+                <strong>XV000001</strong>
+                <br><small class="text-muted">XVoltyTrade</small>
+              </td>
+              <td class="small">demo</td>
+              <td><span class="badge bg-info text-dark">BEP20</span></td>
+              <td class="fw-semibold">$10.00</td>
+              <td>
+                                  <code class="small" style="word-break:break-all;" title="test user">test user…</code>
+                              </td>
+              <td>
+                                  <a href="https://xvoltytrade.bgtl.in/uploads/deposit_receipts/wqr_990221fe74ffda840b05bc1bb25e0ae3.png" target="_blank" class="btn btn-outline-secondary btn-sm"><i class="fa-solid fa-image"></i></a>
+                              </td>
+              <td>
+                <span class="badge bg-success">approved</span>              </td>
+              <td class="small">2026-04-20 11:13:33</td>
+              <td>
+                                  <small class="text-muted">Test approve</small>
+                              </td>
+            </tr>
+                      <tr>
+              <td>25</td>
+              <td>
+                <strong>XV000001</strong>
+                <br><small class="text-muted">XVoltyTrade</small>
+              </td>
+              <td class="small">demo</td>
+              <td><span class="badge bg-info text-dark">BEP20</span></td>
+              <td class="fw-semibold">$10.00</td>
+              <td>
+                                  <code class="small" style="word-break:break-all;" title="test user">test user…</code>
+                              </td>
+              <td>
+                                  <a href="https://xvoltytrade.bgtl.in/uploads/deposit_receipts/wqr_4f1d946fb4100f690e39913e5281eb7c.png" target="_blank" class="btn btn-outline-secondary btn-sm"><i class="fa-solid fa-image"></i></a>
+                              </td>
+              <td>
+                <span class="badge bg-danger">rejected</span>              </td>
+              <td class="small">2026-04-20 11:07:22</td>
+              <td>
+                                  <small class="text-muted">false</small>
+                              </td>
+            </tr>
+                      <tr>
+              <td>26</td>
+              <td>
+                <strong>XV000001</strong>
+                <br><small class="text-muted">XVoltyTrade</small>
+              </td>
+              <td class="small">demo</td>
+              <td><span class="badge bg-info text-dark">BEP20</span></td>
+              <td class="fw-semibold">$10.00</td>
+              <td>
+                                  <code class="small" style="word-break:break-all;" title="test user">test user…</code>
+                              </td>
+              <td>
+                                  <a href="https://xvoltytrade.bgtl.in/uploads/deposit_receipts/wqr_2463d5cd407352c0989836b30f592fac.png" target="_blank" class="btn btn-outline-secondary btn-sm"><i class="fa-solid fa-image"></i></a>
+                              </td>
+              <td>
+                <span class="badge bg-success">approved</span>              </td>
+              <td class="small">2026-04-20 11:06:31</td>
+              <td>
+                                  <small class="text-muted"></small>
+                              </td>
+            </tr>
+                      <tr>
+              <td>27</td>
+              <td>
+                <strong>XV000001</strong>
+                <br><small class="text-muted">XVoltyTrade</small>
+              </td>
+              <td class="small">demo</td>
+              <td><span class="badge bg-info text-dark">BEP20</span></td>
+              <td class="fw-semibold">$10.00</td>
+              <td>
+                                  <code class="small" style="word-break:break-all;" title="test user">test user…</code>
+                              </td>
+              <td>
+                                  <a href="https://xvoltytrade.bgtl.in/uploads/deposit_receipts/wqr_9f376cd8e4ee98c4f894f9b87531fa66.png" target="_blank" class="btn btn-outline-secondary btn-sm"><i class="fa-solid fa-image"></i></a>
+                              </td>
+              <td>
+                <span class="badge bg-danger">rejected</span>              </td>
+              <td class="small">2026-04-20 11:05:54</td>
+              <td>
+                                  <small class="text-muted">wrong</small>
+                              </td>
+            </tr>
+                  </tbody>
+      </table>
+    </div>
+  </div>
+</div>
+
+<!-- Approve/Reject Modal -->
+<div class="modal fade" id="drModal" tabindex="-1">
+  <div class="modal-dialog"><div class="modal-content">
+    <form method="POST">
+      <input type="hidden" name="request_id" id="drId">
+      <input type="hidden" name="action" id="drAction">
+      <div class="modal-header">
+        <h5 class="modal-title" id="drTitle">Process Deposit</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+      </div>
+      <div class="modal-body">
+        <p id="drDesc"></p>
+        <div id="drTxInfo" class="mb-3"></div>
+        <div class="mb-3">
+          <label class="form-label">Admin Remark (optional)</label>
+          <textarea name="admin_remark" class="form-control" rows="2"></textarea>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+        <button type="submit" class="btn" id="drSubmitBtn">Confirm</button>
+      </div>
+    </form>
+  </div></div>
+</div>
+
+<script>
+function openDrAction(id, action, userId, amount, txHash) {
+  document.getElementById('drId').value = id;
+  document.getElementById('drAction').value = action;
+  var btn = document.getElementById('drSubmitBtn');
+  var txInfo = txHash ? '<div class="alert alert-secondary small mb-0"><strong>TX Hash:</strong> <code>' + txHash + '</code></div>' : '';
+  document.getElementById('drTxInfo').innerHTML = txInfo;
+  if (action === 'approve') {
+    document.getElementById('drTitle').textContent = 'Approve Deposit';
+    document.getElementById('drDesc').innerHTML = 'Approve <strong>$' + amount + '</strong> deposit from <strong>' + userId + '</strong>? Amount will be credited to their wallet.';
+    btn.className = 'btn btn-success'; btn.textContent = 'Approve & Credit';
+  } else {
+    document.getElementById('drTitle').textContent = 'Reject Deposit';
+    document.getElementById('drDesc').innerHTML = 'Reject <strong>$' + amount + '</strong> deposit from <strong>' + userId + '</strong>?';
+    btn.className = 'btn btn-danger'; btn.textContent = 'Reject';
+  }
+}
+</script>
+
+    </main>
+  </div><!-- /.app-main -->
+</div><!-- /.app-shell -->
+
+<!-- Bootstrap bundle -->
+<script src="../assets/Deposit Requests — Admin — XVolty Trade_files/bootstrap.bundle.min.js.download"></script>
+
+<!-- App-wide dashboard JS: sidebar toggle + submenu + theme form -->
+<script>
+(function(){
+  // Mobile sidebar toggle
+  const sidebar  = document.getElementById('appSidebar');
+  const backdrop = document.getElementById('appSidebarBackdrop');
+  const mobileBtn = document.getElementById('sidebarMobileBtn');
+  const openSidebar  = () => { sidebar.classList.add('show'); backdrop.classList.add('show'); };
+  const closeSidebar = () => { sidebar.classList.remove('show'); backdrop.classList.remove('show'); };
+  if (mobileBtn)   mobileBtn.addEventListener('click', openSidebar);
+  if (backdrop)    backdrop.addEventListener('click', closeSidebar);
+
+  // Sidebar collapsible submenu
+  document.querySelectorAll('.app-sidebar .nav-dropdown-toggle').forEach(a => {
+    a.addEventListener('click', (e) => {
+      e.preventDefault();
+      a.closest('.has-submenu').classList.toggle('open');
+    });
+  });
+
+  // Theme customizer AJAX save
+  const themeForm = document.getElementById('themeForm');
+  if (themeForm) {
+    themeForm.addEventListener('submit', async (e) => {
+      e.preventDefault();
+      const msg = document.getElementById('themeMsg');
+      msg.textContent = 'Saving...';
+      try {
+        const fd = new FormData(themeForm);
+        const res = await fetch('../app/Controllers/api/save_theme.php', { method: 'POST', body: fd });
+        const data = await res.json();
+        if (data.status === 'success') {
+          msg.innerHTML = '<span class="text-success"><i class="fa-solid fa-check"></i> Saved. Reloading...</span>';
+          setTimeout(() => location.reload(), 500);
+        } else {
+          msg.innerHTML = '<span class="text-danger">' + (data.message || 'Error saving theme') + '</span>';
+        }
+      } catch (err) {
+        msg.innerHTML = '<span class="text-danger">Network error: ' + err.message + '</span>';
+      }
+    });
+  }
+})();
+</script>
+
+<!-- Auto-cron beacon (runs due tasks silently in background) -->
+<script>
+(function(){
+  setTimeout(function(){
+    fetch('../cron/auto_runner.php', {credentials:'same-origin'}).catch(function(){});
+  }, 3000);
+})();
+</script>
+
+
+
+</body></html>
+
+

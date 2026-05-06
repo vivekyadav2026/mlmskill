@@ -1,0 +1,197 @@
+﻿<!DOCTYPE html>
+<!-- saved from url=(0050)../user/profile-image.html -->
+<html lang="en" data-bs-theme="dark"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Profile Image — XVolty Trade</title>
+  
+  <link rel="preconnect" href="https://fonts.googleapis.com/">
+  <link rel="preconnect" href="https://fonts.gstatic.com/" crossorigin="">
+  <link href="../assets/Profile Image — XVolty Trade_files/css2" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+  <!-- Bootstrap (local) -->
+  <link rel="stylesheet" href="../assets/Profile Image — XVolty Trade_files/bootstrap.min.css">
+
+  <!-- Theme variables -->
+  <style id="xvt-theme-vars">
+  :root,
+  [data-bs-theme="dark"] {
+    --xvt-primary: #f24a4a;
+    --xvt-accent:  #8c54c4;
+    --xvt-radius:  8px;
+    --xvt-body-bg: #0b1220;
+    --xvt-card-bg: #1a222d;
+    --xvt-sidebar-bg: #14172a;
+    --xvt-topbar-bg:  #161f2d;
+    --xvt-text:    #e2e8f0;
+    --xvt-muted:   #94a3b8;
+    --xvt-border:  #334155;
+
+    /* Bootstrap overrides */
+    --bs-primary: var(--xvt-primary);
+    --bs-primary-rgb: 8, 126, 139;
+    --bs-link-color: var(--xvt-primary);
+    --bs-link-hover-color: var(--xvt-accent);
+    --bs-body-bg: var(--xvt-body-bg);
+    --bs-body-color: var(--xvt-text);
+    --bs-border-color: var(--xvt-border);
+    --bs-border-radius: var(--xvt-radius);
+    --bs-border-radius-sm: calc(var(--xvt-radius) * 0.625);
+    --bs-border-radius-lg: calc(var(--xvt-radius) * 1.25);
+  }
+</style>
+
+  <!-- Constant theme CSS -->
+  <link rel="stylesheet" href="../assets/Profile Image — XVolty Trade_files/theme.css">
+</head>
+<body>
+  <!-- ===== App Shell ===== -->
+<div class="app-shell">
+
+  <!-- ===== User Sidebar ===== -->
+  <aside id="appSidebar" class="app-sidebar">
+        <a href="../user/index.html" class="sidebar-brand">
+              <i class="fa-solid fa-bolt-lightning"></i>
+        <span>X VOLTY TRADE</span>
+          </a>
+    <ul class="list-unstyled mb-0 pb-3">
+      <li class="nav-section">Main</li>
+      <li><a href="../user/index.html" class="nav-link"><i class="fa-solid fa-house"></i><span>Dashboard</span></a></li>
+      <li><a href="../user/deposit.html" class="nav-link"><i class="fa-solid fa-arrow-down"></i><span>Deposit</span></a></li>
+      <li><a href="../user/withdraw.html" class="nav-link"><i class="fa-solid fa-arrow-up"></i><span>Withdraw</span></a></li>
+      <li><a href="../user/payout-wallet.html" class="nav-link"><i class="fa-solid fa-wallet"></i><span>Payout Wallet</span></a></li>
+      <li><a href="../user/invest.html" class="nav-link"><i class="fa-solid fa-coins"></i><span>Invest</span></a></li>
+
+      <li class="nav-section">Network</li>
+      <li><a href="../user/tree.html" class="nav-link"><i class="fa-solid fa-sitemap"></i><span>Network Tree</span></a></li>
+      <li><a href="../user/referrals.html" class="nav-link"><i class="fa-solid fa-user-plus"></i><span>Direct Team</span></a></li>
+
+      <li><a href="../user/incomes.html" class="nav-link"><i class="fa-solid fa-sack-dollar"></i><span>My Incomes</span></a></li>
+
+      <li class="nav-section">History</li>
+      <li><a href="../user/transactions.html" class="nav-link"><i class="fa-solid fa-receipt"></i><span>Transactions</span></a></li>
+      <li><a href="../user/portfolio.html" class="nav-link"><i class="fa-solid fa-chart-pie"></i><span>Portfolio</span></a></li>
+
+      <li class="nav-section">Account</li>
+      <li class="has-submenu open">
+        <a href="../user/profile-image.html#" class="nav-link nav-dropdown-toggle active">
+          <i class="fa-solid fa-user-gear"></i><span>Manage Profile</span>
+          <i class="fa-solid fa-chevron-down nav-arrow"></i>
+        </a>
+        <ul class="nav-submenu list-unstyled mb-0">
+          <li><a href="../user/profile.html" class="nav-link sub-link"><i class="fa-solid fa-user"></i><span>My Profile</span></a></li>
+          <li><a href="../user/profile-image.html" class="nav-link sub-link active"><i class="fa-solid fa-camera"></i><span>Profile Image</span></a></li>
+          <li><a href="../user/change-password.html" class="nav-link sub-link"><i class="fa-solid fa-key"></i><span>Change Password</span></a></li>
+          <li><a href="../user/kyc.html" class="nav-link sub-link"><i class="fa-solid fa-id-card"></i><span>KYC</span></a></li>
+        </ul>
+      </li>
+      <li><a href="../user/logout.html" class="nav-link"><i class="fa-solid fa-right-from-bracket"></i><span>Log Out</span></a></li>
+    </ul>
+  </aside>
+  <div class="app-sidebar-backdrop" id="appSidebarBackdrop"></div>
+
+  <!-- Main column -->
+  <div class="app-main">
+    <!-- ===== User Topbar ===== -->
+        <nav class="app-topbar d-flex align-items-center justify-content-between">
+      <div class="d-flex align-items-center gap-2">
+        <button class="btn btn-sm btn-outline-secondary d-lg-none" id="sidebarMobileBtn" aria-label="Open sidebar">
+          <i class="fa-solid fa-bars"></i>
+        </button>
+        <h6 class="mb-0 fw-heading d-none d-md-block">Profile Image</h6>
+      </div>
+
+      <div class="d-flex align-items-center gap-2">
+        <!-- Notifications -->
+        <!-- <div class="dropdown">
+          <button class="btn btn-sm btn-outline-secondary position-relative" data-bs-toggle="dropdown" aria-expanded="false">
+            <i class="fa-solid fa-bell"></i>
+            <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger" style="font-size:0.6rem;">2</span>
+          </button>
+          <div class="dropdown-menu dropdown-menu-end p-0" style="min-width:320px;">
+            <h6 class="dropdown-header">Notifications</h6>
+            <a class="dropdown-item d-flex gap-2 py-2" href="#">
+              <span class="xvt-avatar" style="background:#10b981;"><i class="fa-solid fa-check"></i></span>
+              <span class="small"><strong>$1,500</strong> deposit confirmed<br><span class="text-muted">10 minutes ago</span></span>
+            </a>
+            <a class="dropdown-item d-flex gap-2 py-2" href="#">
+              <span class="xvt-avatar"><i class="fa-solid fa-chart-line"></i></span>
+              <span class="small">Daily ROI <strong>$45.50</strong> credited<br><span class="text-muted">2 hours ago</span></span>
+            </a>
+            <div class="dropdown-divider"></div>
+            <a class="dropdown-item text-center small" href="#">View all</a>
+          </div>
+        </div> -->
+
+        <!-- Profile -->
+        <div class="dropdown">
+          <button class="btn btn-sm btn-outline-secondary d-flex align-items-center gap-2" data-bs-toggle="dropdown" aria-expanded="false">
+            <span class="xvt-avatar" style="width:28px; height:28px; font-size:0.75rem;"><img src="../assets/Profile Image — XVolty Trade_files/3448ce1363001e09fd873ae7a8b81485.png" alt=""></span>
+            <span class="d-none d-md-inline">XVoltyTrade</span>
+            <i class="fa-solid fa-chevron-down small"></i>
+          </button>
+          <ul class="dropdown-menu dropdown-menu-end">
+            <li><h6 class="dropdown-header">XVoltyTrade<br><small class="text-muted">user@xvoltytrade.com</small></h6></li>
+            <li><hr class="dropdown-divider"></li>
+            <li><a class="dropdown-item" href="../user/profile.html"><i class="fa-solid fa-user me-2"></i>Profile</a></li>
+            <li><a class="dropdown-item" href="../user/change-password.html"><i class="fa-solid fa-shield-halved me-2"></i>Security</a></li>
+            <li><a class="dropdown-item" href="../user/logout.html"><i class="fa-solid fa-right-from-bracket me-2"></i>Log Out</a></li>
+          </ul>
+        </div>
+      </div>
+    </nav>
+
+    <!-- Start page content -->
+    <main class="app-content">
+
+<h3 class="fw-heading mb-1"><i class="fa-solid fa-camera me-2"></i>Profile Image</h3>
+<p class="text-muted small mb-4">Upload or change your profile picture.</p>
+
+<div class="row"><div class="col-lg-6">
+    
+  <div class="card border-themed">
+    <div class="card-body p-4 text-center">
+      <div class="mb-3">
+                  <img src="../assets/Profile Image — XVolty Trade_files/3448ce1363001e09fd873ae7a8b81485.png" alt="Profile" class="rounded-circle" style="width:140px;height:140px;object-fit:cover;border:3px solid var(--xvt-primary);">
+              </div>
+      <p class="small text-muted mb-4">JPG, JPEG or PNG. Max 2 MB.</p>
+
+      <form method="POST" enctype="multipart/form-data" class="d-inline">
+        <input type="hidden" name="upload_image" value="1">
+        <input type="file" name="profile_image" id="profileImageInput" accept=".jpg,.jpeg,.png" class="d-none" onchange="this.form.submit()">
+        <button type="button" class="btn btn-primary" onclick="document.getElementById(&#39;profileImageInput&#39;).click()">
+          <i class="fa-solid fa-upload me-1"></i>Upload New Image
+        </button>
+      </form>
+
+              <form method="POST" class="d-inline ms-2" onsubmit="return confirm(&#39;Remove your profile image?&#39;)">
+          <input type="hidden" name="remove_image" value="1">
+          <button type="submit" class="btn btn-outline-danger"><i class="fa-solid fa-trash me-1"></i>Remove Image</button>
+        </form>
+          </div>
+  </div>
+</div></div>
+
+    </main>
+  </div><!-- /.app-main -->
+</div><!-- /.app-shell -->
+
+<script src="../assets/Profile Image — XVolty Trade_files/bootstrap.bundle.min.js.download"></script>
+<script>
+(function(){
+  const sidebar  = document.getElementById('appSidebar');
+  const backdrop = document.getElementById('appSidebarBackdrop');
+  const btn      = document.getElementById('sidebarMobileBtn');
+  if (btn)      btn.addEventListener('click', () => { sidebar.classList.add('show'); backdrop.classList.add('show'); });
+  if (backdrop) backdrop.addEventListener('click', () => { sidebar.classList.remove('show'); backdrop.classList.remove('show'); });
+  document.querySelectorAll('.app-sidebar .nav-dropdown-toggle').forEach(a => {
+    a.addEventListener('click', (e) => { e.preventDefault(); a.closest('.has-submenu').classList.toggle('open'); });
+  });
+})();
+</script>
+
+
+</body></html>
+
+
