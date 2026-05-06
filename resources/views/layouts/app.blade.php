@@ -10,6 +10,7 @@
     </style>
 </head>
 <body class="antialiased">
+    @include('components.preloader')
     <nav class="bg-indigo-600 shadow-lg">
         <div class="max-w-7xl mx-auto px-4">
             <div class="flex justify-between h-16">

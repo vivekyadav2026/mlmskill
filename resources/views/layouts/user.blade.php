@@ -55,6 +55,7 @@
   <link rel="stylesheet" href="{{ asset('assets/My Dashboard â€” XVolty Trade_files/theme.css') }}">
 </head>
 <body>
+  @include('components.preloader')
   <!-- ===== App Shell ===== -->
 <div class="app-shell">
 

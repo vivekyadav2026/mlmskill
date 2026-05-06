@@ -30,7 +30,8 @@
         }
     </script>
 </head>
-<body class="antialiased font-sans bg-gray-50 text-gray-800 flex min-h-screen">
+<body class="antialiased font-sans bg-gray-50 text-gray-800 flex min-h-screen overflow-x-hidden">
+    @include('components.preloader')
 
     <!-- Left Panel -->
     <div class="hidden lg:flex lg:w-1/2 bg-brand-900 relative flex-col justify-between p-12 overflow-hidden">

@@ -53,24 +53,46 @@
 </head>
 <body class="antialiased font-sans bg-gray-50 text-gray-800 overflow-x-hidden relative">
 
+    @include('components.preloader')
     <!-- Navigation -->
     <nav class="fixed w-full z-50 bg-white/90 backdrop-blur-md border-b border-gray-100 transition-all duration-300 shadow-sm" id="navbar">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div class="flex justify-between items-center h-20">
+                <!-- Logo -->
                 <div class="flex items-center gap-3">
                     <div class="w-10 h-10 rounded-lg bg-gradient-to-br from-brand-600 to-purple-600 flex items-center justify-center text-white font-heading font-black text-xl shadow-lg shadow-brand-500/30">SD</div>
                     <span class="font-heading font-bold text-2xl text-brand-900 tracking-tight">Samarth <span class="text-brand-600">Digital</span></span>
                 </div>
-                <div class="hidden lg:flex space-x-8">
+                
+                <!-- Desktop Menu -->
+                <div class="hidden lg:flex space-x-8 items-center">
                     <a href="#about" class="text-gray-600 hover:text-brand-600 transition font-medium">About</a>
                     <a href="#programs" class="text-gray-600 hover:text-brand-600 transition font-medium">Programs</a>
                     <a href="#benefits" class="text-gray-600 hover:text-brand-600 transition font-medium">Benefits</a>
                     <a href="#features" class="text-gray-600 hover:text-brand-600 transition font-medium">Features</a>
-                </div>
-                <div class="flex items-center space-x-4">
-                    <a href="{{ route('login') }}" class="hidden md:block text-gray-600 hover:text-brand-600 font-medium transition">Sign In</a>
+                    <div class="w-px h-6 bg-gray-200"></div>
+                    <a href="{{ route('login') }}" class="text-gray-600 hover:text-brand-600 font-bold transition">Sign In</a>
                     <!-- <a href="{{ route('register') }}" class="bg-brand-600 text-white hover:bg-brand-700 px-6 py-2.5 rounded-lg font-semibold shadow-lg shadow-brand-500/30 transition transform hover:-translate-y-0.5">Get Started</a> -->
                 </div>
+
+                <!-- Mobile Menu Button -->
+                <div class="lg:hidden flex items-center">
+                    <button id="mobile-menu-btn" class="text-gray-600 hover:text-brand-600 focus:outline-none p-2 transition">
+                        <i id="mobile-menu-icon" class="fa-solid fa-bars text-2xl"></i>
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Mobile Menu Panel -->
+        <div id="mobile-menu" class="hidden lg:hidden bg-white/95 backdrop-blur-md border-t border-gray-100 shadow-xl absolute w-full left-0 transition-all duration-300 transform -translate-y-2 opacity-0 pointer-events-none">
+            <div class="px-4 pt-2 pb-6 space-y-2 flex flex-col">
+                <a href="#about" class="mobile-link block px-3 py-3 text-base font-medium text-gray-700 hover:text-brand-600 hover:bg-brand-50 rounded-lg transition">About</a>
+                <a href="#programs" class="mobile-link block px-3 py-3 text-base font-medium text-gray-700 hover:text-brand-600 hover:bg-brand-50 rounded-lg transition">Programs</a>
+                <a href="#benefits" class="mobile-link block px-3 py-3 text-base font-medium text-gray-700 hover:text-brand-600 hover:bg-brand-50 rounded-lg transition">Benefits</a>
+                <a href="#features" class="mobile-link block px-3 py-3 text-base font-medium text-gray-700 hover:text-brand-600 hover:bg-brand-50 rounded-lg transition">Features</a>
+                <div class="border-t border-gray-100 my-2 pt-2"></div>
+                <a href="{{ route('login') }}" class="block px-3 py-3 text-base font-bold text-brand-600 hover:bg-brand-50 rounded-lg transition">Sign In</a>
             </div>
         </div>
     </nav>
@@ -738,6 +760,39 @@
                 nav.classList.add('shadow-sm');
             }
         });
+
+        // Mobile menu toggle
+        const btn = document.getElementById('mobile-menu-btn');
+        const icon = document.getElementById('mobile-menu-icon');
+        const menu = document.getElementById('mobile-menu');
+        const links = document.querySelectorAll('.mobile-link');
+        let menuOpen = false;
+
+        function toggleMenu() {
+            menuOpen = !menuOpen;
+            if (menuOpen) {
+                menu.classList.remove('hidden', '-translate-y-2', 'opacity-0', 'pointer-events-none');
+                icon.classList.remove('fa-bars');
+                icon.classList.add('fa-xmark');
+            } else {
+                menu.classList.add('-translate-y-2', 'opacity-0', 'pointer-events-none');
+                icon.classList.remove('fa-xmark');
+                icon.classList.add('fa-bars');
+                setTimeout(() => {
+                    if(!menuOpen) menu.classList.add('hidden');
+                }, 300);
+            }
+        }
+
+        btn.addEventListener('click', toggleMenu);
+
+        // Close menu when clicking a link
+        links.forEach(link => {
+            link.addEventListener('click', () => {
+                if(menuOpen) toggleMenu();
+            });
+        });
+
     </script>
 </body>
 </html>
