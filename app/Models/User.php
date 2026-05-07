@@ -5,6 +5,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
+use App\Models\Role;
 
 class User extends Authenticatable
 {
@@ -34,6 +35,7 @@ class User extends Authenticatable
             'email_verified_at' => 'datetime',
             'activation_date' => 'datetime',
             'course_completed_at' => 'datetime',
+            'last_seen_at' => 'datetime',
             'password' => 'hashed',
         ];
     }
@@ -71,5 +73,50 @@ class User extends Authenticatable
     public function certificates()
     {
         return $this->hasMany(Certificate::class);
+    }
+
+    // ── Role & Permission Helpers ───────────────────────────
+
+    /** Get the Role model for this user */
+    public function roleModel()
+    {
+        return Role::with('permissions')->where('name', $this->role)->first();
+    }
+
+    /** Check if user has a specific role slug */
+    public function hasRole(string $role): bool
+    {
+        return $this->role === $role;
+    }
+
+    /** Check if user is a super-admin (bypasses all permission checks) */
+    public function isSuperAdmin(): bool
+    {
+        return $this->role === 'super_admin' || $this->role === 'admin';
+    }
+
+    /** Check if user has a specific permission */
+    public function hasPermission(string $permission): bool
+    {
+        if ($this->isSuperAdmin()) return true;  // super admin can do everything
+        $rm = $this->roleModel();
+        if (!$rm) return false;
+        return $rm->permissions->contains('name', $permission);
+    }
+
+    /** Get all permission slugs for this user's role (cached per request) */
+    public function getPermissions(): array
+    {
+        static $cache = [];
+        $key = $this->id . '_' . $this->role;
+        if (!isset($cache[$key])) {
+            if ($this->isSuperAdmin()) {
+                $cache[$key] = ['*'];   // wildcard
+            } else {
+                $rm = $this->roleModel();
+                $cache[$key] = $rm ? $rm->permissions->pluck('name')->toArray() : [];
+            }
+        }
+        return $cache[$key];
     }
 }

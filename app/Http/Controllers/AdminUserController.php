@@ -36,4 +36,52 @@ class AdminUserController extends Controller
         $users = User::where('status', 'inactive')->latest()->paginate(15);
         return view('admin.users.inactive', compact('users'));
     }
+
+    public function show($id) {
+        $user = User::findOrFail($id);
+        return view('admin.users.show', compact('user'));
+    }
+
+    public function edit($id) {
+        $user = User::findOrFail($id);
+        return view('admin.users.edit', compact('user'));
+    }
+
+    public function update(Request $request, $id) {
+        $user = User::findOrFail($id);
+        $request->validate([
+            'name' => 'required',
+            'email' => 'required|email|unique:users,email,'.$id,
+        ]);
+        $user->name = $request->name;
+        $user->email = $request->email;
+        if($request->filled('password')) {
+            $user->password = \Illuminate\Support\Facades\Hash::make($request->password);
+        }
+        $user->save();
+        return redirect('admin/users')->with('success', 'User updated successfully.');
+    }
+
+    public function status($id, \App\Services\ActivationService $activationService) {
+        $user = User::findOrFail($id);
+        
+        if ($user->status === 'inactive') {
+            try {
+                $activationService->activateUser($user);
+                return back()->with('success', 'User activated successfully! Commissions and wallets generated.');
+            } catch (\Exception $e) {
+                return back()->with('error', 'Activation failed: ' . $e->getMessage());
+            }
+        } else {
+            $user->status = 'inactive';
+            $user->save();
+            return back()->with('success', 'User deactivated successfully.');
+        }
+    }
+
+    public function destroy($id) {
+        $user = User::findOrFail($id);
+        $user->delete();
+        return back()->with('success', 'User deleted successfully.');
+    }
 }

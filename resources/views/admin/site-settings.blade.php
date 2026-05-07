@@ -23,7 +23,7 @@
       <div class="row g-3">
         <div class="col-md-6">
           <label class="form-label small">Company Name <span class="text-danger">*</span></label>
-          <input type="text" name="company_name" class="form-control" maxlength="120" required="" value="X VOLTY TRADE">
+          <input type="text" name="company_name" class="form-control" maxlength="120" required="" value=" Samarth Digital">
         </div>
         <div class="col-md-6">
           <label class="form-label small">Tagline</label>

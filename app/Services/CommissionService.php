@@ -9,13 +9,13 @@ use Illuminate\Support\Facades\DB;
 
 class CommissionService
 {
-    private array $levelCommissions = [
-        1 => 15.00,
-        2 => 10.00,
-        3 => 6.00,
-        4 => 3.00,
-        5 => 2.00,
-        6 => 0.50,
+    private array $levelCommissionPercentages = [
+        1 => 15.00, // 15%
+        2 => 10.00, // 10%
+        3 => 6.00,  // 6%
+        4 => 3.00,  // 3%
+        5 => 2.00,  // 2%
+        6 => 0.50,  // 0.5%
         7 => 0.50,
         8 => 0.50,
         9 => 0.50,
@@ -23,11 +23,11 @@ class CommissionService
     ];
 
     /**
-     * Distribute referral commissions when a user activates.
+     * Distribute referral commissions when a user activates / buys a course.
      */
-    public function distributeCommissions(User $activatedUser)
+    public function distributeCommissions(User $activatedUser, float $amountSpent = 300.00)
     {
-        DB::transaction(function () use ($activatedUser) {
+        DB::transaction(function () use ($activatedUser, $amountSpent) {
             $currentUser = $activatedUser;
             
             for ($level = 1; $level <= 10; $level++) {
@@ -42,7 +42,8 @@ class CommissionService
 
                 // Only active users earn commission
                 if ($sponsor->status === 'active') {
-                    $amount = $this->levelCommissions[$level];
+                    $percentage = $this->levelCommissionPercentages[$level];
+                    $amount = ($percentage / 100) * $amountSpent;
                     $type = $level === 1 ? 'direct' : 'team';
 
                     // Log commission

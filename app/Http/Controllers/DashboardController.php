@@ -26,9 +26,14 @@ class DashboardController extends Controller
         $recentWithdrawals = \App\Models\Withdrawal::where('user_id', $user->id)->latest()->take(4)->get();
         $recentTokens = \App\Models\TokenLedger::where('user_id', $user->id)->latest()->take(4)->get();
         
+        // CMS Content
+        $banners = \App\Models\Banner::where('status', 'active')->latest()->get();
+        $announcements = \App\Models\Announcement::where('status', 'active')->latest()->get();
+        
         return view('dashboard', compact(
             'user', 'wallet', 'totalEarned', 'directCount', 'networkCount',
-            'recentIncome', 'recentReferrals', 'recentWithdrawals', 'recentTokens'
+            'recentIncome', 'recentReferrals', 'recentWithdrawals', 'recentTokens',
+            'banners', 'announcements'
         ));
     }
 

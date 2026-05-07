@@ -63,7 +63,7 @@
   <aside id="appSidebar" class="app-sidebar">
         <a href="{{ url('user/index') }}" class="sidebar-brand">
               <i class="fa-solid fa-bolt-lightning"></i>
-        <span>X VOLTY TRADE</span>
+        <span> Samarth Digital</span>
           </a>
     <ul class="list-unstyled mb-0 pb-3">
       <li class="nav-section">Main</li>
@@ -311,4 +311,5 @@
 </body></html>
 
 
-
+
+

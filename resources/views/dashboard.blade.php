@@ -33,6 +33,51 @@
         </div>
     </div>
 
+    <!-- Announcements -->
+    @if($announcements->count() > 0)
+    <div class="mb-6 space-y-3">
+        @foreach($announcements as $ann)
+            @php
+                $annColor = 'blue';
+                if($ann->type == 'warning') $annColor = 'orange';
+                if($ann->type == 'success') $annColor = 'green';
+                if($ann->type == 'danger') $annColor = 'red';
+            @endphp
+            <div class="bg-{{ $annColor }}-900/30 border-l-4 border-{{ $annColor }}-500 p-4 rounded-r-lg flex items-start shadow-sm">
+                <div class="flex-shrink-0 mr-3 mt-0.5">
+                    <i class="fa-solid fa-bullhorn text-{{ $annColor }}-400 text-lg"></i>
+                </div>
+                <div>
+                    <h4 class="text-{{ $annColor }}-300 font-bold text-sm">{{ $ann->title }}</h4>
+                    <p class="text-gray-300 text-sm mt-1">{{ $ann->content }}</p>
+                </div>
+            </div>
+        @endforeach
+    </div>
+    @endif
+
+    <!-- Banners (Basic Grid for now) -->
+    @if($banners->count() > 0)
+    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-{{ min(3, $banners->count()) }} gap-4 mb-6">
+        @foreach($banners as $banner)
+            <div class="rounded-lg overflow-hidden border border-[#334155] shadow-lg group relative h-40">
+                @if($banner->link_url)
+                    <a href="{{ $banner->link_url }}" target="_blank" class="block w-full h-full">
+                @endif
+                
+                <img src="{{ $banner->image_url }}" alt="{{ $banner->title }}" class="w-full h-full object-cover transition duration-300 group-hover:scale-105">
+                <div class="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black/90 to-transparent p-3 pt-8">
+                    <h4 class="text-white font-bold text-sm drop-shadow-md">{{ $banner->title }}</h4>
+                </div>
+
+                @if($banner->link_url)
+                    </a>
+                @endif
+            </div>
+        @endforeach
+    </div>
+    @endif
+
     <!-- Referral Link Bar -->
     <div class="bg-[#1a222d] rounded-lg border border-[#334155] p-3 mb-6 flex items-center">
         <i class="fa-solid fa-link text-gray-400 mx-3"></i>

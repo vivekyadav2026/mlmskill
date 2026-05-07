@@ -51,7 +51,7 @@
   <div class="container">
     <a class="navbar-brand d-flex align-items-center gap-2" href="{{ url('/') }}">
               <i class="fa-solid fa-bolt-lightning text-accent"></i>
-        <span class="fw-heading">X VOLTY TRADE</span>
+        <span class="fw-heading"> Samarth Digital</span>
           </a>
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#publicNav" aria-controls="publicNav" aria-expanded="false" aria-label="Toggle navigation">
       <span class="navbar-toggler-icon"></span>
@@ -189,7 +189,7 @@
       <div class="col-md-4">
         <a href="{{ url('/') }}" class="navbar-brand d-flex align-items-center gap-2 mb-3">
                       <i class="fa-solid fa-bolt-lightning text-accent"></i>
-            <span class="fw-heading">X VOLTY TRADE</span>
+            <span class="fw-heading"> Samarth Digital</span>
                   </a>
         <p class="text-muted small">Secure Crypto Trading &amp; Investment</p>
         <ul class="list-unstyled small text-muted mb-0">
@@ -233,7 +233,7 @@
     </div>
     <hr class="my-4 border-themed">
     <div class="d-flex flex-column flex-md-row justify-content-between align-items-center small text-muted">
-      <span>© 2026 X VOLTY TRADE. All rights reserved.</span>
+      <span>© 2026  Samarth Digital. All rights reserved.</span>
       <div class="d-flex gap-3 mt-2 mt-md-0">
         <a href="https://xvoltytrade.bgtl.in/#" class="text-muted text-decoration-none">Privacy</a>
         <a href="https://xvoltytrade.bgtl.in/#" class="text-muted text-decoration-none">Terms</a>

@@ -30,17 +30,11 @@ class ActivationService
             $user->activation_date = now();
             $user->save();
 
-            // Ensure wallet exists
-            Wallet::firstOrCreate(['user_id' => $user->id]);
-
-            // Give access to course
-            CourseProgress::firstOrCreate([
-                'user_id' => $user->id,
-                'course_id' => $courseId,
-            ]);
-
-            // Distribute commissions up the tree
-            $this->commissionService->distributeCommissions($user);
+            // Give them $300 in package wallet to buy the course
+            $wallet = Wallet::firstOrCreate(['user_id' => $user->id]);
+            $wallet->increment('package_wallet', 300);
+            
+            \App\Models\ActivityLog::log('activation_bonus', 'Received $300 wallet bonus upon admin approval', $user->id);
 
             return true;
         });

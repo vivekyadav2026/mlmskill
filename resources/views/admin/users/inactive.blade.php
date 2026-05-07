@@ -5,7 +5,7 @@
     <div class="mb-6"><h2 class="text-2xl font-bold text-gray-100">Inactive Users</h2></div>
     <div class="bg-[#1a222d] border border-[#334155] rounded-lg overflow-hidden">
         <table class="w-full table-custom">
-            <thead><tr><th>Name</th><th>Email</th><th>Referral Code</th><th>Status</th><th>Joined</th></tr></thead>
+            <thead><tr><th>Name</th><th>Email</th><th>Referral Code</th><th>Status</th><th>Joined</th><th>Actions</th></tr></thead>
             <tbody>
                 @forelse($users as $u)
                 <tr>
@@ -14,9 +14,25 @@
                     <td class="text-indigo-400 font-mono">{{ $u->referral_code }}</td>
                     <td><span class="px-2 py-1 text-xs rounded bg-{{ $u->status=='active'?'green':'red' }}-900 text-{{ $u->status=='active'?'green':'red' }}-300">{{ $u->status }}</span></td>
                     <td>{{ $u->created_at->format('M d, Y') }}</td>
+                    <td>
+                        <div class="flex items-center gap-2">
+                            <a href="{{ route('admin.users.show', $u->id) }}" class="p-1 text-blue-400 hover:text-blue-300" title="View"><i class="fa-solid fa-eye"></i></a>
+                            <a href="{{ route('admin.users.edit', $u->id) }}" class="p-1 text-yellow-400 hover:text-yellow-300" title="Edit"><i class="fa-solid fa-pen"></i></a>
+                            <form action="{{ route('admin.users.status', $u->id) }}" method="POST" class="inline">
+                                @csrf
+                                <button type="submit" class="p-1 {{ $u->status == 'active' ? 'text-orange-400 hover:text-orange-300' : 'text-green-400 hover:text-green-300' }}" title="{{ $u->status == 'active' ? 'Deactivate' : 'Activate' }}">
+                                    <i class="fa-solid {{ $u->status == 'active' ? 'fa-ban' : 'fa-check' }}"></i>
+                                </button>
+                            </form>
+                            <form action="{{ route('admin.users.destroy', $u->id) }}" method="POST" class="inline" onsubmit="return confirm('Are you sure you want to delete this user?');">
+                                @csrf
+                                <button type="submit" class="p-1 text-red-400 hover:text-red-300" title="Delete"><i class="fa-solid fa-trash"></i></button>
+                            </form>
+                        </div>
+                    </td>
                 </tr>
                 @empty
-                <tr><td colspan="5" class="text-center p-8 text-gray-500">No users found.</td></tr>
+                <tr><td colspan="6" class="text-center p-8 text-gray-500">No users found.</td></tr>
                 @endforelse
             </tbody>
         </table>

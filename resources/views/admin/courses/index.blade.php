@@ -16,7 +16,13 @@
                     <td class="text-green-400 font-mono">$\{{ number_format($c->price, 2) }}</td>
                     <td><span class="bg-green-900 text-green-300 px-2 py-1 rounded text-xs">{{ $c->status }}</span></td>
                     <td>12 Videos</td>
-                    <td><button class="text-indigo-400 hover:text-white"><i class="fa-solid fa-edit"></i> Edit</button></td>
+                    <td>
+                        <a href="{{ route('admin.courses.edit', $c->id) }}" class="text-indigo-400 hover:text-white mr-3"><i class="fa-solid fa-edit"></i> Edit</a>
+                        <form action="{{ route('admin.courses.destroy', $c->id) }}" method="POST" class="inline" onsubmit="return confirm('Are you sure you want to delete this course?');">
+                            @csrf
+                            <button type="submit" class="text-red-400 hover:text-red-300"><i class="fa-solid fa-trash"></i> Delete</button>
+                        </form>
+                    </td>
                 </tr>
                 @empty
                 <tr><td colspan="5" class="text-center p-8 text-gray-500">No courses available.</td></tr>

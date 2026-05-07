@@ -58,6 +58,12 @@
             
             <h2 class="font-heading text-2xl font-bold text-white mb-6 text-center">Sign In</h2>
 
+            @if(session('success'))
+                <div class="bg-green-500/10 border border-green-500/30 text-green-200 p-4 rounded-xl text-sm mb-6 backdrop-blur-sm text-center">
+                    {{ session('success') }}
+                </div>
+            @endif
+
             @if($errors->any())
                 <div class="bg-red-500/10 border border-red-500/30 text-red-200 p-4 rounded-xl text-sm mb-6 backdrop-blur-sm">
                     <ul class="list-disc pl-5 space-y-1">

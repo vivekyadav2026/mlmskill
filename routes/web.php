@@ -27,10 +27,16 @@ Route::get('/login/user', function () {
 
 // User Dashboard & Flow
 Route::middleware(['auth'])->group(function () {
-    Route::get('/dashboard', [\App\Http\Controllers\DashboardController::class, 'index'])->name('dashboard');
+    Route::get('/inactive', [\App\Http\Controllers\UserActivationController::class, 'inactive'])->name('inactive');
+    Route::post('/inactive/submit', [\App\Http\Controllers\UserActivationController::class, 'submit'])->name('user.activate.submit');
     
-    // Activation Flow
-    Route::post('/activate', [\App\Http\Controllers\ActivationController::class, 'activate'])->name('user.activate');
+    // Package Module - Accessible to inactive users so they can buy package to activate
+    Route::get('/user/package/upgrade', [\App\Http\Controllers\PackageController::class, 'upgrade'])->name('package.upgrade');
+    Route::post('/user/package/purchase', [\App\Http\Controllers\PackageController::class, 'purchase'])->name('package.purchase');
+
+    Route::middleware(['active'])->group(function () {
+
+        Route::get('/dashboard', [\App\Http\Controllers\DashboardController::class, 'index'])->name('dashboard');
     
     // Wallets & Tokens
     Route::get('/wallets', [\App\Http\Controllers\WalletController::class, 'index'])->name('wallets.index');
@@ -82,8 +88,7 @@ Route::middleware(['auth'])->group(function () {
     Route::get('/user/token/renewal', [\App\Http\Controllers\TokenSystemController::class, 'renewal'])->name('token.renewal');
     Route::get('/user/token/conversion', [\App\Http\Controllers\TokenSystemController::class, 'conversion'])->name('token.conversion');
 
-    // Package Module
-    Route::get('/user/package/upgrade', [\App\Http\Controllers\PackageController::class, 'upgrade'])->name('package.upgrade');
+    // Package Module (History only, upgrade is accessible outside)
     Route::get('/user/package/history', [\App\Http\Controllers\PackageController::class, 'history'])->name('package.history');
 
     // Withdraw Module
@@ -106,6 +111,7 @@ Route::middleware(['auth'])->group(function () {
 
     // Dynamic User Routes for Sidebar
     Route::get('/user/{section}/{subsection?}', [\App\Http\Controllers\DashboardController::class, 'userView']);
+    });
 });
 
 // Admin Panel
@@ -114,6 +120,12 @@ Route::middleware(['auth', 'admin'])->prefix('admin')->group(function () {
     // Analytics
     Route::get('/analytics', [\App\Http\Controllers\AdminAnalyticsController::class, 'index'])->name('admin.analytics');
 
+    // Notifications
+    Route::get('/notifications/mark-all-read', function() {
+        auth()->user()->unreadNotifications->markAsRead();
+        return back();
+    });
+
     // Users
     Route::get('/users', [\App\Http\Controllers\AdminUserController::class, 'index'])->name('admin.users.index');
     Route::get('/users/active', [\App\Http\Controllers\AdminUserController::class, 'active'])->name('admin.users.active');
@@ -121,6 +133,11 @@ Route::middleware(['auth', 'admin'])->prefix('admin')->group(function () {
     Route::get('/users/create', [\App\Http\Controllers\AdminUserController::class, 'create'])->name('admin.users.create');
     Route::post('/users/create', [\App\Http\Controllers\AdminUserController::class, 'store']);
     Route::get('/users/tree', [\App\Http\Controllers\AdminUserController::class, 'tree'])->name('admin.users.tree');
+    Route::get('/users/{id}', [\App\Http\Controllers\AdminUserController::class, 'show'])->name('admin.users.show');
+    Route::get('/users/{id}/edit', [\App\Http\Controllers\AdminUserController::class, 'edit'])->name('admin.users.edit');
+    Route::post('/users/{id}/update', [\App\Http\Controllers\AdminUserController::class, 'update'])->name('admin.users.update');
+    Route::post('/users/{id}/status', [\App\Http\Controllers\AdminUserController::class, 'status'])->name('admin.users.status');
+    Route::post('/users/{id}/delete', [\App\Http\Controllers\AdminUserController::class, 'destroy'])->name('admin.users.destroy');
     
     // Withdrawals
     Route::get('/withdrawals/pending', [\App\Http\Controllers\AdminWithdrawalController::class, 'pending'])->name('admin.withdrawals.pending');
@@ -131,6 +148,8 @@ Route::middleware(['auth', 'admin'])->prefix('admin')->group(function () {
 
     // Activations
     Route::get('/activations/requests', [\App\Http\Controllers\AdminActivationController::class, 'requests'])->name('admin.activations.requests');
+    Route::post('/activations/requests/{id}/approve', [\App\Http\Controllers\AdminActivationController::class, 'approveRequest'])->name('admin.activations.approve');
+    Route::post('/activations/requests/{id}/reject', [\App\Http\Controllers\AdminActivationController::class, 'rejectRequest'])->name('admin.activations.reject');
     Route::get('/activations/history', [\App\Http\Controllers\AdminActivationController::class, 'history'])->name('admin.activations.history');
     Route::get('/activations/manual', [\App\Http\Controllers\AdminActivationController::class, 'manual'])->name('admin.activations.manual');
     Route::post('/activations/manual', [\App\Http\Controllers\AdminActivationController::class, 'activate']);
@@ -155,4 +174,87 @@ Route::middleware(['auth', 'admin'])->prefix('admin')->group(function () {
     Route::get('/courses', [\App\Http\Controllers\AdminCourseController::class, 'index'])->name('admin.courses.index');
     Route::get('/courses/create', [\App\Http\Controllers\AdminCourseController::class, 'create'])->name('admin.courses.create');
     Route::post('/courses/create', [\App\Http\Controllers\AdminCourseController::class, 'store']);
+    Route::get('/courses/content', [\App\Http\Controllers\AdminCourseController::class, 'content'])->name('admin.courses.content');
+    Route::post('/courses/content/store', [\App\Http\Controllers\AdminCourseController::class, 'storeContent'])->name('admin.courses.content.store');
+    Route::post('/courses/content/{id}/delete', [\App\Http\Controllers\AdminCourseController::class, 'destroyContent'])->name('admin.courses.content.destroy');
+    Route::get('/courses/{id}/edit', [\App\Http\Controllers\AdminCourseController::class, 'edit'])->name('admin.courses.edit');
+    Route::post('/courses/{id}/update', [\App\Http\Controllers\AdminCourseController::class, 'update'])->name('admin.courses.update');
+    Route::post('/courses/{id}/delete', [\App\Http\Controllers\AdminCourseController::class, 'destroy'])->name('admin.courses.destroy');
+    Route::get('/courses/progress', [\App\Http\Controllers\AdminCourseController::class, 'progress'])->name('admin.courses.progress');
+
+    // Certificates
+    Route::get('/certificates/generate', [\App\Http\Controllers\AdminCertificateController::class, 'generateForm'])->name('admin.certificates.generate');
+    Route::post('/certificates/generate', [\App\Http\Controllers\AdminCertificateController::class, 'generate']);
+    Route::get('/certificates/issued', [\App\Http\Controllers\AdminCertificateController::class, 'issued'])->name('admin.certificates.issued');
+    Route::post('/certificates/{id}/delete', [\App\Http\Controllers\AdminCertificateController::class, 'destroy'])->name('admin.certificates.destroy');
+
+    // Reports
+    Route::get('/reports/income', [\App\Http\Controllers\AdminReportController::class, 'income'])->name('admin.reports.income');
+    Route::get('/reports/token', [\App\Http\Controllers\AdminReportController::class, 'token'])->name('admin.reports.token');
+    Route::get('/reports/user', [\App\Http\Controllers\AdminReportController::class, 'user'])->name('admin.reports.user');
+    Route::get('/reports/financial', [\App\Http\Controllers\AdminReportController::class, 'financial'])->name('admin.reports.financial');
+
+    // Monthly Closing
+    Route::get('/closing/history', [\App\Http\Controllers\AdminClosingController::class, 'history'])->name('admin.closing.history');
+    Route::get('/closing/generate', [\App\Http\Controllers\AdminClosingController::class, 'generate'])->name('admin.closing.generate');
+    Route::post('/closing/generate', [\App\Http\Controllers\AdminClosingController::class, 'store']);
+    Route::get('/closing/reports', [\App\Http\Controllers\AdminClosingController::class, 'reports'])->name('admin.closing.reports');
+
+    // CMS / Content
+    Route::get('/cms/banners', [\App\Http\Controllers\AdminCmsController::class, 'banners'])->name('admin.cms.banners');
+    Route::post('/cms/banners', [\App\Http\Controllers\AdminCmsController::class, 'storeBanner']);
+    Route::post('/cms/banners/{id}/delete', [\App\Http\Controllers\AdminCmsController::class, 'destroyBanner'])->name('admin.cms.banners.destroy');
+    
+    Route::get('/cms/announcements', [\App\Http\Controllers\AdminCmsController::class, 'announcements'])->name('admin.cms.announcements');
+    Route::post('/cms/announcements', [\App\Http\Controllers\AdminCmsController::class, 'storeAnnouncement']);
+    Route::post('/cms/announcements/{id}/delete', [\App\Http\Controllers\AdminCmsController::class, 'destroyAnnouncement'])->name('admin.cms.announcements.destroy');
+
+    Route::get('/cms/pages', [\App\Http\Controllers\AdminCmsController::class, 'pages'])->name('admin.cms.pages');
+    Route::post('/cms/pages', [\App\Http\Controllers\AdminCmsController::class, 'storePage']);
+    Route::post('/cms/pages/{id}/delete', [\App\Http\Controllers\AdminCmsController::class, 'destroyPage'])->name('admin.cms.pages.destroy');
+
+    // System Settings
+    Route::get('/settings/general', [\App\Http\Controllers\AdminSettingController::class, 'general'])->name('admin.settings.general');
+    Route::post('/settings/general', [\App\Http\Controllers\AdminSettingController::class, 'saveGeneral']);
+    Route::get('/settings/smtp', [\App\Http\Controllers\AdminSettingController::class, 'smtp'])->name('admin.settings.smtp');
+    Route::post('/settings/smtp', [\App\Http\Controllers\AdminSettingController::class, 'saveSmtp']);
+    Route::post('/settings/test-email', [\App\Http\Controllers\AdminSettingController::class, 'sendTestEmail'])->name('admin.settings.test-email');
+
+    Route::get('/settings/plan', [\App\Http\Controllers\AdminSettingController::class, 'plan'])->name('admin.settings.plan');
+    Route::post('/settings/plan', [\App\Http\Controllers\AdminSettingController::class, 'savePlan']);
+
+    Route::get('/settings/token', [\App\Http\Controllers\AdminSettingController::class, 'token'])->name('admin.settings.token');
+    Route::post('/settings/token', [\App\Http\Controllers\AdminSettingController::class, 'saveToken']);
+
+    Route::get('/settings/payment', [\App\Http\Controllers\AdminSettingController::class, 'payment'])->name('admin.settings.payment');
+    Route::post('/settings/payment', [\App\Http\Controllers\AdminSettingController::class, 'savePayment']);
+
+    Route::post('/settings/theme', [\App\Http\Controllers\AdminSettingController::class, 'saveTheme'])->name('admin.settings.theme');
+
+    // Roles & Permissions
+    Route::get('/roles',                        [\App\Http\Controllers\AdminRoleController::class, 'roles'])->name('admin.roles');
+    Route::post('/roles',                       [\App\Http\Controllers\AdminRoleController::class, 'storeRole']);
+    Route::post('/roles/{id}/delete',           [\App\Http\Controllers\AdminRoleController::class, 'destroyRole'])->name('admin.roles.destroy');
+    Route::get('/roles/{id}/permissions',       [\App\Http\Controllers\AdminRoleController::class, 'assignPermissions'])->name('admin.roles.permissions');
+    Route::post('/roles/{id}/permissions',      [\App\Http\Controllers\AdminRoleController::class, 'savePermissions']);
+    Route::post('/roles/assign-user',           [\App\Http\Controllers\AdminRoleController::class, 'assignRoleToUser'])->name('admin.roles.assign-user');
+
+    Route::get('/permissions',                  [\App\Http\Controllers\AdminRoleController::class, 'permissions'])->name('admin.permissions');
+    Route::post('/permissions',                 [\App\Http\Controllers\AdminRoleController::class, 'storePermission']);
+    Route::post('/permissions/{id}/delete',     [\App\Http\Controllers\AdminRoleController::class, 'destroyPermission'])->name('admin.permissions.destroy');
+    Route::post('/permissions/seed',            [\App\Http\Controllers\AdminRoleController::class, 'seedPermissions'])->name('admin.permissions.seed');
+    Route::get('/permissions/assign',           [\App\Http\Controllers\AdminRoleController::class, 'assignPage'])->name('admin.permissions.assign');
+    Route::post('/permissions/assign',          [\App\Http\Controllers\AdminRoleController::class, 'saveAssign']);
+
+    // Logs & Monitoring
+    Route::get('/logs/system',                  [\App\Http\Controllers\AdminLogController::class, 'systemLogs'])->name('admin.logs.system');
+    Route::post('/logs/system/clear',           [\App\Http\Controllers\AdminLogController::class, 'clearSystemLogs'])->name('admin.logs.system.clear');
+    Route::get('/logs/activity',                [\App\Http\Controllers\AdminLogController::class, 'activityLogs'])->name('admin.logs.activity');
+    Route::get('/logs/error',                   [\App\Http\Controllers\AdminLogController::class, 'errorLogs'])->name('admin.logs.error');
 });
+
+// Dynamic CMS Pages
+Route::get('/page/{slug}', [\App\Http\Controllers\PageController::class, 'show'])->name('page.show');
+
+// Admin Settings Routes (inside admin middleware in web.php)
+

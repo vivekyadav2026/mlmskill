@@ -5,7 +5,12 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Mail;
+use Illuminate\Support\Facades\Notification;
 use App\Models\User;
+use App\Models\ActivityLog;
+use App\Mail\WelcomeEmail;
+use App\Notifications\NewUserNotification;
 
 class AuthController extends Controller
 {
@@ -23,6 +28,8 @@ class AuthController extends Controller
 
         if (Auth::attempt($credentials)) {
             $request->session()->regenerate();
+            
+            ActivityLog::log('login', 'User logged in successfully');
             
             if (Auth::user()->role === 'admin') {
                 return redirect()->intended('/admin/dashboard');
@@ -61,13 +68,37 @@ class AuthController extends Controller
             'referral_code' => 'SD-' . strtoupper(substr(md5(uniqid()), 0, 6)),
         ]);
 
-        Auth::login($user);
+        // Create wallet with 0 balance
+        $wallet = \App\Models\Wallet::firstOrCreate(['user_id' => $user->id]);
 
-        return redirect()->route('dashboard');
+        // Send welcome email to user
+        try {
+            Mail::to($user->email)->send(new WelcomeEmail($user));
+        } catch (\Exception $e) {
+            \Log::error("Failed to send welcome email: " . $e->getMessage());
+        }
+
+        // Notify admins
+        $admins = User::where('role', 'admin')->get();
+        if ($admins->count() > 0) {
+            Notification::send($admins, new NewUserNotification($user));
+        }
+
+        ActivityLog::log('register', 'User registered an account: ' . $user->email, $user->id);
+
+        // Auto-login the user
+        Auth::login($user);
+        ActivityLog::log('login', 'User logged in successfully automatically after registration');
+
+        return redirect()->route('dashboard')->with('success', 'Registration successful!');
     }
 
     public function logout(Request $request)
     {
+        if (Auth::check()) {
+            ActivityLog::log('logout', 'User logged out');
+        }
+        
         Auth::logout();
         $request->session()->invalidate();
         $request->session()->regenerateToken();

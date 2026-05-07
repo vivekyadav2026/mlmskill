@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <!-- saved from url=(0043)../admin/index.html -->
-<html lang="en" data-bs-theme="dark"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+@php $tm = \App\Models\Setting::get('theme_mode', 'dark'); @endphp
+<html lang="en" data-bs-theme="{{ $tm }}"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Admin Dashboard â€” XVolty Trade</title>
@@ -22,34 +23,82 @@
     }
   </script>
 
-  <!-- Theme variables (from site_settings) -->
+@php
+    $tp  = \App\Models\Setting::get('theme_primary',    '#6366f1');
+    $ta  = \App\Models\Setting::get('theme_accent',     '#8b5cf6');
+    $tr  = \App\Models\Setting::get('theme_radius',     '8px');
+    $tbb = \App\Models\Setting::get('theme_body_bg',    '#0b1220');
+    $tcb = \App\Models\Setting::get('theme_card_bg',    '#1a222d');
+    $tsb = \App\Models\Setting::get('theme_sidebar_bg', '#14172a');
+    $ttb = \App\Models\Setting::get('theme_topbar_bg',  '#161f2d');
+    $tm  = \App\Models\Setting::get('theme_mode',       'dark');
+@endphp
+  <!-- Theme variables (loaded from database) -->
   <style id="xvt-theme-vars">
-  :root,
-  [data-bs-theme="dark"] {
-    --xvt-primary: #f24a4a;
-    --xvt-accent:  #8c54c4;
-    --xvt-radius:  8px;
-    --xvt-body-bg: #0b1220;
-    --xvt-card-bg: #1a222d;
-    --xvt-sidebar-bg: #14172a;
-    --xvt-topbar-bg:  #161f2d;
-    --xvt-text:    #e2e8f0;
-    --xvt-muted:   #94a3b8;
-    --xvt-border:  #334155;
 
-    /* Bootstrap overrides */
-    --bs-primary: var(--xvt-primary);
-    --bs-primary-rgb: 8, 126, 139;
-    --bs-link-color: var(--xvt-primary);
+  /* ── SHARED (radius + primary across both modes) ── */
+  :root {
+    --xvt-primary:    {{ $tp }};
+    --xvt-accent:     {{ $ta }};
+    --xvt-radius:     {{ $tr }};
+    --bs-primary:     var(--xvt-primary);
+    --bs-link-color:  var(--xvt-primary);
     --bs-link-hover-color: var(--xvt-accent);
-    --bs-body-bg: var(--xvt-body-bg);
-    --bs-body-color: var(--xvt-text);
-    --bs-border-color: var(--xvt-border);
-    --bs-border-radius: var(--xvt-radius);
+    --bs-border-radius:    var(--xvt-radius);
     --bs-border-radius-sm: calc(var(--xvt-radius) * 0.625);
     --bs-border-radius-lg: calc(var(--xvt-radius) * 1.25);
   }
-</style>
+
+  /* ── DARK MODE ── */
+  [data-bs-theme="dark"] {
+    --xvt-body-bg:    {{ $tbb }};
+    --xvt-card-bg:    {{ $tcb }};
+    --xvt-sidebar-bg: {{ $tsb }};
+    --xvt-topbar-bg:  {{ $ttb }};
+    --xvt-text:   #e2e8f0;
+    --xvt-muted:  #94a3b8;
+    --xvt-border: #334155;
+    --bs-body-bg:    var(--xvt-body-bg);
+    --bs-body-color: var(--xvt-text);
+    --bs-border-color: var(--xvt-border);
+    background-color: var(--xvt-body-bg);
+  }
+  [data-bs-theme="dark"] .app-sidebar  { background: var(--xvt-sidebar-bg) !important; }
+  [data-bs-theme="dark"] .app-topbar   { background: var(--xvt-topbar-bg)  !important; }
+  [data-bs-theme="dark"] .app-content  { background: var(--xvt-body-bg)    !important; }
+  [data-bs-theme="dark"] .card,
+  [data-bs-theme="dark"] .bg-card      { background: var(--xvt-card-bg)    !important; }
+
+  /* ── LIGHT MODE ── */
+  [data-bs-theme="light"] {
+    --xvt-body-bg:    #f1f5f9;
+    --xvt-card-bg:    #ffffff;
+    --xvt-sidebar-bg: #1e293b;
+    --xvt-topbar-bg:  #ffffff;
+    --xvt-text:   #0f172a;
+    --xvt-muted:  #64748b;
+    --xvt-border: #e2e8f0;
+    --bs-body-bg:    var(--xvt-body-bg);
+    --bs-body-color: var(--xvt-text);
+    --bs-border-color: var(--xvt-border);
+    background-color: var(--xvt-body-bg);
+  }
+  [data-bs-theme="light"] .app-sidebar  { background: var(--xvt-sidebar-bg) !important; }
+  [data-bs-theme="light"] .app-sidebar .nav-link,
+  [data-bs-theme="light"] .app-sidebar .sidebar-brand { color: #e2e8f0 !important; }
+  [data-bs-theme="light"] .app-topbar   { background: var(--xvt-topbar-bg);  border-bottom: 1px solid #e2e8f0; }
+  [data-bs-theme="light"] .app-content  { background: var(--xvt-body-bg)    !important; }
+  [data-bs-theme="light"] .card         { background: var(--xvt-card-bg); border-color: #e2e8f0; }
+  [data-bs-theme="light"] .tailwind-scope .bg-\[\#1a222d\] { background-color: #ffffff !important; }
+  [data-bs-theme="light"] .tailwind-scope .bg-\[\#0f172a\] { background-color: #f8fafc !important; }
+  [data-bs-theme="light"] .tailwind-scope .border-\[\#334155\] { border-color: #e2e8f0 !important; }
+  [data-bs-theme="light"] .tailwind-scope .text-gray-100,
+  [data-bs-theme="light"] .tailwind-scope .text-gray-200,
+  [data-bs-theme="light"] .tailwind-scope .text-gray-300 { color: #0f172a !important; }
+  [data-bs-theme="light"] .tailwind-scope .text-gray-400,
+  [data-bs-theme="light"] .tailwind-scope .text-gray-500 { color: #64748b !important; }
+
+  </style>
 
   <!-- Constant theme CSS (Bootstrap overrides + bespoke components) -->
   <link rel="stylesheet" href="{{ asset('assets/Admin Dashboard â€” XVolty Trade_files/theme.css') }}">
@@ -63,7 +112,7 @@
   <aside id="appSidebar" class="app-sidebar">
         <a href="{{ url('admin/index') }}" class="sidebar-brand">
               <i class="fa-solid fa-bolt-lightning"></i>
-        <span>X VOLTY TRADE</span>
+        <span> Samarth Digital</span>
           </a>
     <ul class="list-unstyled mb-0 pb-3">
       <li class="nav-section">Main</li>
@@ -79,6 +128,7 @@
         </ul>
       </li>
 
+      @hasPermission('view_users')
       <li class="has-submenu">
         <a href="#" class="nav-link nav-dropdown-toggle">
           <i class="fa-solid fa-users"></i><span>User Management</span>
@@ -92,6 +142,7 @@
           <li><a href="{{ url('admin/users/tree') }}" class="nav-link sub-link"><span>Sponsor Tree View</span></a></li>
         </ul>
       </li>
+      @endhasPermission
 
       <li class="has-submenu">
         <a href="#" class="nav-link nav-dropdown-toggle">
@@ -117,6 +168,7 @@
         </ul>
       </li>
 
+      @hasPermission('view_tokens')
       <li class="has-submenu">
         <a href="#" class="nav-link nav-dropdown-toggle">
           <i class="fa-solid fa-coins"></i><span>Token Management</span>
@@ -128,7 +180,9 @@
           <li><a href="{{ url('admin/tokens/manual') }}" class="nav-link sub-link"><span>Manual Token Credit</span></a></li>
         </ul>
       </li>
+      @endhasPermission
 
+      @hasPermission('view_commissions')
       <li class="has-submenu">
         <a href="#" class="nav-link nav-dropdown-toggle">
           <i class="fa-solid fa-sack-dollar"></i><span>Commission Management</span>
@@ -140,7 +194,9 @@
           <li><a href="{{ url('admin/commissions/settings') }}" class="nav-link sub-link"><span>Commission Settings</span></a></li>
         </ul>
       </li>
+      @endhasPermission
 
+      @hasPermission('view_courses')
       <li class="has-submenu">
         <a href="#" class="nav-link nav-dropdown-toggle">
           <i class="fa-solid fa-graduation-cap"></i><span>Course Management</span>
@@ -153,6 +209,7 @@
           <li><a href="{{ url('admin/courses/progress') }}" class="nav-link sub-link"><span>User Course Progress</span></a></li>
         </ul>
       </li>
+      @endhasPermission
 
       <li class="has-submenu">
         <a href="#" class="nav-link nav-dropdown-toggle">
@@ -165,6 +222,7 @@
         </ul>
       </li>
 
+      @hasPermission('view_withdrawals')
       <li class="has-submenu">
         <a href="#" class="nav-link nav-dropdown-toggle">
           <i class="fa-solid fa-arrow-up-from-bracket"></i><span>Withdrawal Management</span>
@@ -177,6 +235,7 @@
           <li><a href="{{ url('admin/withdrawals/logs') }}" class="nav-link sub-link"><span>Payment Logs</span></a></li>
         </ul>
       </li>
+      @endhasPermission
 
       <li class="has-submenu">
         <a href="#" class="nav-link nav-dropdown-toggle">
@@ -191,6 +250,7 @@
         </ul>
       </li>
 
+      @hasPermission('view_closing')
       <li class="has-submenu">
         <a href="#" class="nav-link nav-dropdown-toggle">
           <i class="fa-solid fa-calendar-check"></i><span>Monthly Closing</span>
@@ -202,7 +262,9 @@
           <li><a href="{{ url('admin/closing/reports') }}" class="nav-link sub-link"><span>Settlement Reports</span></a></li>
         </ul>
       </li>
+      @endhasPermission
 
+      @hasPermission('manage_banners')
       <li class="has-submenu">
         <a href="#" class="nav-link nav-dropdown-toggle">
           <i class="fa-solid fa-newspaper"></i><span>CMS / Content</span>
@@ -214,7 +276,9 @@
           <li><a href="{{ url('admin/cms/pages') }}" class="nav-link sub-link"><span>Pages</span></a></li>
         </ul>
       </li>
+      @endhasPermission
 
+      @hasPermission('manage_settings')
       <li class="has-submenu">
         <a href="#" class="nav-link nav-dropdown-toggle">
           <i class="fa-solid fa-gear"></i><span>System Settings</span>
@@ -227,7 +291,9 @@
           <li><a href="{{ url('admin/settings/payment') }}" class="nav-link sub-link"><span>Payment Settings</span></a></li>
         </ul>
       </li>
+      @endhasPermission
 
+      @hasPermission('manage_roles')
       <li class="has-submenu">
         <a href="#" class="nav-link nav-dropdown-toggle">
           <i class="fa-solid fa-user-shield"></i><span>Role & Permission</span>
@@ -239,6 +305,7 @@
           <li><a href="{{ url('admin/permissions/assign') }}" class="nav-link sub-link"><span>Assign Permissions</span></a></li>
         </ul>
       </li>
+      @endhasPermission
 
       <li class="has-submenu">
         <a href="#" class="nav-link nav-dropdown-toggle">
@@ -270,25 +337,40 @@
 
       <div class="d-flex align-items-center gap-2">
         <!-- Notifications dropdown -->
-        <!-- <div class="dropdown">
+        <div class="dropdown">
           <button class="btn btn-sm btn-outline-secondary position-relative" data-bs-toggle="dropdown" aria-expanded="false">
             <i class="fa-solid fa-bell"></i>
-            <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger" style="font-size:0.6rem;">3</span>
+            @if(auth()->check() && auth()->user()->unreadNotifications->count() > 0)
+                <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger" style="font-size:0.6rem;">
+                    {{ auth()->user()->unreadNotifications->count() }}
+                </span>
+            @endif
           </button>
-          <div class="dropdown-menu dropdown-menu-end p-0" style="min-width:320px;">
-            <h6 class="dropdown-header">Notifications</h6>
-            <a class="dropdown-item d-flex gap-2 py-2" href="#">
-              <span class="xvt-avatar" style="background:#10b981;"><i class="fa-solid fa-arrow-down"></i></span>
-              <span class="small"><strong>$5,200</strong> deposit received<br><span class="text-muted">2 minutes ago</span></span>
-            </a>
-            <a class="dropdown-item d-flex gap-2 py-2" href="#">
-              <span class="xvt-avatar"><i class="fa-solid fa-user-plus"></i></span>
-              <span class="small"><strong>John D.</strong> registered<br><span class="text-muted">15 minutes ago</span></span>
-            </a>
-            <div class="dropdown-divider"></div>
-            <a class="dropdown-item text-center small" href="#">View all</a>
+          <div class="dropdown-menu dropdown-menu-end p-0 shadow-lg" style="min-width:320px; background: var(--xvt-card-bg); border-color: var(--xvt-border);">
+            <div class="dropdown-header d-flex justify-content-between align-items-center border-bottom border-secondary">
+                <h6 class="mb-0 text-white">Notifications</h6>
+                @if(auth()->check() && auth()->user()->unreadNotifications->count() > 0)
+                    <a href="{{ url('admin/notifications/mark-all-read') }}" class="text-xs text-indigo-400 hover:text-indigo-300">Mark all read</a>
+                @endif
+            </div>
+            
+            <div style="max-height: 300px; overflow-y: auto;">
+                @if(auth()->check())
+                    @forelse(auth()->user()->notifications()->take(5)->get() as $notification)
+                        <a class="dropdown-item d-flex gap-3 py-3 border-bottom border-secondary {{ $notification->read_at ? 'opacity-75' : 'bg-secondary bg-opacity-10' }}" href="{{ $notification->data['url'] ?? '#' }}">
+                            <div class="xvt-avatar flex-shrink-0" style="background:#6366f1; color: white;"><i class="fa-solid fa-user-plus"></i></div>
+                            <div>
+                                <span class="small text-white d-block"><strong>{{ $notification->data['user_name'] ?? 'New User' }}</strong> registered</span>
+                                <span class="text-muted" style="font-size: 0.75rem;">{{ $notification->created_at->diffForHumans() }}</span>
+                            </div>
+                        </a>
+                    @empty
+                        <div class="p-4 text-center text-muted small">No new notifications.</div>
+                    @endforelse
+                @endif
+            </div>
           </div>
-        </div> -->
+        </div>
 
         <!-- Theme customizer trigger -->
         <button class="btn btn-sm btn-outline-secondary" data-bs-toggle="offcanvas" data-bs-target="#themeCustomizer" aria-label="Theme settings">
@@ -319,44 +401,56 @@
         <button type="button" class="btn-close" data-bs-dismiss="offcanvas"></button>
       </div>
       <div class="offcanvas-body">
-        <p class="text-muted small">Changes apply site-wide and are saved to the database.</p>
+        <p class="text-muted small">Drag a color to preview live. Click Save to persist site-wide.</p>
         <form id="themeForm">
+
+          <!-- Theme Mode Toggle -->
+          <div class="mb-3">
+            <label class="form-label">Theme Mode</label>
+            <div class="d-flex gap-2">
+              @php $tm = \App\Models\Setting::get('theme_mode', 'dark'); @endphp
+              <button type="button" id="btn_dark" onclick="switchMode('dark')"
+                class="btn btn-sm {{ $tm === 'dark' ? 'btn-primary' : 'btn-outline-secondary' }} flex-fill">
+                <i class="fa-solid fa-moon me-1"></i> Dark
+              </button>
+              <button type="button" id="btn_light" onclick="switchMode('light')"
+                class="btn btn-sm {{ $tm !== 'dark' ? 'btn-primary' : 'btn-outline-secondary' }} flex-fill">
+                <i class="fa-solid fa-sun me-1"></i> Light
+              </button>
+            </div>
+            <input type="hidden" name="theme_mode" id="theme_mode" value="{{ $tm }}">
+          </div>
+
           <div class="mb-3">
             <label class="form-label">Primary color</label>
-            <input type="color" name="theme_primary" class="form-control form-control-color w-100" value="#f24a4a">
+            <input type="color" name="theme_primary" id="theme_primary" class="form-control form-control-color w-100" value="{{ $tp }}">
           </div>
           <div class="mb-3">
             <label class="form-label">Accent color</label>
-            <input type="color" name="theme_accent" class="form-control form-control-color w-100" value="#8c54c4">
-          </div>
-          <div class="mb-3">
-            <label class="form-label">Mode</label>
-            <select name="theme_mode" class="form-select">
-              <option value="dark" selected="">Dark</option>
-              <option value="light">Light</option>
-            </select>
+            <input type="color" name="theme_accent" id="theme_accent" class="form-control form-control-color w-100" value="{{ $ta }}">
           </div>
           <div class="mb-3">
             <label class="form-label">Corner radius</label>
             <select name="theme_radius" class="form-select">
-              <option value="4px">Small (4px)</option>
-              <option value="8px" selected="">Medium (8px)</option>
-              <option value="12px">Large (12px)</option>
-              <option value="16px">Extra Large (16px)</option>
+              <option value="4px"  {{ $tr === '4px'  ? 'selected' : '' }}>Small (4px)</option>
+              <option value="8px"  {{ $tr === '8px'  ? 'selected' : '' }}>Medium (8px)</option>
+              <option value="12px" {{ $tr === '12px' ? 'selected' : '' }}>Large (12px)</option>
+              <option value="16px" {{ $tr === '16px' ? 'selected' : '' }}>Extra Large (16px)</option>
             </select>
           </div>
           <details class="mb-3">
             <summary class="small text-muted mb-2">Advanced colors</summary>
             <div class="mb-2"><label class="form-label small">Body background</label>
-              <input type="color" name="theme_body_bg" class="form-control form-control-color w-100" value="#0b1220"></div>
+              <input type="color" name="theme_body_bg" class="form-control form-control-color w-100" value="{{ $tbb }}"></div>
             <div class="mb-2"><label class="form-label small">Card background</label>
-              <input type="color" name="theme_card_bg" class="form-control form-control-color w-100" value="#1a222d"></div>
+              <input type="color" name="theme_card_bg" class="form-control form-control-color w-100" value="{{ $tcb }}"></div>
             <div class="mb-2"><label class="form-label small">Sidebar background</label>
-              <input type="color" name="theme_sidebar_bg" class="form-control form-control-color w-100" value="#14172a"></div>
+              <input type="color" name="theme_sidebar_bg" class="form-control form-control-color w-100" value="{{ $tsb }}"></div>
             <div class="mb-2"><label class="form-label small">Topbar background</label>
-              <input type="color" name="theme_topbar_bg" class="form-control form-control-color w-100" value="#161f2d"></div>
+              <input type="color" name="theme_topbar_bg" class="form-control form-control-color w-100" value="{{ $ttb }}"></div>
           </details>
-          <button type="submit" class="btn btn-primary w-100"><i class="fa-solid fa-check me-1"></i> Save &amp; Reload</button>
+          <button type="submit" class="btn btn-primary w-100"><i class="fa-solid fa-floppy-disk me-1"></i> Save Theme</button>
+          <button type="button" class="btn btn-outline-secondary w-100 mt-2" onclick="resetTheme()"><i class="fa-solid fa-rotate-left me-1"></i> Reset to Default</button>
         </form>
         <div id="themeMsg" class="small mt-3"></div>
       </div>
@@ -408,26 +502,177 @@
       }
   });
 
-  // Theme customizer AJAX save
+  // ═══════════════════════════════════════════════════
+  // THEME CUSTOMIZER — Complete Working Implementation
+  // ═══════════════════════════════════════════════════
+
+  const DARK_DEFAULTS = {
+    theme_primary:    '#6366f1',
+    theme_accent:     '#8b5cf6',
+    theme_radius:     '8px',
+    theme_body_bg:    '#0b1220',
+    theme_card_bg:    '#1a222d',
+    theme_sidebar_bg: '#14172a',
+    theme_topbar_bg:  '#161f2d',
+    theme_mode:       'dark',
+  };
+
+  const LIGHT_DEFAULTS = {
+    theme_primary:    '#6366f1',
+    theme_accent:     '#8b5cf6',
+    theme_radius:     '8px',
+    theme_body_bg:    '#f1f5f9',
+    theme_card_bg:    '#ffffff',
+    theme_sidebar_bg: '#1e293b',
+    theme_topbar_bg:  '#ffffff',
+    theme_mode:       'light',
+  };
+
+  // Apply a CSS variable to :root
+  function applyVar(prop, val) {
+    document.documentElement.style.setProperty(prop, val);
+  }
+
+  // Apply full set of CSS vars + update pickers
+  function applyTheme(values, isLight) {
+    applyVar('--xvt-primary',    values.theme_primary);
+    applyVar('--xvt-accent',     values.theme_accent);
+    applyVar('--xvt-radius',     values.theme_radius);
+    applyVar('--xvt-body-bg',    values.theme_body_bg);
+    applyVar('--xvt-card-bg',    values.theme_card_bg);
+    applyVar('--xvt-sidebar-bg', values.theme_sidebar_bg);
+    applyVar('--xvt-topbar-bg',  values.theme_topbar_bg);
+    if (isLight) {
+      applyVar('--xvt-text',    '#0f172a');
+      applyVar('--xvt-muted',   '#64748b');
+      applyVar('--xvt-border',  '#e2e8f0');
+      applyVar('--bs-body-bg',     '#f1f5f9');
+      applyVar('--bs-body-color',  '#0f172a');
+    } else {
+      applyVar('--xvt-text',    '#e2e8f0');
+      applyVar('--xvt-muted',   '#94a3b8');
+      applyVar('--xvt-border',  '#334155');
+      applyVar('--bs-body-bg',     values.theme_body_bg);
+      applyVar('--bs-body-color',  '#e2e8f0');
+    }
+    // Update color pickers to match
+    const setPicker = (name, val) => {
+      const el = name === 'theme_primary' ? document.getElementById('theme_primary')
+               : name === 'theme_accent'  ? document.getElementById('theme_accent')
+               : document.querySelector(`[name="${name}"]`);
+      if (el) el.value = val;
+    };
+    setPicker('theme_primary',    values.theme_primary);
+    setPicker('theme_accent',     values.theme_accent);
+    setPicker('theme_body_bg',    values.theme_body_bg);
+    setPicker('theme_card_bg',    values.theme_card_bg);
+    setPicker('theme_sidebar_bg', values.theme_sidebar_bg);
+    setPicker('theme_topbar_bg',  values.theme_topbar_bg);
+    // Update radius select
+    const radEl = document.querySelector('[name="theme_radius"]');
+    if (radEl) radEl.value = values.theme_radius;
+  }
+
+  // Switch dark / light mode
+  function switchMode(mode) {
+    document.documentElement.setAttribute('data-bs-theme', mode);
+    const modeInput = document.getElementById('theme_mode');
+    if (modeInput) modeInput.value = mode;
+
+    const isLight = (mode === 'light');
+    // Apply colour vars immediately
+    if (isLight) {
+      applyTheme(LIGHT_DEFAULTS, true);
+    } else {
+      // Restore current picker values for dark
+      const current = {
+        theme_primary:    document.getElementById('theme_primary')?.value    || DARK_DEFAULTS.theme_primary,
+        theme_accent:     document.getElementById('theme_accent')?.value     || DARK_DEFAULTS.theme_accent,
+        theme_radius:     document.querySelector('[name="theme_radius"]')?.value || DARK_DEFAULTS.theme_radius,
+        theme_body_bg:    document.querySelector('[name="theme_body_bg"]')?.value    || DARK_DEFAULTS.theme_body_bg,
+        theme_card_bg:    document.querySelector('[name="theme_card_bg"]')?.value    || DARK_DEFAULTS.theme_card_bg,
+        theme_sidebar_bg: document.querySelector('[name="theme_sidebar_bg"]')?.value || DARK_DEFAULTS.theme_sidebar_bg,
+        theme_topbar_bg:  document.querySelector('[name="theme_topbar_bg"]')?.value  || DARK_DEFAULTS.theme_topbar_bg,
+      };
+      applyTheme(current, false);
+    }
+    // Update toggle buttons appearance
+    document.getElementById('btn_dark').className  = isLight ? 'btn btn-sm btn-outline-secondary flex-fill' : 'btn btn-sm btn-primary flex-fill';
+    document.getElementById('btn_light').className = isLight ? 'btn btn-sm btn-primary flex-fill'            : 'btn btn-sm btn-outline-secondary flex-fill';
+  }
+
+  // Reset to defaults — saves to DB automatically
+  function resetTheme() {
+    const mode    = document.getElementById('theme_mode')?.value || 'dark';
+    const isLight = (mode === 'light');
+    const defs    = isLight ? LIGHT_DEFAULTS : DARK_DEFAULTS;
+    document.documentElement.setAttribute('data-bs-theme', defs.theme_mode);
+    applyTheme(defs, isLight);
+
+    // Auto-save the reset to DB
+    const fd = new FormData();
+    fd.append('_token', '{{ csrf_token() }}');
+    Object.entries(defs).forEach(([k, v]) => fd.append(k, v));
+    fetch('{{ url("admin/settings/theme") }}', {
+      method: 'POST',
+      headers: { 'Accept': 'application/json', 'X-CSRF-TOKEN': '{{ csrf_token() }}' },
+      body: fd
+    }).then(r => r.json()).then(data => {
+      const msg = document.getElementById('themeMsg');
+      if (msg) {
+        msg.innerHTML = '<span class="text-success"><i class="fa-solid fa-check"></i> Reset to defaults!</span>';
+        setTimeout(() => msg.textContent = '', 3000);
+      }
+    }).catch(() => {});
+  }
+
+  // Expose to global scope so onclick= attributes can reach them
+  window.switchMode  = switchMode;
+  window.resetTheme  = resetTheme;
+
+  // ── Wire up live preview listeners ──
   const themeForm = document.getElementById('themeForm');
   if (themeForm) {
+    const liveBindings = [
+      { id: 'theme_primary',       prop: '--xvt-primary' },
+      { id: 'theme_accent',        prop: '--xvt-accent' },
+      { name: 'theme_body_bg',     prop: '--xvt-body-bg' },
+      { name: 'theme_card_bg',     prop: '--xvt-card-bg' },
+      { name: 'theme_sidebar_bg',  prop: '--xvt-sidebar-bg' },
+      { name: 'theme_topbar_bg',   prop: '--xvt-topbar-bg' },
+      { name: 'theme_radius',      prop: '--xvt-radius' },
+    ];
+    liveBindings.forEach(b => {
+      const el = b.id
+        ? document.getElementById(b.id)
+        : document.querySelector(`[name="${b.name}"]`);
+      if (el) el.addEventListener('input', e => applyVar(b.prop, e.target.value));
+    });
+
+    // Save to Laravel on submit
     themeForm.addEventListener('submit', async (e) => {
       e.preventDefault();
       const msg = document.getElementById('themeMsg');
-      msg.textContent = 'Saving...';
+      const btn = themeForm.querySelector('[type="submit"]');
+      msg.innerHTML = '<span class="text-muted"><i class="fa-solid fa-spinner fa-spin"></i> Saving...</span>';
+      btn.disabled = true;
+      const fd = new FormData(themeForm);
+      fd.append('_token', '{{ csrf_token() }}');
       try {
-        const fd = new FormData(themeForm);
-        const res = await fetch('../app/Controllers/api/save_theme.php', { method: 'POST', body: fd });
+        const res  = await fetch('{{ url("admin/settings/theme") }}', {
+          method:  'POST',
+          headers: { 'Accept': 'application/json', 'X-CSRF-TOKEN': '{{ csrf_token() }}' },
+          body:    fd
+        });
         const data = await res.json();
-        if (data.status === 'success') {
-          msg.innerHTML = '<span class="text-success"><i class="fa-solid fa-check"></i> Saved. Reloading...</span>';
-          setTimeout(() => location.reload(), 500);
-        } else {
-          msg.innerHTML = '<span class="text-danger">' + (data.message || 'Error saving theme') + '</span>';
-        }
+        msg.innerHTML = data.status === 'success'
+          ? '<span class="text-success"><i class="fa-solid fa-check"></i> Theme saved!</span>'
+          : '<span class="text-danger">' + (data.message || 'Error') + '</span>';
       } catch (err) {
         msg.innerHTML = '<span class="text-danger">Network error: ' + err.message + '</span>';
       }
+      btn.disabled = false;
+      setTimeout(() => msg.textContent = '', 4000);
     });
   }
 })();
@@ -447,4 +692,5 @@
 </body></html>
 
 
-
+
+
