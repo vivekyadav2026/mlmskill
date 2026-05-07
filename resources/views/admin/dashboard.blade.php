@@ -167,22 +167,22 @@
         </div>
     </div>
 
-    <!-- Charts Placeholder Row -->
+    <!-- Charts Row -->
     <div class="grid grid-cols-1 lg:grid-cols-3 gap-6 mb-8">
         <div class="lg:col-span-2 bg-[#1a222d] rounded-lg border border-[#334155] p-5">
             <div class="flex justify-between items-center mb-4">
                 <h3 class="text-gray-200 font-medium"><i class="fa-solid fa-chart-line mr-2"></i>User Growth (Last 30 Days)</h3>
             </div>
-            <div class="h-64 flex items-center justify-center border border-dashed border-[#334155] rounded">
-                <p class="text-gray-500">Chart rendering dynamically configured...</p>
+            <div class="h-64 relative">
+                <canvas id="growthChart"></canvas>
             </div>
         </div>
         <div class="bg-[#1a222d] rounded-lg border border-[#334155] p-5">
             <div class="flex justify-between items-center mb-4">
                 <h3 class="text-gray-200 font-medium"><i class="fa-solid fa-chart-pie mr-2"></i>Income Distribution</h3>
             </div>
-            <div class="h-64 flex items-center justify-center border border-dashed border-[#334155] rounded">
-                <p class="text-gray-500">Donut chart configuration...</p>
+            <div class="h-64 relative">
+                <canvas id="incomeDistChart"></canvas>
             </div>
         </div>
     </div>
@@ -282,4 +282,68 @@
         </div>
     </div>
 </div>
+
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    // User Growth Line Chart
+    const growthCtx = document.getElementById('growthChart').getContext('2d');
+    new Chart(growthCtx, {
+        type: 'line',
+        data: {
+            labels: {!! json_encode($growthLabels) !!},
+            datasets: [{
+                label: 'New Users',
+                data: {!! json_encode($growthData) !!},
+                borderColor: '#3b82f6',
+                backgroundColor: 'rgba(59, 130, 246, 0.1)',
+                borderWidth: 2,
+                tension: 0.4,
+                fill: true,
+                pointBackgroundColor: '#60a5fa',
+                pointRadius: 3
+            }]
+        },
+        options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            plugins: { legend: { display: false } },
+            scales: {
+                y: {
+                    beginAtZero: true,
+                    grid: { color: '#334155' },
+                    ticks: { color: '#94a3b8', stepSize: 1 }
+                },
+                x: {
+                    grid: { display: false },
+                    ticks: { color: '#94a3b8', maxRotation: 0 }
+                }
+            }
+        }
+    });
+
+    // Income Distribution Donut Chart
+    const distCtx = document.getElementById('incomeDistChart').getContext('2d');
+    new Chart(distCtx, {
+        type: 'doughnut',
+        data: {
+            labels: {!! json_encode($distLabels) !!},
+            datasets: [{
+                data: {!! json_encode($distData) !!},
+                backgroundColor: ['#6366f1', '#10b981', '#f59e0b', '#ec4899', '#8b5cf6'],
+                borderWidth: 0,
+                hoverOffset: 4
+            }]
+        },
+        options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            cutout: '70%',
+            plugins: {
+                legend: { position: 'bottom', labels: { color: '#94a3b8', padding: 20 } }
+            }
+        }
+    });
+});
+</script>
 @endsection

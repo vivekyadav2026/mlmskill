@@ -32,13 +32,39 @@ class AdminController extends Controller
         $latestRegistrations = User::latest()->take(5)->get();
         $latestActivations = User::where('status', 'active')->whereNotNull('activation_date')->orderBy('activation_date', 'desc')->take(5)->get();
         $latestWithdrawals = Withdrawal::with('user')->latest()->take(5)->get();
+        
+        // --- Dynamic Chart Data ---
+        // 1. User Growth (Last 30 Days)
+        $growthLabels = [];
+        $growthData = [];
+        for ($i = 29; $i >= 0; $i--) {
+            $date = \Carbon\Carbon::today()->subDays($i);
+            if ($i % 5 == 0 || $i == 0 || $i == 29) { // reduce label clutter
+                $growthLabels[] = $date->format('M d');
+            } else {
+                $growthLabels[] = '';
+            }
+            $growthData[] = User::whereDate('created_at', $date)->count();
+        }
+
+        // 2. Income Distribution
+        $incomeDist = CommissionLedger::selectRaw('commission_type, sum(amount) as total')
+            ->groupBy('commission_type')
+            ->pluck('total', 'commission_type')->toArray();
+        $distLabels = array_map('ucfirst', array_keys($incomeDist));
+        $distData = array_values($incomeDist);
+        if (empty($distData)) {
+            $distLabels = ['No Data'];
+            $distData = [1];
+        }
             
         return view('admin.dashboard', compact(
             'totalUsers', 'activeUsers', 'inactiveUsers',
             'totalIncome', 'directIncomePaid', 'levelIncomePaid',
             'totalUtilityTokens', 'totalRenewalTokens',
             'pendingWithdrawalsAmount', 'pendingWithdrawalsCount', 'totalWithdrawalsPaid',
-            'latestRegistrations', 'latestActivations', 'latestWithdrawals'
+            'latestRegistrations', 'latestActivations', 'latestWithdrawals',
+            'growthLabels', 'growthData', 'distLabels', 'distData'
         ));
     }
 
