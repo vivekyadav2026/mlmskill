@@ -44,20 +44,24 @@ class NetworkController extends Controller
         // Assuming we have a 'commission_ledgers' table with 'from_user_id', 'level', 'amount', etc.
         $totalLevelIncome = \Illuminate\Support\Facades\DB::table('commission_ledgers')
             ->where('user_id', $user->id)
-            ->where('commission_type', 'level')
+            ->where('commission_type', 'team')
             ->sum('amount');
             
         $monthlyLevelIncome = \Illuminate\Support\Facades\DB::table('commission_ledgers')
             ->where('user_id', $user->id)
-            ->where('commission_type', 'level')
+            ->where('commission_type', 'team')
             ->whereMonth('created_at', now()->month)
             ->sum('amount');
             
-        $networkCount = \App\Models\User::where('sponsor_id', $user->referral_code)->count(); // Simplified for now
+        $networkCount = \Illuminate\Support\Facades\DB::table('commission_ledgers')
+            ->where('user_id', $user->id)
+            ->whereIn('commission_type', ['direct', 'team'])
+            ->distinct('from_user_id')
+            ->count();
         
         // In reality, fromUser relation requires Eloquent. Since we just need the list:
         $history = \App\Models\User::find($user->id)->commissions()
-            ->where('commission_type', 'level')
+            ->where('commission_type', 'team')
             ->with('fromUser')
             ->orderBy('created_at', 'desc')
             ->paginate(15);

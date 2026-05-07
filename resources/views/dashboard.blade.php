@@ -158,11 +158,15 @@
     <div class="grid grid-cols-1 lg:grid-cols-3 gap-6 mb-6">
         <div class="lg:col-span-2 bg-[#1a222d] rounded-lg border border-[#334155] p-5">
             <h3 class="text-gray-200 font-medium mb-4"><i class="fa-solid fa-chart-line mr-2"></i>Earnings Trend</h3>
-            <div class="h-48 border border-dashed border-[#334155] rounded flex items-center justify-center text-gray-500">Graph Area</div>
+            <div class="h-64 rounded flex items-center justify-center text-gray-500 relative">
+                <canvas id="earningsChart"></canvas>
+            </div>
         </div>
         <div class="bg-[#1a222d] rounded-lg border border-[#334155] p-5">
             <h3 class="text-gray-200 font-medium mb-4"><i class="fa-solid fa-chart-pie mr-2"></i>Income Breakdown</h3>
-            <div class="h-48 border border-dashed border-[#334155] rounded flex items-center justify-center text-gray-500">Donut Chart</div>
+            <div class="h-64 rounded flex items-center justify-center text-gray-500 relative">
+                <canvas id="breakdownChart"></canvas>
+            </div>
         </div>
     </div>
 
@@ -279,4 +283,79 @@
         </div>
     </div>
 </div>
+
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    // Earnings Trend Line Chart
+    const trendCtx = document.getElementById('earningsChart').getContext('2d');
+    new Chart(trendCtx, {
+        type: 'line',
+        data: {
+            labels: {!! json_encode($trendLabels) !!},
+            datasets: [{
+                label: 'Earnings ($)',
+                data: {!! json_encode($earningsTrend) !!},
+                borderColor: '#6366f1',
+                backgroundColor: 'rgba(99, 102, 241, 0.1)',
+                borderWidth: 2,
+                tension: 0.3,
+                fill: true,
+                pointBackgroundColor: '#818cf8',
+                pointRadius: 4
+            }]
+        },
+        options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            plugins: {
+                legend: { display: false }
+            },
+            scales: {
+                y: {
+                    beginAtZero: true,
+                    grid: { color: '#334155' },
+                    ticks: { color: '#94a3b8' }
+                },
+                x: {
+                    grid: { display: false },
+                    ticks: { color: '#94a3b8' }
+                }
+            }
+        }
+    });
+
+    // Income Breakdown Doughnut Chart
+    const breakCtx = document.getElementById('breakdownChart').getContext('2d');
+    new Chart(breakCtx, {
+        type: 'doughnut',
+        data: {
+            labels: {!! json_encode($breakdownLabels) !!},
+            datasets: [{
+                data: {!! json_encode($breakdownData) !!},
+                backgroundColor: [
+                    '#3b82f6', // blue
+                    '#10b981', // green
+                    '#8b5cf6', // purple
+                    '#f59e0b', // yellow
+                    '#ec4899'  // pink
+                ],
+                borderWidth: 0,
+                hoverOffset: 4
+            }]
+        },
+        options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            cutout: '75%',
+            plugins: {
+                legend: {
+                    position: 'bottom',
+                    labels: { color: '#94a3b8', padding: 20 }
+                }
+            }
+        }
+    });
+});
+</script>
 @endsection
