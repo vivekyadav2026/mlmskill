@@ -14,8 +14,8 @@
     @endif
 
     <div class="mb-8 text-center">
-        <h1 class="text-4xl font-extrabold text-white mb-3">Choose Your Learning Module</h1>
-        <p class="text-gray-400 text-lg">Select a specialized module to activate your account and start your journey.</p>
+        <h1 class="text-4xl font-extrabold text-white mb-3">Purchase This Course</h1>
+        <p class="text-gray-400 text-lg">Select a specialized course to activate your account and start your journey.</p>
     </div>
 
     @foreach($modules as $module)
@@ -56,34 +56,18 @@
                 <div class="text-3xl text-gray-400 line-through decoration-red-500/50 font-bold mb-1">$600.00</div>
                 
                 <div class="bg-green-900/30 border border-green-500/30 rounded-lg p-3 my-4">
-                    <p class="text-green-400 text-sm font-bold uppercase mb-1">NGO Sponsored Price</p>
+                    <p class="text-green-400 text-sm font-bold uppercase mb-1">50% NGO Sponsored Discount</p>
                     <div class="text-5xl text-white font-black">$300<span class="text-xl text-gray-400 font-normal">.00</span></div>
-                </div>
-
-                <div class="flex justify-between items-center text-sm text-gray-400 mb-6 px-2 border-t border-[#334155] pt-4">
-                    <span>Your Wallet:</span>
-                    <span class="{{ $balance >= 300 ? 'text-green-400' : 'text-red-400' }} font-bold">${{ number_format($balance, 2) }}</span>
                 </div>
 
                 @if($user->status === 'active')
                     <div class="w-full py-3 bg-green-600 text-white font-bold rounded-lg shadow cursor-not-allowed">
-                        <i class="fa-solid fa-check-circle mr-2"></i> Account Activated
+                        <i class="fa-solid fa-check-circle mr-2"></i> Course Purchased
                     </div>
                 @else
-                    @if($balance >= 300)
-                        <form action="{{ route('package.purchase') }}" method="POST" onsubmit="return confirm('Deduct $300 from your Package Wallet to activate your account with the {{ addslashes($module->name) }} module?');">
-                            @csrf
-                            <input type="hidden" name="module_id" value="{{ $module->id }}">
-                            <button type="submit" class="w-full py-4 bg-indigo-600 hover:bg-indigo-700 text-white font-bold rounded-lg shadow-lg transition flex justify-center items-center gap-2 text-lg">
-                                <i class="fa-solid fa-unlock"></i> Activate with this Module
-                            </button>
-                        </form>
-                    @else
-                        <button disabled class="w-full py-3 bg-gray-800 text-gray-500 font-bold rounded-lg cursor-not-allowed border border-gray-700 flex justify-center items-center gap-2">
-                            <i class="fa-solid fa-lock"></i> Insufficient Funds
-                        </button>
-                        <p class="text-xs text-red-400 mt-3 text-center">You need ${{ number_format(300 - $balance, 2) }} more.</p>
-                    @endif
+                    <a href="{{ route('package.checkout', $module->id) }}" class="w-full py-4 bg-indigo-600 hover:bg-indigo-700 text-white font-bold rounded-lg shadow-lg transition flex justify-center items-center gap-2 text-lg inline-block text-center decoration-none">
+                        <i class="fa-solid fa-cart-shopping"></i> Purchase Order
+                    </a>
                 @endif
             </div>
         </div>

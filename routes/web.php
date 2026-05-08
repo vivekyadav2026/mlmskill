@@ -40,7 +40,13 @@ Route::middleware(['auth'])->group(function () {
     
     // Package Module - Accessible to inactive users so they can buy package to activate
     Route::get('/user/package/upgrade', [\App\Http\Controllers\PackageController::class, 'upgrade'])->name('package.upgrade');
+    Route::get('/user/package/checkout/{id}', [\App\Http\Controllers\PackageController::class, 'checkout'])->name('package.checkout');
     Route::post('/user/package/purchase', [\App\Http\Controllers\PackageController::class, 'purchase'])->name('package.purchase');
+
+    // Support Chat Module - Accessible to inactive users
+    Route::get('/user/chat/unread', [\App\Http\Controllers\SupportChatController::class, 'unreadCount']);
+    Route::get('/user/chat/messages', [\App\Http\Controllers\SupportChatController::class, 'fetchMessages']);
+    Route::post('/user/chat/send', [\App\Http\Controllers\SupportChatController::class, 'sendMessage']);
 
     Route::middleware(['active'])->group(function () {
 
@@ -108,8 +114,10 @@ Route::middleware(['auth'])->group(function () {
     Route::get('/user/token/renewal', [\App\Http\Controllers\TokenSystemController::class, 'renewal'])->name('token.renewal');
     Route::get('/user/token/conversion', [\App\Http\Controllers\TokenSystemController::class, 'conversion'])->name('token.conversion');
 
-    // Package Module (History only, upgrade is accessible outside)
+    // Package Module (History and Activation)
     Route::get('/user/package/history', [\App\Http\Controllers\PackageController::class, 'history'])->name('package.history');
+    Route::get('/user/package/activate-member', [\App\Http\Controllers\PackageController::class, 'activateMember'])->name('package.activate_member');
+    Route::post('/user/package/activate-member', [\App\Http\Controllers\PackageController::class, 'processActivateMember'])->name('package.activate_member.submit');
 
     // Withdraw Module
     Route::get('/user/withdraw/request', [\App\Http\Controllers\WithdrawController::class, 'request'])->name('withdraw.request');
@@ -125,10 +133,6 @@ Route::middleware(['auth'])->group(function () {
     Route::get('/user/notifications/system', [\App\Http\Controllers\NotificationController::class, 'system'])->name('notifications.system');
     Route::get('/user/notifications/announcements', [\App\Http\Controllers\NotificationController::class, 'announcements'])->name('notifications.announcements');
 
-    // Support Chat Module
-    Route::get('/user/chat/unread', [\App\Http\Controllers\SupportChatController::class, 'unreadCount']);
-    Route::get('/user/chat/messages', [\App\Http\Controllers\SupportChatController::class, 'fetchMessages']);
-    Route::post('/user/chat/send', [\App\Http\Controllers\SupportChatController::class, 'sendMessage']);
 
     // Settings Module (Mapping directly to Profile controller for account management)
     Route::get('/user/settings/account', [\App\Http\Controllers\ProfileController::class, 'edit'])->name('settings.account');

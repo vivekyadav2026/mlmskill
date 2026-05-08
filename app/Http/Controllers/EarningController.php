@@ -25,7 +25,7 @@ class EarningController extends Controller
     {
         $user = Auth::user();
         $earnings = CommissionLedger::where('user_id', $user->id)
-            ->where('commission_type', 'level')
+            ->where('commission_type', 'team')
             ->orderBy('created_at', 'desc')
             ->paginate(15);
             
@@ -42,7 +42,7 @@ class EarningController extends Controller
             
         $totalEarned = $earnings->sum('amount');
         $directEarned = CommissionLedger::where('user_id', $user->id)->where('commission_type', 'direct')->sum('amount');
-        $levelEarned = CommissionLedger::where('user_id', $user->id)->where('commission_type', 'level')->sum('amount');
+        $levelEarned = CommissionLedger::where('user_id', $user->id)->where('commission_type', 'team')->sum('amount');
         
         return view('user.earnings.total', compact('earnings', 'totalEarned', 'directEarned', 'levelEarned'));
     }

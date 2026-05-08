@@ -27,6 +27,31 @@
         </div>
     </div>
 
+    <!-- Level Breakdown -->
+    <div class="bg-[#1a222d] rounded-lg shadow-lg overflow-hidden border border-[#334155] mb-6">
+        <div class="px-6 py-4 border-b border-[#334155] bg-[#161f2d]">
+            <h3 class="text-lg font-medium text-gray-200">Network Level Breakdown</h3>
+            <p class="text-sm text-gray-400">See how many members you have at each specific level.</p>
+        </div>
+        <div class="p-6">
+            <div class="grid grid-cols-2 md:grid-cols-5 gap-4">
+                @foreach($levelCounts as $level => $count)
+                <div class="bg-[#0b1220] border border-[#334155] rounded-lg p-4 text-center">
+                    <p class="text-gray-400 text-sm font-bold uppercase mb-1">Level {{ $level }}</p>
+                    <div class="flex justify-center items-end gap-2 mb-2">
+                        <span class="text-2xl font-black {{ $count > 0 ? 'text-indigo-400' : 'text-gray-600' }}">{{ $count }}</span>
+                        <span class="text-xs text-gray-500 mb-1">Members</span>
+                    </div>
+                    <div class="bg-[#1a222d] border border-green-500/30 rounded py-1 px-2 inline-block">
+                        <span class="text-xs text-gray-400 mr-1">Earned:</span>
+                        <span class="text-sm font-bold {{ $levelEarnings[$level] > 0 ? 'text-green-400' : 'text-gray-500' }}">${{ number_format($levelEarnings[$level], 2) }}</span>
+                    </div>
+                </div>
+                @endforeach
+            </div>
+        </div>
+    </div>
+
     <!-- History Table -->
     <div class="bg-[#1a222d] rounded-lg shadow-lg overflow-hidden border border-[#334155]">
         <div class="px-6 py-4 border-b border-[#334155] bg-[#161f2d]">

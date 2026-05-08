@@ -34,7 +34,7 @@
                 <i class="fa-solid fa-graduation-cap text-4xl text-gray-300"></i>
             </div>
             <div class="absolute top-8 right-8">
-                <img src="https://ui-avatars.com/api/?name=SK&background=4338ca&color=fff&rounded=true&size=64" alt="Logo">
+                <img src="https://ui-avatars.com/api/?name=SD&background=4338ca&color=fff&rounded=true&size=64" alt="Logo">
             </div>
             
             <h1 class="cert-header mt-10">Certificate of Completion</h1>
@@ -43,7 +43,7 @@
             <h2 class="cert-name">{{ $user->name }}</h2>
             
             <p class="mt-4 text-lg text-gray-600 max-w-2xl mx-auto leading-relaxed">
-                has successfully completed the comprehensive <strong class="text-gray-800">SK Global Masterclass</strong> in networking, sales strategy, and system mechanics, demonstrating outstanding dedication and skill.
+                has successfully completed the comprehensive <strong class="text-gray-800">{{ $moduleName }}</strong> in networking, sales strategy, and system mechanics, demonstrating outstanding dedication and skill.
             </p>
             
             <div class="mt-16 flex justify-between items-end px-12">
@@ -54,7 +54,7 @@
                 
                 <div class="h-24 w-24 bg-yellow-500 rounded-full flex items-center justify-center border-4 border-yellow-600 shadow-lg text-white font-bold text-xl relative">
                     <span class="absolute inset-0 border-2 border-dashed border-yellow-300 rounded-full m-1"></span>
-                    SK<br>SEAL
+                    SD<br>SEAL
                 </div>
 
                 <div class="text-center">

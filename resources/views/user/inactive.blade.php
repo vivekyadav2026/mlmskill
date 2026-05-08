@@ -22,8 +22,8 @@
     <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
         
         <!-- Left: Status & Bank Details -->
-        <div>
-            <div class="bg-[#1a222d] border border-red-500/50 rounded-xl p-8 shadow-lg mb-6 text-center">
+        <!-- <div>   -->
+            <!-- <div class="bg-[#1a222d] border border-red-500/50 rounded-xl p-8 shadow-lg mb-6 text-center">
                 <div class="w-20 h-20 bg-red-500/10 text-red-500 rounded-full flex items-center justify-center mx-auto mb-4">
                     <i class="fa-solid fa-lock text-3xl"></i>
                 </div>
@@ -31,10 +31,10 @@
                 <div class="inline-block bg-indigo-900/30 border border-indigo-500/30 text-indigo-300 px-5 py-2 rounded-lg font-bold text-xl">
                     Joining Fee: ${{ number_format($fee, 2) }}
                 </div>
-            </div>
+            </div> -->
 
             <!-- Bank Details from Settings -->
-            <div class="bg-[#1a222d] border border-[#334155] rounded-xl p-6 shadow-lg">
+            <!-- <div class="bg-[#1a222d] border border-[#334155] rounded-xl p-6 shadow-lg">
                 <h3 class="text-lg font-semibold text-white mb-4 border-b border-[#334155] pb-2">
                     <i class="fa-solid fa-building-columns text-green-400 mr-2"></i> Payment Details
                 </h3>
@@ -72,8 +72,8 @@
                     </div>
                 </div>
                 @endif
-            </div>
-        </div>
+            </div> -->
+        <!-- </div> -->
 
         <!-- Right: Simple Activation Request -->
         <div class="bg-[#1a222d] border border-[#334155] rounded-xl p-8 shadow-lg h-full flex flex-col justify-center text-center">

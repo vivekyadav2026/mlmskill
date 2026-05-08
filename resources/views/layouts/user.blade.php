@@ -178,6 +178,7 @@
         </a>
         <ul class="nav-submenu list-unstyled mb-0">
           <li><a href="{{ url('user/package/upgrade') }}" class="nav-link sub-link"><span>Upgrade Package</span></a></li>
+          <li><a href="{{ url('user/package/activate-member') }}" class="nav-link sub-link"><span>Activate Member</span></a></li>
           <li><a href="{{ url('user/package/history') }}" class="nav-link sub-link"><span>Package History</span></a></li>
         </ul>
       </li>

@@ -110,7 +110,7 @@
 
   <!-- ===== Admin Sidebar ===== -->
   <aside id="appSidebar" class="app-sidebar">
-        <a href="{{ url('admin/index') }}" class="sidebar-brand">
+        <a href="{{ url('admin/dashboard') }}" class="sidebar-brand">
               <i class="fa-solid fa-bolt-lightning"></i>
         <span> Samarth Digital</span>
           </a>

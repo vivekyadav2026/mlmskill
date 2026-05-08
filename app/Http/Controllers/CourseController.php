@@ -40,6 +40,14 @@ class CourseController extends Controller
     public function certificate()
     {
         $user = Auth::user();
-        return view('user.course.certificate', compact('user'));
+        
+        $moduleName = 'SK Global Masterclass';
+        $progress = \App\Models\CourseProgress::with('course.module')->where('user_id', $user->id)->first();
+        
+        if ($progress && $progress->course && $progress->course->module) {
+            $moduleName = $progress->course->module->name;
+        }
+        
+        return view('user.course.certificate', compact('user', 'moduleName'));
     }
 }
