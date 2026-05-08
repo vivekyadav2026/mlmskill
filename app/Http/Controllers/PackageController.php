@@ -10,14 +10,14 @@ class PackageController extends Controller
         $user = Auth::user();
         $balance = $user->wallet->package_wallet ?? 0;
         
-        // Fetch all active courses
-        $courses = \App\Models\Course::where('status', 'active')->get();
+        // Fetch all active modules with their courses
+        $modules = \App\Models\CourseModule::with('courses')->where('status', 'active')->get();
         
-        // Get IDs of courses the user already owns
+        // Get IDs of courses the user already owns (if needed for checking)
         $purchasedCourseIds = \App\Models\CourseProgress::where('user_id', $user->id)
                                 ->pluck('course_id')->toArray();
                                 
-        return view('user.package.upgrade', compact('user', 'balance', 'courses', 'purchasedCourseIds'));
+        return view('user.package.upgrade', compact('user', 'balance', 'modules', 'purchasedCourseIds'));
     }
 
     public function history()
@@ -29,37 +29,49 @@ class PackageController extends Controller
 
     public function purchase(Request $request, \App\Services\CommissionService $commissionService)
     {
-        $request->validate(['course_id' => 'required|exists:courses,id']);
-        
         $user = Auth::user();
-        $wallet = $user->wallet;
         
-        $course = \App\Models\Course::findOrFail($request->course_id);
-        $price = (float) $course->price;
-
-        if (!$wallet || $wallet->package_wallet < $price) {
-            return back()->with('error', 'Insufficient funds in your Package Wallet.');
+        if ($user->status === 'active') {
+            return back()->with('error', 'Your account is already active.');
         }
 
-        $alreadyPurchased = \App\Models\CourseProgress::where('user_id', $user->id)->where('course_id', $course->id)->exists();
-        if ($alreadyPurchased) {
-            return back()->with('error', 'You have already purchased this course.');
+        $request->validate([
+            'module_id' => 'required|exists:course_modules,id'
+        ]);
+
+        $wallet = $user->wallet;
+        $price = 300.00; // NGO Sponsored Price for any module
+
+        if (!$wallet || $wallet->package_wallet < $price) {
+            return back()->with('error', 'Insufficient funds in your Package Wallet. You need $300.');
         }
 
         // Deduct from wallet
         $wallet->decrement('package_wallet', $price);
 
-        // Grant access to course
-        \App\Models\CourseProgress::create([
-            'user_id' => $user->id,
-            'course_id' => $course->id,
-        ]);
+        // Get the selected module
+        $module = \App\Models\CourseModule::with('courses')->findOrFail($request->module_id);
+
+        // Grant access to all courses inside this module
+        foreach ($module->courses as $course) {
+            if ($course->status == 'active') {
+                \App\Models\CourseProgress::firstOrCreate([
+                    'user_id' => $user->id,
+                    'course_id' => $course->id,
+                ]);
+            }
+        }
+
+        // Activate User
+        $user->status = 'active';
+        $user->activation_date = now();
+        $user->save();
 
         // Distribute upline commissions
         $commissionService->distributeCommissions($user, $price);
 
-        \App\Models\ActivityLog::log('course_purchased', 'Purchased course: ' . $course->title . ' for $' . $price, $user->id);
+        \App\Models\ActivityLog::log('account_activated', 'Activated account with NGO Package for $' . $price, $user->id);
 
-        return redirect()->route('dashboard')->with('success', 'Course purchased successfully! You now have full access.');
+        return redirect()->route('dashboard')->with('success', 'Account activated successfully! You now have full access to the platform and courses.');
     }
 }

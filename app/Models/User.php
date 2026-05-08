@@ -16,9 +16,17 @@ class User extends Authenticatable
         'email',
         'phone',
         'password',
+        'mpin',
+        'profile_image',
+        'gender',
+        'address',
+        'city',
+        'state',
+        'zip',
         'sponsor_id',
         'referral_code',
         'status',
+        'is_profile_complete',
         'activation_date',
         'course_completed_at',
         'role',
@@ -73,6 +81,11 @@ class User extends Authenticatable
     public function certificates()
     {
         return $this->hasMany(Certificate::class);
+    }
+
+    public function supportChats()
+    {
+        return $this->hasMany(SupportChat::class);
     }
 
     // ── Role & Permission Helpers ───────────────────────────

@@ -27,6 +27,16 @@
             </div>
 
             <div class="mb-4">
+                <label for="module_id" class="block text-gray-300 font-medium mb-2">Assign to Module</label>
+                <select name="module_id" id="module_id" class="w-full bg-[#0f172a] border border-[#334155] text-white rounded-lg px-4 py-2 focus:outline-none focus:border-indigo-500">
+                    <option value="">-- No Module (Standalone) --</option>
+                    @foreach($modules as $module)
+                        <option value="{{ $module->id }}" {{ old('module_id', $course->module_id) == $module->id ? 'selected' : '' }}>{{ $module->name }}</option>
+                    @endforeach
+                </select>
+            </div>
+
+            <div class="mb-4">
                 <label for="price" class="block text-gray-300 font-medium mb-2">Price ($)</label>
                 <input type="number" step="0.01" name="price" id="price" value="{{ old('price', $course->price) }}" class="w-full bg-[#0f172a] border border-[#334155] text-white rounded-lg px-4 py-2 focus:outline-none focus:border-indigo-500" required>
             </div>

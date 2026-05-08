@@ -274,7 +274,8 @@
     <div class="bg-[#1a222d] rounded-lg border border-[#334155] p-5 mb-8">
         <h3 class="text-gray-200 font-medium mb-4"><i class="fa-solid fa-bolt mr-2"></i>Quick Actions</h3>
         <div class="flex flex-wrap gap-3">
-            <a href="{{ url('user/package/upgrade') }}" class="px-4 py-2 bg-green-600 hover:bg-green-700 text-white rounded text-sm transition"><i class="fa-solid fa-box mr-1"></i> Buy Course</a>
+            <a href="{{ url('user/package/upgrade') }}" class="px-4 py-2 bg-green-600 hover:bg-green-700 text-white rounded text-sm transition"><i class="fa-solid fa-box mr-1"></i> Activate Package</a>
+            <a href="{{ url('user/wallets/transfer') }}" class="px-4 py-2 bg-indigo-600 hover:bg-indigo-700 text-white rounded text-sm transition shadow"><i class="fa-solid fa-paper-plane mr-1"></i> P2P Transfer</a>
             <a href="{{ url('user/withdraw/request') }}" class="px-4 py-2 bg-red-600 hover:bg-red-700 text-white rounded text-sm transition"><i class="fa-solid fa-arrow-up-from-bracket mr-1"></i> Withdraw</a>
             <a href="{{ url('user/network/tree') }}" class="px-4 py-2 bg-[#334155] hover:bg-[#475569] text-white rounded text-sm transition"><i class="fa-solid fa-sitemap mr-1"></i> View Network</a>
             <a href="{{ url('user/wallets/history') }}" class="px-4 py-2 bg-[#334155] hover:bg-[#475569] text-white rounded text-sm transition"><i class="fa-solid fa-receipt mr-1"></i> Wallet History</a>

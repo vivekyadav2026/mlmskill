@@ -8,14 +8,21 @@
     </div>
     <div class="bg-[#1a222d] border border-[#334155] rounded-lg overflow-hidden">
         <table class="w-full table-custom">
-            <thead><tr><th>Course Title</th><th>Price</th><th>Status</th><th>Modules</th><th>Action</th></tr></thead>
+            <thead><tr><th>Course Title</th><th>Module</th><th>Price</th><th>Status</th><th>Videos</th><th>Action</th></tr></thead>
             <tbody>
                 @forelse($courses as $c)
                 <tr>
                     <td class="font-bold">{{ $c->title }}</td>
-                    <td class="text-green-400 font-mono">$\{{ number_format($c->price, 2) }}</td>
-                    <td><span class="bg-green-900 text-green-300 px-2 py-1 rounded text-xs">{{ $c->status }}</span></td>
-                    <td>12 Videos</td>
+                    <td>
+                        @if($c->module)
+                            <span class="bg-indigo-900/50 text-indigo-300 border border-indigo-700/50 px-2 py-1 rounded text-xs">{{ $c->module->name }}</span>
+                        @else
+                            <span class="text-gray-500 text-xs italic">Standalone</span>
+                        @endif
+                    </td>
+                    <td class="text-green-400 font-mono">${{ number_format($c->price, 2) }}</td>
+                    <td><span class="bg-green-900 text-green-300 px-2 py-1 rounded text-xs">{{ ucfirst($c->status) }}</span></td>
+                    <td>{{ $c->lessons->count() ?? '0' }} Videos</td>
                     <td>
                         <a href="{{ route('admin.courses.edit', $c->id) }}" class="text-indigo-400 hover:text-white mr-3"><i class="fa-solid fa-edit"></i> Edit</a>
                         <form action="{{ route('admin.courses.destroy', $c->id) }}" method="POST" class="inline" onsubmit="return confirm('Are you sure you want to delete this course?');">

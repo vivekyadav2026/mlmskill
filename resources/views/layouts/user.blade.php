@@ -78,6 +78,7 @@
           <li><a href="{{ url('user/profile') }}" class="nav-link sub-link"><i class="fa-solid fa-id-card"></i><span>View Profile</span></a></li>
           <li><a href="{{ url('user/profile/edit') }}" class="nav-link sub-link"><i class="fa-solid fa-user-pen"></i><span>Edit Profile</span></a></li>
           <li><a href="{{ url('user/profile/password') }}" class="nav-link sub-link"><i class="fa-solid fa-key"></i><span>Change Password</span></a></li>
+          <li><a href="{{ url('user/id-card') }}" class="nav-link sub-link"><i class="fa-solid fa-id-badge"></i><span>Digital ID Card</span></a></li>
         </ul>
       </li>
 
@@ -92,6 +93,18 @@
           <li><a href="{{ url('user/wallets/utility') }}" class="nav-link sub-link"><span>Utility Token Wallet</span></a></li>
           <li><a href="{{ url('user/wallets/renewal') }}" class="nav-link sub-link"><span>Renewal Token Wallet</span></a></li>
           <li><a href="{{ url('user/wallets/history') }}" class="nav-link sub-link"><span>Wallet History</span></a></li>
+        </ul>
+      </li>
+
+      <li class="has-submenu">
+        <a href="#" class="nav-link nav-dropdown-toggle">
+          <i class="fa-solid fa-exchange-alt"></i><span>P2P System</span>
+          <i class="fa-solid fa-chevron-down nav-arrow"></i>
+        </a>
+        <ul class="nav-submenu list-unstyled mb-0">
+          <li><a href="{{ url('user/wallets/transfer') }}" class="nav-link sub-link"><span>Transfer Funds</span></a></li>
+          <li><a href="{{ url('user/p2p/history') }}" class="nav-link sub-link"><span>Transfer History</span></a></li>
+          <li><a href="{{ url('user/p2p/mpin') }}" class="nav-link sub-link"><span>Manage MPIN</span></a></li>
         </ul>
       </li>
 
@@ -308,7 +321,145 @@
 </script>
 
 
-</body></html>
+<!-- Support Chat Widget -->
+<div id="supportChatWidget" class="tailwind-scope fixed bottom-6 right-6" style="z-index: 9999;">
+    <!-- Chat Button -->
+    <button id="supportChatBtn" class="bg-indigo-600 hover:bg-indigo-700 text-white rounded-full w-14 h-14 flex items-center justify-center shadow-2xl transition transform hover:scale-110 focus:outline-none relative">
+        <i class="fa-solid fa-comments text-2xl"></i>
+        <span id="supportChatBadge" class="hidden absolute top-0 right-0 bg-red-600 text-white text-xs font-bold w-5 h-5 flex items-center justify-center rounded-full border-2 border-[#1a222d]"></span>
+    </button>
+
+    <!-- Chat Box -->
+    <div id="supportChatBox" class="hidden absolute bottom-16 right-0 w-80 rounded-xl shadow-2xl flex flex-col overflow-hidden border border-gray-700" style="height: 400px; background-color: #1a222d;">
+        <div class="bg-indigo-600 text-white px-4 py-3 flex justify-between items-center">
+            <h3 class="font-bold m-0 text-white"><i class="fa-solid fa-headset mr-2"></i> Support Team</h3>
+            <button id="closeSupportChat" class="text-white hover:text-gray-200 focus:outline-none"><i class="fa-solid fa-xmark"></i></button>
+        </div>
+        <div id="supportChatMessages" class="flex-1 p-4 overflow-y-auto flex flex-col gap-3">
+            <!-- Messages go here -->
+        </div>
+        <div class="p-3 border-t border-gray-700" style="background-color: #0b1220;">
+            <form id="supportChatForm" class="flex gap-2 m-0">
+                <input type="text" id="supportChatMessage" class="flex-1 text-white rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-indigo-500 border border-gray-700" style="background-color: #1a222d;" placeholder="Type a message..." required autocomplete="off">
+                <button type="submit" class="bg-indigo-600 hover:bg-indigo-700 text-white px-3 py-2 rounded-lg transition"><i class="fa-solid fa-paper-plane"></i></button>
+            </form>
+        </div>
+    </div>
+</div>
+
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    const chatBtn = document.getElementById('supportChatBtn');
+    const chatBox = document.getElementById('supportChatBox');
+    const closeChat = document.getElementById('closeSupportChat');
+    const chatForm = document.getElementById('supportChatForm');
+    const messageInput = document.getElementById('supportChatMessage');
+    const messagesContainer = document.getElementById('supportChatMessages');
+    let lastMessageCount = 0;
+
+    if (!chatBtn) return; // Prevent errors if not logged in
+
+    chatBtn.addEventListener('click', () => {
+        chatBox.classList.toggle('hidden');
+        if (!chatBox.classList.contains('hidden')) {
+            document.getElementById('supportChatBadge').classList.add('hidden');
+            fetchMessages();
+        }
+    });
+
+    closeChat.addEventListener('click', () => {
+        chatBox.classList.add('hidden');
+    });
+
+    // Unread count checker
+    setInterval(() => {
+        if (chatBox.classList.contains('hidden')) {
+            fetch('/user/chat/unread')
+                .then(res => res.json())
+                .then(data => {
+                    const badge = document.getElementById('supportChatBadge');
+                    if (data.unread > 0) {
+                        badge.innerText = data.unread;
+                        badge.classList.remove('hidden');
+                    } else {
+                        badge.classList.add('hidden');
+                    }
+                })
+                .catch(err => console.error(err));
+        }
+    }, 3000);
+
+    function fetchMessages() {
+        fetch('/user/chat/messages')
+            .then(res => res.json())
+            .then(data => {
+                if (data.messages.length !== lastMessageCount) {
+                    messagesContainer.innerHTML = '';
+                    if(data.messages.length === 0) {
+                        messagesContainer.innerHTML = '<div class="text-center text-gray-500 text-xs mt-4">Send a message to start chatting with support.</div>';
+                    }
+                    data.messages.forEach(msg => appendMessage(msg));
+                    messagesContainer.scrollTop = messagesContainer.scrollHeight;
+                    lastMessageCount = data.messages.length;
+                }
+            })
+            .catch(err => console.error(err));
+    }
+
+    function appendMessage(msg) {
+        const div = document.createElement('div');
+        const isUser = msg.sender === 'user';
+        const bgClass = isUser ? 'bg-indigo-600 text-white self-end rounded-br-none' : 'text-gray-100 self-start rounded-bl-none';
+        
+        div.className = `max-w-[80%] rounded-lg px-3 py-2 text-sm ${bgClass}`;
+        if (!isUser) {
+            div.style.backgroundColor = '#334155';
+        }
+        div.innerText = msg.message;
+        messagesContainer.appendChild(div);
+    }
+
+    if(chatForm) {
+        chatForm.addEventListener('submit', function(e) {
+            e.preventDefault();
+            const msg = messageInput.value.trim();
+            if(!msg) return;
+
+            messageInput.value = '';
+            messageInput.disabled = true;
+
+            fetch('/user/chat/send', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'X-CSRF-TOKEN': '{{ csrf_token() }}'
+                },
+                body: JSON.stringify({ message: msg })
+            })
+            .then(res => res.json())
+            .then(data => {
+                messageInput.disabled = false;
+                messageInput.focus();
+                if(data.success) {
+                    if(messagesContainer.innerHTML.includes('Send a message to start')) messagesContainer.innerHTML = '';
+                    appendMessage(data.message);
+                    messagesContainer.scrollTop = messagesContainer.scrollHeight;
+                    lastMessageCount++;
+                }
+            });
+        });
+    }
+
+    // Auto refresh if open
+    setInterval(() => {
+        if (!chatBox.classList.contains('hidden')) {
+            fetchMessages();
+        }
+    }, 1500);
+});
+</script>
+</body>
+</html>
 
 
 

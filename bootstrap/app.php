@@ -18,6 +18,7 @@ return Application::configure(basePath: dirname(__DIR__))
         
         $middleware->web(append: [
             \App\Http\Middleware\TrackUserTimeMiddleware::class,
+            \App\Http\Middleware\ProfileCompleteMiddleware::class,
         ]);
     })
     ->withExceptions(function (Exceptions $exceptions): void {

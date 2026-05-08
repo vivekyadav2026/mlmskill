@@ -105,4 +105,33 @@ class AuthController extends Controller
 
         return redirect('/');
     }
+
+    public function showForgot()
+    {
+        return view('auth.forgot-password');
+    }
+
+    public function processForgot(Request $request)
+    {
+        $request->validate([
+            'email' => 'required|email|exists:users,email',
+            'referral_code' => 'required|string',
+            'password' => 'required|string|min:8|confirmed',
+        ]);
+
+        $user = User::where('email', $request->email)
+                    ->where('referral_code', $request->referral_code)
+                    ->first();
+
+        if (!$user) {
+            return back()->with('error', 'We could not verify your identity. Make sure your Email and ID Number match.');
+        }
+
+        $user->password = Hash::make($request->password);
+        $user->save();
+
+        ActivityLog::log('password_reset', 'User recovered and reset their password', $user->id);
+
+        return redirect()->route('login')->with('success', 'Your password has been successfully reset! You can now sign in.');
+    }
 }

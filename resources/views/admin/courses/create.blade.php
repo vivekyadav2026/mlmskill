@@ -6,6 +6,15 @@
         <form method="POST" action="{{ url('admin/courses/create') }}">
             @csrf
             <div class="mb-4"><label class="block text-gray-300 mb-2">Course Title</label><input type="text" name="title" class="w-full bg-[#0b1220] border border-[#334155] text-white p-3 rounded" required></div>
+            <div class="mb-4">
+                <label class="block text-gray-300 mb-2">Assign to Module</label>
+                <select name="module_id" class="w-full bg-[#0b1220] border border-[#334155] text-white p-3 rounded">
+                    <option value="">-- No Module (Standalone) --</option>
+                    @foreach($modules as $module)
+                        <option value="{{ $module->id }}">{{ $module->name }}</option>
+                    @endforeach
+                </select>
+            </div>
             <div class="mb-4"><label class="block text-gray-300 mb-2">Description</label><textarea name="description" rows="4" class="w-full bg-[#0b1220] border border-[#334155] text-white p-3 rounded"></textarea></div>
             <div class="mb-4"><label class="block text-gray-300 mb-2">Price ($)</label><input type="number" step="0.01" name="price" class="w-full bg-[#0b1220] border border-[#334155] text-white p-3 rounded" required></div>
             <div class="mb-6"><label class="block text-gray-300 mb-2">Status</label><select name="status" class="w-full bg-[#0b1220] border border-[#334155] text-white p-3 rounded"><option value="active">Active</option><option value="inactive">Inactive</option></select></div>

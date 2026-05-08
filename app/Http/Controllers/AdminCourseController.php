@@ -8,25 +8,28 @@ use App\Models\CourseProgress;
 class AdminCourseController extends Controller
 {
     public function index() {
-        $courses = Course::latest()->paginate(15);
-        return view('admin.courses.index', compact('courses'));
+        $courses = Course::with('module')->latest()->paginate(15);
+        $modules = \App\Models\CourseModule::all();
+        return view('admin.courses.index', compact('courses', 'modules'));
     }
     public function create() {
-        return view('admin.courses.create');
+        $modules = \App\Models\CourseModule::where('status', 'active')->get();
+        return view('admin.courses.create', compact('modules'));
     }
     public function store(Request $request) {
-        $request->validate(['title'=>'required', 'price'=>'required|numeric']);
+        $request->validate(['title'=>'required', 'price'=>'required|numeric', 'module_id'=>'nullable|exists:course_modules,id']);
         Course::create($request->all());
         return redirect('admin/courses')->with('success', 'Course added successfully.');
     }
 
     public function edit($id) {
         $course = Course::findOrFail($id);
-        return view('admin.courses.edit', compact('course'));
+        $modules = \App\Models\CourseModule::where('status', 'active')->get();
+        return view('admin.courses.edit', compact('course', 'modules'));
     }
 
     public function update(Request $request, $id) {
-        $request->validate(['title'=>'required', 'price'=>'required|numeric']);
+        $request->validate(['title'=>'required', 'price'=>'required|numeric', 'module_id'=>'nullable|exists:course_modules,id']);
         $course = Course::findOrFail($id);
         $course->update($request->all());
         return redirect('admin/courses')->with('success', 'Course updated successfully.');
@@ -36,6 +39,56 @@ class AdminCourseController extends Controller
         $course = Course::findOrFail($id);
         $course->delete();
         return redirect('admin/courses')->with('success', 'Course deleted successfully.');
+    }
+
+    // Module Management
+    public function modules() {
+        $modules = \App\Models\CourseModule::with('courses')->withCount('courses')->latest()->paginate(15);
+        $allCourses = Course::all();
+        return view('admin.courses.modules', compact('modules', 'allCourses'));
+    }
+
+    public function storeModule(Request $request) {
+        $request->validate([
+            'name' => 'required|string|max:255',
+            'description' => 'nullable|string'
+        ]);
+        \App\Models\CourseModule::create($request->all());
+        return redirect()->route('admin.courses.modules')->with('success', 'Course Module created successfully.');
+    }
+
+    public function updateModule(Request $request, $id) {
+        $request->validate([
+            'name' => 'required|string|max:255',
+            'description' => 'nullable|string',
+            'status' => 'required|in:active,inactive'
+        ]);
+        $module = \App\Models\CourseModule::findOrFail($id);
+        $module->update($request->all());
+        return redirect()->route('admin.courses.modules')->with('success', 'Course Module updated successfully.');
+    }
+
+    public function destroyModule($id) {
+        $module = \App\Models\CourseModule::findOrFail($id);
+        $module->delete();
+        return redirect()->route('admin.courses.modules')->with('success', 'Course Module deleted successfully.');
+    }
+
+    public function assignCourses(Request $request, $id) {
+        $module = \App\Models\CourseModule::findOrFail($id);
+        
+        // Remove this module from courses that were unchecked
+        $courseIds = $request->input('course_ids', []);
+        Course::where('module_id', $module->id)
+              ->whereNotIn('id', $courseIds)
+              ->update(['module_id' => null]);
+              
+        // Add this module to checked courses
+        if (!empty($courseIds)) {
+            Course::whereIn('id', $courseIds)->update(['module_id' => $module->id]);
+        }
+        
+        return redirect()->route('admin.courses.modules')->with('success', 'Courses successfully assigned to module!');
     }
 
     public function content() {

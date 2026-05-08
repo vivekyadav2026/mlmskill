@@ -16,9 +16,39 @@ class WithdrawController extends Controller
     public function submit(Request $request)
     {
         $request->validate([
-            'amount' => 'required|numeric|min:10'
+            'amount' => 'required|numeric|min:10',
+            'mpin' => 'required|digits:4',
         ]);
-        // Demo mode logic
+
+        $user = Auth::user();
+
+        // Verify MPIN
+        if (!\Illuminate\Support\Facades\Hash::check($request->mpin, $user->mpin)) {
+            return back()->with('error', 'Invalid MPIN. Withdrawal cancelled.');
+        }
+
+        $wallet = $user->wallet;
+        $amount = (float) $request->amount;
+
+        if (!$wallet || $wallet->income_wallet < $amount) {
+            return back()->with('error', 'Insufficient funds in your Income Wallet.');
+        }
+
+        \Illuminate\Support\Facades\DB::transaction(function () use ($user, $wallet, $amount) {
+            // Deduct from wallet
+            $wallet->decrement('income_wallet', $amount);
+
+            // Create withdrawal record
+            Withdrawal::create([
+                'user_id' => $user->id,
+                'amount' => $amount,
+                'status' => 'pending',
+                // other details can be added later (like method/address)
+            ]);
+            
+            \App\Models\ActivityLog::log('withdrawal_request', 'Requested withdrawal of $' . $amount, $user->id);
+        });
+
         return redirect()->back()->with('success', 'Withdrawal request submitted successfully! Pending admin approval.');
     }
 

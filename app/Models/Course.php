@@ -10,6 +10,7 @@ class Course extends Model
     use HasFactory;
 
     protected $fillable = [
+        'module_id',
         'title',
         'description',
         'price',
@@ -17,6 +18,11 @@ class Course extends Model
         'content_url',
         'status',
     ];
+
+    public function module()
+    {
+        return $this->belongsTo(CourseModule::class, 'module_id');
+    }
 
     public function progress()
     {

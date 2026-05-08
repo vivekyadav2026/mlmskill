@@ -12,6 +12,10 @@ Route::get('/login', [\App\Http\Controllers\AuthController::class, 'showLogin'])
 Route::post('/login', [\App\Http\Controllers\AuthController::class, 'login']);
 Route::get('/register', [\App\Http\Controllers\AuthController::class, 'showRegister'])->name('register');
 Route::post('/register', [\App\Http\Controllers\AuthController::class, 'register']);
+
+Route::get('/forgot-password', [\App\Http\Controllers\AuthController::class, 'showForgot'])->name('forgot.password');
+Route::post('/forgot-password', [\App\Http\Controllers\AuthController::class, 'processForgot'])->name('forgot.password.submit');
+
 Route::post('/logout', [\App\Http\Controllers\AuthController::class, 'logout'])->name('logout');
 Route::get('/logout', [\App\Http\Controllers\AuthController::class, 'logout']); // Fallback GET logout
 
@@ -27,6 +31,10 @@ Route::get('/login/user', function () {
 
 // User Dashboard & Flow
 Route::middleware(['auth'])->group(function () {
+    // Profile Completion
+    Route::get('/user/complete-profile', [\App\Http\Controllers\CompleteProfileController::class, 'index'])->name('user.complete.profile');
+    Route::post('/user/complete-profile', [\App\Http\Controllers\CompleteProfileController::class, 'store'])->name('user.complete.profile.submit');
+
     Route::get('/inactive', [\App\Http\Controllers\UserActivationController::class, 'inactive'])->name('inactive');
     Route::post('/inactive/submit', [\App\Http\Controllers\UserActivationController::class, 'submit'])->name('user.activate.submit');
     
@@ -58,12 +66,24 @@ Route::middleware(['auth'])->group(function () {
     Route::post('/user/profile/edit', [\App\Http\Controllers\ProfileController::class, 'update'])->name('profile.update');
     Route::post('/user/profile/password', [\App\Http\Controllers\ProfileController::class, 'updatePassword'])->name('profile.password.update');
 
+    // Profile Extra Module
+    Route::get('/user/profile/edit', [\App\Http\Controllers\ProfileController::class, 'edit'])->name('profile.edit');
+    Route::get('/user/profile/password', [\App\Http\Controllers\ProfileController::class, 'password'])->name('profile.password');
+    Route::get('/user/id-card', [\App\Http\Controllers\ProfileController::class, 'idCard'])->name('user.idcard');
+
     // Wallet Module
     Route::get('/user/wallets/income', [\App\Http\Controllers\WalletController::class, 'income'])->name('wallets.income');
     Route::get('/user/wallets/package', [\App\Http\Controllers\WalletController::class, 'package'])->name('wallets.package');
     Route::get('/user/wallets/utility', [\App\Http\Controllers\WalletController::class, 'utility'])->name('wallets.utility');
     Route::get('/user/wallets/renewal', [\App\Http\Controllers\WalletController::class, 'renewal'])->name('wallets.renewal');
     Route::get('/user/wallets/history', [\App\Http\Controllers\WalletController::class, 'history'])->name('wallets.history');
+    Route::get('/user/wallets/transfer', [\App\Http\Controllers\WalletController::class, 'transfer'])->name('wallets.transfer');
+    Route::post('/user/wallets/transfer', [\App\Http\Controllers\WalletController::class, 'processTransfer'])->name('wallets.transfer.submit');
+
+    // P2P Extra Module
+    Route::get('/user/p2p/history', [\App\Http\Controllers\WalletController::class, 'p2pHistory'])->name('p2p.history');
+    Route::get('/user/p2p/mpin', [\App\Http\Controllers\WalletController::class, 'mpinSettings'])->name('p2p.mpin');
+    Route::post('/user/p2p/mpin', [\App\Http\Controllers\WalletController::class, 'updateMpin'])->name('p2p.mpin.update');
 
     // Referral Module
     Route::get('/user/referral/link', [\App\Http\Controllers\ReferralController::class, 'link'])->name('referral.link');
@@ -105,9 +125,14 @@ Route::middleware(['auth'])->group(function () {
     Route::get('/user/notifications/system', [\App\Http\Controllers\NotificationController::class, 'system'])->name('notifications.system');
     Route::get('/user/notifications/announcements', [\App\Http\Controllers\NotificationController::class, 'announcements'])->name('notifications.announcements');
 
+    // Support Chat Module
+    Route::get('/user/chat/unread', [\App\Http\Controllers\SupportChatController::class, 'unreadCount']);
+    Route::get('/user/chat/messages', [\App\Http\Controllers\SupportChatController::class, 'fetchMessages']);
+    Route::post('/user/chat/send', [\App\Http\Controllers\SupportChatController::class, 'sendMessage']);
+
     // Settings Module (Mapping directly to Profile controller for account management)
     Route::get('/user/settings/account', [\App\Http\Controllers\ProfileController::class, 'edit'])->name('settings.account');
-    Route::get('/user/settings/security', [\App\Http\Controllers\ProfileController::class, 'changePassword'])->name('settings.security');
+    Route::get('/user/settings/security', [\App\Http\Controllers\ProfileController::class, 'password'])->name('settings.security');
 
     // Dynamic User Routes for Sidebar
     Route::get('/user/{section}/{subsection?}', [\App\Http\Controllers\DashboardController::class, 'userView']);
@@ -174,6 +199,14 @@ Route::middleware(['auth', 'admin'])->prefix('admin')->group(function () {
     Route::get('/courses', [\App\Http\Controllers\AdminCourseController::class, 'index'])->name('admin.courses.index');
     Route::get('/courses/create', [\App\Http\Controllers\AdminCourseController::class, 'create'])->name('admin.courses.create');
     Route::post('/courses/create', [\App\Http\Controllers\AdminCourseController::class, 'store']);
+    
+    // Modules
+    Route::get('/courses/modules', [\App\Http\Controllers\AdminCourseController::class, 'modules'])->name('admin.courses.modules');
+    Route::post('/courses/modules', [\App\Http\Controllers\AdminCourseController::class, 'storeModule']);
+    Route::post('/courses/modules/{id}/update', [\App\Http\Controllers\AdminCourseController::class, 'updateModule'])->name('admin.courses.modules.update');
+    Route::post('/courses/modules/{id}/assign', [\App\Http\Controllers\AdminCourseController::class, 'assignCourses'])->name('admin.courses.modules.assign');
+    Route::post('/courses/modules/{id}/delete', [\App\Http\Controllers\AdminCourseController::class, 'destroyModule'])->name('admin.courses.modules.destroy');
+
     Route::get('/courses/content', [\App\Http\Controllers\AdminCourseController::class, 'content'])->name('admin.courses.content');
     Route::post('/courses/content/store', [\App\Http\Controllers\AdminCourseController::class, 'storeContent'])->name('admin.courses.content.store');
     Route::post('/courses/content/{id}/delete', [\App\Http\Controllers\AdminCourseController::class, 'destroyContent'])->name('admin.courses.content.destroy');
@@ -251,6 +284,14 @@ Route::middleware(['auth', 'admin'])->prefix('admin')->group(function () {
     Route::post('/logs/system/clear',           [\App\Http\Controllers\AdminLogController::class, 'clearSystemLogs'])->name('admin.logs.system.clear');
     Route::get('/logs/activity',                [\App\Http\Controllers\AdminLogController::class, 'activityLogs'])->name('admin.logs.activity');
     Route::get('/logs/error',                   [\App\Http\Controllers\AdminLogController::class, 'errorLogs'])->name('admin.logs.error');
+
+    // Support Chat
+    Route::get('/support/unread', [\App\Http\Controllers\AdminSupportChatController::class, 'unreadCount']);
+    Route::get('/support', [\App\Http\Controllers\AdminSupportChatController::class, 'index'])->name('admin.support.index');
+    Route::get('/support/{userId}', [\App\Http\Controllers\AdminSupportChatController::class, 'chat'])->name('admin.support.chat');
+    Route::delete('/support/{userId}/delete', [\App\Http\Controllers\AdminSupportChatController::class, 'deleteChat']);
+    Route::get('/support/{userId}/messages', [\App\Http\Controllers\AdminSupportChatController::class, 'fetchMessages']);
+    Route::post('/support/{userId}/send', [\App\Http\Controllers\AdminSupportChatController::class, 'sendMessage']);
 });
 
 // Dynamic CMS Pages

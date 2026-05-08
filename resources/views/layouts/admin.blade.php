@@ -203,6 +203,7 @@
           <i class="fa-solid fa-chevron-down nav-arrow"></i>
         </a>
         <ul class="nav-submenu list-unstyled mb-0">
+          <li><a href="{{ url('admin/courses/modules') }}" class="nav-link sub-link"><span>Course Modules</span></a></li>
           <li><a href="{{ url('admin/courses') }}" class="nav-link sub-link"><span>All Courses</span></a></li>
           <li><a href="{{ url('admin/courses/create') }}" class="nav-link sub-link"><span>Add Course</span></a></li>
           <li><a href="{{ url('admin/courses/content') }}" class="nav-link sub-link"><span>Course Content</span></a></li>
@@ -278,6 +279,16 @@
       </li>
       @endhasPermission
 
+      <li class="nav-item">
+        <a class="nav-link {{ request()->routeIs('admin.support.*') ? 'active' : '' }}" href="{{ route('admin.support.index') }}">
+          <i class="fa-solid fa-headset"></i><span>Support Center</span>
+          @php
+            $unreadSupport = \App\Models\SupportChat::where('sender', 'user')->where('is_read', false)->count();
+          @endphp
+          <span id="adminSupportBadge" class="badge bg-danger rounded-pill float-end mt-1 {{ $unreadSupport > 0 ? '' : 'd-none' }}">{{ $unreadSupport }}</span>
+        </a>
+      </li>
+
       @hasPermission('manage_settings')
       <li class="has-submenu">
         <a href="#" class="nav-link nav-dropdown-toggle">
@@ -336,6 +347,17 @@
       </div>
 
       <div class="d-flex align-items-center gap-2">
+        <!-- Messages Link -->
+        <a href="{{ route('admin.support.index') }}" class="btn btn-sm btn-outline-secondary position-relative me-2" title="Support Messages">
+          <i class="fa-solid fa-envelope"></i>
+          @php
+            $unreadSupport = \App\Models\SupportChat::where('sender', 'user')->where('is_read', false)->count();
+          @endphp
+          <span id="adminTopMessageBadge" class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger {{ $unreadSupport > 0 ? '' : 'd-none' }}" style="font-size:0.6rem;">
+              {{ $unreadSupport }}
+          </span>
+        </a>
+
         <!-- Notifications dropdown -->
         <div class="dropdown">
           <button class="btn btn-sm btn-outline-secondary position-relative" data-bs-toggle="dropdown" aria-expanded="false">
@@ -687,10 +709,24 @@
 })();
 </script>
 
-
+<script>
+  // Admin Support Unread Polling
+  setInterval(() => {
+    fetch('/admin/support/unread')
+      .then(res => res.json())
+      .then(data => {
+        const badge1 = document.getElementById('adminSupportBadge');
+        const badge2 = document.getElementById('adminTopMessageBadge');
+        if (data.unread > 0) {
+          if (badge1) { badge1.innerText = data.unread; badge1.classList.remove('d-none'); }
+          if (badge2) { badge2.innerText = data.unread; badge2.classList.remove('d-none'); }
+        } else {
+          if (badge1) { badge1.classList.add('d-none'); }
+          if (badge2) { badge2.classList.add('d-none'); }
+        }
+      })
+      .catch(err => console.error(err));
+  }, 5000);
+</script>
 
 </body></html>
-
-
-
-
