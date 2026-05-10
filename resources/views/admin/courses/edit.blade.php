@@ -18,12 +18,20 @@
     @endif
 
     <div class="bg-[#1a222d] border border-[#334155] rounded-lg p-6">
-        <form action="{{ route('admin.courses.update', $course->id) }}" method="POST">
+        <form action="{{ route('admin.courses.update', $course->id) }}" method="POST" enctype="multipart/form-data">
             @csrf
             
             <div class="mb-4">
                 <label for="title" class="block text-gray-300 font-medium mb-2">Course Title</label>
                 <input type="text" name="title" id="title" value="{{ old('title', $course->title) }}" class="w-full bg-[#0f172a] border border-[#334155] text-white rounded-lg px-4 py-2 focus:outline-none focus:border-indigo-500" required>
+            </div>
+
+            <div class="mb-4">
+                <label for="pdf_file" class="block text-gray-300 font-medium mb-2">Upload PDF (Optional)</label>
+                <input type="file" name="pdf_file" id="pdf_file" accept=".pdf" class="w-full bg-[#0f172a] border border-[#334155] text-white rounded-lg px-4 py-2 focus:outline-none focus:border-indigo-500">
+                @if($course->pdf_path)
+                    <p class="text-sm text-green-400 mt-2">Current PDF: <a href="{{ asset('storage/' . $course->pdf_path) }}" target="_blank" class="underline">View Document</a></p>
+                @endif
             </div>
 
             <div class="mb-4">

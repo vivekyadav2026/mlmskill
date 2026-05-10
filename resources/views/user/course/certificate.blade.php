@@ -43,7 +43,7 @@
             <h2 class="cert-name">{{ $user->name }}</h2>
             
             <p class="mt-4 text-lg text-gray-600 max-w-2xl mx-auto leading-relaxed">
-                has successfully completed the comprehensive <strong class="text-gray-800">{{ $moduleName }}</strong> in networking, sales strategy, and system mechanics, demonstrating outstanding dedication and skill.
+                has successfully completed the comprehensive <strong class="text-gray-800">{{ $moduleName }}</strong> covering {{ $moduleDesc }}, demonstrating outstanding dedication and skill.
             </p>
             
             <div class="mt-16 flex justify-between items-end px-12">

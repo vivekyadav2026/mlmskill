@@ -152,7 +152,6 @@
         </a>
         <ul class="nav-submenu list-unstyled mb-0">
           <li><a href="{{ url('user/course/my') }}" class="nav-link sub-link"><span>My Course</span></a></li>
-          <li><a href="{{ url('user/course/progress') }}" class="nav-link sub-link"><span>Course Progress</span></a></li>
           <li><a href="{{ url('user/course/complete') }}" class="nav-link sub-link"><span>Complete Course</span></a></li>
           <li><a href="{{ url('user/course/certificate') }}" class="nav-link sub-link"><span>Download Certificate</span></a></li>
         </ul>

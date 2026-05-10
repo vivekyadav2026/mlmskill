@@ -72,7 +72,7 @@
                     <!-- <div class="text-center mt-3">
                         <a href="{{ route('wallets.index') }}" class="text-indigo-400 hover:text-indigo-300 text-sm underline">Add funds to your wallet</a>
                     </div> -->
-                @endifc
+                @endif
             </div>
 
             <!-- Option 2: Ask Sponsor -->

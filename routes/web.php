@@ -57,7 +57,6 @@ Route::middleware(['auth'])->group(function () {
     Route::post('/wallets/convert', [\App\Http\Controllers\WalletController::class, 'convertTokens'])->name('wallets.convert');
     
     // Withdrawals
-    Route::post('/withdraw', [\App\Http\Controllers\WithdrawalController::class, 'requestWithdrawal'])->name('withdraw.request');
     
     // Courses & Certificates
     Route::get('/courses', [\App\Http\Controllers\CourseController::class, 'index'])->name('courses.index');
@@ -113,6 +112,7 @@ Route::middleware(['auth'])->group(function () {
     Route::get('/user/token/utility', [\App\Http\Controllers\TokenSystemController::class, 'utility'])->name('token.utility');
     Route::get('/user/token/renewal', [\App\Http\Controllers\TokenSystemController::class, 'renewal'])->name('token.renewal');
     Route::get('/user/token/conversion', [\App\Http\Controllers\TokenSystemController::class, 'conversion'])->name('token.conversion');
+    Route::post('/user/token/conversion', [\App\Http\Controllers\TokenSystemController::class, 'processConversion'])->name('token.conversion.submit');
 
     // Package Module (History and Activation)
     Route::get('/user/package/history', [\App\Http\Controllers\PackageController::class, 'history'])->name('package.history');
@@ -172,6 +172,7 @@ Route::middleware(['auth', 'admin'])->prefix('admin')->group(function () {
     Route::get('/withdrawals/pending', [\App\Http\Controllers\AdminWithdrawalController::class, 'pending'])->name('admin.withdrawals.pending');
     Route::get('/withdrawals/approved', [\App\Http\Controllers\AdminWithdrawalController::class, 'approved'])->name('admin.withdrawals.approved');
     Route::get('/withdrawals/rejected', [\App\Http\Controllers\AdminWithdrawalController::class, 'rejected'])->name('admin.withdrawals.rejected');
+    Route::get('/withdrawals/logs', [\App\Http\Controllers\AdminWithdrawalController::class, 'logs'])->name('admin.withdrawals.logs');
     Route::post('/withdrawals/{id}/approve', [\App\Http\Controllers\AdminWithdrawalController::class, 'approve'])->name('admin.withdrawals.approve');
     Route::post('/withdrawals/{id}/reject', [\App\Http\Controllers\AdminWithdrawalController::class, 'reject'])->name('admin.withdrawals.reject');
 

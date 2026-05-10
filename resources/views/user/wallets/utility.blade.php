@@ -11,16 +11,64 @@
         <p class="text-gray-400">Daily tokens credited for utility use and conversion.</p>
     </div>
 
-    <!-- Balance Card -->
-    <div class="bg-gradient-to-r from-blue-600 to-indigo-900 rounded-lg shadow-lg overflow-hidden border border-indigo-500/50 mb-8 max-w-sm">
-        <div class="p-6">
+    <!-- Top Row: Balance and Chart -->
+    <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
+        <!-- Balance Card -->
+        <div class="bg-gradient-to-r from-blue-600 to-indigo-900 rounded-lg shadow-lg overflow-hidden border border-indigo-500/50 flex flex-col justify-center p-6">
             <h3 class="text-indigo-100 font-medium text-lg mb-1">Available Tokens</h3>
             <div class="text-4xl font-bold text-white">{{ number_format($balance, 2) }} UT</div>
             <div class="mt-4 flex gap-3">
                 <a href="{{ url('user/token/conversion') }}" class="bg-white text-indigo-800 px-4 py-2 rounded font-medium shadow hover:bg-gray-100 transition">Convert to Package Wallet</a>
             </div>
         </div>
+
+        <!-- Chart Card -->
+        <div class="md:col-span-2 bg-[#1a222d] rounded-lg shadow-lg border border-[#334155] p-6">
+            <h3 class="text-gray-300 font-medium mb-4">Utility Tokens Earned (Last 30 Days)</h3>
+            <div class="h-48 w-full relative">
+                <canvas id="tokenChart"></canvas>
+            </div>
+        </div>
     </div>
+
+    <!-- Chart.js Script -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const chartData = @json($chartData);
+            const labels = chartData.map(item => item.date);
+            const dataPoints = chartData.map(item => item.total);
+
+            const ctx = document.getElementById('tokenChart').getContext('2d');
+            new Chart(ctx, {
+                type: 'line',
+                data: {
+                    labels: labels,
+                    datasets: [{
+                        label: 'Utility Tokens',
+                        data: dataPoints,
+                        borderColor: '#60a5fa',
+                        backgroundColor: 'rgba(96, 165, 250, 0.2)',
+                        borderWidth: 2,
+                        pointBackgroundColor: '#3b82f6',
+                        fill: true,
+                        tension: 0.3
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    scales: {
+                        y: { beginAtZero: true, ticks: { color: '#9ca3af', stepSize: 1 }, grid: { color: '#334155' } },
+                        x: { ticks: { color: '#9ca3af' }, grid: { display: false } }
+                    },
+                    plugins: {
+                        legend: { display: false }
+                    }
+                }
+            });
+        });
+    </script>
 
     <!-- History Table -->
     <div class="bg-[#1a222d] rounded-lg shadow-lg overflow-hidden border border-[#334155]">

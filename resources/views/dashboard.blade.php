@@ -154,18 +154,44 @@
         </div>
     </div>
 
-    <!-- Charts Row -->
-    <div class="grid grid-cols-1 lg:grid-cols-3 gap-6 mb-6">
-        <div class="lg:col-span-2 bg-[#1a222d] rounded-lg border border-[#334155] p-5">
-            <h3 class="text-gray-200 font-medium mb-4"><i class="fa-solid fa-chart-line mr-2"></i>Earnings Trend</h3>
-            <div class="h-64 rounded flex items-center justify-center text-gray-500 relative">
-                <canvas id="earningsChart"></canvas>
-            </div>
+    <!-- Live Market Tracker (Dummy Stock Graph) -->
+    <div class="mb-6 bg-[#1a222d] rounded-lg border border-[#334155] p-5 shadow-lg relative overflow-hidden">
+        <div class="absolute top-0 right-0 w-64 h-64 bg-green-500/5 rounded-full blur-3xl -mr-10 -mt-10 pointer-events-none"></div>
+        <div class="flex justify-between items-center mb-4 relative z-10">
+            <h3 class="text-gray-200 font-medium"><i class="fa-solid fa-arrow-trend-up mr-2 text-green-400"></i>Live Token Market (SKT/USD)</h3>
+            <span class="text-xs font-bold bg-green-900 text-green-300 border border-green-700 px-2 py-1 rounded animate-pulse">
+                <i class="fa-solid fa-circle text-[8px] mr-1"></i> Live Market
+            </span>
         </div>
-        <div class="bg-[#1a222d] rounded-lg border border-[#334155] p-5">
-            <h3 class="text-gray-200 font-medium mb-4"><i class="fa-solid fa-chart-pie mr-2"></i>Income Breakdown</h3>
+        <div class="flex items-end gap-3 mb-2 relative z-10">
+            <h1 class="text-3xl font-bold text-white font-mono" id="currentStockPrice">$0.4200</h1>
+            <span class="text-green-400 text-sm font-semibold mb-1 bg-green-900/30 px-2 py-0.5 rounded"><i class="fa-solid fa-caret-up mr-1"></i>+12.5% Today</span>
+        </div>
+        <div class="h-64 rounded flex items-center justify-center text-gray-500 relative z-10">
+            <canvas id="stockChart"></canvas>
+        </div>
+    </div>
+
+    <!-- Main Trend Chart Row -->
+    <div class="mb-6 bg-[#1a222d] rounded-lg border border-[#334155] p-5 shadow-lg">
+        <h3 class="text-gray-200 font-medium mb-4"><i class="fa-solid fa-chart-line mr-2 text-indigo-400"></i>Overall Financial Growth (Last 7 Days)</h3>
+        <div class="h-72 rounded flex items-center justify-center text-gray-500 relative">
+            <canvas id="earningsChart"></canvas>
+        </div>
+    </div>
+
+    <!-- Breakdown Charts Row -->
+    <div class="grid grid-cols-1 lg:grid-cols-2 gap-6 mb-6">
+        <div class="bg-[#1a222d] rounded-lg border border-[#334155] p-5 shadow-lg">
+            <h3 class="text-gray-200 font-medium mb-4"><i class="fa-solid fa-chart-pie mr-2 text-purple-400"></i>Income Breakdown</h3>
             <div class="h-64 rounded flex items-center justify-center text-gray-500 relative">
                 <canvas id="breakdownChart"></canvas>
+            </div>
+        </div>
+        <div class="bg-[#1a222d] rounded-lg border border-[#334155] p-5 shadow-lg">
+            <h3 class="text-gray-200 font-medium mb-4"><i class="fa-solid fa-wallet mr-2 text-green-400"></i>Current Asset Distribution</h3>
+            <div class="h-64 rounded flex items-center justify-center text-gray-500 relative">
+                <canvas id="assetChart"></canvas>
             </div>
         </div>
     </div>
@@ -288,45 +314,69 @@
 <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 <script>
 document.addEventListener('DOMContentLoaded', function() {
-    // Earnings Trend Line Chart
+    // 1. Overall Financial Growth (Mixed Chart: Bar for Income, Line for Tokens)
     const trendCtx = document.getElementById('earningsChart').getContext('2d');
     new Chart(trendCtx, {
-        type: 'line',
+        type: 'bar',
         data: {
             labels: {!! json_encode($trendLabels) !!},
-            datasets: [{
-                label: 'Earnings ($)',
-                data: {!! json_encode($earningsTrend) !!},
-                borderColor: '#6366f1',
-                backgroundColor: 'rgba(99, 102, 241, 0.1)',
-                borderWidth: 2,
-                tension: 0.3,
-                fill: true,
-                pointBackgroundColor: '#818cf8',
-                pointRadius: 4
-            }]
+            datasets: [
+                {
+                    type: 'line',
+                    label: 'Tokens Earned',
+                    data: {!! json_encode($tokenTrend) !!},
+                    borderColor: '#10b981',
+                    backgroundColor: 'rgba(16, 185, 129, 0.1)',
+                    borderWidth: 2,
+                    tension: 0.4,
+                    fill: true,
+                    pointBackgroundColor: '#34d399',
+                    pointRadius: 4,
+                    order: 1
+                },
+                {
+                    type: 'bar',
+                    label: 'Income Earned ($)',
+                    data: {!! json_encode($earningsTrend) !!},
+                    backgroundColor: 'rgba(99, 102, 241, 0.8)',
+                    borderRadius: 4,
+                    order: 2
+                }
+            ]
         },
         options: {
             responsive: true,
             maintainAspectRatio: false,
             plugins: {
-                legend: { display: false }
+                legend: { 
+                    position: 'top',
+                    labels: { color: '#94a3b8', usePointStyle: true, boxWidth: 8 }
+                },
+                tooltip: {
+                    mode: 'index',
+                    intersect: false,
+                }
             },
             scales: {
                 y: {
                     beginAtZero: true,
-                    grid: { color: '#334155' },
+                    grid: { color: '#334155', drawBorder: false },
                     ticks: { color: '#94a3b8' }
                 },
                 x: {
                     grid: { display: false },
                     ticks: { color: '#94a3b8' }
                 }
+            },
+            interaction: {
+                mode: 'nearest',
+                axis: 'x',
+                intersect: false
             }
         }
     });
 
-    // Income Breakdown Doughnut Chart
+    // 2. Income Breakdown Doughnut Chart
     const breakCtx = document.getElementById('breakdownChart').getContext('2d');
     new Chart(breakCtx, {
         type: 'doughnut',
@@ -352,8 +402,136 @@ document.addEventListener('DOMContentLoaded', function() {
             plugins: {
                 legend: {
                     position: 'bottom',
-                    labels: { color: '#94a3b8', padding: 20 }
+                    labels: { color: '#94a3b8', padding: 20, usePointStyle: true }
                 }
+            }
+        }
+    });
+
+    // 3. Current Asset Distribution Chart
+    const assetCtx = document.getElementById('assetChart').getContext('2d');
+    new Chart(assetCtx, {
+        type: 'polarArea',
+        data: {
+            labels: ['Income Wallet', 'Package Wallet', 'Utility Tokens'],
+            datasets: [{
+                data: [
+                    {{ $wallet->income_wallet ?? 0 }},
+                    {{ $wallet->package_wallet ?? 0 }},
+                    {{ $wallet->utility_token_wallet ?? 0 }}
+                ],
+                backgroundColor: [
+                    'rgba(16, 185, 129, 0.7)', // Green for Income
+                    'rgba(139, 92, 246, 0.7)', // Purple for Package
+                    'rgba(59, 130, 246, 0.7)'  // Blue for Tokens
+                ],
+                borderWidth: 1,
+                borderColor: '#1a222d'
+            }]
+        },
+        options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            scales: {
+                r: {
+                    grid: { color: '#334155' },
+                    ticks: { display: false },
+                    angleLines: { color: '#334155' }
+                }
+            },
+            plugins: {
+                legend: {
+                    position: 'bottom',
+                    labels: { color: '#94a3b8', padding: 20, usePointStyle: true }
+                }
+            }
+        }
+    });
+
+    // 4. Live Stock Market Dummy Graph
+    const stockCtx = document.getElementById('stockChart').getContext('2d');
+    
+    // Generate dummy stock data (Last 30 days)
+    const stockLabels = [];
+    const stockData = [];
+    let currentPrice = 0.1250;
+    
+    for (let i = 30; i >= 0; i--) {
+        let d = new Date();
+        d.setDate(d.getDate() - i);
+        stockLabels.push(d.toLocaleDateString('en-US', { month: 'short', day: 'numeric' }));
+        
+        // Random walk favoring upward trend
+        let change = (Math.random() - 0.42) * 0.08; 
+        currentPrice = Math.max(0.05, currentPrice + change);
+        stockData.push(currentPrice.toFixed(4));
+    }
+    
+    // Ensure the last price matches the displayed price
+    stockData[stockData.length - 1] = 0.4200;
+    
+    // Create gradient
+    let gradient = stockCtx.createLinearGradient(0, 0, 0, 300);
+    gradient.addColorStop(0, 'rgba(16, 185, 129, 0.4)'); // Green
+    gradient.addColorStop(1, 'rgba(16, 185, 129, 0.0)');
+    
+    new Chart(stockCtx, {
+        type: 'line',
+        data: {
+            labels: stockLabels,
+            datasets: [{
+                label: 'SKT Price ($)',
+                data: stockData,
+                borderColor: '#10b981', // green
+                backgroundColor: gradient,
+                borderWidth: 2,
+                tension: 0.05, // slightly jagged for stock look
+                fill: true,
+                pointRadius: 0,
+                pointHoverRadius: 6,
+                pointHoverBackgroundColor: '#10b981',
+                pointHoverBorderColor: '#fff',
+                pointHoverBorderWidth: 2
+            }]
+        },
+        options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            plugins: {
+                legend: { display: false },
+                tooltip: {
+                    mode: 'index',
+                    intersect: false,
+                    backgroundColor: 'rgba(15, 23, 42, 0.9)',
+                    titleColor: '#94a3b8',
+                    bodyColor: '#10b981',
+                    borderColor: '#334155',
+                    borderWidth: 1,
+                    displayColors: false,
+                    callbacks: {
+                        label: function(context) {
+                            return '$' + parseFloat(context.parsed.y).toFixed(4);
+                        }
+                    }
+                }
+            },
+            scales: {
+                y: {
+                    grid: { color: '#334155', drawBorder: false },
+                    ticks: { 
+                        color: '#94a3b8',
+                        callback: function(value) { return '$' + parseFloat(value).toFixed(2); }
+                    }
+                },
+                x: {
+                    grid: { display: false },
+                    ticks: { color: '#94a3b8', maxTicksLimit: 7 }
+                }
+            },
+            interaction: {
+                mode: 'nearest',
+                axis: 'x',
+                intersect: false
             }
         }
     });

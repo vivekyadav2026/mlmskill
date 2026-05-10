@@ -36,7 +36,7 @@
                 <i class="fa-solid fa-check text-5xl"></i>
             </div>
             <h3 class="text-2xl font-bold text-white mb-2">Congratulations!</h3>
-            <p class="text-gray-400 mb-6">You successfully completed the SK Global Masterclass on {{ \Carbon\Carbon::parse($user->course_completed_at)->format('F d, Y') }}.</p>
+            <p class="text-gray-400 mb-6">You successfully completed the {{ $moduleName }} on {{ \Carbon\Carbon::parse($user->course_completed_at)->format('F d, Y') }}.</p>
             
             <a href="{{ url('user/course/certificate') }}" class="bg-indigo-600 hover:bg-indigo-700 text-white font-bold py-3 px-8 rounded shadow transition block mx-auto max-w-xs">
                 <i class="fa-solid fa-certificate mr-2"></i> View Certificate

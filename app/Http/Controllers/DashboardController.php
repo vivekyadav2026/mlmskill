@@ -32,15 +32,32 @@ class DashboardController extends Controller
         
         // --- Chart Data ---
         // 1. Earnings Trend (Last 7 Days)
-        $earningsTrend = [];
+        $earningsTrend = array_fill(0, 7, 0);
+        $tokenTrend = array_fill(0, 7, 0);
         $trendLabels = [];
+        
+        $startDate = \Carbon\Carbon::today()->subDays(6);
+        
         for ($i = 6; $i >= 0; $i--) {
-            $date = \Carbon\Carbon::today()->subDays($i);
-            $trendLabels[] = $date->format('M d');
-            $sum = \App\Models\CommissionLedger::where('user_id', $user->id)
-                ->whereDate('created_at', $date)
-                ->sum('amount');
-            $earningsTrend[] = round($sum, 2);
+            $trendLabels[] = \Carbon\Carbon::today()->subDays($i)->format('M d');
+        }
+
+        $commissions = \App\Models\CommissionLedger::where('user_id', $user->id)
+            ->where('created_at', '>=', $startDate)
+            ->selectRaw('DATE(created_at) as date, sum(amount) as total')
+            ->groupBy('date')
+            ->pluck('total', 'date')->toArray();
+
+        $tokens = \App\Models\TokenLedger::where('user_id', $user->id)
+            ->where('created_at', '>=', $startDate)
+            ->selectRaw('DATE(created_at) as date, sum(token_count) as total')
+            ->groupBy('date')
+            ->pluck('total', 'date')->toArray();
+
+        foreach ($trendLabels as $index => $label) {
+            $dateStr = \Carbon\Carbon::today()->subDays(6 - $index)->format('Y-m-d');
+            $earningsTrend[$index] = round($commissions[$dateStr] ?? 0, 2);
+            $tokenTrend[$index] = round($tokens[$dateStr] ?? 0, 2);
         }
         
         // 2. Income Breakdown
@@ -61,7 +78,7 @@ class DashboardController extends Controller
             'user', 'wallet', 'totalEarned', 'directCount', 'networkCount',
             'recentIncome', 'recentReferrals', 'recentWithdrawals', 'recentTokens',
             'banners', 'announcements',
-            'trendLabels', 'earningsTrend', 'breakdownLabels', 'breakdownData'
+            'trendLabels', 'earningsTrend', 'tokenTrend', 'breakdownLabels', 'breakdownData'
         ));
     }
 

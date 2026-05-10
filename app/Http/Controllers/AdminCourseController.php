@@ -4,11 +4,12 @@ use Illuminate\Http\Request;
 use App\Models\Course;
 use App\Models\CourseLesson;
 use App\Models\CourseProgress;
+use Illuminate\Support\Facades\Storage;
 
 class AdminCourseController extends Controller
 {
     public function index() {
-        $courses = Course::with('module')->latest()->paginate(15);
+        $courses = Course::with(['module', 'lessons'])->latest()->paginate(15);
         $modules = \App\Models\CourseModule::all();
         return view('admin.courses.index', compact('courses', 'modules'));
     }
@@ -17,8 +18,19 @@ class AdminCourseController extends Controller
         return view('admin.courses.create', compact('modules'));
     }
     public function store(Request $request) {
-        $request->validate(['title'=>'required', 'price'=>'required|numeric', 'module_id'=>'nullable|exists:course_modules,id']);
-        Course::create($request->all());
+        $request->validate([
+            'title'=>'required', 
+            'price'=>'required|numeric', 
+            'module_id'=>'nullable|exists:course_modules,id',
+            'pdf_file'=>'nullable|mimes:pdf|max:10240'
+        ]);
+        
+        $data = $request->all();
+        if ($request->hasFile('pdf_file')) {
+            $data['pdf_path'] = $request->file('pdf_file')->store('course_pdfs', 'public');
+        }
+
+        Course::create($data);
         return redirect('admin/courses')->with('success', 'Course added successfully.');
     }
 
@@ -29,9 +41,23 @@ class AdminCourseController extends Controller
     }
 
     public function update(Request $request, $id) {
-        $request->validate(['title'=>'required', 'price'=>'required|numeric', 'module_id'=>'nullable|exists:course_modules,id']);
+        $request->validate([
+            'title'=>'required', 
+            'price'=>'required|numeric', 
+            'module_id'=>'nullable|exists:course_modules,id',
+            'pdf_file'=>'nullable|mimes:pdf|max:10240'
+        ]);
         $course = Course::findOrFail($id);
-        $course->update($request->all());
+        
+        $data = $request->all();
+        if ($request->hasFile('pdf_file')) {
+            if ($course->pdf_path) {
+                Storage::disk('public')->delete($course->pdf_path);
+            }
+            $data['pdf_path'] = $request->file('pdf_file')->store('course_pdfs', 'public');
+        }
+
+        $course->update($data);
         return redirect('admin/courses')->with('success', 'Course updated successfully.');
     }
 

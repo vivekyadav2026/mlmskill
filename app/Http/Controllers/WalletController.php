@@ -41,7 +41,17 @@ class WalletController extends Controller
             ->orderBy('created_at', 'desc')
             ->paginate(15);
             
-        return view('user.wallets.utility', compact('balance', 'history'));
+        $chartData = DB::table('token_ledgers')
+            ->select(DB::raw('DATE(created_at) as date'), DB::raw('SUM(token_count) as total'))
+            ->where('user_id', $user->id)
+            ->where('token_type', 'utility')
+            ->where('token_count', '>', 0)
+            ->groupBy(DB::raw('DATE(created_at)'))
+            ->orderBy(DB::raw('DATE(created_at)'), 'asc')
+            ->take(30)
+            ->get();
+            
+        return view('user.wallets.utility', compact('balance', 'history', 'chartData'));
     }
 
     public function renewal()

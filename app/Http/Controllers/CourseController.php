@@ -10,7 +10,12 @@ class CourseController extends Controller
     public function my()
     {
         $user = Auth::user();
-        return view('user.course.my', compact('user'));
+        
+        // Fetch courses the user has access to (via CourseProgress which is created on purchase)
+        $courseIds = \App\Models\CourseProgress::where('user_id', $user->id)->pluck('course_id');
+        $courses = \App\Models\Course::whereIn('id', $courseIds)->where('status', 'active')->get();
+        
+        return view('user.course.my', compact('user', 'courses'));
     }
 
     public function progress()
@@ -24,7 +29,14 @@ class CourseController extends Controller
     public function completeView()
     {
         $user = Auth::user();
-        return view('user.course.complete', compact('user'));
+        $moduleName = 'Skill Development Program';
+        $progress = \App\Models\CourseProgress::with('course.module')->where('user_id', $user->id)->first();
+        
+        if ($progress && $progress->course && $progress->course->module) {
+            $moduleName = $progress->course->module->name;
+        }
+
+        return view('user.course.complete', compact('user', 'moduleName'));
     }
 
     public function markComplete()
@@ -41,13 +53,15 @@ class CourseController extends Controller
     {
         $user = Auth::user();
         
-        $moduleName = 'SK Global Masterclass';
+        $moduleName = 'Skill Development Program';
+        $moduleDesc = 'various skill development mechanics and strategies';
         $progress = \App\Models\CourseProgress::with('course.module')->where('user_id', $user->id)->first();
         
         if ($progress && $progress->course && $progress->course->module) {
             $moduleName = $progress->course->module->name;
+            $moduleDesc = $progress->course->module->description ?: 'skill development and associated mechanics';
         }
         
-        return view('user.course.certificate', compact('user', 'moduleName'));
+        return view('user.course.certificate', compact('user', 'moduleName', 'moduleDesc'));
     }
 }

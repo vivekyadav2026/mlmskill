@@ -16,6 +16,7 @@ class Course extends Model
         'price',
         'content_type',
         'content_url',
+        'pdf_path',
         'status',
     ];
 

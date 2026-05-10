@@ -175,7 +175,7 @@
           <i class="fa-solid fa-chevron-down nav-arrow"></i>
         </a>
         <ul class="nav-submenu list-unstyled mb-0">
-          <li><a href="{{ url('admin/tokens/settings') }}" class="nav-link sub-link"><span>Token Settings</span></a></li>
+          <li><a href="{{ url('admin/settings/token') }}" class="nav-link sub-link"><span>Token Settings</span></a></li>
           <li><a href="{{ url('admin/tokens/logs') }}" class="nav-link sub-link"><span>Token Distribution Logs</span></a></li>
           <li><a href="{{ url('admin/tokens/manual') }}" class="nav-link sub-link"><span>Manual Token Credit</span></a></li>
         </ul>
@@ -191,7 +191,7 @@
         <ul class="nav-submenu list-unstyled mb-0">
           <li><a href="{{ url('admin/commissions/direct') }}" class="nav-link sub-link"><span>Direct Income Logs</span></a></li>
           <li><a href="{{ url('admin/commissions/level') }}" class="nav-link sub-link"><span>Level Income Logs</span></a></li>
-          <li><a href="{{ url('admin/commissions/settings') }}" class="nav-link sub-link"><span>Commission Settings</span></a></li>
+          <li><a href="{{ url('admin/settings/plan') }}" class="nav-link sub-link"><span>Commission Settings</span></a></li>
         </ul>
       </li>
       @endhasPermission

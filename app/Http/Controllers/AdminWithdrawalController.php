@@ -30,4 +30,8 @@ class AdminWithdrawalController extends Controller
         $withdrawal->save();
         return redirect()->back()->with('success', 'Withdrawal rejected.');
     }
+    public function logs() {
+        $withdrawals = Withdrawal::with('user')->whereIn('status', ['approved', 'rejected'])->latest()->paginate(15);
+        return view('admin.withdrawals.logs', compact('withdrawals'));
+    }
 }
