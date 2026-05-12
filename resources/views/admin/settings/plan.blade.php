@@ -57,22 +57,22 @@
 
     <!-- Commission Structure -->
     <div class="s-card">
-      <div class="s-header"><i class="fa-solid fa-percent text-green-400"></i><h3>Commission Structure</h3></div>
-      <div class="s-body grid grid-cols-1 md:grid-cols-3 gap-4">
+      <div class="s-header"><i class="fa-solid fa-percent text-green-400"></i><h3>Multi-Level Commission Structure (%)</h3></div>
+      <div class="s-body grid grid-cols-2 md:grid-cols-5 gap-4">
+        @for($i=1; $i<=10; $i++)
         <div>
-          <label class="f-label">Direct Commission (%)</label>
-          <input type="number" step="0.01" name="direct_commission_pct" class="f-ctrl" value="{{ $settings['direct_commission_pct'] ?? '10' }}" required>
-          <p class="info-box">Paid on direct referral registration fee</p>
+          <label class="f-label">Level {{ $i }} (%)</label>
+          <input type="number" step="0.01" name="level_{{ $i }}_pct" class="f-ctrl" value="{{ $settings['level_'.$i.'_pct'] ?? ($i==1 ? '15' : ($i==2 ? '10' : ($i==3 ? '6' : ($i==4 ? '3' : ($i==5 ? '2' : '0.5'))))) }}" required>
         </div>
-        <div>
-          <label class="f-label">Level Commission (%)</label>
-          <input type="number" step="0.01" name="level_commission_pct" class="f-ctrl" value="{{ $settings['level_commission_pct'] ?? '5' }}" required>
-          <p class="info-box">Paid per qualifying downline level</p>
-        </div>
-        <div>
-          <label class="f-label">Maximum Levels</label>
-          <input type="number" name="max_levels" class="f-ctrl" value="{{ $settings['max_levels'] ?? '5' }}" min="1" max="20" required>
-          <p class="info-box">How many downline levels earn commissions</p>
+        @endfor
+      </div>
+      <div class="s-body border-t border-[#334155] pt-0">
+        <div class="grid grid-cols-1 gap-4">
+            <div>
+              <label class="f-label">Maximum Levels (Active)</label>
+              <input type="number" name="max_levels" class="f-ctrl max-w-[200px]" value="{{ $settings['max_levels'] ?? '10' }}" min="1" max="10" required>
+            </div>
+            <p class="info-box mt-0">Level 1 corresponds to "Direct Commission". Levels 2-10 are "Team/Level Commissions". Note: You must also set the Maximum Levels field above to control how deep commissions go.</p>
         </div>
       </div>
     </div>

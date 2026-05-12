@@ -11,11 +11,12 @@
 </head>
 <body class="antialiased">
     @include('components.preloader')
-    <nav class="bg-indigo-600 shadow-lg">
+    <nav class="shadow-lg" style="background-color: #1f512c;">
         <div class="max-w-7xl mx-auto px-4">
             <div class="flex justify-between h-16">
                 <div class="flex">
-                    <div class="flex-shrink-0 flex items-center">
+                    <div class="flex-shrink-0 flex items-center gap-2">
+                        <img src="{{ asset('logo.png') }}" alt="Logo" class="w-10 h-10 rounded-full object-cover">
                         <span class="text-white font-bold text-xl">samarth.digital</span>
                     </div>
                 </div>

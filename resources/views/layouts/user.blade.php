@@ -26,16 +26,16 @@
   <style id="xvt-theme-vars">
   :root,
   [data-bs-theme="dark"] {
-    --xvt-primary: #f24a4a;
-    --xvt-accent:  #8c54c4;
+    --xvt-primary: #1f512c;
+    --xvt-accent:  #f48a20;
     --xvt-radius:  8px;
-    --xvt-body-bg: #0b1220;
-    --xvt-card-bg: #1a222d;
-    --xvt-sidebar-bg: #14172a;
-    --xvt-topbar-bg:  #161f2d;
+    --xvt-body-bg: #0d1510;
+    --xvt-card-bg: #16231a;
+    --xvt-sidebar-bg: #111c15;
+    --xvt-topbar-bg:  #132018;
     --xvt-text:    #e2e8f0;
     --xvt-muted:   #94a3b8;
-    --xvt-border:  #334155;
+    --xvt-border:  #2f3c34;
 
     /* Bootstrap overrides */
     --bs-primary: var(--xvt-primary);
@@ -61,8 +61,8 @@
 
   <!-- ===== User Sidebar ===== -->
   <aside id="appSidebar" class="app-sidebar">
-        <a href="{{ url('user/index') }}" class="sidebar-brand">
-              <i class="fa-solid fa-bolt-lightning"></i>
+        <a href="{{ url('user/index') }}" class="sidebar-brand d-flex align-items-center gap-2">
+              <img src="{{ asset('logo.png') }}" alt="Logo" style="width: 40px; height: 40px; border-radius: 50%; object-fit: cover;">
         <span> Samarth Digital</span>
           </a>
     <ul class="list-unstyled mb-0 pb-3">

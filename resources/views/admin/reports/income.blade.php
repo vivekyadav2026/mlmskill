@@ -38,12 +38,12 @@
                     <td class="font-medium text-gray-200">{{ $comm->user->name ?? 'Unknown' }}</td>
                     <td class="text-gray-400">{{ $comm->fromUser->name ?? 'System' }}</td>
                     <td>
-                        @if($comm->type == 'direct')
+                        @if($comm->commission_type == 'direct')
                             <span class="bg-blue-900/50 text-blue-400 px-2 py-1 rounded text-xs font-medium">Direct Income</span>
-                        @elseif($comm->type == 'level')
+                        @elseif($comm->commission_type == 'team')
                             <span class="bg-purple-900/50 text-purple-400 px-2 py-1 rounded text-xs font-medium">Level Income (Lvl {{ $comm->level }})</span>
                         @else
-                            <span class="bg-gray-800 text-gray-400 px-2 py-1 rounded text-xs font-medium">{{ ucfirst($comm->type) }}</span>
+                            <span class="bg-gray-800 text-gray-400 px-2 py-1 rounded text-xs font-medium">{{ ucfirst($comm->commission_type) }}</span>
                         @endif
                     </td>
                     <td class="font-bold text-green-400">+${{ number_format($comm->amount, 2) }}</td>

@@ -115,23 +115,29 @@ class AdminSettingController extends Controller
 
     public function savePlan(Request $request)
     {
-        $request->validate([
+        $rules = [
             'registration_fee'      => 'required|numeric|min:0',
-            'direct_commission_pct' => 'required|numeric|min:0|max:100',
-            'level_commission_pct'  => 'required|numeric|min:0|max:100',
-            'max_levels'            => 'required|integer|min:1|max:20',
+            'max_levels'            => 'required|integer|min:1|max:10',
             'min_withdrawal'        => 'required|numeric|min:0',
             'max_withdrawal'        => 'required|numeric|min:0',
             'withdrawal_charge_pct' => 'required|numeric|min:0|max:100',
             'renewal_target'        => 'required|numeric|min:0',
-        ]);
-
-        $fields = [
-            'registration_fee', 'direct_commission_pct', 'level_commission_pct',
-            'max_levels', 'min_withdrawal', 'max_withdrawal', 'withdrawal_charge_pct',
-            'renewal_target', 'plan_name', 'plan_description',
         ];
-        foreach ($fields as $f) Setting::set($f, $request->input($f, ''));
+        $fields = [
+            'registration_fee', 'max_levels', 'min_withdrawal', 'max_withdrawal',
+            'withdrawal_charge_pct', 'renewal_target', 'plan_name', 'plan_description',
+        ];
+
+        for ($i = 1; $i <= 10; $i++) {
+            $rules['level_'.$i.'_pct'] = 'required|numeric|min:0|max:100';
+            $fields[] = 'level_'.$i.'_pct';
+        }
+
+        $request->validate($rules);
+
+        foreach ($fields as $f) {
+            Setting::set($f, $request->input($f, ''));
+        }
 
         return back()->with('success', 'MLM Plan settings saved successfully!');
     }

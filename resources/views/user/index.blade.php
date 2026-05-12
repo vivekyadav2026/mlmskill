@@ -1,5 +1,5 @@
 @extends('layouts.user')
-@section('title', 'My Dashboard â€” XVolty Trade')
+@section('title', 'My Dashboard â€”')
 
 @section('content')
 <!-- Welcome Banner -->
@@ -49,7 +49,7 @@
 
 <!-- â”€â”€â”€ KPI Wallet Cards â”€â”€â”€ -->
 <div class="row g-3 mb-4">
-      <div class="col-6 col-lg-3">
+    <div class="col-6 col-lg-4">
       <div class="card border-themed h-100">
         <div class="card-body">
           <div class="d-flex align-items-center gap-3">
@@ -62,7 +62,7 @@
         </div>
       </div>
     </div>
-      <div class="col-6 col-lg-3">
+    <div class="col-6 col-lg-4">
       <div class="card border-themed h-100">
         <div class="card-body">
           <div class="d-flex align-items-center gap-3">
@@ -75,20 +75,7 @@
         </div>
       </div>
     </div>
-      <div class="col-6 col-lg-3">
-      <div class="card border-themed h-100">
-        <div class="card-body">
-          <div class="d-flex align-items-center gap-3">
-            <span class="xvt-avatar lg" style="background:#f59e0b22;color:#f59e0b;"><i class="fa-solid fa-lock"></i></span>
-            <div>
-              <div class="text-muted small">Inactive Wallet</div>
-              <h5 class="mb-0 fw-bold">$0.00</h5>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-      <div class="col-6 col-lg-3">
+    <div class="col-6 col-lg-4">
       <div class="card border-themed h-100">
         <div class="card-body">
           <div class="d-flex align-items-center gap-3">
@@ -96,6 +83,45 @@
             <div>
               <div class="text-muted small">Total Earned</div>
               <h5 class="mb-0 fw-bold">${{ number_format($user->total_earned, 2) }}</h5>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="col-6 col-lg-4">
+      <div class="card border-themed h-100">
+        <div class="card-body">
+          <div class="d-flex align-items-center gap-3">
+            <span class="xvt-avatar lg" style="background:#8b5cf622;color:#8b5cf6;"><i class="fa-solid fa-coins"></i></span>
+            <div>
+              <div class="text-muted small">Utility Tokens</div>
+              <h5 class="mb-0 fw-bold">{{ number_format($user->wallet->utility_token_wallet ?? 0, 2) }} UT</h5>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="col-6 col-lg-4">
+      <div class="card border-themed h-100">
+        <div class="card-body">
+          <div class="d-flex align-items-center gap-3">
+            <span class="xvt-avatar lg" style="background:#f48a2022;color:#f48a20;"><i class="fa-solid fa-rotate"></i></span>
+            <div>
+              <div class="text-muted small">Renewal Tokens</div>
+              <h5 class="mb-0 fw-bold">{{ number_format($user->wallet->renewal_token_wallet ?? 0, 2) }} RT</h5>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="col-6 col-lg-4">
+      <div class="card border-themed h-100">
+        <div class="card-body">
+          <div class="d-flex align-items-center gap-3">
+            <span class="xvt-avatar lg" style="background:#ef444422;color:#ef4444;"><i class="fa-solid fa-arrow-up-from-bracket"></i></span>
+            <div>
+              <div class="text-muted small">Total Withdrawn</div>
+              <h5 class="mb-0 fw-bold">${{ number_format(\App\Models\Withdrawal::where('user_id', $user->id)->where('status', 'approved')->sum('amount'), 2) }}</h5>
             </div>
           </div>
         </div>
@@ -285,37 +311,22 @@
             </tr>
           </thead>
           <tbody>
-                            <tr>
-                  <td class="ps-3"><span class="badge bg-secondary text-uppercase small">roi</span>
-                  </td>
-                  <td class="small text-success">$5.00</td>
-                  <td class="pe-3 small text-muted">2026-05-01 10:31:20</td>
+          <tbody>
+              @php
+                  $recentIncome = \App\Models\CommissionLedger::where('user_id', $user->id)->latest()->take(5)->get();
+              @endphp
+              @forelse($recentIncome as $inc)
+                <tr>
+                  <td class="ps-3"><span class="badge bg-secondary text-uppercase small">{{ $inc->commission_type }}</span></td>
+                  <td class="small text-success">+${{ number_format($inc->amount, 2) }}</td>
+                  <td class="pe-3 small text-muted">{{ $inc->created_at->format('Y-m-d H:i') }}</td>
                 </tr>
-                              <tr>
-                  <td class="ps-3"><span class="badge bg-secondary text-uppercase small">roi</span>
-                  </td>
-                  <td class="small text-success">$5.00</td>
-                  <td class="pe-3 small text-muted">2026-04-29 11:00:54</td>
+              @empty
+                <tr>
+                  <td colspan="3" class="text-center text-muted py-3">No recent income</td>
                 </tr>
-                              <tr>
-                  <td class="ps-3"><span class="badge bg-secondary text-uppercase small">roi</span>
-                  </td>
-                  <td class="small text-success">$5.00</td>
-                  <td class="pe-3 small text-muted">2026-04-25 10:35:57</td>
-                </tr>
-                              <tr>
-                  <td class="ps-3"><span class="badge bg-secondary text-uppercase small">direct</span>
-                  </td>
-                  <td class="small text-success">$5.00</td>
-                  <td class="pe-3 small text-muted">2026-04-24 08:38:41</td>
-                </tr>
-                              <tr>
-                  <td class="ps-3"><span class="badge bg-secondary text-uppercase small">level</span>
-                  </td>
-                  <td class="small text-success">$2.50</td>
-                  <td class="pe-3 small text-muted">2026-04-24 08:38:41</td>
-                </tr>
-                        </tbody>
+              @endforelse
+          </tbody>
         </table>
       </div>
     </div>
@@ -336,19 +347,28 @@
             </tr>
           </thead>
           <tbody>
-                            <tr>
-                  <td class="ps-3 small"><strong>POONAM SINGH</strong><br><span class="text-muted">XV442258</span></td>
-                  <td><span class="badge bg-success">Active</span>
+          <tbody>
+              @php
+                  $recentReferrals = \App\Models\User::where('sponsor_id', $user->referral_code)->latest()->take(5)->get();
+              @endphp
+              @forelse($recentReferrals as $ref)
+                <tr>
+                  <td class="ps-3 small"><strong>{{ $ref->name }}</strong><br><span class="text-muted">{{ $ref->referral_code }}</span></td>
+                  <td>
+                    @if($ref->status === 'active')
+                        <span class="badge bg-success">Active</span>
+                    @else
+                        <span class="badge bg-secondary">Inactive</span>
+                    @endif
                   </td>
-                  <td class="pe-3 small text-muted">2026-04-21 10:49:07</td>
+                  <td class="pe-3 small text-muted">{{ $ref->created_at->format('Y-m-d') }}</td>
                 </tr>
-                              <tr>
-                  <td class="ps-3 small"><strong>Ravishankar Tiwari</strong><br><span class="text-muted">XV528556</span></td>
-                  <td><span class="badge bg-secondary">Inactive</span>
-                  </td>
-                  <td class="pe-3 small text-muted">2026-04-21 10:14:21</td>
+              @empty
+                <tr>
+                  <td colspan="3" class="text-center text-muted py-3">No recent referrals</td>
                 </tr>
-                        </tbody>
+              @endforelse
+          </tbody>
         </table>
       </div>
     </div>
@@ -373,25 +393,28 @@
             </tr>
           </thead>
           <tbody>
-                            <tr>
-                  <td class="ps-3 small">$1,000.00</td>
-                  <td class="small">crypto</td>
-                  <td><span class="badge bg-success">Approved</span></td>
-                  <td class="pe-3 small text-muted">2026-04-21 05:20:46</td>
+          <tbody>
+              @php
+                  $recentDeposits = \App\Models\ActivationRequest::where('user_id', $user->id)->latest()->take(5)->get();
+              @endphp
+              @forelse($recentDeposits as $dep)
+                <tr>
+                  <td class="ps-3 small">${{ number_format($dep->amount, 2) }}</td>
+                  <td class="small">{{ $dep->payment_method ?? 'Bank' }}</td>
+                  <td>
+                    @if($dep->status === 'approved') <span class="badge bg-success">Approved</span>
+                    @elseif($dep->status === 'pending') <span class="badge bg-warning text-dark">Pending</span>
+                    @else <span class="badge bg-danger">Rejected</span>
+                    @endif
+                  </td>
+                  <td class="pe-3 small text-muted">{{ $dep->created_at->format('Y-m-d') }}</td>
                 </tr>
-                              <tr>
-                  <td class="ps-3 small">$10.00</td>
-                  <td class="small">crypto</td>
-                  <td><span class="badge bg-success">Approved</span></td>
-                  <td class="pe-3 small text-muted">2026-04-20 11:16:43</td>
+              @empty
+                <tr>
+                  <td colspan="4" class="text-center text-muted py-3">No recent deposits</td>
                 </tr>
-                              <tr>
-                  <td class="ps-3 small">$10.00</td>
-                  <td class="small">crypto</td>
-                  <td><span class="badge bg-success">Approved</span></td>
-                  <td class="pe-3 small text-muted">2026-04-20 11:07:08</td>
-                </tr>
-                        </tbody>
+              @endforelse
+          </tbody>
         </table>
       </div>
     </div>
@@ -413,37 +436,28 @@
             </tr>
           </thead>
           <tbody>
-                            <tr>
-                  <td class="ps-3 small">$29.00</td>
-                  <td class="small">$27.55</td>
-                  <td><span class="badge bg-success">Approved</span></td>
-                  <td class="pe-3 small text-muted">2026-04-21 05:31:23</td>
+          <tbody>
+              @php
+                  $recentWithdrawals = \App\Models\Withdrawal::where('user_id', $user->id)->latest()->take(5)->get();
+              @endphp
+              @forelse($recentWithdrawals as $w)
+                <tr>
+                  <td class="ps-3 small">${{ number_format($w->amount, 2) }}</td>
+                  <td class="small">${{ number_format($w->amount, 2) }}</td>
+                  <td>
+                    @if($w->status === 'approved') <span class="badge bg-success">Approved</span>
+                    @elseif($w->status === 'pending') <span class="badge bg-warning text-dark">Pending</span>
+                    @else <span class="badge bg-danger">Rejected</span>
+                    @endif
+                  </td>
+                  <td class="pe-3 small text-muted">{{ $w->created_at->format('Y-m-d') }}</td>
                 </tr>
-                              <tr>
-                  <td class="ps-3 small">$29.00</td>
-                  <td class="small">$27.55</td>
-                  <td><span class="badge bg-danger">Rejected</span></td>
-                  <td class="pe-3 small text-muted">2026-04-21 05:28:05</td>
+              @empty
+                <tr>
+                  <td colspan="4" class="text-center text-muted py-3">No recent withdrawals</td>
                 </tr>
-                              <tr>
-                  <td class="ps-3 small">$29.00</td>
-                  <td class="small">$27.55</td>
-                  <td><span class="badge bg-danger">Rejected</span></td>
-                  <td class="pe-3 small text-muted">2026-04-21 05:28:02</td>
-                </tr>
-                              <tr>
-                  <td class="ps-3 small">$29.00</td>
-                  <td class="small">$27.55</td>
-                  <td><span class="badge bg-danger">Rejected</span></td>
-                  <td class="pe-3 small text-muted">2026-04-21 05:27:48</td>
-                </tr>
-                              <tr>
-                  <td class="ps-3 small">$20.99</td>
-                  <td class="small">$19.94</td>
-                  <td><span class="badge bg-danger">Rejected</span></td>
-                  <td class="pe-3 small text-muted">2026-04-21 05:27:04</td>
-                </tr>
-                        </tbody>
+              @endforelse
+          </tbody>
         </table>
       </div>
     </div>

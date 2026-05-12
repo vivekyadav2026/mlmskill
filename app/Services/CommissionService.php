@@ -35,6 +35,11 @@ class CommissionService
                     break; // No more uplines
                 }
 
+                $maxLevels = \App\Models\Setting::get('max_levels', 10);
+                if ($level > $maxLevels) {
+                    break;
+                }
+
                 $sponsor = User::where('referral_code', $currentUser->sponsor_id)->first();
                 if (!$sponsor) {
                     break;
@@ -42,9 +47,15 @@ class CommissionService
 
                 // Only active users earn commission
                 if ($sponsor->status === 'active') {
-                    $percentage = $this->levelCommissionPercentages[$level];
-                    $amount = ($percentage / 100) * $amountSpent;
-                    $type = $level === 1 ? 'direct' : 'team';
+                    $defaultPercentages = [
+                        1 => 15.00, 2 => 10.00, 3 => 6.00, 4 => 3.00, 5 => 2.00,
+                        6 => 0.50, 7 => 0.50, 8 => 0.50, 9 => 0.50, 10 => 0.50
+                    ];
+                    $percentage = (float)\App\Models\Setting::get('level_'.$level.'_pct', $defaultPercentages[$level] ?? 0);
+                    
+                    if ($percentage > 0) {
+                        $amount = ($percentage / 100) * $amountSpent;
+                        $type = $level === 1 ? 'direct' : 'team';
 
                     // Log commission
                     CommissionLedger::create([
@@ -59,6 +70,7 @@ class CommissionService
                     // Add to wallet
                     $wallet = Wallet::firstOrCreate(['user_id' => $sponsor->id]);
                     $wallet->increment('income_wallet', $amount);
+                    }
                 }
 
                 // Move up the tree

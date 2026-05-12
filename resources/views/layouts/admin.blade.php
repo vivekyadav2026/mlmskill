@@ -110,8 +110,8 @@
 
   <!-- ===== Admin Sidebar ===== -->
   <aside id="appSidebar" class="app-sidebar">
-        <a href="{{ url('admin/dashboard') }}" class="sidebar-brand">
-              <i class="fa-solid fa-bolt-lightning"></i>
+        <a href="{{ url('admin/dashboard') }}" class="sidebar-brand d-flex align-items-center gap-2">
+              <img src="{{ asset('logo.png') }}" alt="Logo" style="width: 40px; height: 40px; border-radius: 50%; object-fit: cover;">
         <span> Samarth Digital</span>
           </a>
     <ul class="list-unstyled mb-0 pb-3">
@@ -380,7 +380,7 @@
                 @if(auth()->check())
                     @forelse(auth()->user()->notifications()->take(5)->get() as $notification)
                         <a class="dropdown-item d-flex gap-3 py-3 border-bottom border-secondary {{ $notification->read_at ? 'opacity-75' : 'bg-secondary bg-opacity-10' }}" href="{{ $notification->data['url'] ?? '#' }}">
-                            <div class="xvt-avatar flex-shrink-0" style="background:#6366f1; color: white;"><i class="fa-solid fa-user-plus"></i></div>
+                            <div class="xvt-avatar flex-shrink-0" style="background:var(--xvt-primary); color: white;"><i class="fa-solid fa-user-plus"></i></div>
                             <div>
                                 <span class="small text-white d-block"><strong>{{ $notification->data['user_name'] ?? 'New User' }}</strong> registered</span>
                                 <span class="text-muted" style="font-size: 0.75rem;">{{ $notification->created_at->diffForHumans() }}</span>
@@ -529,23 +529,23 @@
   // ═══════════════════════════════════════════════════
 
   const DARK_DEFAULTS = {
-    theme_primary:    '#6366f1',
-    theme_accent:     '#8b5cf6',
+    theme_primary:    '#1f512c',
+    theme_accent:     '#f48a20',
     theme_radius:     '8px',
-    theme_body_bg:    '#0b1220',
-    theme_card_bg:    '#1a222d',
-    theme_sidebar_bg: '#14172a',
-    theme_topbar_bg:  '#161f2d',
+    theme_body_bg:    '#0d1510',
+    theme_card_bg:    '#16231a',
+    theme_sidebar_bg: '#111c15',
+    theme_topbar_bg:  '#132018',
     theme_mode:       'dark',
   };
 
   const LIGHT_DEFAULTS = {
-    theme_primary:    '#6366f1',
-    theme_accent:     '#8b5cf6',
+    theme_primary:    '#1f512c',
+    theme_accent:     '#f48a20',
     theme_radius:     '8px',
-    theme_body_bg:    '#f1f5f9',
+    theme_body_bg:    '#f4fcf6',
     theme_card_bg:    '#ffffff',
-    theme_sidebar_bg: '#1e293b',
+    theme_sidebar_bg: '#1f512c',
     theme_topbar_bg:  '#ffffff',
     theme_mode:       'light',
   };

@@ -18,13 +18,28 @@
                     },
                     colors: {
                         brand: {
-                            50: '#f0fdfa',
-                            100: '#e0e7ff',
-                            500: '#6366f1', // Indigo
-                            600: '#4f46e5',
-                            700: '#4338ca',
-                            800: '#1e1b4b', // Deep Dark Blue/Purple
-                            900: '#0f172a', // Slate Dark Blue
+                            50: '#e8f5e9',
+                            100: '#c8e6c9',
+                            200: '#a5d6a7',
+                            300: '#81c784',
+                            400: '#66bb6a',
+                            500: '#4caf50',
+                            600: '#43a047',
+                            700: '#388e3c',
+                            800: '#2e7d32',
+                            900: '#1f512c', // Logo Dark Green
+                        },
+                        accent: {
+                            50: '#fff3e0',
+                            100: '#ffe0b2',
+                            200: '#ffcc80',
+                            300: '#ffb74d',
+                            400: '#ffa726',
+                            500: '#f48a20', // Logo Orange
+                            600: '#fb8c00',
+                            700: '#f57c00',
+                            800: '#ef6c00',
+                            900: '#e65100',
                         }
                     },
                     boxShadow: {
@@ -42,12 +57,12 @@
             box-shadow: 0 10px 40px -10px rgba(0,0,0,0.08);
         }
         .gradient-text {
-            background: linear-gradient(135deg, #4f46e5, #9333ea);
+            background: linear-gradient(135deg, #43a047, #f48a20);
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
         }
         .gradient-bg {
-            background: linear-gradient(135deg, #1e1b4b 0%, #4338ca 100%);
+            background: linear-gradient(135deg, #1f512c 0%, #2e7d32 100%);
         }
     </style>
 </head>
@@ -60,7 +75,7 @@
             <div class="flex justify-between items-center h-20">
                 <!-- Logo -->
                 <div class="flex items-center gap-3">
-                    <div class="w-10 h-10 rounded-lg bg-gradient-to-br from-brand-600 to-purple-600 flex items-center justify-center text-white font-heading font-black text-xl shadow-lg shadow-brand-500/30">SD</div>
+                    <img src="{{ asset('logo.png') }}" alt="Logo" class="w-10 h-10 rounded-full object-cover shadow-lg shadow-brand-500/30">
                     <span class="font-heading font-bold text-2xl text-brand-900 tracking-tight">Samarth <span class="text-brand-600">Digital</span></span>
                 </div>
                 
@@ -103,7 +118,7 @@
             <div class="absolute inset-0 bg-[url('https://images.unsplash.com/photo-1522071820081-009f0129c71c?q=80&w=2070&auto=format&fit=crop')] bg-cover bg-center opacity-10 mix-blend-overlay"></div>
             <div class="absolute inset-0 bg-gradient-to-r from-brand-900 via-brand-800/95 to-brand-700/90"></div>
             <!-- Decorative gradient blobs -->
-            <div class="absolute top-0 right-0 -mr-40 -mt-40 w-96 h-96 rounded-full bg-purple-600/30 blur-3xl"></div>
+            <div class="absolute top-0 right-0 -mr-40 -mt-40 w-96 h-96 rounded-full bg-accent-500/30 blur-3xl"></div>
             <div class="absolute bottom-0 left-0 -ml-40 -mb-40 w-96 h-96 rounded-full bg-brand-500/30 blur-3xl"></div>
         </div>
 
@@ -116,7 +131,7 @@
                     </div>
                     <h1 class="font-heading text-4xl md:text-5xl lg:text-6xl font-black leading-tight mb-6">
                         Upgrade Your Skills.<br>
-                        <span class="text-transparent bg-clip-text bg-gradient-to-r from-blue-400 to-purple-400">Unlock New Opportunities.</span>
+                        <span class="text-transparent bg-clip-text bg-gradient-to-r from-accent-400 to-accent-600">Unlock New Opportunities.</span>
                     </h1>
                     <p class="text-lg md:text-xl text-gray-300 mb-8 max-w-xl font-light leading-relaxed">
                         Join a next-generation learning platform designed to help individuals grow through education, digital training, and performance-based rewards.
@@ -147,7 +162,7 @@
                 </div>
 
                 <div class="relative hidden lg:block">
-                    <div class="absolute inset-0 bg-gradient-to-tr from-brand-500 to-purple-500 rounded-2xl transform rotate-3 scale-105 opacity-50 blur-lg"></div>
+                    <div class="absolute inset-0 bg-gradient-to-tr from-brand-500 to-accent-500 rounded-2xl transform rotate-3 scale-105 opacity-50 blur-lg"></div>
                     <img src="https://images.unsplash.com/photo-1516321318423-f06f85e504b3?q=80&w=2070&auto=format&fit=crop" alt="Professionals Learning" class="relative rounded-2xl shadow-2xl border border-white/10 object-cover h-[500px] w-full">
                     
                     <!-- Floating Card -->
@@ -693,7 +708,7 @@
             <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-12 mb-12">
                 <div class="lg:col-span-1">
                     <div class="flex items-center gap-3 mb-6">
-                        <div class="w-8 h-8 rounded-lg bg-gradient-to-br from-brand-500 to-purple-500 flex items-center justify-center text-white font-heading font-black text-sm">SD</div>
+                        <img src="{{ asset('logo.png') }}" alt="Logo" class="w-10 h-10 rounded-full object-cover">
                         <span class="font-heading font-bold text-xl text-white tracking-tight">Samarth Digital</span>
                     </div>
                     <p class="text-sm text-gray-400 mb-6 leading-relaxed">
