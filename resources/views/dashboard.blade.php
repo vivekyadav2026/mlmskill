@@ -106,7 +106,7 @@
             <div class="stat-icon bg-blue-500/10 text-blue-500"><i class="fa-solid fa-coins"></i></div>
             <div class="flex-grow">
                 <p class="text-sm font-medium text-gray-400">Utility Tokens</p>
-                <h3 class="text-2xl font-bold text-gray-100">{{ number_format($wallet->utility_token_wallet ?? 0, 2) }} UT</h3>
+                <h3 class="text-2xl font-bold text-gray-100">{{ number_format($wallet->utility_token_wallet ?? 0, 2) }} {{ strtoupper($tokenName) }}</h3>
             </div>
         </div>
         <div class="stat-card border-l-4 border-l-indigo-500">
@@ -123,15 +123,15 @@
         <div class="bg-[#1a222d] rounded-lg border border-[#334155] p-6">
             <div class="flex justify-between items-center mb-4">
                 <h3 class="text-gray-200 font-medium"><i class="fa-solid fa-shield mr-2 text-yellow-500"></i>Renewal Progress</h3>
-                <span class="text-xs font-bold bg-cyan-900 text-cyan-300 px-2 py-1 rounded">Target: $300</span>
+                <span class="text-xs font-bold bg-cyan-900 text-cyan-300 px-2 py-1 rounded">Target: ${{ $renewalTarget }}</span>
             </div>
-            @php $renewPct = min(100, (($wallet->renewal_token_wallet ?? 0) / 300) * 100); @endphp
+            @php $renewPct = min(100, (($wallet->renewal_token_wallet ?? 0) / max(1, $renewalTarget)) * 100); @endphp
             <div class="w-full bg-gray-900 rounded-full h-2 mb-2 border border-[#334155]">
                 <div class="bg-cyan-500 h-2 rounded-full" style="width: {{ $renewPct }}%"></div>
             </div>
             <div class="flex justify-between text-sm mt-4 border-t border-[#334155] pt-4">
                 <div><p class="text-gray-500">Current Saved</p><p class="text-green-400 font-bold">${{ number_format($wallet->renewal_token_wallet ?? 0, 2) }}</p></div>
-                <div class="text-right"><p class="text-gray-500">Remaining to Renew</p><p class="text-gray-200 font-bold">${{ number_format(max(0, 300 - ($wallet->renewal_token_wallet ?? 0)), 2) }}</p></div>
+                <div class="text-right"><p class="text-gray-500">Remaining to Renew</p><p class="text-gray-200 font-bold">${{ number_format(max(0, $renewalTarget - ($wallet->renewal_token_wallet ?? 0)), 2) }}</p></div>
             </div>
         </div>
 
@@ -212,18 +212,18 @@
         </div>
     </div>
 
-    <!-- Live Market Tracker (Dummy Stock Graph) -->
+    <!-- Live Market Tracker (Stock Graph) -->
     <div class="mb-6 bg-[#1a222d] rounded-lg border border-[#334155] p-5 shadow-lg relative overflow-hidden">
         <div class="absolute top-0 right-0 w-64 h-64 bg-green-500/5 rounded-full blur-3xl -mr-10 -mt-10 pointer-events-none"></div>
         <div class="flex justify-between items-center mb-4 relative z-10">
-            <h3 class="text-gray-200 font-medium"><i class="fa-solid fa-arrow-trend-up mr-2 text-green-400"></i>Live Token Market (SKT/USD)</h3>
+            <h3 class="text-gray-200 font-medium"><i class="fa-solid fa-arrow-trend-up mr-2 text-green-400"></i>Live Token Market ({{ strtoupper($tokenName) }}/USD)</h3>
             <span class="text-xs font-bold bg-green-900 text-green-300 border border-green-700 px-2 py-1 rounded animate-pulse">
                 <i class="fa-solid fa-circle text-[8px] mr-1"></i> Live Market
             </span>
         </div>
         <div class="flex items-end gap-3 mb-2 relative z-10">
-            <h1 class="text-3xl font-bold text-white font-mono" id="currentStockPrice">$0.4200</h1>
-            <span class="text-green-400 text-sm font-semibold mb-1 bg-green-900/30 px-2 py-0.5 rounded"><i class="fa-solid fa-caret-up mr-1"></i>+12.5% Today</span>
+            <h1 class="text-3xl font-bold text-white font-mono" id="currentStockPrice">${{ number_format($tokenPrice, 4) }}</h1>
+            <span class="text-green-400 text-sm font-semibold mb-1 bg-green-900/30 px-2 py-0.5 rounded" id="todayChangeBadge"><i class="fa-solid fa-caret-up mr-1"></i>+0.0% Today</span>
         </div>
         <div class="h-64 rounded flex items-center justify-center text-gray-500 relative z-10">
             <canvas id="stockChart"></canvas>
@@ -509,24 +509,48 @@ document.addEventListener('DOMContentLoaded', function() {
     // 4. Live Stock Market Dummy Graph
     const stockCtx = document.getElementById('stockChart').getContext('2d');
     
-    // Generate dummy stock data (Last 30 days)
+    // Generate simulated stock data ending at actual Token Price
     const stockLabels = [];
     const stockData = [];
-    let currentPrice = 0.1250;
+    const actualPrice = {{ $tokenPrice }};
     
+    // Create realistic-looking historical data working backwards from current price
+    let simPrice = actualPrice;
+    
+    // Generate backwards
+    const historicalData = [];
+    for (let i = 0; i <= 30; i++) {
+        historicalData.unshift(simPrice);
+        // Random walk backward, slight upward bias in general trend
+        let volatility = actualPrice * 0.05; // 5% daily volatility max
+        let change = (Math.random() - 0.45) * volatility; 
+        simPrice = Math.max(actualPrice * 0.5, simPrice - change);
+    }
+    
+    // Generate labels and load data forward
     for (let i = 30; i >= 0; i--) {
         let d = new Date();
         d.setDate(d.getDate() - i);
         stockLabels.push(d.toLocaleDateString('en-US', { month: 'short', day: 'numeric' }));
-        
-        // Random walk favoring upward trend
-        let change = (Math.random() - 0.42) * 0.08; 
-        currentPrice = Math.max(0.05, currentPrice + change);
-        stockData.push(currentPrice.toFixed(4));
+        stockData.push(historicalData[30 - i].toFixed(4));
     }
     
-    // Ensure the last price matches the displayed price
-    stockData[stockData.length - 1] = 0.4200;
+    // Ensure the last price exactly matches the db price
+    stockData[stockData.length - 1] = actualPrice.toFixed(4);
+    
+    // Update the "+X% Today" badge dynamically based on the simulated opening price
+    const openPrice = parseFloat(stockData[stockData.length - 2]);
+    const closePrice = actualPrice;
+    const pctChange = ((closePrice - openPrice) / openPrice) * 100;
+    
+    const badge = document.getElementById('todayChangeBadge');
+    if (pctChange >= 0) {
+        badge.innerHTML = '<i class="fa-solid fa-caret-up mr-1"></i>+' + pctChange.toFixed(1) + '% Today';
+        badge.className = 'text-green-400 text-sm font-semibold mb-1 bg-green-900/30 px-2 py-0.5 rounded';
+    } else {
+        badge.innerHTML = '<i class="fa-solid fa-caret-down mr-1"></i>' + pctChange.toFixed(1) + '% Today';
+        badge.className = 'text-red-400 text-sm font-semibold mb-1 bg-red-900/30 px-2 py-0.5 rounded';
+    }
     
     // Create gradient
     let gradient = stockCtx.createLinearGradient(0, 0, 0, 300);

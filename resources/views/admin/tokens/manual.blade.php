@@ -1,14 +1,131 @@
 @extends('layouts.admin')
 @section('content')
 <div class="tailwind-scope mt-4 max-w-2xl mx-auto">
-    <div class="mb-6"><h2 class="text-2xl font-bold text-gray-100">Manual Token Credit</h2></div>
+
+    {{-- Header --}}
+    <div class="mb-6">
+        <h2 class="text-2xl font-bold text-gray-100">Manual Token Credit</h2>
+        <p class="text-gray-400 text-sm mt-1">Manually credit Utility or Renewal tokens to any active user. All credits are logged.</p>
+    </div>
+
+    {{-- Success Alert --}}
+    @if(session('success'))
+    <div class="flex items-center gap-3 bg-green-500/10 border border-green-700 text-green-400 p-4 rounded-lg mb-6">
+        <i class="fa-solid fa-circle-check text-xl flex-shrink-0"></i>
+        <span>{{ session('success') }}</span>
+    </div>
+    @endif
+
+    {{-- Error Alert --}}
+    @if($errors->any())
+    <div class="bg-red-500/10 border border-red-700 text-red-400 p-4 rounded-lg mb-6">
+        <i class="fa-solid fa-triangle-exclamation mr-2"></i>
+        <strong>Please fix the errors below:</strong>
+        <ul class="mt-2 list-disc list-inside text-sm">
+            @foreach($errors->all() as $error)
+                <li>{{ $error }}</li>
+            @endforeach
+        </ul>
+    </div>
+    @endif
+
+    {{-- Form --}}
     <div class="bg-[#1a222d] border border-[#334155] rounded-lg p-6">
-        <form onsubmit="event.preventDefault(); alert('Tokens Credited successfully!');">
-            <div class="mb-4"><label class="block text-gray-300 mb-2">Select User</label><input type="text" placeholder="Search by email..." class="w-full bg-[#0b1220] border border-[#334155] text-white p-3 rounded"></div>
-            <div class="mb-4"><label class="block text-gray-300 mb-2">Token Type</label><select class="w-full bg-[#0b1220] border border-[#334155] text-white p-3 rounded"><option>Utility Token</option><option>Renewal Token</option></select></div>
-            <div class="mb-6"><label class="block text-gray-300 mb-2">Amount</label><input type="number" class="w-full bg-[#0b1220] border border-[#334155] text-white p-3 rounded" required></div>
-            <button class="bg-indigo-600 text-white px-6 py-2 rounded font-bold w-full">Dispatch Tokens</button>
+        <form method="POST" action="{{ route('admin.tokens.manual.submit') }}">
+            @csrf
+
+            {{-- User Select --}}
+            <div class="mb-5">
+                <label class="block text-gray-300 text-sm font-medium mb-2">
+                    <i class="fa-solid fa-user mr-1 text-indigo-400"></i> Target User <span class="text-red-400">*</span>
+                </label>
+                <select name="user_id" class="w-full bg-[#0b1220] border border-[#334155] text-white p-3 rounded focus:border-indigo-500 focus:outline-none" required>
+                    <option value="">-- Select Active User --</option>
+                    @foreach($users as $u)
+                        <option value="{{ $u->id }}" {{ old('user_id') == $u->id ? 'selected' : '' }}>
+                            {{ $u->name }} ({{ $u->referral_code }}) — {{ $u->email }}
+                        </option>
+                    @endforeach
+                </select>
+            </div>
+
+            {{-- Token Type --}}
+            <div class="mb-5">
+                <label class="block text-gray-300 text-sm font-medium mb-2">
+                    <i class="fa-solid fa-coins mr-1 text-yellow-400"></i> Token Type <span class="text-red-400">*</span>
+                </label>
+                <div class="grid grid-cols-2 gap-3">
+                    <label class="cursor-pointer">
+                        <input type="radio" name="token_type" value="utility" class="sr-only peer" {{ old('token_type', 'utility') === 'utility' ? 'checked' : '' }} required>
+                        <div class="flex items-center gap-3 bg-[#0b1220] border border-[#334155] peer-checked:border-indigo-500 peer-checked:bg-indigo-500/10 p-4 rounded-lg transition">
+                            <i class="fa-solid fa-circle-bolt text-indigo-400 text-xl"></i>
+                            <div>
+                                <p class="text-white font-semibold text-sm">Utility Token</p>
+                                <p class="text-gray-500 text-xs">Daily income, convertible</p>
+                            </div>
+                        </div>
+                    </label>
+                    <label class="cursor-pointer">
+                        <input type="radio" name="token_type" value="renewal" class="sr-only peer" {{ old('token_type') === 'renewal' ? 'checked' : '' }}>
+                        <div class="flex items-center gap-3 bg-[#0b1220] border border-[#334155] peer-checked:border-yellow-500 peer-checked:bg-yellow-500/10 p-4 rounded-lg transition">
+                            <i class="fa-solid fa-rotate text-yellow-400 text-xl"></i>
+                            <div>
+                                <p class="text-white font-semibold text-sm">Renewal Token</p>
+                                <p class="text-gray-500 text-xs">Locked savings vault</p>
+                            </div>
+                        </div>
+                    </label>
+                </div>
+            </div>
+
+            {{-- Number of Tokens --}}
+            <div class="mb-5">
+                <label class="block text-gray-300 text-sm font-medium mb-2">
+                    <i class="fa-solid fa-hashtag mr-1 text-green-400"></i> Number of Tokens <span class="text-red-400">*</span>
+                </label>
+                <input type="number"
+                       name="amount"
+                       step="0.0001"
+                       min="0.0001"
+                       value="{{ old('amount') }}"
+                       placeholder="e.g. 50 or 100.5"
+                       class="w-full bg-[#0b1220] border border-[#334155] text-white p-3 rounded focus:border-indigo-500 focus:outline-none"
+                       required>
+                <p class="text-gray-500 text-xs mt-1">
+                    This is the <strong class="text-gray-300">number of tokens</strong> to credit — not a rupee/dollar amount.
+                    Each Utility Token ≈ <span class="text-indigo-400">₹{{ \App\Models\Setting::get('utility_token_value', '1') }}</span> &nbsp;|&nbsp;
+                    Each Renewal Token ≈ <span class="text-yellow-400">₹{{ \App\Models\Setting::get('renewal_token_value', '1') }}</span>
+                </p>
+            </div>
+
+            {{-- Note / Reason --}}
+            <div class="mb-6">
+                <label class="block text-gray-300 text-sm font-medium mb-2">
+                    <i class="fa-solid fa-note-sticky mr-1 text-gray-400"></i> Reason / Note <span class="text-gray-500 font-normal">(optional)</span>
+                </label>
+                <input type="text"
+                       name="note"
+                       value="{{ old('note') }}"
+                       placeholder="e.g. Bonus credit, Campaign reward, Manual correction..."
+                       class="w-full bg-[#0b1220] border border-[#334155] text-white p-3 rounded focus:border-indigo-500 focus:outline-none">
+            </div>
+
+            {{-- Submit --}}
+            <button type="submit"
+                    class="w-full bg-indigo-600 hover:bg-indigo-700 text-white font-bold py-3 px-6 rounded transition flex items-center justify-center gap-2">
+                <i class="fa-solid fa-paper-plane"></i> Credit Tokens Now
+            </button>
         </form>
+    </div>
+
+    {{-- Quick links --}}
+    <div class="mt-4 flex justify-between text-sm">
+        <a href="{{ route('admin.tokens.logs') }}" class="text-indigo-400 hover:text-indigo-300">
+            <i class="fa-solid fa-list mr-1"></i>View Token Logs →
+        </a>
+        <a href="{{ route('admin.tokens.settings') }}" class="text-gray-400 hover:text-gray-300">
+            <i class="fa-solid fa-gear mr-1"></i>Token Settings
+        </a>
     </div>
 </div>
 @endsection

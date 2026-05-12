@@ -39,8 +39,13 @@ class PackageController extends Controller
     public function history()
     {
         $user = Auth::user();
-        // Assuming a package_purchases table or just use user activation dates for now
-        return view('user.package.history', compact('user'));
+        
+        $history = \App\Models\ActivityLog::where('user_id', $user->id)
+            ->whereIn('action', ['account_activated', 'account_activated_by_sponsor'])
+            ->orderBy('created_at', 'desc')
+            ->paginate(15);
+            
+        return view('user.package.history', compact('user', 'history'));
     }
 
     public function purchase(Request $request, \App\Services\CommissionService $commissionService)

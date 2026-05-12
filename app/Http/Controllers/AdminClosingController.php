@@ -41,7 +41,20 @@ class AdminClosingController extends Controller
     public function reports()
     {
         $closings = MonthlyClosing::orderBy('year', 'desc')->orderBy('month', 'desc')->get();
-        return view('admin.closing.reports', compact('closings'));
+        
+        // Prepare chart data (reverse so oldest is first, up to last 6 closings)
+        $chartClosings = $closings->take(6)->reverse();
+        $chartLabels = [];
+        $chartIncome = [];
+        $chartWithdrawals = [];
+        
+        foreach ($chartClosings as $c) {
+            $chartLabels[] = date('M Y', mktime(0, 0, 0, $c->month, 10, $c->year));
+            $chartIncome[] = (float) $c->total_income_generated;
+            $chartWithdrawals[] = (float) $c->total_withdrawals;
+        }
+
+        return view('admin.closing.reports', compact('closings', 'chartLabels', 'chartIncome', 'chartWithdrawals'));
     }
 
     public function store(Request $request)

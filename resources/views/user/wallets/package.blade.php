@@ -22,16 +22,53 @@
         </div>
     </div>
 
-    <!-- History Placeholder -->
     <div class="bg-[#1a222d] rounded-lg shadow-lg overflow-hidden border border-[#334155]">
         <div class="px-6 py-4 border-b border-[#334155] bg-[#161f2d]">
             <h3 class="text-lg font-medium text-gray-200">Recent Package Wallet Activity</h3>
         </div>
-        <div class="p-10 text-center text-gray-500">
-            <i class="fa-solid fa-box-open text-3xl mb-3"></i>
-            <p>No recent activity in your package wallet.</p>
-            <p class="text-sm mt-2 text-gray-400">Convert Utility Tokens to add funds here.</p>
+        <div class="overflow-x-auto">
+            <table class="min-w-full divide-y divide-[#334155]">
+                <thead class="bg-[#14172a]">
+                    <tr>
+                        <th class="px-6 py-3 text-left text-xs font-medium text-gray-400 uppercase tracking-wider">Date</th>
+                        <th class="px-6 py-3 text-left text-xs font-medium text-gray-400 uppercase tracking-wider">Type</th>
+                        <th class="px-6 py-3 text-left text-xs font-medium text-gray-400 uppercase tracking-wider">Description</th>
+                        <th class="px-6 py-3 text-left text-xs font-medium text-gray-400 uppercase tracking-wider">Amount</th>
+                    </tr>
+                </thead>
+                <tbody class="divide-y divide-[#334155]">
+                    @forelse($history as $item)
+                    <tr class="hover:bg-[#1f2937] transition-colors">
+                        <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-400">{{ \Carbon\Carbon::parse($item['date'])->format('M d, Y') }}</td>
+                        <td class="px-6 py-4 whitespace-nowrap">
+                            <span class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-purple-100 text-purple-800">
+                                {{ $item['type'] }}
+                            </span>
+                        </td>
+                        <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-300">
+                            {{ $item['desc'] }}
+                        </td>
+                        <td class="px-6 py-4 whitespace-nowrap text-sm font-bold text-green-400">
+                            +{{ $item['amount'] }}
+                        </td>
+                    </tr>
+                    @empty
+                    <tr>
+                        <td colspan="4" class="px-6 py-10 text-center text-gray-500">
+                            <i class="fa-solid fa-box-open text-3xl mb-3"></i>
+                            <p>No recent activity in your package wallet.</p>
+                            <p class="text-sm mt-2 text-gray-400">Convert Utility Tokens to add funds here.</p>
+                        </td>
+                    </tr>
+                    @endforelse
+                </tbody>
+            </table>
         </div>
+        @if($history->hasPages())
+        <div class="px-6 py-3 border-t border-[#334155]">
+            {{ $history->links() }}
+        </div>
+        @endif
     </div>
 </div>
 @endsection

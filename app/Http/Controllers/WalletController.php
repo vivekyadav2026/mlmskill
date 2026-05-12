@@ -27,7 +27,39 @@ class WalletController extends Controller
         $user = Auth::user();
         $balance = $user->wallet->package_wallet ?? 0;
         
-        return view('user.wallets.package', compact('balance'));
+        $p2p = \App\Models\ActivityLog::where('user_id', $user->id)
+            ->where('action', 'p2p_received')
+            ->get()->map(function($item) {
+                return [
+                    'date' => $item->created_at,
+                    'type' => 'P2P Received',
+                    'desc' => $item->description,
+                    'amount' => 'Credit'
+                ];
+            });
+            
+        $conversions = \App\Models\TokenLedger::where('user_id', $user->id)
+            ->where('source', 'conversion')
+            ->where('status', 'used')
+            ->get()->map(function($item) {
+                return [
+                    'date' => $item->created_at,
+                    'type' => 'Token Conversion',
+                    'desc' => 'Converted ' . abs($item->token_count) . ' ' . ucfirst($item->token_type) . ' tokens',
+                    'amount' => 'Credit'
+                ];
+            });
+            
+        $historyList = collect()->concat($p2p)->concat($conversions)->sortByDesc('date')->values();
+        
+        $currentPage = \Illuminate\Pagination\Paginator::resolveCurrentPage();
+        $perPage = 15;
+        $currentItems = $historyList->slice(($currentPage - 1) * $perPage, $perPage)->all();
+        $history = new \Illuminate\Pagination\LengthAwarePaginator($currentItems, count($historyList), $perPage, $currentPage, [
+            'path' => \Illuminate\Pagination\Paginator::resolveCurrentPath()
+        ]);
+        
+        return view('user.wallets.package', compact('balance', 'history'));
     }
 
     public function utility()
@@ -51,7 +83,9 @@ class WalletController extends Controller
             ->take(30)
             ->get();
             
-        return view('user.wallets.utility', compact('balance', 'history', 'chartData'));
+        $tokenName = \App\Models\Setting::get('utility_token_name', 'SKT');
+            
+        return view('user.wallets.utility', compact('balance', 'history', 'chartData', 'tokenName'));
     }
 
     public function renewal()
@@ -65,13 +99,81 @@ class WalletController extends Controller
             ->orderBy('created_at', 'desc')
             ->paginate(15);
             
-        return view('user.wallets.renewal', compact('balance', 'history'));
+        $renewalTarget = \App\Models\Setting::get('renewal_limit', 300);
+            
+        return view('user.wallets.renewal', compact('balance', 'history', 'renewalTarget'));
     }
 
     public function history()
     {
         $user = Auth::user();
-        return view('user.wallets.history', compact('user'));
+        $tokenName = \App\Models\Setting::get('utility_token_name', 'SKT');
+        $renewalTarget = \App\Models\Setting::get('renewal_limit', 300);
+        
+        // Create consolidated history
+        $commissions = DB::table('commission_ledgers')->where('user_id', $user->id)
+            ->get()->map(function($item) {
+                return [
+                    'date' => $item->created_at,
+                    'wallet' => 'Income Wallet',
+                    'type' => ucfirst($item->commission_type) . ' Commission',
+                    'amount' => '+$' . number_format($item->amount, 2),
+                    'color' => 'text-green-400',
+                    'bg' => 'bg-green-100 text-green-800'
+                ];
+            });
+            
+        $tokens = DB::table('token_ledgers')->where('user_id', $user->id)
+            ->get()->map(function($item) use ($tokenName) {
+                $isAdd = $item->token_count > 0;
+                $label = $item->token_type == 'utility' ? strtoupper($tokenName) : 'RT';
+                return [
+                    'date' => $item->created_at,
+                    'wallet' => ucfirst($item->token_type) . ' Tokens',
+                    'type' => 'Token ' . ucfirst($item->source ?? 'Distribution'),
+                    'amount' => ($isAdd ? '+' : '') . number_format($item->token_count, 2) . ' ' . $label,
+                    'color' => $isAdd ? 'text-blue-400' : 'text-red-400',
+                    'bg' => $isAdd ? 'bg-blue-100 text-blue-800' : 'bg-red-100 text-red-800'
+                ];
+            });
+            
+        $withdrawals = DB::table('withdrawals')->where('user_id', $user->id)
+            ->get()->map(function($item) {
+                return [
+                    'date' => $item->created_at,
+                    'wallet' => 'Income Wallet',
+                    'type' => 'Withdrawal ' . ucfirst($item->status),
+                    'amount' => '-$' . number_format($item->amount, 2),
+                    'color' => 'text-orange-400',
+                    'bg' => 'bg-orange-100 text-orange-800'
+                ];
+            });
+            
+        $p2p = \App\Models\ActivityLog::where('user_id', $user->id)
+            ->whereIn('action', ['p2p_received', 'p2p_transfer'])
+            ->get()->map(function($item) {
+                $isReceived = $item->action == 'p2p_received';
+                return [
+                    'date' => $item->created_at,
+                    'wallet' => $isReceived ? 'Package Wallet' : 'Income Wallet',
+                    'type' => 'P2P ' . ($isReceived ? 'Received' : 'Transfer'),
+                    'amount' => 'View Details', // Exact amount is in description, keeping it simple
+                    'color' => $isReceived ? 'text-purple-400' : 'text-gray-400',
+                    'bg' => 'bg-purple-100 text-purple-800'
+                ];
+            });
+            
+        $historyList = collect()->concat($commissions)->concat($tokens)->concat($withdrawals)->concat($p2p)
+            ->sortByDesc('date')->values();
+            
+        $currentPage = \Illuminate\Pagination\Paginator::resolveCurrentPage();
+        $perPage = 15;
+        $currentItems = $historyList->slice(($currentPage - 1) * $perPage, $perPage)->all();
+        $paginatedHistory = new \Illuminate\Pagination\LengthAwarePaginator($currentItems, count($historyList), $perPage, $currentPage, [
+            'path' => \Illuminate\Pagination\Paginator::resolveCurrentPath()
+        ]);
+
+        return view('user.wallets.history', compact('user', 'tokenName', 'renewalTarget', 'paginatedHistory'));
     }
 
     public function transfer()

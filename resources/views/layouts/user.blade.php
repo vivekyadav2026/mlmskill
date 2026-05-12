@@ -7,11 +7,11 @@
   
   <link rel="preconnect" href="https://fonts.googleapis.com/">
   <link rel="preconnect" href="https://fonts.gstatic.com/" crossorigin="">
-  <link href="{{ asset('assets/My Dashboard â€” XVolty Trade_files/css2') }}" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 
-  <!-- Bootstrap (local) -->
-  <link rel="stylesheet" href="{{ asset('assets/My Dashboard â€” XVolty Trade_files/bootstrap.min.css') }}">
+  <!-- Bootstrap -->
+  <link rel="stylesheet" href="{{ asset('assets/dist/bootstrap.min.css') }}">
   <!-- Tailwind CSS without Preflight -->
   <script src="https://cdn.tailwindcss.com"></script>
   <script>
@@ -51,8 +51,8 @@
   }
 </style>
 
-  <!-- Constant theme CSS -->
-  <link rel="stylesheet" href="{{ asset('assets/My Dashboard â€” XVolty Trade_files/theme.css') }}">
+  <!-- Theme component CSS -->
+  <link rel="stylesheet" href="{{ asset('assets/dist/theme.css') }}">
 </head>
 <body>
   @include('components.preloader')
@@ -268,7 +268,7 @@
         <!-- Profile -->
         <div class="dropdown">
           <button class="btn btn-sm btn-outline-secondary d-flex align-items-center gap-2" data-bs-toggle="dropdown" aria-expanded="false">
-            <span class="xvt-avatar" style="width:28px; height:28px; font-size:0.75rem;"><img src="{{ asset('assets/My Dashboard â€” XVolty Trade_files/3448ce1363001e09fd873ae7a8b81485.png') }}" alt=""></span>
+            <span class="xvt-avatar" style="width:28px; height:28px; font-size:0.75rem;">{{ strtoupper(substr(auth()->user()->name ?? 'U', 0, 2)) }}</span>
             <span class="d-none d-md-inline">{{ auth()->user()->name ?? 'User' }}</span>
             <i class="fa-solid fa-chevron-down small"></i>
           </button>
@@ -290,7 +290,7 @@
   </div><!-- /.app-main -->
 </div><!-- /.app-shell -->
 
-<script src="{{ asset('assets/My Dashboard â€” XVolty Trade_files/bootstrap.bundle.min.js.download') }}"></script>
+<script src="{{ asset('assets/dist/bootstrap.bundle.min.js') }}"></script>
 <script>
 (function(){
   const sidebar  = document.getElementById('appSidebar');

@@ -32,12 +32,51 @@
     </div>
 
     <div class="bg-[#1a222d] rounded-lg shadow-lg overflow-hidden border border-[#334155]">
-        <div class="p-10 text-center text-gray-500">
-            <i class="fa-solid fa-clock-rotate-left text-4xl mb-3"></i>
-            <h3 class="text-xl font-bold text-gray-300">Consolidated History Report</h3>
-            <p class="mt-2 text-gray-400">Detailed combined ledger functionality is being aggregated and will be available soon.</p>
-            <p class="text-sm mt-4">Please visit individual wallets (Income, Utility, Renewal) to view detailed line-item histories.</p>
+        <div class="px-6 py-4 border-b border-[#334155] bg-[#161f2d]">
+            <h3 class="text-lg font-medium text-gray-200">Consolidated Ledger</h3>
         </div>
+        <div class="overflow-x-auto">
+            <table class="min-w-full divide-y divide-[#334155]">
+                <thead class="bg-[#14172a]">
+                    <tr>
+                        <th class="px-6 py-3 text-left text-xs font-medium text-gray-400 uppercase tracking-wider">Date</th>
+                        <th class="px-6 py-3 text-left text-xs font-medium text-gray-400 uppercase tracking-wider">Wallet</th>
+                        <th class="px-6 py-3 text-left text-xs font-medium text-gray-400 uppercase tracking-wider">Transaction Type</th>
+                        <th class="px-6 py-3 text-left text-xs font-medium text-gray-400 uppercase tracking-wider">Amount / Effect</th>
+                    </tr>
+                </thead>
+                <tbody class="divide-y divide-[#334155]">
+                    @forelse($paginatedHistory as $item)
+                    <tr class="hover:bg-[#1f2937] transition-colors">
+                        <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-400">{{ \Carbon\Carbon::parse($item['date'])->format('M d, Y - H:i') }}</td>
+                        <td class="px-6 py-4 whitespace-nowrap">
+                            <span class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full {{ $item['bg'] ?? 'bg-gray-100 text-gray-800' }}">
+                                {{ $item['wallet'] }}
+                            </span>
+                        </td>
+                        <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-300">
+                            {{ $item['type'] }}
+                        </td>
+                        <td class="px-6 py-4 whitespace-nowrap text-sm font-bold {{ $item['color'] ?? 'text-gray-400' }}">
+                            {{ $item['amount'] }}
+                        </td>
+                    </tr>
+                    @empty
+                    <tr>
+                        <td colspan="4" class="px-6 py-10 text-center text-gray-500">
+                            <i class="fa-solid fa-clock-rotate-left text-3xl mb-3"></i>
+                            <p>No transaction history found across any wallets.</p>
+                        </td>
+                    </tr>
+                    @endforelse
+                </tbody>
+            </table>
+        </div>
+        @if($paginatedHistory->hasPages())
+        <div class="px-6 py-3 border-t border-[#334155]">
+            {{ $paginatedHistory->links() }}
+        </div>
+        @endif
     </div>
 </div>
 @endsection

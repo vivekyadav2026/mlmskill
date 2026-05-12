@@ -2,12 +2,19 @@
 
 @section('content')
 <style>
-  .table-custom th { background: #0f172a; color: #94a3b8; font-weight: 600; padding: 0.75rem 1rem; border-bottom: 1px solid #334155; }
-  .table-custom td { padding: 1rem; border-bottom: 1px solid #334155; color: #e2e8f0; }
+.table-custom th { background:#0f172a; color:#94a3b8; font-weight:600; font-size:0.72rem; text-transform:uppercase; letter-spacing:0.05em; padding:0.75rem 1rem; border-bottom:1px solid #334155; white-space:nowrap; }
+.table-custom td { padding:0.85rem 1rem; border-bottom:1px solid #1e293b; color:#e2e8f0; font-size:0.875rem; vertical-align:middle; }
+.table-custom tr:hover td { background:rgba(255,255,255,0.03); }
+.table-scroll { overflow-x:auto; -webkit-overflow-scrolling:touch; }
+.table-scroll table { min-width:650px; }
+@media(max-width:767px){
+  .report-header { flex-direction:column; align-items:flex-start !important; }
+  .hide-mobile { display:none !important; }
+}
 </style>
 
 <div class="tailwind-scope mt-4 max-w-[1400px] mx-auto">
-    <div class="flex justify-between items-center mb-6">
+    <div class="report-header flex items-center justify-between mb-6 flex-wrap gap-3">
         <div>
             <h2 class="text-2xl font-bold text-gray-100">Settlement Reports</h2>
             <p class="text-gray-400 text-sm">Aggregated overview of platform settlements</p>
@@ -19,27 +26,36 @@
     </div>
 
     <!-- Analytics Overview -->
-    <div class="grid grid-cols-1 md:grid-cols-4 gap-6 mb-8">
-        <div class="bg-[#1a222d] border border-[#334155] p-6 rounded-xl shadow-lg">
-            <h3 class="text-gray-400 font-medium mb-1">Total Months Closed</h3>
-            <div class="text-3xl font-bold text-white">{{ count($closings) }}</div>
+    <div class="grid grid-cols-2 md:grid-cols-4 gap-4 mb-8">
+        <div class="bg-[#1a222d] border border-[#334155] p-5 rounded-xl shadow-lg">
+            <h3 class="text-gray-400 font-medium mb-1 text-xs uppercase">Total Months Closed</h3>
+            <div class="text-2xl font-bold text-white">{{ count($closings) }}</div>
         </div>
-        <div class="bg-[#1a222d] border border-[#334155] p-6 rounded-xl shadow-lg">
-            <h3 class="text-gray-400 font-medium mb-1">Lifetime Income</h3>
-            <div class="text-3xl font-bold text-green-400">${{ number_format($closings->sum('total_income_generated'), 2) }}</div>
+        <div class="bg-[#1a222d] border border-[#334155] p-5 rounded-xl shadow-lg">
+            <h3 class="text-gray-400 font-medium mb-1 text-xs uppercase">Lifetime Income</h3>
+            <div class="text-2xl font-bold text-green-400">${{ number_format($closings->sum('total_income_generated'), 2) }}</div>
         </div>
-        <div class="bg-[#1a222d] border border-[#334155] p-6 rounded-xl shadow-lg">
-            <h3 class="text-gray-400 font-medium mb-1">Lifetime Withdrawals</h3>
-            <div class="text-3xl font-bold text-orange-400">${{ number_format($closings->sum('total_withdrawals'), 2) }}</div>
+        <div class="bg-[#1a222d] border border-[#334155] p-5 rounded-xl shadow-lg">
+            <h3 class="text-gray-400 font-medium mb-1 text-xs uppercase">Lifetime Withdrawals</h3>
+            <div class="text-2xl font-bold text-orange-400">${{ number_format($closings->sum('total_withdrawals'), 2) }}</div>
         </div>
-        <div class="bg-[#1a222d] border border-[#334155] p-6 rounded-xl shadow-lg">
-            <h3 class="text-gray-400 font-medium mb-1">Tokens Distributed</h3>
-            <div class="text-3xl font-bold text-purple-400">{{ number_format($closings->sum('total_tokens_issued')) }}</div>
+        <div class="bg-[#1a222d] border border-[#334155] p-5 rounded-xl shadow-lg">
+            <h3 class="text-gray-400 font-medium mb-1 text-xs uppercase">Tokens Distributed</h3>
+            <div class="text-2xl font-bold text-purple-400">{{ number_format($closings->sum('total_tokens_issued')) }}</div>
         </div>
+    </div>
+    
+    {{-- Chart --}}
+    <div class="bg-[#1a222d] border border-[#334155] rounded-xl p-6 shadow-lg mb-8">
+        <h3 class="text-gray-300 font-semibold mb-4 flex items-center gap-2">
+            <i class="fa-solid fa-chart-line text-blue-400"></i> Net Retention Trend (Last 6 Closings)
+        </h3>
+        <canvas id="closingChart" height="80"></canvas>
     </div>
 
     <div class="bg-[#1a222d] border border-[#334155] rounded-lg overflow-hidden shadow-lg">
-        <table class="w-full table-custom">
+        <div class="table-scroll">
+            <table class="w-full table-custom">
             <thead>
                 <tr>
                     <th>Reporting Period</th>
@@ -77,6 +93,43 @@
                 @endforelse
             </tbody>
         </table>
+        </div>
     </div>
 </div>
+
+<script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
+<script>
+new Chart(document.getElementById('closingChart'), {
+    type: 'bar',
+    data: {
+        labels: @json($chartLabels),
+        datasets: [
+            {
+                label: 'Gross Income ($)',
+                data: @json($chartIncome),
+                backgroundColor: 'rgba(34,197,94,0.3)',
+                borderColor: '#22c55e',
+                borderWidth: 2,
+                borderRadius: 4,
+            },
+            {
+                label: 'Paid Withdrawals ($)',
+                data: @json($chartWithdrawals),
+                backgroundColor: 'rgba(249,115,22,0.3)',
+                borderColor: '#f97316',
+                borderWidth: 2,
+                borderRadius: 4,
+            }
+        ]
+    },
+    options: {
+        responsive: true,
+        plugins: { legend: { labels: { color: '#94a3b8' } } },
+        scales: {
+            x: { ticks: { color: '#64748b' }, grid: { color: '#1e293b' } },
+            y: { ticks: { color: '#64748b', callback: v => '$'+v }, grid: { color: '#1e293b' }, beginAtZero: true }
+        }
+    }
+});
+</script>
 @endsection

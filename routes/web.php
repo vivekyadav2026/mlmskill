@@ -194,6 +194,7 @@ Route::middleware(['auth', 'admin'])->prefix('admin')->group(function () {
     Route::get('/tokens/settings', [\App\Http\Controllers\AdminTokenController::class, 'settings'])->name('admin.tokens.settings');
     Route::get('/tokens/logs', [\App\Http\Controllers\AdminTokenController::class, 'logs'])->name('admin.tokens.logs');
     Route::get('/tokens/manual', [\App\Http\Controllers\AdminTokenController::class, 'manual'])->name('admin.tokens.manual');
+    Route::post('/tokens/manual', [\App\Http\Controllers\AdminTokenController::class, 'creditManual'])->name('admin.tokens.manual.submit');
 
     // Commissions
     Route::get('/commissions/direct', [\App\Http\Controllers\AdminCommissionController::class, 'direct'])->name('admin.commissions.direct');

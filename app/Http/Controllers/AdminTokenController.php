@@ -1,14 +1,69 @@
 <?php
 namespace App\Http\Controllers;
+
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use App\Models\TokenLedger;
+use App\Models\User;
+use App\Models\Setting;
+use Carbon\Carbon;
 
 class AdminTokenController extends Controller
 {
-    public function settings() { return view('admin.tokens.settings'); }
-    public function logs() {
-        $logs = TokenLedger::with('user')->latest()->paginate(15);
+    public function settings()
+    {
+        $settings = Setting::whereIn('key', [
+            'utility_token_name', 'utility_token_value',
+            'renewal_token_name', 'renewal_token_value',
+            'token_expiry_days', 'min_token_redeem',
+            'token_auto_credit', 'token_transferable',
+        ])->pluck('value', 'key')->toArray();
+
+        return view('admin.tokens.settings', compact('settings'));
+    }
+
+    public function logs()
+    {
+        $logs = TokenLedger::with('user')->latest()->paginate(20);
         return view('admin.tokens.logs', compact('logs'));
     }
-    public function manual() { return view('admin.tokens.manual'); }
+
+    public function manual()
+    {
+        $users = User::where('status', 'active')->orderBy('name')->get();
+        return view('admin.tokens.manual', compact('users'));
+    }
+
+    public function creditManual(Request $request)
+    {
+        $request->validate([
+            'user_id'    => 'required|exists:users,id',
+            'token_type' => 'required|in:utility,renewal',
+            'amount'     => 'required|numeric|min:0.0001',
+            'note'       => 'nullable|string|max:255',
+        ]);
+
+        // Get token value from settings
+        $valueKey = $request->token_type === 'utility'
+            ? 'utility_token_value'
+            : 'renewal_token_value';
+        $tokenValue = (float) (Setting::get($valueKey, 1));
+
+        // Create the ledger entry
+        TokenLedger::create([
+            'user_id'      => $request->user_id,
+            'token_type'   => $request->token_type,
+            'token_count'  => $request->amount,
+            'token_value'  => $tokenValue,
+            'source'       => 'manual:admin#' . Auth::id() . ($request->note ? ' – ' . $request->note : ''),
+            'status'       => 'credited',
+            'credited_date'=> Carbon::now(),
+        ]);
+
+        $user = User::find($request->user_id);
+        $typeLabel = ucfirst($request->token_type);
+
+        return redirect()->route('admin.tokens.manual')
+            ->with('success', "{$request->amount} {$typeLabel} tokens credited to {$user->name} successfully.");
+    }
 }

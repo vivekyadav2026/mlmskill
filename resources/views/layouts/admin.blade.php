@@ -8,11 +8,11 @@
   
   <link rel="preconnect" href="https://fonts.googleapis.com/">
   <link rel="preconnect" href="https://fonts.gstatic.com/" crossorigin="">
-  <link href="{{ asset('assets/Admin Dashboard â€” XVolty Trade_files/css2') }}" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 
-  <!-- Bootstrap (local) -->
-  <link rel="stylesheet" href="{{ asset('assets/Admin Dashboard â€” XVolty Trade_files/bootstrap.min.css') }}">
+  <!-- Bootstrap -->
+  <link rel="stylesheet" href="{{ asset('assets/dist/bootstrap.min.css') }}">
   <!-- Tailwind CSS without Preflight -->
   <script src="https://cdn.tailwindcss.com"></script>
   <script>
@@ -100,8 +100,8 @@
 
   </style>
 
-  <!-- Constant theme CSS (Bootstrap overrides + bespoke components) -->
-  <link rel="stylesheet" href="{{ asset('assets/Admin Dashboard â€” XVolty Trade_files/theme.css') }}">
+  <!-- Theme component CSS -->
+  <link rel="stylesheet" href="{{ asset('assets/dist/theme.css') }}">
 </head>
 <body>
   @include('components.preloader')
@@ -128,7 +128,6 @@
         </ul>
       </li>
 
-      @hasPermission('view_users')
       <li class="has-submenu">
         <a href="#" class="nav-link nav-dropdown-toggle">
           <i class="fa-solid fa-users"></i><span>User Management</span>
@@ -142,7 +141,6 @@
           <li><a href="{{ url('admin/users/tree') }}" class="nav-link sub-link"><span>Sponsor Tree View</span></a></li>
         </ul>
       </li>
-      @endhasPermission
 
       <li class="has-submenu">
         <a href="#" class="nav-link nav-dropdown-toggle">
@@ -168,7 +166,6 @@
         </ul>
       </li>
 
-      @hasPermission('view_tokens')
       <li class="has-submenu">
         <a href="#" class="nav-link nav-dropdown-toggle">
           <i class="fa-solid fa-coins"></i><span>Token Management</span>
@@ -180,9 +177,7 @@
           <li><a href="{{ url('admin/tokens/manual') }}" class="nav-link sub-link"><span>Manual Token Credit</span></a></li>
         </ul>
       </li>
-      @endhasPermission
 
-      @hasPermission('view_commissions')
       <li class="has-submenu">
         <a href="#" class="nav-link nav-dropdown-toggle">
           <i class="fa-solid fa-sack-dollar"></i><span>Commission Management</span>
@@ -194,9 +189,7 @@
           <li><a href="{{ url('admin/settings/plan') }}" class="nav-link sub-link"><span>Commission Settings</span></a></li>
         </ul>
       </li>
-      @endhasPermission
 
-      @hasPermission('view_courses')
       <li class="has-submenu">
         <a href="#" class="nav-link nav-dropdown-toggle">
           <i class="fa-solid fa-graduation-cap"></i><span>Course Management</span>
@@ -210,7 +203,6 @@
           <li><a href="{{ url('admin/courses/progress') }}" class="nav-link sub-link"><span>User Course Progress</span></a></li>
         </ul>
       </li>
-      @endhasPermission
 
       <li class="has-submenu">
         <a href="#" class="nav-link nav-dropdown-toggle">
@@ -223,7 +215,6 @@
         </ul>
       </li>
 
-      @hasPermission('view_withdrawals')
       <li class="has-submenu">
         <a href="#" class="nav-link nav-dropdown-toggle">
           <i class="fa-solid fa-arrow-up-from-bracket"></i><span>Withdrawal Management</span>
@@ -236,7 +227,6 @@
           <li><a href="{{ url('admin/withdrawals/logs') }}" class="nav-link sub-link"><span>Payment Logs</span></a></li>
         </ul>
       </li>
-      @endhasPermission
 
       <li class="has-submenu">
         <a href="#" class="nav-link nav-dropdown-toggle">
@@ -251,7 +241,6 @@
         </ul>
       </li>
 
-      @hasPermission('view_closing')
       <li class="has-submenu">
         <a href="#" class="nav-link nav-dropdown-toggle">
           <i class="fa-solid fa-calendar-check"></i><span>Monthly Closing</span>
@@ -263,9 +252,7 @@
           <li><a href="{{ url('admin/closing/reports') }}" class="nav-link sub-link"><span>Settlement Reports</span></a></li>
         </ul>
       </li>
-      @endhasPermission
 
-      @hasPermission('manage_banners')
       <li class="has-submenu">
         <a href="#" class="nav-link nav-dropdown-toggle">
           <i class="fa-solid fa-newspaper"></i><span>CMS / Content</span>
@@ -277,7 +264,6 @@
           <li><a href="{{ url('admin/cms/pages') }}" class="nav-link sub-link"><span>Pages</span></a></li>
         </ul>
       </li>
-      @endhasPermission
 
       <li class="nav-item">
         <a class="nav-link {{ request()->routeIs('admin.support.*') ? 'active' : '' }}" href="{{ route('admin.support.index') }}">
@@ -289,7 +275,6 @@
         </a>
       </li>
 
-      @hasPermission('manage_settings')
       <li class="has-submenu">
         <a href="#" class="nav-link nav-dropdown-toggle">
           <i class="fa-solid fa-gear"></i><span>System Settings</span>
@@ -302,9 +287,8 @@
           <li><a href="{{ url('admin/settings/payment') }}" class="nav-link sub-link"><span>Payment Settings</span></a></li>
         </ul>
       </li>
-      @endhasPermission
 
-      @hasPermission('manage_roles')
+      {{-- ROLES & PERMISSIONS MODULE DISABLED --
       <li class="has-submenu">
         <a href="#" class="nav-link nav-dropdown-toggle">
           <i class="fa-solid fa-user-shield"></i><span>Role & Permission</span>
@@ -316,7 +300,7 @@
           <li><a href="{{ url('admin/permissions/assign') }}" class="nav-link sub-link"><span>Assign Permissions</span></a></li>
         </ul>
       </li>
-      @endhasPermission
+      --}}
 
       <li class="has-submenu">
         <a href="#" class="nav-link nav-dropdown-toggle">
@@ -486,7 +470,7 @@
 </div><!-- /.app-shell -->
 
 <!-- Bootstrap bundle -->
-<script src="{{ asset('assets/Admin Dashboard â€” XVolty Trade_files/bootstrap.bundle.min.js.download') }}"></script>
+<script src="{{ asset('assets/dist/bootstrap.bundle.min.js') }}"></script>
 
 <!-- App-wide dashboard JS: sidebar toggle + submenu + theme form -->
 <script>

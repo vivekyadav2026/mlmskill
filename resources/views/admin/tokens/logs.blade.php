@@ -1,25 +1,141 @@
 @extends('layouts.admin')
 @section('content')
-<style>.table-custom th { background: #0f172a; color: #94a3b8; font-weight: 600; padding: 0.75rem 1rem; border-bottom: 1px solid #334155; } .table-custom td { padding: 1rem; border-bottom: 1px solid #334155; color: #e2e8f0; }</style>
-<div class="tailwind-scope mt-4 max-w-[1600px] mx-auto">
-    <div class="mb-6"><h2 class="text-2xl font-bold text-gray-100">Token Distribution Logs</h2></div>
-    <div class="bg-[#1a222d] border border-[#334155] rounded-lg overflow-hidden">
-        <table class="w-full table-custom">
-            <thead><tr><th>User</th><th>Token Type</th><th>Amount</th><th>Date</th></tr></thead>
-            <tbody>
-                @forelse($logs as $log)
-                <tr>
-                    <td class="font-bold">{{ $log->user->name ?? 'System' }}</td>
-                    <td><span class="text-xs uppercase bg-gray-800 border border-gray-600 px-2 py-1 rounded">{{ $log->token_type }}</span></td>
-                    <td class="text-indigo-400 font-mono">+{{ number_format($log->token_count, 2) }}</td>
-                    <td>{{ $log->created_at->format('M d, Y H:i') }}</td>
-                </tr>
-                @empty
-                <tr><td colspan="4" class="text-center p-8 text-gray-500">No tokens minted.</td></tr>
-                @endforelse
-            </tbody>
-        </table>
-        <div class="p-4 border-t border-[#334155]">{{ $logs->links() ?? '' }}</div>
+<style>
+.table-custom th { background:#0f172a; color:#94a3b8; font-weight:600; font-size:0.72rem; text-transform:uppercase; letter-spacing:0.05em; padding:0.75rem 1rem; border-bottom:1px solid #334155; white-space:nowrap; }
+.table-custom td { padding:0.85rem 1rem; border-bottom:1px solid #1e293b; color:#e2e8f0; font-size:0.875rem; vertical-align:middle; }
+.table-custom tr:hover td { background:rgba(255,255,255,0.03); }
+.badge-utility  { background:rgba(99,102,241,0.15); color:#818cf8; border:1px solid rgba(99,102,241,0.3); padding:0.2rem 0.7rem; border-radius:999px; font-size:0.72rem; font-weight:600; }
+.badge-renewal  { background:rgba(245,158,11,0.15); color:#fbbf24; border:1px solid rgba(245,158,11,0.3); padding:0.2rem 0.7rem; border-radius:999px; font-size:0.72rem; font-weight:600; }
+.badge-credited { background:rgba(16,185,129,0.15); color:#34d399; border:1px solid rgba(16,185,129,0.3); padding:0.2rem 0.6rem; border-radius:999px; font-size:0.7rem; }
+.badge-pending  { background:rgba(234,179,8,0.15);  color:#facc15; border:1px solid rgba(234,179,8,0.3);  padding:0.2rem 0.6rem; border-radius:999px; font-size:0.7rem; }
+.badge-used     { background:rgba(148,163,184,0.1);  color:#94a3b8; border:1px solid rgba(148,163,184,0.2);padding:0.2rem 0.6rem; border-radius:999px; font-size:0.7rem; }
+</style>
+
+<div class="tailwind-scope mt-4 max-w-[1400px] mx-auto">
+
+    {{-- Header --}}
+    <div class="flex items-center justify-between mb-6 flex-wrap gap-3">
+        <div>
+            <h2 class="text-2xl font-bold text-gray-100">Token Distribution Logs</h2>
+            <p class="text-gray-400 text-sm mt-1">Complete history of all Utility & Renewal tokens distributed to users.</p>
+        </div>
+        <a href="{{ url('admin/tokens/manual') }}"
+           class="bg-indigo-600 hover:bg-indigo-700 text-white text-sm font-semibold px-4 py-2 rounded transition flex items-center gap-2">
+            <i class="fa-solid fa-coins"></i> Manual Credit
+        </a>
     </div>
+
+    {{-- Stats Row --}}
+    @php
+        $allLogs        = \App\Models\TokenLedger::all();
+        $totalUtility   = $allLogs->where('token_type','utility')->sum('token_count');
+        $totalRenewal   = $allLogs->where('token_type','renewal')->sum('token_count');
+        $totalCredited  = $allLogs->where('status','credited')->count();
+        $totalUsed      = $allLogs->where('status','used')->count();
+    @endphp
+    <div class="grid grid-cols-2 md:grid-cols-4 gap-4 mb-6">
+        <div class="bg-[#1a222d] border border-[#334155] rounded-lg p-4">
+            <p class="text-gray-400 text-xs uppercase tracking-wider mb-1">Total Distributions</p>
+            <p class="text-2xl font-bold text-white">{{ $logs->total() }}</p>
+        </div>
+        <div class="bg-[#1a222d] border border-indigo-900 rounded-lg p-4">
+            <p class="text-gray-400 text-xs uppercase tracking-wider mb-1">Utility Tokens Issued</p>
+            <p class="text-2xl font-bold text-indigo-400">{{ number_format($totalUtility, 2) }}</p>
+        </div>
+        <div class="bg-[#1a222d] border border-yellow-900 rounded-lg p-4">
+            <p class="text-gray-400 text-xs uppercase tracking-wider mb-1">Renewal Tokens Issued</p>
+            <p class="text-2xl font-bold text-yellow-400">{{ number_format($totalRenewal, 2) }}</p>
+        </div>
+        <div class="bg-[#1a222d] border border-[#334155] rounded-lg p-4">
+            <p class="text-gray-400 text-xs uppercase tracking-wider mb-1">Active / Used</p>
+            <p class="text-2xl font-bold text-white">
+                <span class="text-green-400">{{ $totalCredited }}</span>
+                <span class="text-gray-500 text-lg"> / </span>
+                <span class="text-gray-400">{{ $totalUsed }}</span>
+            </p>
+        </div>
+    </div>
+
+    {{-- Table --}}
+    <div class="bg-[#1a222d] border border-[#334155] rounded-lg overflow-hidden">
+        <div class="overflow-x-auto">
+            <table class="w-full table-custom">
+                <thead>
+                    <tr>
+                        <th>#</th>
+                        <th>Date</th>
+                        <th>User</th>
+                        <th>Token Type</th>
+                        <th>Amount</th>
+                        <th>Value (₹/$)</th>
+                        <th>Source</th>
+                        <th>Status</th>
+                        <th>Credited On</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @forelse($logs as $log)
+                    <tr>
+                        <td class="text-gray-500 text-xs">{{ $log->id }}</td>
+                        <td>
+                            <span class="text-gray-300">{{ $log->created_at->format('d M Y') }}</span><br>
+                            <span class="text-gray-500 text-xs">{{ $log->created_at->format('h:i A') }}</span>
+                        </td>
+                        <td>
+                            <a href="{{ url('admin/users/' . $log->user_id) }}" class="text-white hover:text-indigo-400 font-medium">
+                                {{ $log->user->name ?? 'Unknown' }}
+                            </a><br>
+                            <span class="text-gray-500 text-xs">{{ $log->user->referral_code ?? '' }}</span>
+                        </td>
+                        <td>
+                            @if($log->token_type === 'utility')
+                                <span class="badge-utility"><i class="fa-solid fa-circle-bolt mr-1"></i>Utility</span>
+                            @else
+                                <span class="badge-renewal"><i class="fa-solid fa-rotate mr-1"></i>Renewal</span>
+                            @endif
+                        </td>
+                        <td class="font-mono font-bold text-indigo-300">
+                            +{{ number_format($log->token_count, 4) }}
+                        </td>
+                        <td class="font-mono text-gray-300">
+                            {{ $log->token_value ? '₹' . number_format($log->token_value, 4) : '—' }}
+                        </td>
+                        <td>
+                            <span class="text-gray-400 text-sm capitalize">{{ $log->source ?? 'Daily Distribution' }}</span>
+                        </td>
+                        <td>
+                            @if($log->status === 'credited')
+                                <span class="badge-credited">Credited</span>
+                            @elseif($log->status === 'used')
+                                <span class="badge-used">Used</span>
+                            @else
+                                <span class="badge-pending">{{ ucfirst($log->status ?? 'Pending') }}</span>
+                            @endif
+                        </td>
+                        <td class="text-gray-400 text-sm">
+                            {{ $log->credited_date ? $log->credited_date->format('d M Y') : '—' }}
+                        </td>
+                    </tr>
+                    @empty
+                    <tr>
+                        <td colspan="9" class="text-center py-16 text-gray-500">
+                            <i class="fa-solid fa-coins text-4xl mb-3 block opacity-20"></i>
+                            No token distributions recorded yet.<br>
+                            <span class="text-xs mt-2 inline-block">Tokens are distributed automatically every day via the Cron Job scheduler.</span>
+                        </td>
+                    </tr>
+                    @endforelse
+                </tbody>
+            </table>
+        </div>
+
+        {{-- Pagination --}}
+        @if($logs->hasPages())
+        <div class="p-4 border-t border-[#334155] flex justify-center">
+            {{ $logs->links() }}
+        </div>
+        @endif
+    </div>
+
 </div>
 @endsection

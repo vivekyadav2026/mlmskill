@@ -2,12 +2,12 @@
 
 @section('content')
 <div class="tailwind-scope mt-4 max-w-4xl mx-auto">
-    <div class="flex justify-between items-center mb-6">
+    <div class="flex items-center justify-between mb-6 flex-wrap gap-3">
         <div>
             <h2 class="text-2xl font-bold text-gray-100">Process Monthly Closing</h2>
             <p class="text-gray-400 text-sm">Finalize statements for the current period</p>
         </div>
-        <a href="{{ route('admin.closing.history') }}" class="px-4 py-2 bg-[#334155] hover:bg-[#475569] text-white rounded shadow transition">View History</a>
+        <a href="{{ route('admin.closing.history') }}" class="px-4 py-2 bg-[#334155] hover:bg-[#475569] text-white rounded shadow transition"><i class="fa-solid fa-clock-rotate-left mr-1"></i> View History</a>
     </div>
 
     @if(session('error'))

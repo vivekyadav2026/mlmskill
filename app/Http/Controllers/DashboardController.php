@@ -78,13 +78,18 @@ class DashboardController extends Controller
         $bonusService = app(\App\Services\BonusService::class);
         $rewardProgress = $bonusService->getNextRewardMilestone($user);
         $salaryStatus = $bonusService->getCurrentSalaryTier($user);
+        // Dynamic Token Settings
+        $tokenPrice = \App\Models\Setting::get('utility_token_value', 0.42);
+        $tokenName = \App\Models\Setting::get('utility_token_name', 'SKT');
+        $renewalTarget = \App\Models\Setting::get('renewal_limit', 300); // Assuming 300 is the default renewal limit
         
         return view('dashboard', compact(
             'user', 'wallet', 'totalEarned', 'directCount', 'networkCount',
             'recentIncome', 'recentReferrals', 'recentWithdrawals', 'recentTokens',
             'banners', 'announcements',
             'trendLabels', 'earningsTrend', 'tokenTrend', 'breakdownLabels', 'breakdownData',
-            'rewardProgress', 'salaryStatus'
+            'rewardProgress', 'salaryStatus',
+            'tokenPrice', 'tokenName', 'renewalTarget'
         ));
     }
 
