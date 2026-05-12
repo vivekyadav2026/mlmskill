@@ -17,13 +17,28 @@
                     },
                     colors: {
                         brand: {
-                            50: '#f0fdfa',
-                            100: '#e0e7ff',
-                            500: '#6366f1',
-                            600: '#4f46e5',
-                            700: '#4338ca',
-                            800: '#1e1b4b',
-                            900: '#0f172a',
+                            50: '#e8f5e9',
+                            100: '#c8e6c9',
+                            200: '#a5d6a7',
+                            300: '#81c784',
+                            400: '#66bb6a',
+                            500: '#4caf50',
+                            600: '#43a047',
+                            700: '#388e3c',
+                            800: '#2e7d32',
+                            900: '#1f512c',
+                        },
+                        accent: {
+                            50: '#fff3e0',
+                            100: '#ffe0b2',
+                            200: '#ffcc80',
+                            300: '#ffb74d',
+                            400: '#ffa726',
+                            500: '#f48a20',
+                            600: '#fb8c00',
+                            700: '#f57c00',
+                            800: '#ef6c00',
+                            900: '#e65100',
                         }
                     }
                 }
@@ -31,14 +46,14 @@
         }
     </script>
 </head>
-<body class="antialiased font-sans overflow-x-hidden min-h-screen bg-brand-900 relative flex items-center justify-center py-12 px-4 sm:px-6 lg:px-8">
+<body class="antialiased font-sans overflow-x-hidden min-h-screen bg-slate-900 relative flex items-center justify-center py-12 px-4 sm:px-6 lg:px-8">
     @include('components.preloader')
 
     <!-- Background Elements -->
     <div class="fixed inset-0 z-0 overflow-hidden pointer-events-none">
         <div class="absolute inset-0 bg-[url('https://images.unsplash.com/photo-1451187580459-43490279c0fa?q=80&w=2072&auto=format&fit=crop')] bg-cover bg-center opacity-10 mix-blend-overlay"></div>
-        <div class="absolute -top-[20%] -left-[10%] w-[50%] h-[50%] rounded-full bg-brand-600/30 blur-[120px]"></div>
-        <div class="absolute -bottom-[20%] -right-[10%] w-[50%] h-[50%] rounded-full bg-purple-600/30 blur-[120px]"></div>
+        <div class="absolute -top-[20%] -left-[10%] w-[50%] h-[50%] rounded-full bg-brand-500/20 blur-[120px]"></div>
+        <div class="absolute -bottom-[20%] -right-[10%] w-[50%] h-[50%] rounded-full bg-accent-500/20 blur-[120px]"></div>
     </div>
 
     <!-- Main Card -->
@@ -47,8 +62,8 @@
         <!-- Logo -->
         <div class="text-center mb-8">
             <a href="{{ url('/') }}" class="inline-flex items-center gap-3 transition transform hover:scale-105">
-                <div class="w-12 h-12 rounded-xl bg-gradient-to-br from-brand-500 to-purple-600 flex items-center justify-center text-white font-heading font-black text-2xl shadow-xl shadow-brand-500/20 border border-white/10">SD</div>
-                <span class="font-heading font-bold text-3xl text-white tracking-tight">Samarth Digital</span>
+                <img src="{{ asset('logo.png') }}" alt="Logo" class="w-14 h-14 rounded-full object-cover shadow-lg shadow-brand-500/30 border border-white/10 bg-white p-0.5">
+                <span class="font-heading font-bold text-3xl text-white tracking-tight">Samarth <span class="text-accent-400">Digital</span></span>
             </a>
             <p class="mt-4 text-brand-100 text-sm font-light tracking-wide">Join the ultimate professional growth platform</p>
         </div>
@@ -166,7 +181,7 @@
                     </div>
                 </div>
 
-                <button type="submit" class="w-full bg-gradient-to-r from-brand-600 to-purple-600 hover:from-brand-500 hover:to-purple-500 text-white font-bold py-3.5 rounded-xl shadow-lg shadow-brand-500/30 transition transform hover:-translate-y-0.5 border border-white/10 mt-6">
+                <button type="submit" class="w-full bg-gradient-to-r from-brand-600 to-brand-500 hover:from-brand-500 hover:to-brand-400 text-white font-bold py-3.5 rounded-xl shadow-lg shadow-brand-500/30 transition transform hover:-translate-y-0.5 border border-white/10 mt-6">
                     Create Account
                 </button>
             </form>
