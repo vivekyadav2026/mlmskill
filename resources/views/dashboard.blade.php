@@ -154,6 +154,64 @@
         </div>
     </div>
 
+    <!-- Bonus Tracking Row -->
+    <div class="grid grid-cols-1 lg:grid-cols-2 gap-6 mb-6">
+        <!-- Reward Income Progress -->
+        <div class="bg-[#1a222d] rounded-lg border border-[#334155] p-6 shadow-lg">
+            <div class="flex justify-between items-center mb-4">
+                <h3 class="text-gray-200 font-medium"><i class="fa-solid fa-trophy mr-2 text-yellow-500"></i>Next Reward Milestone</h3>
+                @if($rewardProgress)
+                <span class="text-xs font-bold bg-green-900 text-green-300 px-2 py-1 rounded">Reward: ${{ number_format($rewardProgress['reward'], 0) }}</span>
+                @else
+                <span class="text-xs font-bold bg-yellow-900 text-yellow-300 px-2 py-1 rounded">Max Level</span>
+                @endif
+            </div>
+            
+            @if($rewardProgress)
+            <div class="w-full bg-gray-900 rounded-full h-2 mb-2 border border-[#334155]">
+                <div class="bg-yellow-500 h-2 rounded-full" style="width: {{ $rewardProgress['percent'] }}%"></div>
+            </div>
+            <div class="flex justify-between text-sm mt-4 border-t border-[#334155] pt-4">
+                <div><p class="text-gray-500">Current Team</p><p class="text-green-400 font-bold">{{ $rewardProgress['current'] }} members</p></div>
+                <div class="text-right"><p class="text-gray-500">Target Team Size</p><p class="text-gray-200 font-bold">{{ $rewardProgress['target'] }} members</p></div>
+            </div>
+            @else
+            <div class="py-4 text-center">
+                <i class="fa-solid fa-crown text-yellow-500 text-4xl mb-2"></i>
+                <p class="text-gray-400 text-sm">Congratulations! You have unlocked all Team Size Reward Milestones.</p>
+            </div>
+            @endif
+        </div>
+
+        <!-- Salary Bonus Status -->
+        <div class="bg-[#1a222d] rounded-lg border border-[#334155] p-6 shadow-lg">
+            <h3 class="text-gray-200 font-medium mb-4"><i class="fa-solid fa-money-check-dollar mr-2 text-green-400"></i>Monthly Salary Status</h3>
+            
+            <div class="grid grid-cols-2 gap-4 mb-4">
+                <div class="bg-[#0b1220] border border-[#334155] rounded p-3 text-center">
+                    <p class="text-xs text-gray-500 uppercase">Active Salary Tier</p>
+                    @if($salaryStatus['active_amount'] > 0)
+                        <p class="text-xl font-bold text-green-400">${{ number_format($salaryStatus['active_amount'], 0) }} /mo</p>
+                    @else
+                        <p class="text-xl font-bold text-gray-500">None</p>
+                    @endif
+                </div>
+                <div class="bg-[#0b1220] border border-[#334155] rounded p-3 text-center">
+                    <p class="text-xs text-gray-500 uppercase">Next Tier (${{ number_format($salaryStatus['next_amount'], 0) }})</p>
+                    <p class="text-lg font-bold text-gray-100 mt-1">{{ $salaryStatus['current_directs'] }} / {{ $salaryStatus['next_tier'] }} Directs</p>
+                </div>
+            </div>
+            
+            @if($salaryStatus['next_tier'] > 0)
+            @php $salPct = min(100, ($salaryStatus['current_directs'] / $salaryStatus['next_tier']) * 100); @endphp
+            <div class="w-full bg-gray-900 rounded-full h-1.5 mb-1 border border-[#334155]">
+                <div class="bg-green-500 h-1.5 rounded-full" style="width: {{ $salPct }}%"></div>
+            </div>
+            <p class="text-xs text-gray-500 text-right">Need {{ $salaryStatus['next_tier'] - $salaryStatus['current_directs'] }} more directs for upgrade</p>
+            @endif
+        </div>
+    </div>
+
     <!-- Live Market Tracker (Dummy Stock Graph) -->
     <div class="mb-6 bg-[#1a222d] rounded-lg border border-[#334155] p-5 shadow-lg relative overflow-hidden">
         <div class="absolute top-0 right-0 w-64 h-64 bg-green-500/5 rounded-full blur-3xl -mr-10 -mt-10 pointer-events-none"></div>

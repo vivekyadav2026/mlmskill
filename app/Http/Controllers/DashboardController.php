@@ -74,11 +74,17 @@ class DashboardController extends Controller
             $breakdownData = [0];
         }
         
+        // Fetch Bonus Progress
+        $bonusService = app(\App\Services\BonusService::class);
+        $rewardProgress = $bonusService->getNextRewardMilestone($user);
+        $salaryStatus = $bonusService->getCurrentSalaryTier($user);
+        
         return view('dashboard', compact(
             'user', 'wallet', 'totalEarned', 'directCount', 'networkCount',
             'recentIncome', 'recentReferrals', 'recentWithdrawals', 'recentTokens',
             'banners', 'announcements',
-            'trendLabels', 'earningsTrend', 'tokenTrend', 'breakdownLabels', 'breakdownData'
+            'trendLabels', 'earningsTrend', 'tokenTrend', 'breakdownLabels', 'breakdownData',
+            'rewardProgress', 'salaryStatus'
         ));
     }
 

@@ -36,6 +36,10 @@ class ActivationService
             
             \App\Models\ActivityLog::log('activation_bonus', 'Received $300 wallet bonus upon admin approval', $user->id);
 
+            // Give commissions and check reward income
+            $this->commissionService->distributeCommissions($user, 300);
+            app(\App\Services\BonusService::class)->checkAndDistributeRewardIncome($user);
+
             return true;
         });
     }
