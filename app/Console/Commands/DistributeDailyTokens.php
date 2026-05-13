@@ -3,6 +3,7 @@
 namespace App\Console\Commands;
 
 use Illuminate\Console\Command;
+use App\Services\TokenService;
 
 class DistributeDailyTokens extends Command
 {
@@ -18,39 +19,18 @@ class DistributeDailyTokens extends Command
      *
      * @var string
      */
-    protected $description = 'Command description';
+    protected $description = 'Distribute 1 Utility + 1 Renewal token daily to all active users';
 
     /**
      * Execute the console command.
      */
-    public function handle()
+    public function handle(TokenService $tokenService): void
     {
-        $users = \App\Models\User::where('status', 'active')->get();
-        foreach ($users as $user) {
-            $wallet = \App\Models\Wallet::firstOrCreate(['user_id' => $user->id]);
-            
-            // Give 1 Utility Token
-            $wallet->increment('utility_token_wallet', 1);
-            \App\Models\TokenLedger::create([
-                'user_id' => $user->id,
-                'token_type' => 'utility',
-                'token_count' => 1,
-                'source' => 'daily_reward',
-                'status' => 'credited',
-                'credited_date' => now()
-            ]);
-            
-            // Give 1 Renewal Token
-            $wallet->increment('renewal_token_wallet', 1);
-            \App\Models\TokenLedger::create([
-                'user_id' => $user->id,
-                'token_type' => 'renewal',
-                'token_count' => 1,
-                'source' => 'daily_reward',
-                'status' => 'credited',
-                'credited_date' => now()
-            ]);
-        }
+        $this->info('Starting daily token distribution...');
+
+        $tokenService->distributeDailyTokens();
+
         $this->info('Daily tokens distributed successfully.');
     }
 }
+
