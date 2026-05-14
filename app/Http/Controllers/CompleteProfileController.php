@@ -21,7 +21,7 @@ class CompleteProfileController extends Controller
         $request->validate([
             'profile_image' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
             'gender' => 'required|in:male,female,other',
-            'phone' => 'required|string|max:20',
+            'phone' => 'required|string|max:20|unique:users,phone,' . Auth::id(),
             'address' => 'required|string|max:255',
             'city' => 'required|string|max:100',
             'state' => 'required|string|max:100',

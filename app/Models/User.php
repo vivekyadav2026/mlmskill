@@ -58,6 +58,11 @@ class User extends Authenticatable
         return $this->hasMany(User::class, 'sponsor_id', 'referral_code');
     }
 
+    public function allReferrals()
+    {
+        return $this->referrals()->with('allReferrals');
+    }
+
     public function wallet()
     {
         return $this->hasOne(Wallet::class);

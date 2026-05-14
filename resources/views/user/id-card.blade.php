@@ -40,7 +40,7 @@
             <!-- Top Right Company Logo -->
             <div class="absolute top-6 right-6 z-10 flex items-center gap-2">
                 <span class="font-bold text-[#1e2380] uppercase tracking-wider text-[11px]">Samarth Digital</span>
-                <i class="fa-solid fa-layer-group text-[#3b41c5] text-lg"></i>
+                <img src="{{ asset('logo.png') }}" alt="Logo" class="w-6 h-6 rounded-full object-cover shadow-sm">
             </div>
 
             <!-- Profile Content -->

@@ -30,11 +30,20 @@ class ActivationService
             $user->activation_date = now();
             $user->save();
 
-            // Give them $300 in package wallet to buy the course
             $wallet = Wallet::firstOrCreate(['user_id' => $user->id]);
-            $wallet->increment('package_wallet', 300);
-            
-            \App\Models\ActivityLog::log('activation_bonus', 'Received $300 wallet bonus upon admin approval', $user->id);
+
+            // Grant access to all courses in the active module automatically
+            $modules = \App\Models\CourseModule::with('courses')->where('status', 'active')->get();
+            foreach ($modules as $module) {
+                foreach ($module->courses as $course) {
+                    if ($course->status == 'active') {
+                        \App\Models\CourseProgress::firstOrCreate([
+                            'user_id' => $user->id,
+                            'course_id' => $course->id,
+                        ]);
+                    }
+                }
+            }
 
             // Give commissions and check reward income
             $this->commissionService->distributeCommissions($user, 300);

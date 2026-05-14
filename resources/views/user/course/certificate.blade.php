@@ -34,7 +34,7 @@
                 <i class="fa-solid fa-graduation-cap text-4xl text-gray-300"></i>
             </div>
             <div class="absolute top-8 right-8">
-                <img src="https://ui-avatars.com/api/?name=SD&background=4338ca&color=fff&rounded=true&size=64" alt="Logo">
+                <img src="{{ asset('logo.png') }}" alt="Logo" class="w-16 h-16 rounded-full object-cover shadow-sm border border-gray-200">
             </div>
             
             <h1 class="cert-header mt-10">Certificate of Completion</h1>

@@ -148,7 +148,7 @@
           <i class="fa-solid fa-chevron-down nav-arrow"></i>
         </a>
         <ul class="nav-submenu list-unstyled mb-0">
-          <li><a href="{{ url('admin/activations/requests') }}" class="nav-link sub-link"><span>Activation Requests</span></a></li>
+          <!-- <li><a href="{{ url('admin/activations/requests') }}" class="nav-link sub-link"><span>Activation Requests</span></a></li> -->
           <li><a href="{{ url('admin/activations/history') }}" class="nav-link sub-link"><span>Payment History</span></a></li>
           <li><a href="{{ url('admin/activations/manual') }}" class="nav-link sub-link"><span>Manual Activation</span></a></li>
         </ul>

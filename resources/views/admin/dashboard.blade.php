@@ -279,6 +279,7 @@
             <a href="{{ url('admin/users') }}" class="px-4 py-2 bg-[#334155] hover:bg-[#475569] text-white rounded text-sm transition"><i class="fa-solid fa-users mr-1"></i> All Users</a>
             <a href="{{ url('admin/settings/plan') }}" class="px-4 py-2 bg-[#334155] hover:bg-[#475569] text-white rounded text-sm transition"><i class="fa-solid fa-gear mr-1"></i> Income Settings</a>
             <a href="{{ url('admin/tokens/manual') }}" class="px-4 py-2 bg-[#334155] hover:bg-[#475569] text-white rounded text-sm transition"><i class="fa-solid fa-coins mr-1"></i> Token Controls</a>
+            <button onclick="copyAdminReferral()" class="px-4 py-2 bg-indigo-600 hover:bg-indigo-700 text-white rounded text-sm transition"><i class="fa-solid fa-link mr-1"></i> Copy Referral Link</button>
         </div>
     </div>
 </div>
@@ -345,5 +346,15 @@ document.addEventListener('DOMContentLoaded', function() {
         }
     });
 });
+
+function copyAdminReferral() {
+    const referralLink = "{{ url('register?ref=' . (auth()->user()->referral_code ?? 'ADMIN123')) }}";
+    navigator.clipboard.writeText(referralLink).then(() => {
+        alert('Admin referral link copied to clipboard:\n\n' + referralLink);
+    }).catch(err => {
+        console.error('Failed to copy text: ', err);
+        prompt('Copy your referral link:', referralLink);
+    });
+}
 </script>
 @endsection
