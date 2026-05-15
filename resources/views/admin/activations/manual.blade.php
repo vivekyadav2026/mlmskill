@@ -3,6 +3,8 @@
 <div class="tailwind-scope mt-4 max-w-2xl mx-auto">
     <div class="mb-6"><h2 class="text-2xl font-bold text-gray-100">Manual User Activation</h2><p class="text-gray-400">Manually activate a user account bypassing the automated payment gateway.</p></div>
     @if(session('success')) <div class="bg-green-500/10 text-green-400 p-4 rounded mb-4">{{ session('success') }}</div> @endif
+    @if(session('error')) <div class="bg-red-500/10 text-red-400 p-4 rounded mb-4">⚠️ {{ session('error') }}</div> @endif
+    @if($errors->any()) <div class="bg-red-500/10 text-red-400 p-4 rounded mb-4"><ul>@foreach($errors->all() as $e)<li>{{ $e }}</li>@endforeach</ul></div> @endif
     <div class="bg-[#1a222d] border border-[#334155] rounded-lg p-8">
         <form action="{{ url('admin/activations/manual') }}" method="POST">
             @csrf
