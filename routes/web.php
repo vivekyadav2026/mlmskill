@@ -68,6 +68,7 @@ Route::middleware(['auth'])->group(function () {
     Route::get('/user/network/level', [\App\Http\Controllers\NetworkController::class, 'level'])->name('network.level');
 
     // Profile Module
+    Route::get('/user/profile', [\App\Http\Controllers\ProfileController::class, 'show'])->name('profile.index');
     Route::post('/user/profile/edit', [\App\Http\Controllers\ProfileController::class, 'update'])->name('profile.update');
     Route::post('/user/profile/password', [\App\Http\Controllers\ProfileController::class, 'updatePassword'])->name('profile.password.update');
 
