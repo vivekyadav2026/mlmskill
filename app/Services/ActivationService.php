@@ -45,6 +45,20 @@ class ActivationService
                 }
             }
 
+            // Give 300 free utility tokens upon activation
+            $tokenValue = (float) \App\Models\Setting::get('utility_token_value', 0.10);
+            \App\Models\TokenLedger::create([
+                'user_id' => $user->id,
+                'token_type' => 'utility',
+                'token_count' => 300,
+                'token_value' => $tokenValue,
+                'source' => 'activation_bonus',
+                'status' => 'credited',
+                'credited_date' => now(),
+            ]);
+            $wallet->utility_token_wallet += 300;
+            $wallet->save();
+
             // Give commissions and check reward income
             $this->commissionService->distributeCommissions($user, 300);
             app(\App\Services\BonusService::class)->checkAndDistributeRewardIncome($user);

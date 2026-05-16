@@ -6,6 +6,8 @@ use Illuminate\Support\Facades\Auth;
 use App\Models\TokenLedger;
 use App\Models\User;
 use App\Models\Setting;
+use App\Models\Wallet;
+use Illuminate\Support\Facades\DB;
 use Carbon\Carbon;
 
 class AdminTokenController extends Controller
@@ -49,16 +51,23 @@ class AdminTokenController extends Controller
             : 'renewal_token_value';
         $tokenValue = (float) (Setting::get($valueKey, 1));
 
-        // Create the ledger entry
-        TokenLedger::create([
-            'user_id'      => $request->user_id,
-            'token_type'   => $request->token_type,
-            'token_count'  => $request->amount,
-            'token_value'  => $tokenValue,
-            'source'       => 'manual:admin#' . Auth::id() . ($request->note ? ' – ' . $request->note : ''),
-            'status'       => 'credited',
-            'credited_date'=> Carbon::now(),
-        ]);
+        DB::transaction(function () use ($request, $tokenValue) {
+            // Create the ledger entry
+            TokenLedger::create([
+                'user_id'      => $request->user_id,
+                'token_type'   => $request->token_type,
+                'token_count'  => $request->amount,
+                'token_value'  => $tokenValue,
+                'source'       => 'manual:admin#' . Auth::id() . ($request->note ? ' – ' . $request->note : ''),
+                'status'       => 'credited',
+                'credited_date'=> Carbon::now(),
+            ]);
+
+            // Update the user's wallet balance
+            $wallet = Wallet::firstOrCreate(['user_id' => $request->user_id]);
+            $walletField = $request->token_type === 'utility' ? 'utility_token_wallet' : 'renewal_token_wallet';
+            $wallet->increment($walletField, $request->amount);
+        });
 
         $user = User::find($request->user_id);
         $typeLabel = ucfirst($request->token_type);

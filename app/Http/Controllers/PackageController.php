@@ -94,6 +94,19 @@ class PackageController extends Controller
         // Check for Reward Income milestones
         app(\App\Services\BonusService::class)->checkAndDistributeRewardIncome($user);
 
+        // Give 300 free utility tokens upon activation
+        $tokenValue = (float) \App\Models\Setting::get('utility_token_value', 0.10);
+        \App\Models\TokenLedger::create([
+            'user_id' => $user->id,
+            'token_type' => 'utility',
+            'token_count' => 300,
+            'token_value' => $tokenValue,
+            'source' => 'activation_bonus',
+            'status' => 'credited',
+            'credited_date' => now(),
+        ]);
+        $wallet->increment('utility_token_wallet', 300);
+
         \App\Models\ActivityLog::log('account_activated', 'Activated account with NGO Package for $' . $price, $user->id);
 
         return redirect()->route('dashboard')->with('success', 'Account activated successfully! You now have full access to the platform and courses.');
@@ -160,6 +173,20 @@ class PackageController extends Controller
 
         // Check for Reward Income milestones
         app(\App\Services\BonusService::class)->checkAndDistributeRewardIncome($targetUser);
+
+        // Give 300 free utility tokens upon activation
+        $tokenValue = (float) \App\Models\Setting::get('utility_token_value', 0.10);
+        \App\Models\TokenLedger::create([
+            'user_id' => $targetUser->id,
+            'token_type' => 'utility',
+            'token_count' => 300,
+            'token_value' => $tokenValue,
+            'source' => 'activation_bonus',
+            'status' => 'credited',
+            'credited_date' => now(),
+        ]);
+        $targetWallet = \App\Models\Wallet::firstOrCreate(['user_id' => $targetUser->id]);
+        $targetWallet->increment('utility_token_wallet', 300);
 
         \App\Models\ActivityLog::log('account_activated_by_sponsor', 'Activated account '.$targetUser->username.' with NGO Package for $' . $price, $currentUser->id);
         \App\Models\ActivityLog::log('account_activated', 'Account activated by sponsor '.$currentUser->username.' for $' . $price, $targetUser->id);

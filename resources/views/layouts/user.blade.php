@@ -305,7 +305,7 @@
             <li><h6 class="dropdown-header">{{ auth()->user()->name ?? 'User' }}<br><small class="text-muted">{{ auth()->user()->email ?? '' }}</small></h6></li>
             <li><hr class="dropdown-divider"></li>
             <li><a class="dropdown-item" href="{{ url('user/profile') }}"><i class="fa-solid fa-user me-2"></i>Profile</a></li>
-            <li><a class="dropdown-item" href="{{ url('user/change-password') }}"><i class="fa-solid fa-shield-halved me-2"></i>Security</a></li>
+            <li><a class="dropdown-item" href="{{ route('profile.password') }}"><i class="fa-solid fa-shield-halved me-2"></i>Security</a></li>
             <li><a class="dropdown-item" href="{{ route('logout') }}"><i class="fa-solid fa-right-from-bracket me-2"></i>Log Out</a></li>
           </ul>
         </div>

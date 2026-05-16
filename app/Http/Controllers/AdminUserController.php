@@ -105,6 +105,18 @@ class AdminUserController extends Controller
         return redirect('admin/users')->with('success', 'User updated successfully.');
     }
 
+    public function changePassword(Request $request, $id) {
+        $user = User::findOrFail($id);
+        $request->validate([
+            'new_password' => 'required|min:6|same:confirm_password',
+        ]);
+        
+        $user->password = \Illuminate\Support\Facades\Hash::make($request->new_password);
+        $user->save();
+        
+        return back()->with('success', 'Password changed successfully for user ' . $user->name);
+    }
+
     public function status($id, \App\Services\ActivationService $activationService) {
         $user = User::findOrFail($id);
         

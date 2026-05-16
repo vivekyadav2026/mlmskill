@@ -168,6 +168,7 @@ Route::middleware(['auth', 'admin'])->prefix('admin')->group(function () {
     Route::get('/users/{id}', [\App\Http\Controllers\AdminUserController::class, 'show'])->name('admin.users.show');
     Route::get('/users/{id}/edit', [\App\Http\Controllers\AdminUserController::class, 'edit'])->name('admin.users.edit');
     Route::post('/users/{id}/update', [\App\Http\Controllers\AdminUserController::class, 'update'])->name('admin.users.update');
+    Route::post('/users/{id}/password', [\App\Http\Controllers\AdminUserController::class, 'changePassword'])->name('admin.users.password');
     Route::post('/users/{id}/status', [\App\Http\Controllers\AdminUserController::class, 'status'])->name('admin.users.status');
     Route::post('/users/{id}/delete', [\App\Http\Controllers\AdminUserController::class, 'destroy'])->name('admin.users.destroy');
     

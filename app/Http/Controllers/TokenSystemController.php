@@ -35,10 +35,10 @@ class TokenSystemController extends Controller
         $balance = $user->wallet->utility_token_wallet ?? 0;
         $renewalBalance = $user->wallet->renewal_token_wallet ?? 0;
         $activationDate = $user->activation_date ? \Carbon\Carbon::parse($user->activation_date) : null;
-        $daysSinceActivation = $activationDate ? $activationDate->diffInDays(now()) : 0;
+        $daysSinceActivation = $activationDate ? (int) $activationDate->diffInDays(now()) : 0;
         
-        $utilityValue = \App\Models\Setting::get('utility_token_value', 0.10); // Default 10 cents
-        $renewalValue = \App\Models\Setting::get('renewal_token_value', 0.50);
+        $utilityValue = (float) \App\Models\Setting::get('utility_token_value', 0.10); // Default 10 cents
+        $renewalValue = (float) \App\Models\Setting::get('renewal_token_value', 0.50);
 
         return view('user.token.conversion', compact('user', 'balance', 'renewalBalance', 'daysSinceActivation', 'utilityValue', 'renewalValue'));
     }
@@ -62,17 +62,19 @@ class TokenSystemController extends Controller
                 return back()->with('error', 'Minimum conversion for Utility Token is 50.');
             }
 
-            $tokenValue = \App\Models\Setting::get('utility_token_value', 0.10);
+            $tokenValue = (float) \App\Models\Setting::get('utility_token_value', 0.10);
             $creditAmount = $amount * $tokenValue;
 
-            \Illuminate\Support\Facades\DB::transaction(function () use ($wallet, $user, $amount, $creditAmount) {
-                $wallet->decrement('utility_token_wallet', $amount);
-                $wallet->increment('package_wallet', $creditAmount);
+            \Illuminate\Support\Facades\DB::transaction(function () use ($wallet, $user, $amount, $creditAmount, $tokenValue) {
+                $wallet->utility_token_wallet -= $amount;
+                $wallet->package_wallet += $creditAmount;
+                $wallet->save();
 
                 \App\Models\TokenLedger::create([
                     'user_id' => $user->id,
                     'token_type' => 'utility',
                     'token_count' => -$amount,
+                    'token_value' => $tokenValue,
                     'source' => 'conversion',
                     'status' => 'used',
                     'used_date' => now()
@@ -84,7 +86,7 @@ class TokenSystemController extends Controller
 
         if ($request->token_type === 'renewal') {
             $activationDate = $user->activation_date ? \Carbon\Carbon::parse($user->activation_date) : null;
-            $daysSinceActivation = $activationDate ? $activationDate->diffInDays(now()) : 0;
+            $daysSinceActivation = $activationDate ? (int) $activationDate->diffInDays(now()) : 0;
 
             if ($daysSinceActivation < 300) {
                 return back()->with('error', 'Renewal Tokens can only be converted after 300 days of activation.');
@@ -93,17 +95,19 @@ class TokenSystemController extends Controller
                 return back()->with('error', 'Insufficient Renewal Tokens.');
             }
 
-            $tokenValue = \App\Models\Setting::get('renewal_token_value', 0.50);
+            $tokenValue = (float) \App\Models\Setting::get('renewal_token_value', 0.50);
             $creditAmount = $amount * $tokenValue;
 
-            \Illuminate\Support\Facades\DB::transaction(function () use ($wallet, $user, $amount, $creditAmount) {
-                $wallet->decrement('renewal_token_wallet', $amount);
-                $wallet->increment('package_wallet', $creditAmount);
+            \Illuminate\Support\Facades\DB::transaction(function () use ($wallet, $user, $amount, $creditAmount, $tokenValue) {
+                $wallet->renewal_token_wallet -= $amount;
+                $wallet->package_wallet += $creditAmount;
+                $wallet->save();
 
                 \App\Models\TokenLedger::create([
                     'user_id' => $user->id,
                     'token_type' => 'renewal',
                     'token_count' => -$amount,
+                    'token_value' => $tokenValue,
                     'source' => 'conversion',
                     'status' => 'used',
                     'used_date' => now()
