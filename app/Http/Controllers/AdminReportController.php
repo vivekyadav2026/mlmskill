@@ -7,6 +7,10 @@ use App\Models\TokenLedger;
 use App\Models\User;
 use App\Models\Withdrawal;
 use Carbon\Carbon;
+use Maatwebsite\Excel\Facades\Excel;
+use App\Exports\CommissionsExport;
+use App\Exports\WithdrawalsExport;
+use Barryvdh\DomPDF\Facade\Pdf;
 
 class AdminReportController extends Controller
 {
@@ -105,5 +109,29 @@ class AdminReportController extends Controller
             'countPending', 'countApproved', 'countRejected',
             'monthlyLabels', 'monthlyPaid'
         ));
+    }
+
+    public function exportIncomeExcel()
+    {
+        return Excel::download(new CommissionsExport, 'income_report_' . date('Y-m-d') . '.xlsx');
+    }
+
+    public function exportFinancialExcel()
+    {
+        return Excel::download(new WithdrawalsExport, 'withdrawal_report_' . date('Y-m-d') . '.xlsx');
+    }
+
+    public function exportIncomePDF()
+    {
+        $commissions = CommissionLedger::with(['user', 'fromUser'])->get();
+        $pdf = Pdf::loadView('admin.exports.income', compact('commissions'))->setPaper('a4', 'landscape');
+        return $pdf->download('income_report_' . date('Y-m-d') . '.pdf');
+    }
+
+    public function exportFinancialPDF()
+    {
+        $withdrawals = Withdrawal::with('user')->get();
+        $pdf = Pdf::loadView('admin.exports.withdrawals', compact('withdrawals'))->setPaper('a4', 'landscape');
+        return $pdf->download('withdrawal_report_' . date('Y-m-d') . '.pdf');
     }
 }

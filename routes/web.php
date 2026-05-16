@@ -173,6 +173,8 @@ Route::middleware(['auth', 'admin'])->prefix('admin')->group(function () {
     Route::get('/users/active', [\App\Http\Controllers\AdminUserController::class, 'active'])->name('admin.users.active');
     Route::get('/users/inactive', [\App\Http\Controllers\AdminUserController::class, 'inactive'])->name('admin.users.inactive');
     Route::get('/users/create', [\App\Http\Controllers\AdminUserController::class, 'create'])->name('admin.users.create');
+    Route::get('/users/export/excel', [\App\Http\Controllers\AdminUserController::class, 'exportExcel'])->name('admin.users.export.excel');
+    Route::get('/users/export/pdf', [\App\Http\Controllers\AdminUserController::class, 'exportPDF'])->name('admin.users.export.pdf');
     Route::post('/users/create', [\App\Http\Controllers\AdminUserController::class, 'store']);
     Route::get('/users/tree', [\App\Http\Controllers\AdminUserController::class, 'tree'])->name('admin.users.tree');
     Route::get('/users/tree/node/{id}', [\App\Http\Controllers\AdminUserController::class, 'treeNode'])->name('admin.users.tree.node');
@@ -245,9 +247,13 @@ Route::middleware(['auth', 'admin'])->prefix('admin')->group(function () {
 
     // Reports
     Route::get('/reports/income', [\App\Http\Controllers\AdminReportController::class, 'income'])->name('admin.reports.income');
+    Route::get('/reports/income/export/excel', [\App\Http\Controllers\AdminReportController::class, 'exportIncomeExcel'])->name('admin.reports.income.excel');
+    Route::get('/reports/income/export/pdf', [\App\Http\Controllers\AdminReportController::class, 'exportIncomePDF'])->name('admin.reports.income.pdf');
     Route::get('/reports/token', [\App\Http\Controllers\AdminReportController::class, 'token'])->name('admin.reports.token');
     Route::get('/reports/user', [\App\Http\Controllers\AdminReportController::class, 'user'])->name('admin.reports.user');
     Route::get('/reports/financial', [\App\Http\Controllers\AdminReportController::class, 'financial'])->name('admin.reports.financial');
+    Route::get('/reports/financial/export/excel', [\App\Http\Controllers\AdminReportController::class, 'exportFinancialExcel'])->name('admin.reports.financial.excel');
+    Route::get('/reports/financial/export/pdf', [\App\Http\Controllers\AdminReportController::class, 'exportFinancialPDF'])->name('admin.reports.financial.pdf');
 
     // Monthly Closing
     Route::get('/closing/history', [\App\Http\Controllers\AdminClosingController::class, 'history'])->name('admin.closing.history');

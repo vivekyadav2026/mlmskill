@@ -2,7 +2,17 @@
 @section('content')
 <style>.table-custom th { background: #0f172a; color: #94a3b8; font-weight: 600; padding: 0.75rem 1rem; border-bottom: 1px solid #334155; } .table-custom td { padding: 1rem; border-bottom: 1px solid #334155; color: #e2e8f0; text-transform: capitalize; }</style>
 <div class="tailwind-scope mt-4 max-w-[1600px] mx-auto">
-    <div class="mb-6"><h2 class="text-2xl font-bold text-gray-100">All Users</h2></div>
+    <div class="mb-6 flex justify-between items-center">
+        <h2 class="text-2xl font-bold text-gray-100">All Users</h2>
+        <div class="flex gap-2">
+            <a href="{{ route('admin.users.export.excel') }}" class="px-4 py-2 bg-green-700 text-white rounded-lg hover:bg-green-600 transition flex items-center gap-2 shadow-lg shadow-green-900/20">
+                <i class="fa-solid fa-file-excel"></i> Export Excel
+            </a>
+            <a href="{{ route('admin.users.export.pdf') }}" class="px-4 py-2 bg-red-700 text-white rounded-lg hover:bg-red-600 transition flex items-center gap-2 shadow-lg shadow-red-900/20">
+                <i class="fa-solid fa-file-pdf"></i> Export PDF
+            </a>
+        </div>
+    </div>
     <div class="bg-[#1a222d] border border-[#334155] rounded-lg overflow-hidden">
         <table class="w-full table-custom">
             <thead><tr><th>Name</th><th>Email</th><th>Referral Code</th><th>Rank</th><th>Status</th><th>Time Track</th><th>Joined</th><th>Actions</th></tr></thead>

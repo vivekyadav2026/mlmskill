@@ -24,7 +24,17 @@
             <h2 class="text-2xl font-bold text-gray-100">Transaction / Financial Reports</h2>
             <p class="text-gray-400 text-sm mt-1">Complete withdrawal history — approved, pending and rejected transactions.</p>
         </div>
-        <span class="text-xs text-gray-500">Generated: {{ now()->format('d M Y, h:i A') }}</span>
+        <div class="flex items-center gap-2">
+            <div class="flex gap-2 mr-4">
+                <a href="{{ route('admin.reports.financial.excel') }}" class="px-4 py-2 bg-green-700 text-white rounded-lg hover:bg-green-600 transition flex items-center gap-2 text-sm shadow-lg shadow-green-900/20">
+                    <i class="fa-solid fa-file-excel"></i> Excel
+                </a>
+                <a href="{{ route('admin.reports.financial.pdf') }}" class="px-4 py-2 bg-red-700 text-white rounded-lg hover:bg-red-600 transition flex items-center gap-2 text-sm shadow-lg shadow-red-900/20">
+                    <i class="fa-solid fa-file-pdf"></i> PDF
+                </a>
+            </div>
+            <span class="text-xs text-gray-500 hide-mobile">Generated: {{ now()->format('d M Y, h:i A') }}</span>
+        </div>
     </div>
 
     {{-- Stats Row --}}

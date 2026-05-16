@@ -2,6 +2,9 @@
 namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\User;
+use Maatwebsite\Excel\Facades\Excel;
+use App\Exports\UsersExport;
+use Barryvdh\DomPDF\Facade\Pdf;
 
 class AdminUserController extends Controller
 {
@@ -132,6 +135,18 @@ class AdminUserController extends Controller
             $user->save();
             return back()->with('success', 'User deactivated successfully.');
         }
+    }
+
+    public function exportExcel()
+    {
+        return Excel::download(new UsersExport, 'users_report_' . date('Y-m-d') . '.xlsx');
+    }
+
+    public function exportPDF()
+    {
+        $users = User::with('wallet')->get();
+        $pdf = Pdf::loadView('admin.exports.users', compact('users'))->setPaper('a4', 'landscape');
+        return $pdf->download('users_report_' . date('Y-m-d') . '.pdf');
     }
 
     public function destroy($id) {
