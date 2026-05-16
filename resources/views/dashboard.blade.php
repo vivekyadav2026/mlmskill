@@ -16,9 +16,12 @@
     <!-- Header Block -->
     <div class="bg-[#1a222d] rounded-lg border border-[#334155] p-6 mb-6 flex flex-col md:flex-row justify-between items-start md:items-center">
         <div>
-            <h2 class="text-3xl font-bold text-gray-100 flex items-center">Welcome back, {{ $user->name }} <span class="ml-2">👋</span></h2>
-            <div class="flex items-center mt-2 gap-2 text-sm">
-                <span class="bg-gray-800 text-gray-300 border border-gray-600 px-2 py-1 rounded font-mono"><i class="fa-solid fa-id-badge mr-1"></i> {{ $user->referral_code }}</span>
+            <h2 class="text-3xl font-bold text-gray-100 flex items-center">Welcome {{ $user->name }} <span class="ml-2">👋</span></h2>
+            <div class="flex items-center mt-2 gap-2 text-sm flex-wrap">
+                <span class="bg-gray-800 text-gray-300 border border-gray-600 px-2 py-1 rounded font-mono flex items-center gap-2" title="Your ID">
+                    <i class="fa-solid fa-id-badge"></i> {{ $user->referral_code }}
+                    <button onclick="navigator.clipboard.writeText('{{ $user->referral_code }}'); alert('ID copied!');" class="text-gray-400 hover:text-white transition" title="Copy ID"><i class="fa-solid fa-copy"></i></button>
+                </span>
                 @if($user->status === 'active')
                     <span class="bg-green-900 text-green-300 border border-green-700 px-2 py-1 rounded"><i class="fa-solid fa-bolt mr-1"></i> Active</span>
                 @else
@@ -79,11 +82,15 @@
     @endif
 
     <!-- Referral Link Bar -->
-    <div class="bg-[#1a222d] rounded-lg border border-[#334155] p-3 mb-6 flex items-center">
-        <i class="fa-solid fa-link text-gray-400 mx-3"></i>
-        <span class="text-gray-400 text-sm whitespace-nowrap mr-2">Referral Link</span>
-        <input type="text" readonly value="{{ url('register?ref=' . $user->referral_code) }}" class="flex-grow bg-[#0b1220] border border-[#334155] rounded px-3 py-1.5 text-gray-300 font-mono text-sm focus:outline-none">
-        <button class="ml-2 bg-indigo-600 hover:bg-indigo-700 text-white px-4 py-1.5 rounded transition shadow" onclick="navigator.clipboard.writeText('{{ url('register?ref=' . $user->referral_code) }}'); alert('Copied!');"><i class="fa-solid fa-copy"></i></button>
+    <div class="bg-[#1a222d] rounded-lg border border-[#334155] p-3 mb-6 flex flex-col md:flex-row items-center gap-3">
+        <div class="flex items-center w-full md:w-auto">
+            <i class="fa-solid fa-link text-gray-400 mr-2"></i>
+            <span class="text-gray-400 text-sm whitespace-nowrap">Referral Link</span>
+        </div>
+        <div class="flex items-center w-full md:flex-grow gap-2">
+            <input type="text" readonly value="{{ url('register?ref=' . $user->referral_code) }}" class="w-full min-w-0 bg-[#0b1220] border border-[#334155] rounded px-3 py-1.5 text-gray-300 font-mono text-sm focus:outline-none text-ellipsis">
+            <button class="bg-indigo-600 hover:bg-indigo-700 text-white px-4 py-1.5 rounded transition shadow flex-shrink-0" onclick="navigator.clipboard.writeText('{{ url('register?ref=' . $user->referral_code) }}'); alert('Copied!');"><i class="fa-solid fa-copy"></i></button>
+        </div>
     </div>
 
     <!-- 4 Stat Cards Row -->
@@ -120,7 +127,7 @@
 
     <!-- Usage & Network Snapshot Row -->
     <div class="grid grid-cols-1 lg:grid-cols-2 gap-6 mb-6">
-        <div class="bg-[#1a222d] rounded-lg border border-[#334155] p-6">
+        <!-- <div class="bg-[#1a222d] rounded-lg border border-[#334155] p-6">
             <div class="flex justify-between items-center mb-4">
                 <h3 class="text-gray-200 font-medium"><i class="fa-solid fa-shield mr-2 text-yellow-500"></i>Renewal Progress</h3>
                 <span class="text-xs font-bold bg-cyan-900 text-cyan-300 px-2 py-1 rounded">Target: ${{ $renewalTarget }}</span>
@@ -133,7 +140,7 @@
                 <div><p class="text-gray-500">Current Saved</p><p class="text-green-400 font-bold">${{ number_format($wallet->renewal_token_wallet ?? 0, 2) }}</p></div>
                 <div class="text-right"><p class="text-gray-500">Remaining to Renew</p><p class="text-gray-200 font-bold">${{ number_format(max(0, $renewalTarget - ($wallet->renewal_token_wallet ?? 0)), 2) }}</p></div>
             </div>
-        </div>
+        </div> -->
 
         <div class="bg-[#1a222d] rounded-lg border border-[#334155] p-6">
             <h3 class="text-gray-200 font-medium mb-4"><i class="fa-solid fa-users mr-2 text-blue-400"></i>Network Snapshot</h3>
@@ -213,7 +220,7 @@
     </div>
 
     <!-- Live Market Tracker (Stock Graph) -->
-    <div class="mb-6 bg-[#1a222d] rounded-lg border border-[#334155] p-5 shadow-lg relative overflow-hidden">
+    <!-- <div class="mb-6 bg-[#1a222d] rounded-lg border border-[#334155] p-5 shadow-lg relative overflow-hidden">
         <div class="absolute top-0 right-0 w-64 h-64 bg-green-500/5 rounded-full blur-3xl -mr-10 -mt-10 pointer-events-none"></div>
         <div class="flex justify-between items-center mb-4 relative z-10">
             <h3 class="text-gray-200 font-medium"><i class="fa-solid fa-arrow-trend-up mr-2 text-green-400"></i>Live Token Market ({{ strtoupper($tokenName) }}/USD)</h3>
@@ -228,18 +235,18 @@
         <div class="h-64 rounded flex items-center justify-center text-gray-500 relative z-10">
             <canvas id="stockChart"></canvas>
         </div>
-    </div>
+    </div> -->
 
     <!-- Main Trend Chart Row -->
-    <div class="mb-6 bg-[#1a222d] rounded-lg border border-[#334155] p-5 shadow-lg">
+    <!-- <div class="mb-6 bg-[#1a222d] rounded-lg border border-[#334155] p-5 shadow-lg">
         <h3 class="text-gray-200 font-medium mb-4"><i class="fa-solid fa-chart-line mr-2 text-indigo-400"></i>Overall Financial Growth (Last 7 Days)</h3>
         <div class="h-72 rounded flex items-center justify-center text-gray-500 relative">
             <canvas id="earningsChart"></canvas>
         </div>
-    </div>
+    </div> -->
 
     <!-- Breakdown Charts Row -->
-    <div class="grid grid-cols-1 lg:grid-cols-2 gap-6 mb-6">
+    <!-- <div class="grid grid-cols-1 lg:grid-cols-2 gap-6 mb-6">
         <div class="bg-[#1a222d] rounded-lg border border-[#334155] p-5 shadow-lg">
             <h3 class="text-gray-200 font-medium mb-4"><i class="fa-solid fa-chart-pie mr-2 text-purple-400"></i>Income Breakdown</h3>
             <div class="h-64 rounded flex items-center justify-center text-gray-500 relative">
@@ -252,7 +259,7 @@
                 <canvas id="assetChart"></canvas>
             </div>
         </div>
-    </div>
+    </div> -->
 
     <!-- 4 Tables Grid Row -->
     <div class="grid grid-cols-1 lg:grid-cols-2 gap-6 mb-6">

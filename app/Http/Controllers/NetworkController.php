@@ -20,12 +20,27 @@ class NetworkController extends Controller
     public function tree()
     {
         $user = Auth::user();
-        
-        // We will pass the user to the view, and the view will recursively load the tree or use a recursive function.
-        // For demonstration, we load the first 3 levels eagerly
-        $user->load('referrals.referrals.referrals');
-        
         return view('user.network.tree', compact('user'));
+    }
+
+    public function treeNode($id)
+    {
+        $authUser = Auth::user();
+        // Allow viewing own subtree or any node within their network
+        $node = User::findOrFail($id);
+
+        $buildTree = function (User $u) use (&$buildTree) {
+            $children = User::where('sponsor_id', $u->referral_code)->get();
+            return [
+                'id'            => $u->id,
+                'name'          => $u->name,
+                'referral_code' => $u->referral_code,
+                'status'        => $u->status,
+                'children'      => $children->map(fn($c) => $buildTree($c))->values()->toArray(),
+            ];
+        };
+
+        return response()->json($buildTree($node));
     }
     
     public function sponsor()

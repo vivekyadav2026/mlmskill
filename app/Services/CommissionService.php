@@ -9,13 +9,13 @@ use Illuminate\Support\Facades\DB;
 
 class CommissionService
 {
-    private array $levelCommissionPercentages = [
-        1 => 15.00, // 15%
-        2 => 10.00, // 10%
-        3 => 6.00,  // 6%
-        4 => 3.00,  // 3%
-        5 => 2.00,  // 2%
-        6 => 0.50,  // 0.5%
+    private array $levelCommissionAmounts = [
+        1 => 15.00, // $15
+        2 => 10.00, // $10
+        3 => 6.00,  // $6
+        4 => 3.00,  // $3
+        5 => 2.00,  // $2
+        6 => 0.50,  // $0.50
         7 => 0.50,
         8 => 0.50,
         9 => 0.50,
@@ -47,14 +47,13 @@ class CommissionService
 
                 // Only active users earn commission
                 if ($sponsor->status === 'active') {
-                    $defaultPercentages = [
+                    $defaultAmounts = [
                         1 => 15.00, 2 => 10.00, 3 => 6.00, 4 => 3.00, 5 => 2.00,
                         6 => 0.50, 7 => 0.50, 8 => 0.50, 9 => 0.50, 10 => 0.50
                     ];
-                    $percentage = (float)\App\Models\Setting::get('level_'.$level.'_pct', $defaultPercentages[$level] ?? 0);
+                    $amount = (float)\App\Models\Setting::get('level_'.$level.'_amt', $defaultAmounts[$level] ?? 0);
                     
-                    if ($percentage > 0) {
-                        $amount = ($percentage / 100) * $amountSpent;
+                    if ($amount > 0) {
                         $type = $level === 1 ? 'direct' : 'team';
 
                     // Log commission

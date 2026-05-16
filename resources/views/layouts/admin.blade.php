@@ -8,7 +8,7 @@
   
   <link rel="preconnect" href="https://fonts.googleapis.com/">
   <link rel="preconnect" href="https://fonts.gstatic.com/" crossorigin="">
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 
   <!-- Bootstrap -->
@@ -19,9 +19,21 @@
     tailwind.config = {
       corePlugins: {
         preflight: false,
+      },
+      theme: {
+        extend: {
+          fontFamily: {
+            sans: ['"Outfit"', 'sans-serif'],
+          }
+        }
       }
     }
   </script>
+  <style>
+    body, h1, h2, h3, h4, h5, h6, p, span, div, a, button, input, select, textarea {
+        font-family: 'Outfit', sans-serif !important;
+    }
+  </style>
 
 @php
     $tp  = \App\Models\Setting::get('theme_primary',    '#6366f1');
@@ -31,6 +43,7 @@
     $tcb = \App\Models\Setting::get('theme_card_bg',    '#1a222d');
     $tsb = \App\Models\Setting::get('theme_sidebar_bg', '#14172a');
     $ttb = \App\Models\Setting::get('theme_topbar_bg',  '#161f2d');
+    $txt = \App\Models\Setting::get('theme_text',       '#e2e8f0');
     $tm  = \App\Models\Setting::get('theme_mode',       'dark');
 @endphp
   <!-- Theme variables (loaded from database) -->
@@ -41,12 +54,15 @@
     --xvt-primary:    {{ $tp }};
     --xvt-accent:     {{ $ta }};
     --xvt-radius:     {{ $tr }};
+    --xvt-text:       {{ $txt }};
     --bs-primary:     var(--xvt-primary);
     --bs-link-color:  var(--xvt-primary);
     --bs-link-hover-color: var(--xvt-accent);
     --bs-border-radius:    var(--xvt-radius);
     --bs-border-radius-sm: calc(var(--xvt-radius) * 0.625);
     --bs-border-radius-lg: calc(var(--xvt-radius) * 1.25);
+    --bs-body-color:  var(--xvt-text);
+    color: var(--xvt-text);
   }
 
   /* ── DARK MODE ── */
@@ -55,11 +71,9 @@
     --xvt-card-bg:    {{ $tcb }};
     --xvt-sidebar-bg: {{ $tsb }};
     --xvt-topbar-bg:  {{ $ttb }};
-    --xvt-text:   #e2e8f0;
     --xvt-muted:  #94a3b8;
     --xvt-border: #334155;
     --bs-body-bg:    var(--xvt-body-bg);
-    --bs-body-color: var(--xvt-text);
     --bs-border-color: var(--xvt-border);
     background-color: var(--xvt-body-bg);
   }
@@ -454,6 +468,8 @@
               <input type="color" name="theme_sidebar_bg" class="form-control form-control-color w-100" value="{{ $tsb }}"></div>
             <div class="mb-2"><label class="form-label small">Topbar background</label>
               <input type="color" name="theme_topbar_bg" class="form-control form-control-color w-100" value="{{ $ttb }}"></div>
+            <div class="mb-2"><label class="form-label small">Text Color</label>
+              <input type="color" name="theme_text" class="form-control form-control-color w-100" value="{{ $txt }}"></div>
           </details>
           <button type="submit" class="btn btn-primary w-100"><i class="fa-solid fa-floppy-disk me-1"></i> Save Theme</button>
           <button type="button" class="btn btn-outline-secondary w-100 mt-2" onclick="resetTheme()"><i class="fa-solid fa-rotate-left me-1"></i> Reset to Default</button>
@@ -520,6 +536,7 @@
     theme_card_bg:    '#16231a',
     theme_sidebar_bg: '#111c15',
     theme_topbar_bg:  '#132018',
+    theme_text:       '#e2e8f0',
     theme_mode:       'dark',
   };
 
@@ -531,6 +548,7 @@
     theme_card_bg:    '#ffffff',
     theme_sidebar_bg: '#1f512c',
     theme_topbar_bg:  '#ffffff',
+    theme_text:       '#0f172a',
     theme_mode:       'light',
   };
 
@@ -548,25 +566,24 @@
     applyVar('--xvt-card-bg',    values.theme_card_bg);
     applyVar('--xvt-sidebar-bg', values.theme_sidebar_bg);
     applyVar('--xvt-topbar-bg',  values.theme_topbar_bg);
+    applyVar('--xvt-text',       values.theme_text);
     if (isLight) {
-      applyVar('--xvt-text',    '#0f172a');
       applyVar('--xvt-muted',   '#64748b');
       applyVar('--xvt-border',  '#e2e8f0');
       applyVar('--bs-body-bg',     '#f1f5f9');
-      applyVar('--bs-body-color',  '#0f172a');
+      applyVar('--bs-body-color',  values.theme_text || '#0f172a');
     } else {
-      applyVar('--xvt-text',    '#e2e8f0');
       applyVar('--xvt-muted',   '#94a3b8');
       applyVar('--xvt-border',  '#334155');
       applyVar('--bs-body-bg',     values.theme_body_bg);
-      applyVar('--bs-body-color',  '#e2e8f0');
+      applyVar('--bs-body-color',  values.theme_text || '#e2e8f0');
     }
     // Update color pickers to match
     const setPicker = (name, val) => {
       const el = name === 'theme_primary' ? document.getElementById('theme_primary')
                : name === 'theme_accent'  ? document.getElementById('theme_accent')
                : document.querySelector(`[name="${name}"]`);
-      if (el) el.value = val;
+      if (el && val) el.value = val;
     };
     setPicker('theme_primary',    values.theme_primary);
     setPicker('theme_accent',     values.theme_accent);
@@ -574,6 +591,7 @@
     setPicker('theme_card_bg',    values.theme_card_bg);
     setPicker('theme_sidebar_bg', values.theme_sidebar_bg);
     setPicker('theme_topbar_bg',  values.theme_topbar_bg);
+    setPicker('theme_text',       values.theme_text);
     // Update radius select
     const radEl = document.querySelector('[name="theme_radius"]');
     if (radEl) radEl.value = values.theme_radius;
@@ -599,6 +617,7 @@
         theme_card_bg:    document.querySelector('[name="theme_card_bg"]')?.value    || DARK_DEFAULTS.theme_card_bg,
         theme_sidebar_bg: document.querySelector('[name="theme_sidebar_bg"]')?.value || DARK_DEFAULTS.theme_sidebar_bg,
         theme_topbar_bg:  document.querySelector('[name="theme_topbar_bg"]')?.value  || DARK_DEFAULTS.theme_topbar_bg,
+        theme_text:       document.querySelector('[name="theme_text"]')?.value       || DARK_DEFAULTS.theme_text,
       };
       applyTheme(current, false);
     }
@@ -647,6 +666,7 @@
       { name: 'theme_sidebar_bg',  prop: '--xvt-sidebar-bg' },
       { name: 'theme_topbar_bg',   prop: '--xvt-topbar-bg' },
       { name: 'theme_radius',      prop: '--xvt-radius' },
+      { name: 'theme_text',        prop: '--xvt-text' },
     ];
     liveBindings.forEach(b => {
       const el = b.id

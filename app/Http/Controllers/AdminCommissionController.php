@@ -13,5 +13,5 @@ class AdminCommissionController extends Controller
         $logs = CommissionLedger::with('user')->where('commission_type', 'level')->latest()->paginate(15);
         return view('admin.commissions.level', compact('logs'));
     }
-    public function settings() { return view('admin.commissions.settings'); }
+    // public function settings() { return view('admin.commissions.settings'); }
 }

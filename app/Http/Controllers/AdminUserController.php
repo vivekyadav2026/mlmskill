@@ -27,8 +27,45 @@ class AdminUserController extends Controller
         return redirect('admin/users')->with('success', 'User created successfully.');
     }
     public function tree() {
-        $users = User::with('allReferrals')->whereNull('sponsor_id')->get();
-        return view('admin.users.tree', compact('users'));
+        // Show a virtual root with all top-level users as children
+        return view('admin.users.tree');
+    }
+
+    public function treeNode($id) {
+        if ($id == 0) {
+            // Virtual root: all users with no sponsor
+            $roots = User::whereNull('sponsor_id')->orWhere('sponsor_id', '')->get();
+            $buildTree = function (User $u) use (&$buildTree) {
+                $children = User::where('sponsor_id', $u->referral_code)->get();
+                return [
+                    'id'            => $u->id,
+                    'name'          => $u->name,
+                    'referral_code' => $u->referral_code,
+                    'status'        => $u->status,
+                    'children'      => $children->map(fn($c) => $buildTree($c))->values()->toArray(),
+                ];
+            };
+            return response()->json([
+                'id'            => 0,
+                'name'          => 'All Members',
+                'referral_code' => '',
+                'status'        => 'active',
+                'children'      => $roots->map(fn($u) => $buildTree($u))->values()->toArray(),
+            ]);
+        }
+
+        $node = User::findOrFail($id);
+        $buildTree = function (User $u) use (&$buildTree) {
+            $children = User::where('sponsor_id', $u->referral_code)->get();
+            return [
+                'id'            => $u->id,
+                'name'          => $u->name,
+                'referral_code' => $u->referral_code,
+                'status'        => $u->status,
+                'children'      => $children->map(fn($c) => $buildTree($c))->values()->toArray(),
+            ];
+        };
+        return response()->json($buildTree($node));
     }
     public function index() {
         $users = User::latest()->paginate(15);

@@ -19,9 +19,9 @@
             <h3 class="text-xl font-bold text-gray-200">Your Unique Referral Code: <span class="text-indigo-400 font-mono">{{ $user->referral_code }}</span></h3>
         </div>
 
-        <div class="max-w-2xl mx-auto bg-[#0b1220] p-4 rounded-lg border border-[#334155] flex items-center shadow-inner mb-8">
-            <input type="text" id="refLink" readonly value="{{ $referralLink }}" class="w-full bg-transparent border-none text-gray-300 font-mono text-sm focus:outline-none">
-            <button onclick="copyLink()" class="ml-4 bg-indigo-600 hover:bg-indigo-700 text-white px-6 py-2 rounded shadow transition whitespace-nowrap">
+        <div class="max-w-2xl mx-auto bg-[#0b1220] p-4 rounded-lg border border-[#334155] flex flex-col md:flex-row items-center shadow-inner mb-8 gap-4">
+            <input type="text" id="refLink" readonly value="{{ $referralLink }}" class="w-full bg-transparent border-none text-gray-300 font-mono text-sm focus:outline-none text-center md:text-left text-ellipsis overflow-hidden">
+            <button onclick="copyLink()" class="w-full md:w-auto bg-indigo-600 hover:bg-indigo-700 text-white px-6 py-2 rounded shadow transition whitespace-nowrap">
                 <i class="fa-solid fa-copy mr-2"></i> Copy Link
             </button>
         </div>

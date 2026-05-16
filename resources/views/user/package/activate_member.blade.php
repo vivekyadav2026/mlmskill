@@ -28,7 +28,7 @@
                     
                     <div class="mb-6">
                         <label class="block text-gray-300 font-bold mb-2">Sponsor Activation ID <span class="text-red-500">*</span></label>
-                        <input type="text" name="sponsor_id" placeholder="e.g. USER-00012" class="w-full bg-[#0b1220] text-white border border-[#334155] rounded-lg px-4 py-3 focus:outline-none focus:border-indigo-500 font-mono tracking-wider" required>
+                        <input type="text" name="sponsor_id" placeholder="e.g. SD-000012" class="w-full bg-[#0b1220] text-white border border-[#334155] rounded-lg px-4 py-3 focus:outline-none focus:border-indigo-500 font-mono tracking-wider" required>
                         <p class="text-sm text-gray-500 mt-2"><i class="fa-solid fa-info-circle"></i> Ask the inactive member to share their Activation ID from their checkout page.</p>
                     </div>
 

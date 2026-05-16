@@ -30,8 +30,8 @@ class PackageController extends Controller
         $module = \App\Models\CourseModule::with('courses')->findOrFail($id);
         $balance = $user->wallet->package_wallet ?? 0;
         
-        // Sponsor ID logic - using user ID as Sponsor ID to share with someone else
-        $sponsorId = 'USER-' . str_pad($user->id, 5, '0', STR_PAD_LEFT);
+        // Use user's referral code as the ID to share with someone else for activation
+        $sponsorId = $user->referral_code;
 
         return view('user.package.checkout', compact('user', 'module', 'balance', 'sponsorId'));
     }
@@ -115,12 +115,11 @@ class PackageController extends Controller
             'module_id' => 'required|exists:course_modules,id'
         ]);
 
-        // Parse Sponsor ID e.g. "USER-00012"
-        $targetUserId = (int) str_replace('USER-', '', strtoupper($request->sponsor_id));
-        $targetUser = \App\Models\User::find($targetUserId);
+        // Find the user by their referral code (Activation ID)
+        $targetUser = \App\Models\User::where('referral_code', strtoupper(trim($request->sponsor_id)))->first();
 
         if (!$targetUser) {
-            return back()->with('error', 'Invalid Activation ID. User not found.');
+            return back()->with('error', 'Invalid User ID. User not found.');
         }
 
         if ($targetUser->status === 'active') {

@@ -65,7 +65,7 @@ class AuthController extends Controller
             'password' => Hash::make($request->password),
             'role' => 'user',
             'sponsor_id' => $request->sponsor_id,
-            'referral_code' => 'SD-' . strtoupper(substr(md5(uniqid()), 0, 6)),
+            'referral_code' => 'SD-' . str_pad((User::max('id') + 1), 6, '0', STR_PAD_LEFT),
         ]);
 
         // Create wallet with 0 balance

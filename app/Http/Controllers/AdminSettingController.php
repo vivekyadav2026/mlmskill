@@ -129,8 +129,8 @@ class AdminSettingController extends Controller
         ];
 
         for ($i = 1; $i <= 10; $i++) {
-            $rules['level_'.$i.'_pct'] = 'required|numeric|min:0|max:100';
-            $fields[] = 'level_'.$i.'_pct';
+            $rules['level_'.$i.'_amt'] = 'required|numeric|min:0';
+            $fields[] = 'level_'.$i.'_amt';
         }
 
         $request->validate($rules);
@@ -214,7 +214,7 @@ class AdminSettingController extends Controller
         $fields = [
             'theme_primary', 'theme_accent', 'theme_mode',
             'theme_radius', 'theme_body_bg', 'theme_card_bg',
-            'theme_sidebar_bg', 'theme_topbar_bg',
+            'theme_sidebar_bg', 'theme_topbar_bg', 'theme_text'
         ];
         foreach ($fields as $f) {
             if ($request->has($f)) {

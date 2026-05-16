@@ -7,7 +7,7 @@
   
   <link rel="preconnect" href="https://fonts.googleapis.com/">
   <link rel="preconnect" href="https://fonts.gstatic.com/" crossorigin="">
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 
   <!-- Bootstrap -->
@@ -18,38 +18,67 @@
     tailwind.config = {
       corePlugins: {
         preflight: false,
+      },
+      theme: {
+        extend: {
+          fontFamily: {
+            sans: ['"Outfit"', 'sans-serif'],
+          }
+        }
       }
     }
   </script>
+  <style>
+    body, h1, h2, h3, h4, h5, h6, p, span, div, a, button, input, select, textarea {
+        font-family: 'Outfit', sans-serif !important;
+    }
+  </style>
 
-  <!-- Theme variables -->
+@php
+    $tp  = \App\Models\Setting::get('theme_primary',    '#6366f1');
+    $ta  = \App\Models\Setting::get('theme_accent',     '#8b5cf6');
+    $tr  = \App\Models\Setting::get('theme_radius',     '8px');
+    $tbb = \App\Models\Setting::get('theme_body_bg',    '#0b1220');
+    $tcb = \App\Models\Setting::get('theme_card_bg',    '#1a222d');
+    $tsb = \App\Models\Setting::get('theme_sidebar_bg', '#14172a');
+    $ttb = \App\Models\Setting::get('theme_topbar_bg',  '#161f2d');
+    $txt = \App\Models\Setting::get('theme_text',       '#e2e8f0');
+    $tm  = \App\Models\Setting::get('theme_mode',       'dark');
+@endphp
+  <!-- Theme variables (loaded from database) -->
   <style id="xvt-theme-vars">
-  :root,
-  [data-bs-theme="dark"] {
-    --xvt-primary: #1f512c;
-    --xvt-accent:  #f48a20;
-    --xvt-radius:  8px;
-    --xvt-body-bg: #0d1510;
-    --xvt-card-bg: #16231a;
-    --xvt-sidebar-bg: #111c15;
-    --xvt-topbar-bg:  #132018;
-    --xvt-text:    #e2e8f0;
-    --xvt-muted:   #94a3b8;
-    --xvt-border:  #2f3c34;
-
-    /* Bootstrap overrides */
-    --bs-primary: var(--xvt-primary);
-    --bs-primary-rgb: 8, 126, 139;
-    --bs-link-color: var(--xvt-primary);
+  /* ── SHARED (radius + primary across both modes) ── */
+  :root {
+    --xvt-primary:    {{ $tp }};
+    --xvt-accent:     {{ $ta }};
+    --xvt-radius:     {{ $tr }};
+    --xvt-text:       {{ $txt }};
+    --bs-primary:     var(--xvt-primary);
+    --bs-link-color:  var(--xvt-primary);
     --bs-link-hover-color: var(--xvt-accent);
-    --bs-body-bg: var(--xvt-body-bg);
-    --bs-body-color: var(--xvt-text);
-    --bs-border-color: var(--xvt-border);
-    --bs-border-radius: var(--xvt-radius);
+    --bs-border-radius:    var(--xvt-radius);
     --bs-border-radius-sm: calc(var(--xvt-radius) * 0.625);
     --bs-border-radius-lg: calc(var(--xvt-radius) * 1.25);
+    --bs-body-color:  var(--xvt-text);
+    color: var(--xvt-text);
   }
-</style>
+
+  /* ── DARK MODE ── */
+  [data-bs-theme="dark"] {
+    --xvt-body-bg:    {{ $tbb }};
+    --xvt-card-bg:    {{ $tcb }};
+    --xvt-sidebar-bg: {{ $tsb }};
+    --xvt-topbar-bg:  {{ $ttb }};
+    --xvt-muted:  #94a3b8;
+    --xvt-border: #334155;
+    --bs-body-bg:    var(--xvt-body-bg);
+    --bs-border-color: var(--xvt-border);
+    background-color: var(--xvt-body-bg);
+  }
+  [data-bs-theme="dark"] .app-sidebar  { background: var(--xvt-sidebar-bg) !important; }
+  [data-bs-theme="dark"] .app-topbar   { background: var(--xvt-topbar-bg)  !important; }
+  [data-bs-theme="dark"] .app-content  { background: var(--xvt-body-bg)    !important; }
+  </style>
 
   <!-- Theme component CSS -->
   <link rel="stylesheet" href="{{ asset('assets/dist/theme.css') }}">

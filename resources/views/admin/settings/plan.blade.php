@@ -57,12 +57,12 @@
 
     <!-- Commission Structure -->
     <div class="s-card">
-      <div class="s-header"><i class="fa-solid fa-percent text-green-400"></i><h3>Multi-Level Commission Structure (%)</h3></div>
+      <div class="s-header"><i class="fa-solid fa-dollar-sign text-green-400"></i><h3>Multi-Level Commission Structure ($)</h3></div>
       <div class="s-body grid grid-cols-2 md:grid-cols-5 gap-4">
         @for($i=1; $i<=10; $i++)
         <div>
-          <label class="f-label">Level {{ $i }} (%)</label>
-          <input type="number" step="0.01" name="level_{{ $i }}_pct" class="f-ctrl" value="{{ $settings['level_'.$i.'_pct'] ?? ($i==1 ? '15' : ($i==2 ? '10' : ($i==3 ? '6' : ($i==4 ? '3' : ($i==5 ? '2' : '0.5'))))) }}" required>
+          <label class="f-label">Level {{ $i }} ($)</label>
+          <input type="number" step="0.01" name="level_{{ $i }}_amt" class="f-ctrl" value="{{ $settings['level_'.$i.'_amt'] ?? ($i==1 ? '15' : ($i==2 ? '10' : ($i==3 ? '6' : ($i==4 ? '3' : ($i==5 ? '2' : '0.5'))))) }}" required>
         </div>
         @endfor
       </div>

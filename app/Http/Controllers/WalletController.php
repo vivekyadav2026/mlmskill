@@ -198,11 +198,15 @@ class WalletController extends Controller
             return back()->with('error', 'Invalid MPIN. Transfer cancelled.');
         }
 
-        if ($sender->referral_code === $request->recipient_id) {
-            return back()->with('error', 'You cannot transfer to yourself using this form. Use Wallet Conversion instead.');
+        $recipient = \App\Models\User::where('referral_code', $request->recipient_id)->first();
+        if (!$recipient) {
+            return back()->with('error', 'Recipient not found.');
         }
 
-        $recipient = \App\Models\User::where('referral_code', $request->recipient_id)->first();
+        if ($recipient->status !== 'active') {
+            return back()->with('error', 'Transfer failed: The recipient account is not active.');
+        }
+
         $amount = (float) $request->amount;
         $senderWallet = $sender->wallet;
 
@@ -210,7 +214,9 @@ class WalletController extends Controller
             return back()->with('error', 'Insufficient funds in your Income Wallet.');
         }
 
-        DB::transaction(function () use ($sender, $senderWallet, $recipient, $amount) {
+        $isSelfTransfer = ($sender->id === $recipient->id);
+
+        DB::transaction(function () use ($sender, $senderWallet, $recipient, $amount, $isSelfTransfer) {
             // Deduct from sender's income wallet
             $senderWallet->decrement('income_wallet', $amount);
 
@@ -219,9 +225,17 @@ class WalletController extends Controller
             $recipientWallet->increment('package_wallet', $amount);
 
             // Log the transfer
-            \App\Models\ActivityLog::log('p2p_transfer', 'Transferred $' . $amount . ' to ' . $recipient->name . ' (' . $recipient->referral_code . ')', $sender->id);
-            \App\Models\ActivityLog::log('p2p_received', 'Received $' . $amount . ' from ' . $sender->name . ' (' . $sender->referral_code . ')', $recipient->id);
+            if ($isSelfTransfer) {
+                \App\Models\ActivityLog::log('wallet_conversion', 'Converted $' . $amount . ' from Income Wallet to Package Wallet', $sender->id);
+            } else {
+                \App\Models\ActivityLog::log('p2p_transfer', 'Transferred $' . $amount . ' to ' . $recipient->name . ' (' . $recipient->referral_code . ')', $sender->id);
+                \App\Models\ActivityLog::log('p2p_received', 'Received $' . $amount . ' from ' . $sender->name . ' (' . $sender->referral_code . ')', $recipient->id);
+            }
         });
+
+        if ($isSelfTransfer) {
+            return redirect()->route('dashboard')->with('success', '$' . number_format($amount, 2) . ' successfully converted to your Package Wallet.');
+        }
 
         return redirect()->route('dashboard')->with('success', '$' . number_format($amount, 2) . ' successfully transferred to ' . $recipient->name . '. They can now activate their account.');
     }

@@ -12,6 +12,7 @@ class Certificate extends Model
     protected $fillable = [
         'user_id',
         'course_id',
+        'module_id',
         'certificate_number',
         'issue_date',
         'status',
@@ -32,5 +33,10 @@ class Certificate extends Model
     public function course()
     {
         return $this->belongsTo(Course::class);
+    }
+
+    public function module()
+    {
+        return $this->belongsTo(\App\Models\CourseModule::class, 'module_id');
     }
 }

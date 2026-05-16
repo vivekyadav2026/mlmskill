@@ -64,6 +64,7 @@ Route::middleware(['auth'])->group(function () {
     // Network Module
     Route::get('/user/network/direct', [\App\Http\Controllers\NetworkController::class, 'direct'])->name('network.direct');
     Route::get('/user/network/tree', [\App\Http\Controllers\NetworkController::class, 'tree'])->name('network.tree');
+    Route::get('/user/network/tree/node/{id}', [\App\Http\Controllers\NetworkController::class, 'treeNode'])->name('network.tree.node');
     Route::get('/user/network/sponsor', [\App\Http\Controllers\NetworkController::class, 'sponsor'])->name('network.sponsor');
     Route::get('/user/network/level', [\App\Http\Controllers\NetworkController::class, 'level'])->name('network.level');
 
@@ -163,6 +164,7 @@ Route::middleware(['auth', 'admin'])->prefix('admin')->group(function () {
     Route::get('/users/create', [\App\Http\Controllers\AdminUserController::class, 'create'])->name('admin.users.create');
     Route::post('/users/create', [\App\Http\Controllers\AdminUserController::class, 'store']);
     Route::get('/users/tree', [\App\Http\Controllers\AdminUserController::class, 'tree'])->name('admin.users.tree');
+    Route::get('/users/tree/node/{id}', [\App\Http\Controllers\AdminUserController::class, 'treeNode'])->name('admin.users.tree.node');
     Route::get('/users/{id}', [\App\Http\Controllers\AdminUserController::class, 'show'])->name('admin.users.show');
     Route::get('/users/{id}/edit', [\App\Http\Controllers\AdminUserController::class, 'edit'])->name('admin.users.edit');
     Route::post('/users/{id}/update', [\App\Http\Controllers\AdminUserController::class, 'update'])->name('admin.users.update');
@@ -200,7 +202,7 @@ Route::middleware(['auth', 'admin'])->prefix('admin')->group(function () {
     // Commissions
     Route::get('/commissions/direct', [\App\Http\Controllers\AdminCommissionController::class, 'direct'])->name('admin.commissions.direct');
     Route::get('/commissions/level', [\App\Http\Controllers\AdminCommissionController::class, 'level'])->name('admin.commissions.level');
-    Route::get('/commissions/settings', [\App\Http\Controllers\AdminCommissionController::class, 'settings'])->name('admin.commissions.settings');
+    // Route::get('/commissions/settings', [\App\Http\Controllers\AdminCommissionController::class, 'settings'])->name('admin.commissions.settings');
 
     // Courses
     Route::get('/courses', [\App\Http\Controllers\AdminCourseController::class, 'index'])->name('admin.courses.index');
@@ -226,6 +228,7 @@ Route::middleware(['auth', 'admin'])->prefix('admin')->group(function () {
     Route::get('/certificates/generate', [\App\Http\Controllers\AdminCertificateController::class, 'generateForm'])->name('admin.certificates.generate');
     Route::post('/certificates/generate', [\App\Http\Controllers\AdminCertificateController::class, 'generate']);
     Route::get('/certificates/issued', [\App\Http\Controllers\AdminCertificateController::class, 'issued'])->name('admin.certificates.issued');
+    Route::get('/certificates/{id}/preview', [\App\Http\Controllers\AdminCertificateController::class, 'preview'])->name('admin.certificates.preview');
     Route::post('/certificates/{id}/delete', [\App\Http\Controllers\AdminCertificateController::class, 'destroy'])->name('admin.certificates.destroy');
 
     // Reports
