@@ -77,7 +77,8 @@ class DashboardController extends Controller
         // Fetch Bonus Progress
         $bonusService = app(\App\Services\BonusService::class);
         $rewardProgress = $bonusService->getNextRewardMilestone($user);
-        $salaryStatus = $bonusService->getCurrentSalaryTier($user);
+        $salaryStatus   = $bonusService->getCurrentSalaryTier($user);
+        $currentRank    = $bonusService->getCurrentRank($user);
         // Dynamic Token Settings
         $tokenPrice = \App\Models\Setting::get('utility_token_value', 0.42);
         $tokenName = \App\Models\Setting::get('utility_token_name', 'SKT');
@@ -88,7 +89,7 @@ class DashboardController extends Controller
             'recentIncome', 'recentReferrals', 'recentWithdrawals', 'recentTokens',
             'banners', 'announcements',
             'trendLabels', 'earningsTrend', 'tokenTrend', 'breakdownLabels', 'breakdownData',
-            'rewardProgress', 'salaryStatus',
+            'rewardProgress', 'salaryStatus', 'currentRank',
             'tokenPrice', 'tokenName', 'renewalTarget'
         ));
     }

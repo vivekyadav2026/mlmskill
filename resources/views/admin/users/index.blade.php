@@ -5,13 +5,20 @@
     <div class="mb-6"><h2 class="text-2xl font-bold text-gray-100">All Users</h2></div>
     <div class="bg-[#1a222d] border border-[#334155] rounded-lg overflow-hidden">
         <table class="w-full table-custom">
-            <thead><tr><th>Name</th><th>Email</th><th>Referral Code</th><th>Status</th><th>Time Track</th><th>Joined</th><th>Actions</th></tr></thead>
+            <thead><tr><th>Name</th><th>Email</th><th>Referral Code</th><th>Rank</th><th>Status</th><th>Time Track</th><th>Joined</th><th>Actions</th></tr></thead>
             <tbody>
+                @php $bonusService = app(\App\Services\BonusService::class); @endphp
                 @forelse($users as $u)
+                @php $rank = $bonusService->getCurrentRank($u); @endphp
                 <tr>
                     <td class="font-bold">{{ $u->name }}</td>
                     <td><span class="lowercase">{{ $u->email }}</span></td>
                     <td class="text-indigo-400 font-mono">{{ $u->referral_code }}</td>
+                    <td>
+                        <span class="px-2 py-1 text-xs rounded font-bold" style="background-color: {{ $rank['current_color'] }}22; color: {{ $rank['current_color'] }}; border: 1px solid {{ $rank['current_color'] }}44;">
+                            {{ $rank['current_rank'] }}
+                        </span>
+                    </td>
                     <td><span class="px-2 py-1 text-xs rounded bg-{{ $u->status=='active'?'green':'red' }}-900 text-{{ $u->status=='active'?'green':'red' }}-300">{{ $u->status }}</span></td>
                     <td>
                         @php

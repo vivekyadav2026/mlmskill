@@ -10,7 +10,10 @@
         <h4 class="fw-heading mb-1">Welcome back, {{ $user->name }} <i class="fa-solid fa-hand-sparkles text-accent"></i></h4>
         <div class="d-flex flex-wrap gap-2 small">
           <span class="badge text-bg-secondary"><i class="fa-solid fa-id-badge me-1"></i>{{ $user->referral_code }}</span>
-                      <span class="badge bg-warning text-dark"><i class="fa-solid fa-trophy me-1"></i>Unranked</span>
+          <span class="badge bg-warning text-dark"
+                style="background-color: {{ $currentRank['current_color'] }} !important; color:#fff !important;">
+            <i class="fa-solid fa-trophy me-1"></i>{{ $currentRank['current_rank'] }}
+          </span>
                     <span class="badge bg-info text-dark"><i class="fa-solid fa-network-wired me-1"></i>2 in
             Network</span>
         </div>
@@ -216,25 +219,49 @@
   </div>
 </div>
 
-<!-- â”€â”€â”€ Rank Progress â”€â”€â”€ -->
+<!-- ─── Rank Progress ─── -->
   <div class="card border-themed mb-4">
     <div class="card-body">
       <div class="d-flex justify-content-between flex-wrap gap-2 mb-3">
         <h6 class="fw-heading mb-0"><i class="fa-solid fa-medal me-2 text-warning"></i>Rank Progress</h6>
         <div class="small">
-          <span class="badge bg-secondary me-1">No Rank</span>
-          <i class="fa-solid fa-arrow-right mx-1 text-muted"></i>
-          <span class="badge bg-warning text-dark">S1 — Bronze</span>
+          <span class="badge me-1"
+            style="background-color: {{ $currentRank['current_color'] }}; color:#fff;">
+            {{ $currentRank['current_rank'] }}
+          </span>
+          @if($currentRank['next_rank'])
+            <i class="fa-solid fa-arrow-right mx-1 text-muted"></i>
+            <span class="badge bg-secondary">{{ $currentRank['next_rank'] }}</span>
+          @else
+            <i class="fa-solid fa-crown ms-1 text-warning"></i>
+            <span class="text-warning small ms-1">Max Rank!</span>
+          @endif
         </div>
       </div>
-      <div class="progress mb-2" style="height:14px;">
-        <div class="progress-bar bg-warning" style="width:40%">
-          40.0%
+      @if($currentRank['next_rank'])
+        <div class="progress mb-2" style="height:14px;">
+          <div class="progress-bar"
+               style="width:{{ $currentRank['progress_pct'] }}%; background-color:{{ $currentRank['current_color'] }};">
+            {{ $currentRank['progress_pct'] }}%
+          </div>
         </div>
-      </div>
-      <div class="small text-muted">Direct Referrals: <strong>2</strong> /
-        <strong>5</strong> | Need <strong class="text-warning">5</strong> more direct referrals
-      </div>
+        <div class="small text-muted">
+          @if($currentRank['next_team'] > 0)
+            Team Size: <strong>{{ number_format($currentRank['team_size']) }}</strong> /
+            <strong>{{ number_format($currentRank['next_team']) }}</strong>
+            &mdash; Need <strong class="text-warning">{{ number_format($currentRank['next_team'] - $currentRank['team_size']) }}</strong> more members
+          @endif
+          @if($currentRank['next_directs'] > 0)
+            &nbsp;| Direct Referrals: <strong>{{ $currentRank['direct_count'] }}</strong> /
+            <strong>{{ $currentRank['next_directs'] }}</strong>
+          @endif
+        </div>
+      @else
+        <div class="text-center py-2">
+          <i class="fa-solid fa-crown fa-2x text-warning mb-2"></i>
+          <p class="mb-0 small text-muted">You have reached the highest rank &mdash; <strong>Diamond Crown</strong>!</p>
+        </div>
+      @endif
     </div>
   </div>
 

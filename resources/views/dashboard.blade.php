@@ -24,6 +24,10 @@
                 </span>
                 @if($user->status === 'active')
                     <span class="bg-green-900 text-green-300 border border-green-700 px-2 py-1 rounded"><i class="fa-solid fa-bolt mr-1"></i> Active</span>
+                    <span class="border px-2 py-1 rounded flex items-center gap-1" style="background-color: {{ $currentRank['current_color'] }}22; color: {{ $currentRank['current_color'] }}; border-color: {{ $currentRank['current_color'] }}44;">
+                        <i class="fa-solid fa-trophy text-xs"></i> 
+                        <span class="font-bold">{{ $currentRank['current_rank'] }}</span>
+                    </span>
                 @else
                     <span class="bg-red-900 text-red-300 border border-red-700 px-2 py-1 rounded"><i class="fa-solid fa-lock mr-1"></i> Inactive</span>
                 @endif
@@ -158,6 +162,40 @@
                     <p class="text-lg font-bold {{ $user->status === 'active' ? 'text-green-400' : 'text-red-400' }} mt-1 capitalize">{{ $user->status }}</p>
                 </div>
             </div>
+        </div>
+
+        <div class="bg-[#1a222d] rounded-lg border border-[#334155] p-6">
+            <div class="flex justify-between items-center mb-4">
+                <h3 class="text-gray-200 font-medium"><i class="fa-solid fa-medal mr-2 text-indigo-400"></i>Rank Progression</h3>
+                @if($currentRank['next_rank'])
+                    <span class="text-xs font-bold text-gray-400">Next: <span class="text-indigo-400">{{ $currentRank['next_rank'] }}</span></span>
+                @else
+                    <span class="text-xs font-bold text-yellow-500"><i class="fa-solid fa-crown"></i> Max Rank</span>
+                @endif
+            </div>
+
+            @if($currentRank['next_rank'])
+                <div class="w-full bg-gray-900 rounded-full h-2 mb-2 border border-[#334155]">
+                    <div class="h-2 rounded-full" style="width: {{ $currentRank['progress_pct'] }}%; background-color: {{ $currentRank['current_color'] }}"></div>
+                </div>
+                <div class="flex justify-between text-xs mt-4 border-t border-[#334155] pt-4">
+                    <div>
+                        <p class="text-gray-500">Directs</p>
+                        <p class="text-gray-200 font-bold">{{ $currentRank['direct_count'] }} / {{ $currentRank['next_directs'] }}</p>
+                    </div>
+                    @if($currentRank['next_team'] > 0)
+                    <div class="text-right">
+                        <p class="text-gray-500">Team Size</p>
+                        <p class="text-gray-200 font-bold">{{ $currentRank['team_size'] }} / {{ $currentRank['next_team'] }}</p>
+                    </div>
+                    @endif
+                </div>
+            @else
+                <div class="py-4 text-center">
+                    <i class="fa-solid fa-medal text-yellow-500 text-4xl mb-2"></i>
+                    <p class="text-gray-400 text-sm">You have achieved the highest rank!</p>
+                </div>
+            @endif
         </div>
     </div>
 

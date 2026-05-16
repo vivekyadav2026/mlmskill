@@ -125,7 +125,8 @@ class PackageController extends Controller
     {
         $request->validate([
             'sponsor_id' => 'required|string',
-            'module_id' => 'required|exists:course_modules,id'
+            'module_id' => 'required|exists:course_modules,id',
+            'mpin' => 'required|digits:4'
         ]);
 
         // Find the user by their referral code (Activation ID)
@@ -140,6 +141,16 @@ class PackageController extends Controller
         }
 
         $currentUser = Auth::user();
+        
+        // --- MPIN Verification ---
+        if (empty($currentUser->mpin)) {
+            return back()->with('error', 'Security MPIN not set. Please set your MPIN in profile settings first.');
+        }
+
+        if (!\Illuminate\Support\Facades\Hash::check(trim($request->mpin), $currentUser->mpin)) {
+            return back()->with('error', 'Invalid Security MPIN. Please try again.');
+        }
+
         $wallet = $currentUser->wallet;
         $price = 300.00;
 

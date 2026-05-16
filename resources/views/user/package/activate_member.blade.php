@@ -47,6 +47,12 @@
                         </div>
                     </div>
 
+                    <div class="mb-8 p-4 bg-indigo-500/5 border border-indigo-500/20 rounded-lg">
+                        <label class="block text-gray-300 font-bold mb-2">Security MPIN <span class="text-red-500">*</span></label>
+                        <input type="password" name="mpin" maxlength="6" placeholder="Enter your security PIN" class="w-full bg-[#0b1220] text-white border border-[#334155] rounded-lg px-4 py-3 focus:outline-none focus:border-indigo-500 font-mono tracking-[0.5em] text-center" required>
+                        <p class="text-xs text-gray-500 mt-2"><i class="fa-solid fa-shield-halved"></i> For security, verify your 4-6 digit MPIN to authorize this transaction.</p>
+                    </div>
+
                     <div class="border-t border-[#334155] pt-6 flex justify-end">
                         <button type="submit" class="bg-indigo-600 hover:bg-indigo-700 text-white font-bold py-3 px-8 rounded-lg shadow-lg transition flex items-center gap-2 text-lg">
                             <i class="fa-solid fa-bolt"></i> Activate Member for $300

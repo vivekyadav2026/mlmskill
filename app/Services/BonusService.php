@@ -10,32 +10,55 @@ use Illuminate\Support\Facades\DB;
 
 class BonusService
 {
+    /**
+     * Rank & Reward milestones (as per the MLM plan).
+     *
+     * 'direct' milestones: keyed by number of active directs → reward amount
+     * 'team'   milestones: keyed by total active team size  → reward amount
+     *
+     * Some team ranks also require a minimum number of direct referrals.
+     * Those are enforced in evaluateUserRewardIncome().
+     */
     private array $rewardIncomeMilestones = [
-        // Type => [MilestoneCount => Amount]
         'direct' => [
-            5 => 25.00,
-            10 => 50.00,
+            //  directs => reward
+             5 =>  25.00,  // Active Associate
+            10 =>  50.00,  // Star
         ],
         'team' => [
-            50 => 100.00,
-            100 => 250.00,
-            500 => 1250.00,
-            1000 => 2500.00,
-            2000 => 5000.00,
-            5000 => 10000.00,
-            10000 => 20000.00,
-            25000 => 50000.00,
-            50000 => 100000.00,
-        ]
+            //  team   => reward
+             50 =>   100.00,  // Manager       (also needs >= 5 directs)
+            100 =>   150.00,  // Sr. Manager   (also needs >= 10 directs)
+            500 =>  1000.00,  // Director
+           1000 =>  2500.00,  // Sr. Director
+           2000 =>  5000.00,  // Crown
+           5000 => 10000.00,  // Silver Crown
+          10000 => 20000.00,  // Gold Crown
+          25000 => 50000.00,  // Platinum Crown
+          50000 => 100000.00, // Diamond Crown
+        ],
     ];
 
+    /**
+     * Minimum active directs required to unlock certain team-size ranks.
+     * If a rank is not listed here, no direct condition applies.
+     */
+    private array $rankDirectRequirements = [
+        50  => 5,  // Manager needs >= 5 directs
+        100 => 10, // Sr. Manager needs >= 10 directs
+    ];
+
+    /**
+     * Salary Bonus tiers (monthly, paid for up to 12 months).
+     * Keyed by minimum active direct referrals → monthly amount.
+     * Sorted descending so the highest eligible tier is matched first.
+     */
     private array $salaryBonusMilestones = [
-        // Directs => MonthlyAmount
         500 => 100.00,
-        200 => 50.00,
-        100 => 25.00,
-        50 => 15.00,
-        20 => 5.00,
+        200 =>  50.00,
+        100 =>  30.00,
+         50 =>  20.00,
+         20 =>  10.00,
     ];
 
     /**
@@ -69,10 +92,11 @@ class BonusService
     private function evaluateUserRewardIncome(User $user)
     {
         $directCount = User::where('sponsor_id', $user->referral_code)->where('status', 'active')->count();
-        $teamSize = $this->calculateTotalTeamSize($user);
+        $teamSize    = $this->calculateTotalTeamSize($user);
 
         DB::transaction(function () use ($user, $directCount, $teamSize) {
-            // Check Directs Milestones
+
+            // ── Check Direct-Count Rank Milestones (Active Associate, Star) ──
             foreach ($this->rewardIncomeMilestones['direct'] as $milestone => $amount) {
                 if ($directCount >= $milestone) {
                     $milestoneKey = 'direct_' . $milestone;
@@ -80,9 +104,17 @@ class BonusService
                 }
             }
 
-            // Check Team Milestones
+            // ── Check Team-Size Rank Milestones ──
             foreach ($this->rewardIncomeMilestones['team'] as $milestone => $amount) {
                 if ($teamSize >= $milestone) {
+
+                    // Some ranks also require a minimum number of direct referrals
+                    $requiredDirects = $this->rankDirectRequirements[$milestone] ?? 0;
+                    if ($requiredDirects > 0 && $directCount < $requiredDirects) {
+                        // Direct condition not yet met — skip this rank
+                        continue;
+                    }
+
                     $milestoneKey = 'team_' . $milestone;
                     $this->payoutRewardIncome($user, $milestoneKey, $amount);
                 }
@@ -237,6 +269,74 @@ class BonusService
             }
         }
         return null;
+    }
+
+    /**
+     * Compute the user's current rank (and next rank) from their live team/direct counts.
+     * Returns an array with: current_rank, current_rank_color, next_rank, next_team, next_direct, progress_pct
+     */
+    public function getCurrentRank(User $user): array
+    {
+        $directCount = User::where('sponsor_id', $user->referral_code)->where('status', 'active')->count();
+        $teamSize    = $this->calculateTotalTeamSize($user);
+
+        // Full rank ladder — ordered highest to lowest for "current rank" detection
+        $rankLadder = [
+            ['name' => 'Diamond Crown',  'color' => '#00cfff', 'team' => 50000, 'directs' => 0],
+            ['name' => 'Platinum Crown', 'color' => '#e5c100', 'team' => 25000, 'directs' => 0],
+            ['name' => 'Gold Crown',     'color' => '#ffd700', 'team' => 10000, 'directs' => 0],
+            ['name' => 'Silver Crown',   'color' => '#c0c0c0', 'team' => 5000,  'directs' => 0],
+            ['name' => 'Crown',          'color' => '#a855f7', 'team' => 2000,  'directs' => 0],
+            ['name' => 'Sr. Director',   'color' => '#6366f1', 'team' => 1000,  'directs' => 0],
+            ['name' => 'Director',       'color' => '#3b82f6', 'team' => 500,   'directs' => 0],
+            ['name' => 'Sr. Manager',    'color' => '#10b981', 'team' => 100,   'directs' => 10],
+            ['name' => 'Manager',        'color' => '#22c55e', 'team' => 50,    'directs' => 5],
+            ['name' => 'Star',           'color' => '#f59e0b', 'team' => 0,     'directs' => 10],
+            ['name' => 'Active Associate','color' => '#f97316','team' => 0,     'directs' => 5],
+        ];
+
+        $currentRank  = null;
+        $currentIndex = count($rankLadder); // "Unranked" is beyond the end
+
+        foreach ($rankLadder as $i => $rank) {
+            $teamOk    = $teamSize    >= $rank['team'];
+            $directOk  = $directCount >= $rank['directs'];
+            if ($teamOk && $directOk) {
+                $currentRank  = $rank;
+                $currentIndex = $i;
+                break;
+            }
+        }
+
+        // Next rank = the one above current in the ladder (lower index)
+        $nextRank = $currentIndex > 0 ? $rankLadder[$currentIndex - 1] : null;
+
+        // Progress toward next rank (team-based if team required, else directs)
+        $progressPct = 0;
+        if ($nextRank) {
+            if ($nextRank['team'] > 0) {
+                $fromTeam = $currentRank ? $currentRank['team'] : 0;
+                $progressPct = $fromTeam < $nextRank['team']
+                    ? min(100, round((($teamSize - $fromTeam) / ($nextRank['team'] - $fromTeam)) * 100, 1))
+                    : 100;
+            } else {
+                $fromDir = $currentRank ? $currentRank['directs'] : 0;
+                $progressPct = $fromDir < $nextRank['directs']
+                    ? min(100, round((($directCount - $fromDir) / ($nextRank['directs'] - $fromDir)) * 100, 1))
+                    : 100;
+            }
+        }
+
+        return [
+            'current_rank'   => $currentRank ? $currentRank['name']  : 'Unranked',
+            'current_color'  => $currentRank ? $currentRank['color'] : '#6b7280',
+            'next_rank'      => $nextRank     ? $nextRank['name']     : null,
+            'next_team'      => $nextRank     ? $nextRank['team']     : null,
+            'next_directs'   => $nextRank     ? $nextRank['directs']  : null,
+            'team_size'      => $teamSize,
+            'direct_count'   => $directCount,
+            'progress_pct'   => $progressPct,
+        ];
     }
 
     public function getCurrentSalaryTier(User $user)

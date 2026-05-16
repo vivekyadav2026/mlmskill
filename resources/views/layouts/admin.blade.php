@@ -198,9 +198,34 @@
           <i class="fa-solid fa-chevron-down nav-arrow"></i>
         </a>
         <ul class="nav-submenu list-unstyled mb-0">
-          <li><a href="{{ url('admin/commissions/direct') }}" class="nav-link sub-link"><span>Direct Income Logs</span></a></li>
-          <li><a href="{{ url('admin/commissions/level') }}" class="nav-link sub-link"><span>Level Income Logs</span></a></li>
+          <li><a href="{{ url('admin/commissions/direct') }}" class="nav-link sub-link"><span>Direct Commission</span></a></li>
+          <li><a href="{{ url('admin/commissions/level') }}" class="nav-link sub-link"><span>Level Commission</span></a></li>
           <li><a href="{{ url('admin/settings/plan') }}" class="nav-link sub-link"><span>Commission Settings</span></a></li>
+        </ul>
+      </li>
+
+      <li class="nav-section">Value Added Services</li>
+
+      <li class="has-submenu">
+        <a href="#" class="nav-link nav-dropdown-toggle">
+          <i class="fa-solid fa-briefcase"></i><span>Job & Placements</span>
+          <i class="fa-solid fa-chevron-down nav-arrow"></i>
+        </a>
+        <ul class="nav-submenu list-unstyled mb-0">
+          <li><a href="{{ route('admin.jobs.index') }}" class="nav-link sub-link"><span>Postings</span></a></li>
+          <li><a href="{{ route('admin.jobs.applications') }}" class="nav-link sub-link"><span>Applications</span></a></li>
+          <li><a href="{{ route('admin.jobs.create') }}" class="nav-link sub-link"><span>Create New</span></a></li>
+        </ul>
+      </li>
+
+      <li class="has-submenu">
+        <a href="#" class="nav-link nav-dropdown-toggle">
+          <i class="fa-solid fa-hand-holding-dollar"></i><span>Loan Facility</span>
+          <i class="fa-solid fa-chevron-down nav-arrow"></i>
+        </a>
+        <ul class="nav-submenu list-unstyled mb-0">
+          <li><a href="{{ route('admin.loans.requests') }}" class="nav-link sub-link"><span>Loan Requests</span></a></li>
+          <li><a href="{{ route('admin.loans.schemes') }}" class="nav-link sub-link"><span>Loan Schemes</span></a></li>
         </ul>
       </li>
 

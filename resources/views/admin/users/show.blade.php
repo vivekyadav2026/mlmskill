@@ -20,6 +20,12 @@
                 <h3 class="text-3xl font-bold text-gray-100">{{ $user->name }}</h3>
                 <p class="text-indigo-400 font-mono text-lg mb-2">{{ $user->referral_code }}</p>
                 <span class="px-3 py-1 text-xs rounded-full bg-{{ $user->status=='active'?'green':'red' }}-900/50 text-{{ $user->status=='active'?'green':'red' }}-400 border border-{{ $user->status=='active'?'green':'red' }}-500 uppercase tracking-wide">{{ $user->status }}</span>
+                @php 
+                    $rank = app(\App\Services\BonusService::class)->getCurrentRank($user);
+                @endphp
+                <span class="ml-2 px-3 py-1 text-xs rounded-full border" style="background-color: {{ $rank['current_color'] }}22; color: {{ $rank['current_color'] }}; border-color: {{ $rank['current_color'] }}44;">
+                    <i class="fa-solid fa-trophy mr-1 text-[10px]"></i> {{ $rank['current_rank'] }}
+                </span>
                 @if($user->role === 'admin')
                     <span class="ml-2 px-3 py-1 text-xs rounded-full bg-blue-900/50 text-blue-400 border border-blue-500 uppercase tracking-wide">Admin</span>
                 @endif

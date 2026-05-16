@@ -4,30 +4,59 @@ namespace App\Console\Commands;
 
 use Illuminate\Console\Command;
 use App\Services\BonusService;
+use App\Models\User;
+use App\Models\CommissionLedger;
+use App\Models\ActivityLog;
+use Carbon\Carbon;
 
 class DistributeSalaryBonus extends Command
 {
-    /**
-     * The name and signature of the console command.
-     *
-     * @var string
-     */
-    protected $signature = 'bonuses:salary';
+    protected $signature   = 'bonuses:salary {--dry-run : Preview without paying}';
+    protected $description = 'Distributes the monthly Salary Bonus based on direct referrals (runs 1st of every month)';
 
-    /**
-     * The console command description.
-     *
-     * @var string
-     */
-    protected $description = 'Distributes the monthly Salary Bonus based on direct referrals';
-
-    /**
-     * Execute the console command.
-     */
-    public function handle(BonusService $bonusService)
+    public function handle(BonusService $bonusService): int
     {
-        $this->info('Starting Salary Bonus distribution...');
-        $bonusService->distributeMonthlySalaryBonus();
-        $this->info('Salary Bonus distribution completed.');
+        $isDryRun = $this->option('dry-run');
+        $month    = Carbon::now()->format('F Y');
+
+        $this->info("═══════════════════════════════════════");
+        $this->info("  Salary Bonus Distribution — {$month}");
+        $this->info("═══════════════════════════════════════");
+
+        if ($isDryRun) {
+            $this->warn('  [DRY RUN] No payments will be made.');
+        }
+
+        // Snapshot wallet totals before run
+        $totalBefore = CommissionLedger::where('commission_type', 'salary_bonus')->sum('amount');
+
+        if (!$isDryRun) {
+            $bonusService->distributeMonthlySalaryBonus();
+        }
+
+        // Calculate how much was paid this run
+        $totalAfter = CommissionLedger::where('commission_type', 'salary_bonus')->sum('amount');
+        $paidThisRun = round($totalAfter - $totalBefore, 2);
+
+        // Count recipients this run (ledger entries created just now)
+        $recipientCount = CommissionLedger::where('commission_type', 'salary_bonus')
+            ->where('created_at', '>=', Carbon::now()->subMinutes(5))
+            ->count();
+
+        $this->info("  ✅ Distribution complete!");
+        $this->info("  Recipients this run : {$recipientCount} users");
+        $this->info("  Amount paid         : \${$paidThisRun}");
+        $this->info("═══════════════════════════════════════");
+
+        // Log to ActivityLog so admin can see it in the dashboard
+        if (!$isDryRun) {
+            ActivityLog::log(
+                'salary_bonus_distributed',
+                "Monthly salary bonus distributed for {$month}: {$recipientCount} users paid, total \${$paidThisRun}"
+            );
+        }
+
+        return Command::SUCCESS;
     }
 }
+

@@ -15,6 +15,11 @@ return new class extends Migration
 
     public function down(): void
     {
+        // Delete records that are not part of the old enum to avoid truncation error
+        DB::table('commission_ledgers')
+            ->whereNotIn('commission_type', ['direct', 'team'])
+            ->delete();
+
         DB::statement("ALTER TABLE `commission_ledgers` MODIFY `commission_type` ENUM('direct', 'team') NOT NULL");
     }
 };

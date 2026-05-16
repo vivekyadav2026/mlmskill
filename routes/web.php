@@ -136,6 +136,17 @@ Route::middleware(['auth'])->group(function () {
     Route::get('/user/notifications/announcements', [\App\Http\Controllers\NotificationController::class, 'announcements'])->name('notifications.announcements');
 
 
+    // Job Placement Module
+    Route::get('/user/jobs', [\App\Http\Controllers\User\UserJobController::class, 'index'])->name('user.jobs.index');
+    Route::get('/user/jobs/applications', [\App\Http\Controllers\User\UserJobController::class, 'applications'])->name('user.jobs.applications');
+    Route::get('/user/jobs/{id}', [\App\Http\Controllers\User\UserJobController::class, 'show'])->name('user.jobs.show');
+    Route::post('/user/jobs/{id}/apply', [\App\Http\Controllers\User\UserJobController::class, 'apply'])->name('user.jobs.apply');
+
+    // Loan Facility Module
+    Route::get('/user/loans', [\App\Http\Controllers\User\UserLoanController::class, 'index'])->name('user.loans.index');
+    Route::get('/user/loans/history', [\App\Http\Controllers\User\UserLoanController::class, 'history'])->name('user.loans.history');
+    Route::post('/user/loans/{id}/apply', [\App\Http\Controllers\User\UserLoanController::class, 'apply'])->name('user.loans.apply');
+
     // Settings Module (Mapping directly to Profile controller for account management)
     Route::get('/user/settings/account', [\App\Http\Controllers\ProfileController::class, 'edit'])->name('settings.account');
     Route::get('/user/settings/security', [\App\Http\Controllers\ProfileController::class, 'password'])->name('settings.security');
@@ -295,6 +306,20 @@ Route::middleware(['auth', 'admin'])->prefix('admin')->group(function () {
     Route::post('/logs/system/clear',           [\App\Http\Controllers\AdminLogController::class, 'clearSystemLogs'])->name('admin.logs.system.clear');
     Route::get('/logs/activity',                [\App\Http\Controllers\AdminLogController::class, 'activityLogs'])->name('admin.logs.activity');
     Route::get('/logs/error',                   [\App\Http\Controllers\AdminLogController::class, 'errorLogs'])->name('admin.logs.error');
+
+    // Job Management
+    Route::get('/jobs', [\App\Http\Controllers\Admin\AdminJobController::class, 'index'])->name('admin.jobs.index');
+    Route::get('/jobs/create', [\App\Http\Controllers\Admin\AdminJobController::class, 'create'])->name('admin.jobs.create');
+    Route::post('/jobs/store', [\App\Http\Controllers\Admin\AdminJobController::class, 'store'])->name('admin.jobs.store');
+    Route::get('/jobs/applications', [\App\Http\Controllers\Admin\AdminJobController::class, 'applications'])->name('admin.jobs.applications');
+    Route::post('/jobs/applications/{id}/update', [\App\Http\Controllers\Admin\AdminJobController::class, 'updateApplication'])->name('admin.jobs.applications.update');
+
+    // Loan Management
+    Route::get('/loans/schemes', [\App\Http\Controllers\Admin\AdminLoanController::class, 'indexSchemes'])->name('admin.loans.schemes');
+    Route::get('/loans/schemes/create', [\App\Http\Controllers\Admin\AdminLoanController::class, 'createScheme'])->name('admin.loans.create_scheme');
+    Route::post('/loans/schemes/store', [\App\Http\Controllers\Admin\AdminLoanController::class, 'storeScheme'])->name('admin.loans.store_scheme');
+    Route::get('/loans/requests', [\App\Http\Controllers\Admin\AdminLoanController::class, 'requests'])->name('admin.loans.requests');
+    Route::post('/loans/requests/{id}/update', [\App\Http\Controllers\Admin\AdminLoanController::class, 'updateRequest'])->name('admin.loans.requests.update');
 
     // Support Chat
     Route::get('/support/unread', [\App\Http\Controllers\AdminSupportChatController::class, 'unreadCount']);

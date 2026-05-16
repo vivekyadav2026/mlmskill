@@ -234,6 +234,30 @@
         </ul>
       </li>
 
+      <li class="nav-section">Value Added Services</li>
+
+      <li class="has-submenu">
+        <a href="#" class="nav-link nav-dropdown-toggle">
+          <i class="fa-solid fa-briefcase"></i><span>Job Placements</span>
+          <i class="fa-solid fa-chevron-down nav-arrow"></i>
+        </a>
+        <ul class="nav-submenu list-unstyled mb-0">
+          <li><a href="{{ route('user.jobs.index') }}" class="nav-link sub-link"><span>Available Jobs</span></a></li>
+          <li><a href="{{ route('user.jobs.applications') }}" class="nav-link sub-link"><span>My Applications</span></a></li>
+        </ul>
+      </li>
+
+      <li class="has-submenu">
+        <a href="#" class="nav-link nav-dropdown-toggle">
+          <i class="fa-solid fa-hand-holding-dollar"></i><span>Loan Facility</span>
+          <i class="fa-solid fa-chevron-down nav-arrow"></i>
+        </a>
+        <ul class="nav-submenu list-unstyled mb-0">
+          <li><a href="{{ route('user.loans.index') }}" class="nav-link sub-link"><span>Loan Schemes</span></a></li>
+          <li><a href="{{ route('user.loans.history') }}" class="nav-link sub-link"><span>My Loan Requests</span></a></li>
+        </ul>
+      </li>
+
       <li class="has-submenu">
         <a href="#" class="nav-link nav-dropdown-toggle">
           <i class="fa-solid fa-bell"></i><span>Notifications</span>
