@@ -44,7 +44,7 @@
         <div class="md:col-span-2 bg-[#1a222d] border border-indigo-500/30 rounded-xl p-8 shadow-xl relative overflow-hidden">
             <div class="absolute top-0 right-0 w-32 h-32 bg-indigo-500/10 rounded-bl-full"></div>
             
-            <form action="{{ route('wallets.transfer.submit') }}" method="POST" onsubmit="return confirm('Are you sure you want to transfer funds? This action cannot be undone.');">
+            <form action="{{ route('wallets.transfer.submit') }}" method="POST">
                 @csrf
                 <div class="mb-6 relative z-10">
                     <label class="block text-sm font-medium text-gray-300 mb-2">Recipient User ID (Referral Code) *</label>
@@ -52,8 +52,31 @@
                         <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
                             <i class="fa-solid fa-user text-gray-500"></i>
                         </div>
-                        <input type="text" name="recipient_id" value="{{ old('recipient_id') }}" required placeholder="e.g. SKS12345" class="w-full bg-[#0b1220] border border-[#334155] rounded-lg pl-10 pr-4 py-3 text-white focus:outline-none focus:border-indigo-500 transition shadow-inner">
+                        <input type="text" name="recipient_id" id="recipient_id" value="{{ old('recipient_id') }}" placeholder="e.g. SKS12345" class="w-full bg-[#0b1220] border border-[#334155] rounded-lg pl-10 pr-4 py-3 text-white focus:outline-none focus:border-indigo-500 transition shadow-inner font-mono tracking-wider uppercase">
                     </div>
+                    
+                    <!-- Real-time Recipient Details Card -->
+                    <div id="recipient-details-container" class="mt-3 hidden transition-all duration-300">
+                        <div class="bg-indigo-950/20 border border-indigo-500/30 rounded-lg p-4 flex flex-col sm:flex-row justify-between items-start sm:items-center gap-3">
+                            <div>
+                                <div class="text-xs text-indigo-400 uppercase font-extrabold tracking-wider mb-1" id="recipient-relation-type">Recipient Found</div>
+                                <div class="font-bold text-white text-lg" id="recipient-name">...</div>
+                                <div class="text-sm text-gray-400" id="recipient-email">...</div>
+                            </div>
+                            <div class="flex items-center gap-2">
+                                <span id="recipient-id-badge" class="px-2.5 py-1 bg-indigo-500/20 text-indigo-300 border border-indigo-500/30 rounded-md font-mono text-sm uppercase">...</span>
+                                <span id="recipient-status-badge" class="px-2.5 py-1 rounded-md text-xs font-bold uppercase">...</span>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div id="recipient-loading" class="mt-3 hidden text-indigo-400 text-sm flex items-center gap-2">
+                        <i class="fa-solid fa-circle-notch fa-spin"></i> Verifying recipient details...
+                    </div>
+                    <div id="recipient-error" class="mt-3 hidden text-red-400 text-sm flex items-center gap-2">
+                        <i class="fa-solid fa-circle-exclamation"></i> <span id="recipient-error-text">Recipient not found</span>
+                    </div>
+
                     <p class="text-xs text-gray-500 mt-2">The exact Referral Code of the user you wish to send funds to.</p>
                 </div>
 
@@ -63,18 +86,21 @@
                         <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
                             <i class="fa-solid fa-dollar-sign text-gray-500"></i>
                         </div>
-                        <input type="number" name="amount" value="{{ old('amount', 300) }}" min="1" step="0.01" required class="w-full bg-[#0b1220] border border-[#334155] rounded-lg pl-10 pr-4 py-3 text-white text-xl font-bold focus:outline-none focus:border-indigo-500 transition shadow-inner">
+                        <input type="number" name="amount" id="amount" value="{{ old('amount', 300) }}" step="0.01" class="w-full bg-[#0b1220] border border-[#334155] rounded-lg pl-10 pr-4 py-3 text-white text-xl font-bold focus:outline-none focus:border-indigo-500 transition shadow-inner">
+                    </div>
+                    <div id="amount-error" class="mt-3 hidden text-red-400 text-sm flex items-center gap-2">
+                        <i class="fa-solid fa-circle-exclamation"></i> <span>Insufficient funds in your Income Wallet.</span>
                     </div>
                     <p class="text-xs text-gray-500 mt-2">Enter 300 to fully fund a new user's package activation.</p>
                 </div>
 
                 <div class="mb-8 relative z-10 border-t border-[#334155] pt-6">
                     <label class="block text-sm font-medium text-gray-300 mb-2"><i class="fa-solid fa-lock text-yellow-500 mr-2"></i>Enter your 4-Digit MPIN to confirm *</label>
-                    <input type="password" name="mpin" required maxlength="4" pattern="\d{4}" class="w-full bg-[#0b1220] border border-[#334155] rounded-lg px-4 py-3 text-white text-2xl tracking-[1em] text-center focus:outline-none focus:border-indigo-500 transition shadow-inner" placeholder="••••">
+                    <input type="password" name="mpin" id="mpin" maxlength="4" class="w-full bg-[#0b1220] border border-[#334155] rounded-lg px-4 py-3 text-white text-2xl tracking-[1em] text-center focus:outline-none focus:border-indigo-500 transition shadow-inner" placeholder="">
                 </div>
 
                 <div class="relative z-10">
-                    <button type="submit" class="w-full bg-indigo-600 hover:bg-indigo-700 text-white font-bold py-4 rounded-lg shadow-lg transition flex items-center justify-center gap-2 text-lg">
+                    <button type="submit" id="submit-btn" class="w-full bg-indigo-600 hover:bg-indigo-700 text-white font-bold py-4 rounded-lg shadow-lg transition flex items-center justify-center gap-2 text-lg">
                         <i class="fa-solid fa-paper-plane"></i> Send Funds Now
                     </button>
                 </div>
@@ -82,4 +108,191 @@
         </div>
     </div>
 </div>
+
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    const recipientInput = document.getElementById('recipient_id');
+    const amountInput = document.getElementById('amount');
+    const submitBtn = document.getElementById('submit-btn');
+    
+    const detailsContainer = document.getElementById('recipient-details-container');
+    const recipientRelationType = document.getElementById('recipient-relation-type');
+    const recipientName = document.getElementById('recipient-name');
+    const recipientEmail = document.getElementById('recipient-email');
+    const recipientIdBadge = document.getElementById('recipient-id-badge');
+    const recipientStatusBadge = document.getElementById('recipient-status-badge');
+    
+    const loadingDiv = document.getElementById('recipient-loading');
+    const errorDiv = document.getElementById('recipient-error');
+    const errorText = document.getElementById('recipient-error-text');
+    
+    const amountErrorDiv = document.getElementById('amount-error');
+
+    const availableBalance = {{ (float) $balance }};
+    const currentUserReferral = '{{ auth()->user()->referral_code }}';
+
+    let isRecipientValid = false;
+    let isAmountValid = true;
+    let debounceTimeout;
+
+    function checkFormValidity() {
+        const amount = parseFloat(amountInput.value) || 0;
+        
+        // 1. Amount validation
+        if (amount <= 0) {
+            isAmountValid = false;
+            amountErrorDiv.classList.add('hidden');
+        } else if (amount > availableBalance) {
+            isAmountValid = false;
+            amountErrorDiv.querySelector('span').textContent = 'Insufficient funds in your Income Wallet.';
+            amountErrorDiv.classList.remove('hidden');
+        } else {
+            isAmountValid = true;
+            amountErrorDiv.classList.add('hidden');
+        }
+    }
+
+    function lookupRecipient() {
+        const value = recipientInput.value.trim().toUpperCase();
+
+        if (value.length < 3) {
+            detailsContainer.classList.add('hidden');
+            loadingDiv.classList.add('hidden');
+            errorDiv.classList.add('hidden');
+            isRecipientValid = false;
+            checkFormValidity();
+            return;
+        }
+
+        loadingDiv.classList.remove('hidden');
+        detailsContainer.classList.add('hidden');
+        errorDiv.classList.add('hidden');
+        isRecipientValid = false;
+        checkFormValidity();
+
+        fetch(`{{ route('package.lookup_member') }}?sponsor_id=${encodeURIComponent(value)}`)
+            .then(response => response.json())
+            .then(data => {
+                loadingDiv.classList.add('hidden');
+                if (data.success) {
+                    const user = data.user;
+                    recipientName.textContent = user.name;
+                    recipientEmail.textContent = user.email;
+                    recipientIdBadge.textContent = user.referral_code;
+                    recipientStatusBadge.textContent = user.status;
+
+                    if (user.referral_code === currentUserReferral) {
+                        recipientRelationType.textContent = 'Self Wallet Conversion';
+                        recipientRelationType.className = 'text-xs text-indigo-400 uppercase font-extrabold tracking-wider mb-1';
+                        recipientStatusBadge.className = 'px-2.5 py-1 rounded-md text-xs font-bold uppercase bg-blue-500/20 text-blue-300 border border-blue-500/30';
+                        isRecipientValid = true;
+                        detailsContainer.classList.remove('hidden');
+                    } else if (user.status === 'active') {
+                        recipientRelationType.textContent = 'Recipient Found';
+                        recipientRelationType.className = 'text-xs text-green-400 uppercase font-extrabold tracking-wider mb-1';
+                        recipientStatusBadge.className = 'px-2.5 py-1 rounded-md text-xs font-bold uppercase bg-green-500/20 text-green-300 border border-green-500/30';
+                        isRecipientValid = true;
+                        detailsContainer.classList.remove('hidden');
+                    } else {
+                        // Recipient is inactive, show custom warning
+                        errorText.innerHTML = `Recipient account (${user.name}) is inactive. Transfers are only allowed to active members.`;
+                        errorDiv.classList.remove('hidden');
+                        isRecipientValid = false;
+                    }
+                } else {
+                    errorText.textContent = data.message || 'Recipient not found.';
+                    errorDiv.classList.remove('hidden');
+                    isRecipientValid = false;
+                }
+                checkFormValidity();
+            })
+            .catch(err => {
+                loadingDiv.classList.add('hidden');
+                errorText.textContent = 'Error verifying recipient ID.';
+                errorDiv.classList.remove('hidden');
+                isRecipientValid = false;
+                checkFormValidity();
+            });
+    }
+
+    recipientInput.addEventListener('input', function() {
+        clearTimeout(debounceTimeout);
+        debounceTimeout = setTimeout(lookupRecipient, 500);
+    });
+
+    amountInput.addEventListener('input', function() {
+        checkFormValidity();
+    });
+
+    // Form submission confirmation with user details context
+    const form = recipientInput.closest('form');
+    if (form) {
+        form.addEventListener('submit', function(e) {
+            
+            const recipientVal = recipientInput.value.trim().toUpperCase();
+            const amountVal = parseFloat(amountInput.value) || 0;
+            
+            // Check recipient validity first
+            if (!isRecipientValid) {
+                e.preventDefault();
+                alert('Please enter a valid, active Recipient User ID (Referral Code).');
+                recipientInput.focus();
+                return;
+            }
+
+            // Check amount validity
+            if (amountVal <= 0) {
+                e.preventDefault();
+                alert('Please enter a valid amount of $1 or more to transfer.');
+                amountInput.focus();
+                return;
+            }
+
+            if (amountVal > availableBalance) {
+                e.preventDefault();
+                alert(`Insufficient funds. Your available Income Wallet balance is $${availableBalance.toFixed(2)}.`);
+                amountInput.focus();
+                return;
+            }
+
+            // Check MPIN validity
+            const mpinInput = document.getElementById('mpin');
+            if (mpinInput) {
+                const mpinVal = mpinInput.value.trim();
+                if (!mpinVal) {
+                    e.preventDefault();
+                    alert('Please enter your 4-digit Security MPIN.');
+                    mpinInput.focus();
+                    return;
+                }
+                if (!/^\d{4}$/.test(mpinVal)) {
+                    e.preventDefault();
+                    alert('Security MPIN must be exactly 4 digits.');
+                    mpinInput.focus();
+                    return;
+                }
+            }
+
+            let msg = '';
+            if (recipientVal === currentUserReferral) {
+                msg = `Are you sure you want to convert $${amountVal.toFixed(2)} from your Income Wallet to your Package Wallet?`;
+            } else {
+                const name = recipientName.textContent;
+                msg = `Are you sure you want to transfer $${amountVal.toFixed(2)} to ${name} (${recipientVal})?\nThis action cannot be undone.`;
+            }
+            
+            if (!confirm(msg)) {
+                e.preventDefault();
+            }
+        });
+    }
+
+    // Run initial checks on load
+    if (recipientInput.value.trim().length >= 3) {
+        lookupRecipient();
+    } else {
+        checkFormValidity();
+    }
+});
+</script>
 @endsection

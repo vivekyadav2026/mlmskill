@@ -190,7 +190,6 @@ class WalletController extends Controller
             'amount' => 'required|numeric|min:1',
             'mpin' => 'required|digits:4',
         ]);
-
         $sender = Auth::user();
         
         // Verify MPIN
@@ -217,14 +216,9 @@ class WalletController extends Controller
         $isSelfTransfer = ($sender->id === $recipient->id);
 
         DB::transaction(function () use ($sender, $senderWallet, $recipient, $amount, $isSelfTransfer) {
-            // Deduct from sender's income wallet
             $senderWallet->decrement('income_wallet', $amount);
-
-            // Add to recipient's package wallet
             $recipientWallet = \App\Models\Wallet::firstOrCreate(['user_id' => $recipient->id]);
             $recipientWallet->increment('package_wallet', $amount);
-
-            // Log the transfer
             if ($isSelfTransfer) {
                 \App\Models\ActivityLog::log('wallet_conversion', 'Converted $' . $amount . ' from Income Wallet to Package Wallet', $sender->id);
             } else {
