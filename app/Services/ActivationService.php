@@ -57,6 +57,19 @@ class ActivationService
                 'credited_date' => now(),
             ]);
             $wallet->utility_token_wallet += 300;
+
+            // Give 300 free renewal tokens upon activation (locked for 300 days)
+            $renewalValue = (float) \App\Models\Setting::get('renewal_token_value', 0.50);
+            \App\Models\TokenLedger::create([
+                'user_id' => $user->id,
+                'token_type' => 'renewal',
+                'token_count' => 300,
+                'token_value' => $renewalValue,
+                'source' => 'activation_bonus',
+                'status' => 'locked',
+                'credited_date' => now(),
+            ]);
+            $wallet->renewal_token_wallet += 300;
             $wallet->save();
 
             // Give commissions and check reward income

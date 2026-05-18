@@ -40,7 +40,7 @@
       <div class="s-body grid grid-cols-1 md:grid-cols-2 gap-4">
         <div>
           <label class="f-label">Token Display Name</label>
-          <input type="text" name="utility_token_name" class="f-ctrl" value="{{ $settings['utility_token_name'] ?? 'Utility Token' }}" placeholder="e.g. Utility Token">
+          <input type="text" readonly name="utility_token_name" class="f-ctrl" value="{{ $settings['utility_token_name'] ?? 'Utility Token' }}" placeholder="e.g. Utility Token">
         </div>
         <div>
           <label class="f-label">Token Value ($) per 1 Token</label>
@@ -55,7 +55,7 @@
       <div class="s-body grid grid-cols-1 md:grid-cols-2 gap-4">
         <div>
           <label class="f-label">Token Display Name</label>
-          <input type="text" name="renewal_token_name" class="f-ctrl" value="{{ $settings['renewal_token_name'] ?? 'Renewal Token' }}" placeholder="e.g. Renewal Token">
+          <input type="text" readonly name="renewal_token_name" class="f-ctrl" value="{{ $settings['renewal_token_name'] ?? 'Renewal Token' }}" placeholder="e.g. Renewal Token">
         </div>
         <div>
           <label class="f-label">Token Value ($) per 1 Token</label>

@@ -120,6 +120,7 @@ Route::middleware(['auth'])->group(function () {
     Route::get('/user/package/history', [\App\Http\Controllers\PackageController::class, 'history'])->name('package.history');
     Route::get('/user/package/activate-member', [\App\Http\Controllers\PackageController::class, 'activateMember'])->name('package.activate_member');
     Route::post('/user/package/activate-member', [\App\Http\Controllers\PackageController::class, 'processActivateMember'])->name('package.activate_member.submit');
+    Route::get('/user/package/lookup-member', [\App\Http\Controllers\PackageController::class, 'lookupMember'])->name('package.lookup_member');
 
     // Withdraw Module
     Route::get('/user/withdraw/request', [\App\Http\Controllers\WithdrawController::class, 'request'])->name('withdraw.request');

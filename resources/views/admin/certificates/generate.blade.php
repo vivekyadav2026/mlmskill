@@ -82,7 +82,7 @@
                     </label>
                     <div class="relative">
                         <i class="fa-solid fa-search absolute left-3 top-1/2 -translate-y-1/2 text-gray-500 text-sm"></i>
-                        <input type="text" id="userSearch" placeholder="Search by name, email or SD-ID..."
+                        <input type="text" id="userSearch" placeholder="Search by name, email or SDID..."
                             autocomplete="off"
                             class="w-full bg-[#0f172a] border border-[#334155] text-white pl-9 pr-4 py-2.5 rounded-lg focus:outline-none focus:border-indigo-500 text-sm transition">
                     </div>

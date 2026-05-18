@@ -98,12 +98,12 @@
                 
                 <div>
                     <label class="block text-sm font-medium text-gray-300 mb-1">New Password <span class="text-red-500">*</span></label>
-                    <input type="password" name="new_password" required minlength="6" class="w-full bg-[#0b1220] border border-[#334155] rounded-lg px-4 py-2.5 text-white placeholder-gray-500 focus:outline-none focus:ring-1 focus:ring-indigo-500 focus:border-indigo-500 transition" placeholder="Minimum 6 characters">
+                    <input type="password" name="new_password" required minlength="6" maxlength="8" class="w-full bg-[#0b1220] border border-[#334155] rounded-lg px-4 py-2.5 text-white placeholder-gray-500 focus:outline-none focus:ring-1 focus:ring-indigo-500 focus:border-indigo-500 transition" placeholder="6 to 8 characters">
                 </div>
                 
                 <div>
                     <label class="block text-sm font-medium text-gray-300 mb-1">Confirm New Password <span class="text-red-500">*</span></label>
-                    <input type="password" name="confirm_password" required minlength="6" class="w-full bg-[#0b1220] border border-[#334155] rounded-lg px-4 py-2.5 text-white placeholder-gray-500 focus:outline-none focus:ring-1 focus:ring-indigo-500 focus:border-indigo-500 transition" placeholder="Re-enter new password">
+                    <input type="password" name="confirm_password" required minlength="6" maxlength="8" class="w-full bg-[#0b1220] border border-[#334155] rounded-lg px-4 py-2.5 text-white placeholder-gray-500 focus:outline-none focus:ring-1 focus:ring-indigo-500 focus:border-indigo-500 transition" placeholder="Re-enter new password">
                 </div>
             </div>
             

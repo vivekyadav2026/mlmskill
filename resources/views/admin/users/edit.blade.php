@@ -32,7 +32,7 @@
 
             <div class="mb-6">
                 <label for="password" class="block text-gray-300 font-medium mb-2">Password (Leave blank to keep unchanged)</label>
-                <input type="password" name="password" id="password" class="w-full bg-[#0f172a] border border-[#334155] text-white rounded-lg px-4 py-2 focus:outline-none focus:border-indigo-500">
+                <input type="password" name="password" id="password" minlength="6" maxlength="8" class="w-full bg-[#0f172a] border border-[#334155] text-white rounded-lg px-4 py-2 focus:outline-none focus:border-indigo-500">
             </div>
 
             <div class="flex gap-4">

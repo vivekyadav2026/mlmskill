@@ -15,7 +15,7 @@ class AdminUserController extends Controller
         $request->validate([
             'name'=>'required', 
             'email'=>'required|email|unique:users', 
-            'password'=>'required|min:6',
+            'password'=>'required|min:6|max:8',
             'sponsor_id'=>'required|exists:users,referral_code'
         ]);
         $user = new User();
@@ -25,7 +25,7 @@ class AdminUserController extends Controller
         $user->role = 'user';
         $user->status = 'inactive';
         $user->sponsor_id = $request->sponsor_id;
-        $user->referral_code = 'SD-' . strtoupper(substr(md5(uniqid()), 0, 6));
+        $user->referral_code = 'SD' . strtoupper(substr(md5(uniqid()), 0, 6));
         $user->save();
         return redirect('admin/users')->with('success', 'User created successfully.');
     }
@@ -98,6 +98,7 @@ class AdminUserController extends Controller
         $request->validate([
             'name' => 'required',
             'email' => 'required|email|unique:users,email,'.$id,
+            'password' => 'nullable|min:6|max:8',
         ]);
         $user->name = $request->name;
         $user->email = $request->email;
@@ -111,7 +112,7 @@ class AdminUserController extends Controller
     public function changePassword(Request $request, $id) {
         $user = User::findOrFail($id);
         $request->validate([
-            'new_password' => 'required|min:6|same:confirm_password',
+            'new_password' => 'required|min:6|max:8|same:confirm_password',
         ]);
         
         $user->password = \Illuminate\Support\Facades\Hash::make($request->new_password);

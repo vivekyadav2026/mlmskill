@@ -28,7 +28,30 @@
                     
                     <div class="mb-6">
                         <label class="block text-gray-300 font-bold mb-2">Sponsor Activation ID <span class="text-red-500">*</span></label>
-                        <input type="text" name="sponsor_id" placeholder="e.g. SD-000012" class="w-full bg-[#0b1220] text-white border border-[#334155] rounded-lg px-4 py-3 focus:outline-none focus:border-indigo-500 font-mono tracking-wider" required>
+                        <input type="text" name="sponsor_id" id="sponsor_id" placeholder="e.g. SD000012" class="w-full bg-[#0b1220] text-white border border-[#334155] rounded-lg px-4 py-3 focus:outline-none focus:border-indigo-500 font-mono tracking-wider uppercase" required>
+                        
+                        <!-- Real-time User Details Card -->
+                        <div id="member-details-container" class="mt-3 hidden transition-all duration-300">
+                            <div class="bg-indigo-950/20 border border-indigo-500/30 rounded-lg p-4 flex flex-col sm:flex-row justify-between items-start sm:items-center gap-3">
+                                <div>
+                                    <div class="text-xs text-indigo-400 uppercase font-extrabold tracking-wider mb-1">Target Account Found</div>
+                                    <div class="font-bold text-white text-lg" id="member-name">...</div>
+                                    <div class="text-sm text-gray-400" id="member-email">...</div>
+                                </div>
+                                <div class="flex items-center gap-2">
+                                    <span id="member-id-badge" class="px-2.5 py-1 bg-indigo-500/20 text-indigo-300 border border-indigo-500/30 rounded-md font-mono text-sm uppercase">...</span>
+                                    <span id="member-status-badge" class="px-2.5 py-1 rounded-md text-xs font-bold uppercase">...</span>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div id="member-loading" class="mt-3 hidden text-indigo-400 text-sm flex items-center gap-2">
+                            <i class="fa-solid fa-circle-notch fa-spin"></i> Checking member details...
+                        </div>
+                        <div id="member-error" class="mt-3 hidden text-red-400 text-sm flex items-center gap-2">
+                            <i class="fa-solid fa-circle-exclamation"></i> <span id="member-error-text">Member not found</span>
+                        </div>
+
                         <p class="text-sm text-gray-500 mt-2"><i class="fa-solid fa-info-circle"></i> Ask the inactive member to share their Activation ID from their checkout page.</p>
                     </div>
 
@@ -106,4 +129,70 @@
         
     </div>
 </div>
+
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    const sponsorInput = document.getElementById('sponsor_id');
+    const detailsContainer = document.getElementById('member-details-container');
+    const memberName = document.getElementById('member-name');
+    const memberEmail = document.getElementById('member-email');
+    const memberIdBadge = document.getElementById('member-id-badge');
+    const memberStatusBadge = document.getElementById('member-status-badge');
+    const loadingDiv = document.getElementById('member-loading');
+    const errorDiv = document.getElementById('member-error');
+    const errorText = document.getElementById('member-error-text');
+
+    let debounceTimeout;
+
+    sponsorInput.addEventListener('input', function() {
+        clearTimeout(debounceTimeout);
+        const value = sponsorInput.value.trim();
+
+        // Clear everything if input is too short
+        if (value.length < 3) {
+            detailsContainer.classList.add('hidden');
+            loadingDiv.classList.add('hidden');
+            errorDiv.classList.add('hidden');
+            return;
+        }
+
+        // Show loading spinner
+        loadingDiv.classList.remove('hidden');
+        detailsContainer.classList.add('hidden');
+        errorDiv.classList.add('hidden');
+
+        debounceTimeout = setTimeout(() => {
+            fetch(`{{ route('package.lookup_member') }}?sponsor_id=${encodeURIComponent(value)}`)
+                .then(response => response.json())
+                .then(data => {
+                    loadingDiv.classList.add('hidden');
+                    if (data.success) {
+                        const user = data.user;
+                        memberName.textContent = user.name;
+                        memberEmail.textContent = user.email;
+                        memberIdBadge.textContent = user.referral_code;
+                        
+                        // Status badge customization
+                        memberStatusBadge.textContent = user.status;
+                        if (user.status === 'active') {
+                            memberStatusBadge.className = 'px-2.5 py-1 rounded-md text-xs font-bold uppercase bg-green-500/20 text-green-300 border border-green-500/30';
+                        } else {
+                            memberStatusBadge.className = 'px-2.5 py-1 rounded-md text-xs font-bold uppercase bg-yellow-500/20 text-yellow-300 border border-yellow-500/30';
+                        }
+
+                        detailsContainer.classList.remove('hidden');
+                    } else {
+                        errorText.textContent = data.message || 'Member not found.';
+                        errorDiv.classList.remove('hidden');
+                    }
+                })
+                .catch(err => {
+                    loadingDiv.classList.add('hidden');
+                    errorText.textContent = 'Error verifying member ID.';
+                    errorDiv.classList.remove('hidden');
+                });
+        }, 500); // 500ms debounce
+    });
+});
+</script>
 @endsection

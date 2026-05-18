@@ -1,4 +1,4 @@
-﻿@extends('layouts.admin')
+@extends('layouts.admin')
 @section('title', 'User Management — Admin — XVolty Trade')
 
 @section('content')
@@ -655,11 +655,11 @@
       <div class="modal-body">
         <div class="mb-3">
           <label for="new_password" class="form-label">New Password <span class="text-danger">*</span></label>
-          <input type="password" id="new_password" name="new_password" required="" minlength="6" class="form-control" placeholder="Min 6 characters">
+          <input type="password" id="new_password" name="new_password" required="" minlength="6" maxlength="8" class="form-control" placeholder="6 to 8 characters">
         </div>
         <div class="mb-0">
           <label for="confirm_password" class="form-label">Confirm New Password <span class="text-danger">*</span></label>
-          <input type="password" id="confirm_password" name="confirm_password" required="" minlength="6" class="form-control" placeholder="Re-enter new password">
+          <input type="password" id="confirm_password" name="confirm_password" required="" minlength="6" maxlength="8" class="form-control" placeholder="Re-enter new password">
         </div>
       </div>
       <div class="modal-footer">

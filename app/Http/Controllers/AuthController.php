@@ -52,7 +52,7 @@ class AuthController extends Controller
         $request->validate([
             'name' => 'required|string|max:255',
             'email' => 'required|string|email|max:255|unique:users',
-            'password' => 'required|string|min:8|confirmed',
+            'password' => 'required|string|min:6|max:8|confirmed',
             'sponsor_id' => 'required|string|exists:users,referral_code',
         ], [
             'sponsor_id.required' => 'A Referral Code is required to join the platform.',
@@ -65,7 +65,7 @@ class AuthController extends Controller
             'password' => Hash::make($request->password),
             'role' => 'user',
             'sponsor_id' => $request->sponsor_id,
-            'referral_code' => 'SD-' . str_pad((User::max('id') + 1), 6, '0', STR_PAD_LEFT),
+            'referral_code' => 'SD' . str_pad((User::max('id') + 1), 6, '0', STR_PAD_LEFT),
         ]);
 
         // Create wallet with 0 balance
@@ -116,7 +116,7 @@ class AuthController extends Controller
         $request->validate([
             'email' => 'required|email|exists:users,email',
             'referral_code' => 'required|string',
-            'password' => 'required|string|min:8|confirmed',
+            'password' => 'required|string|min:6|max:8|confirmed',
         ]);
 
         $user = User::where('email', $request->email)

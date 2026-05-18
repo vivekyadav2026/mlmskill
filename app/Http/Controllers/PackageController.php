@@ -204,4 +204,35 @@ class PackageController extends Controller
 
         return back()->with('success', "Account for {$targetUser->name} activated successfully!");
     }
+
+    public function lookupMember(Request $request)
+    {
+        $sponsorId = strtoupper(trim($request->input('sponsor_id')));
+        
+        if (empty($sponsorId)) {
+            return response()->json([
+                'success' => false,
+                'message' => 'Please enter a Sponsor Activation ID.'
+            ]);
+        }
+
+        $user = \App\Models\User::where('referral_code', $sponsorId)->first();
+
+        if ($user) {
+            return response()->json([
+                'success' => true,
+                'user' => [
+                    'referral_code' => $user->referral_code,
+                    'name' => $user->name,
+                    'email' => $user->email,
+                    'status' => $user->status
+                ]
+            ]);
+        }
+
+        return response()->json([
+            'success' => false,
+            'message' => 'Member not found.'
+        ]);
+    }
 }

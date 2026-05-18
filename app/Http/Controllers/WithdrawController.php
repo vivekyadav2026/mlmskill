@@ -15,8 +15,11 @@ class WithdrawController extends Controller
 
     public function submit(Request $request)
     {
+        $min = (float) \App\Models\Setting::get('min_withdrawal', 10.00);
+        $max = (float) \App\Models\Setting::get('max_withdrawal', 5000.00);
+
         $request->validate([
-            'amount' => 'required|numeric|min:10',
+            'amount' => "required|numeric|min:{$min}|max:{$max}",
             'mpin' => 'required|digits:4',
         ]);
 
