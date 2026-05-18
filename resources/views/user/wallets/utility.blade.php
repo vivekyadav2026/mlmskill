@@ -7,7 +7,7 @@
 </style>
 <div class="tailwind-scope mt-4">
     <div class="mb-6">
-        <h2 class="text-2xl font-bold text-gray-100">Utility Token Wallet</h2>
+        <h2 class="text-2xl font-bold text-gray-100">NEXA 1.0 Wallet</h2>
         <p class="text-gray-400">Daily tokens credited for utility use and conversion.</p>
     </div>
 
@@ -24,7 +24,7 @@
 
         <!-- Chart Card -->
         <div class="md:col-span-2 bg-[#1a222d] rounded-lg shadow-lg border border-[#334155] p-6">
-            <h3 class="text-gray-300 font-medium mb-4">Utility Tokens Earned (Last 30 Days)</h3>
+            <h3 class="text-gray-300 font-medium mb-4">NEXA 1.0s Earned (Last 30 Days)</h3>
             <div class="h-48 w-full relative">
                 <canvas id="tokenChart"></canvas>
             </div>
@@ -45,7 +45,7 @@
                 data: {
                     labels: labels,
                     datasets: [{
-                        label: 'Utility Tokens',
+                        label: 'NEXA 1.0s',
                         data: dataPoints,
                         borderColor: '#60a5fa',
                         backgroundColor: 'rgba(96, 165, 250, 0.2)',
@@ -91,7 +91,7 @@
                         <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-400">{{ \Carbon\Carbon::parse($item->created_at)->format('M d, Y') }}</td>
                         <td class="px-6 py-4 whitespace-nowrap">
                             <span class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-blue-100 text-blue-800">
-                                Utility Token
+                                NEXA 1.0
                             </span>
                         </td>
                         <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-300">

@@ -97,7 +97,7 @@
           <div class="d-flex align-items-center gap-3">
             <span class="xvt-avatar lg" style="background:#8b5cf622;color:#8b5cf6;"><i class="fa-solid fa-coins"></i></span>
             <div>
-              <div class="text-muted small">Utility Tokens</div>
+              <div class="text-muted small">NEXA 1.0s</div>
               <h5 class="mb-0 fw-bold">{{ number_format($user->wallet->utility_token_wallet ?? 0, 2) }} UT</h5>
             </div>
           </div>
@@ -110,7 +110,7 @@
           <div class="d-flex align-items-center gap-3">
             <span class="xvt-avatar lg" style="background:#f48a2022;color:#f48a20;"><i class="fa-solid fa-rotate"></i></span>
             <div>
-              <div class="text-muted small">Renewal Tokens</div>
+              <div class="text-muted small">NEXA 2.0s</div>
               <h5 class="mb-0 fw-bold">{{ number_format($user->wallet->renewal_token_wallet ?? 0, 2) }} RT</h5>
             </div>
           </div>

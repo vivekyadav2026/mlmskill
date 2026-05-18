@@ -5,7 +5,7 @@
     {{-- Header --}}
     <div class="mb-6">
         <h2 class="text-2xl font-bold text-gray-100">Manual Token Credit</h2>
-        <p class="text-gray-400 text-sm mt-1">Manually credit Utility or Renewal tokens to any active user. All credits are logged.</p>
+        <p class="text-gray-400 text-sm mt-1">Manually credit Utility or NEXA 2.0s to any active user. All credits are logged.</p>
     </div>
 
     {{-- Success Alert --}}
@@ -60,7 +60,7 @@
                         <div class="flex items-center gap-3 bg-[#0b1220] border border-[#334155] peer-checked:border-indigo-500 peer-checked:bg-indigo-500/10 p-4 rounded-lg transition">
                             <i class="fa-solid fa-circle-bolt text-indigo-400 text-xl"></i>
                             <div>
-                                <p class="text-white font-semibold text-sm">Utility Token</p>
+                                <p class="text-white font-semibold text-sm">NEXA 1.0</p>
                                 <p class="text-gray-500 text-xs">Daily income, convertible</p>
                             </div>
                         </div>
@@ -70,7 +70,7 @@
                         <div class="flex items-center gap-3 bg-[#0b1220] border border-[#334155] peer-checked:border-yellow-500 peer-checked:bg-yellow-500/10 p-4 rounded-lg transition">
                             <i class="fa-solid fa-rotate text-yellow-400 text-xl"></i>
                             <div>
-                                <p class="text-white font-semibold text-sm">Renewal Token</p>
+                                <p class="text-white font-semibold text-sm">NEXA 2.0</p>
                                 <p class="text-gray-500 text-xs">Locked savings vault</p>
                             </div>
                         </div>
@@ -93,8 +93,8 @@
                        required>
                 <p class="text-gray-500 text-xs mt-1">
                     This is the <strong class="text-gray-300">number of tokens</strong> to credit — not a rupee/dollar amount.
-                    Each Utility Token ≈ <span class="text-indigo-400">₹{{ \App\Models\Setting::get('utility_token_value', '1') }}</span> &nbsp;|&nbsp;
-                    Each Renewal Token ≈ <span class="text-yellow-400">₹{{ \App\Models\Setting::get('renewal_token_value', '1') }}</span>
+                    Each NEXA 1.0 ≈ <span class="text-indigo-400">₹{{ \App\Models\Setting::get('utility_token_value', '1') }}</span> &nbsp;|&nbsp;
+                    Each NEXA 2.0 ≈ <span class="text-yellow-400">₹{{ \App\Models\Setting::get('renewal_token_value', '1') }}</span>
                 </p>
             </div>
 

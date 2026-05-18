@@ -116,14 +116,14 @@
         <div class="stat-card border-l-4 border-l-blue-500">
             <div class="stat-icon bg-blue-500/10 text-blue-500"><i class="fa-solid fa-coins"></i></div>
             <div class="flex-grow">
-                <p class="text-sm font-medium text-gray-400">Utility Tokens</p>
+                <p class="text-sm font-medium text-gray-400">NEXA 1.0s</p>
                 <h3 class="text-2xl font-bold text-gray-100">{{ number_format($wallet->utility_token_wallet ?? 0, 2) }} {{ strtoupper($tokenName) }}</h3>
             </div>
         </div>
         <div class="stat-card border-l-4 border-l-orange-500">
             <div class="stat-icon bg-orange-500/10 text-orange-500"><i class="fa-solid fa-arrows-spin"></i></div>
             <div class="flex-grow">
-                <p class="text-sm font-medium text-gray-400">Renewal Tokens</p>
+                <p class="text-sm font-medium text-gray-400">NEXA 2.0s</p>
                 <h3 class="text-2xl font-bold text-gray-100">{{ number_format($wallet->renewal_token_wallet ?? 0, 2) }} RT</h3>
             </div>
         </div>
@@ -523,7 +523,7 @@ document.addEventListener('DOMContentLoaded', function() {
     new Chart(assetCtx, {
         type: 'polarArea',
         data: {
-            labels: ['Income Wallet', 'Package Wallet', 'Utility Tokens'],
+            labels: ['Income Wallet', 'Package Wallet', 'NEXA 1.0s'],
             datasets: [{
                 data: [
                     {{ $wallet->income_wallet ?? 0 }},

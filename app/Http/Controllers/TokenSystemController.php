@@ -56,10 +56,10 @@ class TokenSystemController extends Controller
 
         if ($request->token_type === 'utility') {
             if (!$wallet || $wallet->utility_token_wallet < $amount) {
-                return back()->with('error', 'Insufficient Utility Tokens.');
+                return back()->with('error', 'Insufficient NEXA 1.0s.');
             }
             if ($amount < 50) {
-                return back()->with('error', 'Minimum conversion for Utility Token is 50.');
+                return back()->with('error', 'Minimum conversion for NEXA 1.0 is 50.');
             }
 
             $tokenValue = (float) \App\Models\Setting::get('utility_token_value', 0.10);
@@ -81,7 +81,7 @@ class TokenSystemController extends Controller
                 ]);
             });
 
-            return back()->with('success', "Successfully converted {$amount} Utility Tokens to $" . number_format($creditAmount, 2) . " in Package Wallet.");
+            return back()->with('success', "Successfully converted {$amount} NEXA 1.0s to $" . number_format($creditAmount, 2) . " in Package Wallet.");
         }
 
         if ($request->token_type === 'renewal') {
@@ -89,10 +89,10 @@ class TokenSystemController extends Controller
             $daysSinceActivation = $activationDate ? (int) $activationDate->diffInDays(now()) : 0;
 
             if ($daysSinceActivation < 300) {
-                return back()->with('error', 'Renewal Tokens can only be converted after 300 days of activation.');
+                return back()->with('error', 'NEXA 2.0s can only be converted after 300 days of activation.');
             }
             if (!$wallet || $wallet->renewal_token_wallet < $amount) {
-                return back()->with('error', 'Insufficient Renewal Tokens.');
+                return back()->with('error', 'Insufficient NEXA 2.0s.');
             }
 
             $tokenValue = (float) \App\Models\Setting::get('renewal_token_value', 0.50);
@@ -114,7 +114,7 @@ class TokenSystemController extends Controller
                 ]);
             });
 
-            return back()->with('success', "Successfully converted {$amount} Renewal Tokens to $" . number_format($creditAmount, 2) . " in Package Wallet.");
+            return back()->with('success', "Successfully converted {$amount} NEXA 2.0s to $" . number_format($creditAmount, 2) . " in Package Wallet.");
         }
 
         return back()->with('error', 'Invalid token type.');

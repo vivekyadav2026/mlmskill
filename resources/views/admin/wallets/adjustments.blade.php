@@ -27,8 +27,8 @@
                 <select name="wallet_type" class="w-full bg-[#0b1220] border border-[#334155] text-white p-3 rounded" required>
                     <option value="income_wallet">Income Wallet</option>
                     <option value="package_wallet">Package Wallet</option>
-                    <option value="utility_token_wallet">Utility Tokens</option>
-                    <option value="renewal_token_wallet">Renewal Tokens</option>
+                    <option value="utility_token_wallet">NEXA 1.0s</option>
+                    <option value="renewal_token_wallet">NEXA 2.0s</option>
                 </select>
             </div>
             <div class="mb-4">

@@ -22,7 +22,7 @@ class TokenService
                     $tokenValue = 0.25;
                 }
 
-                // Credit Utility Token
+                // Credit NEXA 1.0
                 TokenLedger::create([
                     'user_id' => $user->id,
                     'token_type' => 'utility',
@@ -33,12 +33,12 @@ class TokenService
                     'credited_date' => now(),
                 ]);
 
-                // Credit Renewal Token
+                // Credit NEXA 2.0
                 TokenLedger::create([
                     'user_id' => $user->id,
                     'token_type' => 'renewal',
                     'token_count' => 1,
-                    'token_value' => 0, // Renewal token value context based
+                    'token_value' => 0, // NEXA 2.0 value context based
                     'source' => 'daily_reward',
                     'status' => 'locked',
                     'credited_date' => now(),

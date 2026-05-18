@@ -94,7 +94,7 @@ class PackageController extends Controller
         // Check for Reward Income milestones
         app(\App\Services\BonusService::class)->checkAndDistributeRewardIncome($user);
 
-        // Give 300 free utility tokens upon activation
+        // Give 300 free NEXA 1.0s upon activation
         $tokenValue = (float) \App\Models\Setting::get('utility_token_value', 0.10);
         \App\Models\TokenLedger::create([
             'user_id' => $user->id,
@@ -185,7 +185,7 @@ class PackageController extends Controller
         // Check for Reward Income milestones
         app(\App\Services\BonusService::class)->checkAndDistributeRewardIncome($targetUser);
 
-        // Give 300 free utility tokens upon activation
+        // Give 300 free NEXA 1.0s upon activation
         $tokenValue = (float) \App\Models\Setting::get('utility_token_value', 0.10);
         \App\Models\TokenLedger::create([
             'user_id' => $targetUser->id,

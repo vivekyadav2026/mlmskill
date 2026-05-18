@@ -8,7 +8,7 @@
 <div class="tailwind-scope mt-4">
     <div class="mb-6">
         <h2 class="text-2xl font-bold text-gray-100">Package Wallet</h2>
-        <p class="text-gray-400">Funds converted from Utility Tokens to be used for Package Upgrades.</p>
+        <p class="text-gray-400">Funds converted from NEXA 1.0s to be used for Package Upgrades.</p>
     </div>
 
     <!-- Balance Card -->
@@ -57,7 +57,7 @@
                         <td colspan="4" class="px-6 py-10 text-center text-gray-500">
                             <i class="fa-solid fa-box-open text-3xl mb-3"></i>
                             <p>No recent activity in your package wallet.</p>
-                            <p class="text-sm mt-2 text-gray-400">Convert Utility Tokens to add funds here.</p>
+                            <p class="text-sm mt-2 text-gray-400">Convert NEXA 1.0s to add funds here.</p>
                         </td>
                     </tr>
                     @endforelse

@@ -17,7 +17,7 @@
 <div class="tailwind-scope mt-4 max-w-4xl mx-auto">
   <div class="mb-6">
     <h2 class="text-2xl font-bold text-gray-100">Token Settings</h2>
-    <p class="text-gray-400 text-sm">Configure utility token and renewal token values, behaviour and rules</p>
+    <p class="text-gray-400 text-sm">Configure NEXA 1.0 and NEXA 2.0 values, behaviour and rules</p>
   </div>
 
   @if(session('success'))
@@ -34,13 +34,13 @@
   <form action="{{ url('admin/settings/token') }}" method="POST">
     @csrf
 
-    <!-- Utility Token -->
+    <!-- NEXA 1.0 -->
     <div class="s-card">
-      <div class="s-header"><i class="fa-solid fa-coins text-indigo-400"></i><h3>Utility Token (UT)</h3></div>
+      <div class="s-header"><i class="fa-solid fa-coins text-indigo-400"></i><h3>NEXA 1.0 (UT)</h3></div>
       <div class="s-body grid grid-cols-1 md:grid-cols-2 gap-4">
         <div>
           <label class="f-label">Token Display Name</label>
-          <input type="text" readonly name="utility_token_name" class="f-ctrl" value="{{ $settings['utility_token_name'] ?? 'Utility Token' }}" placeholder="e.g. Utility Token">
+          <input type="text" readonly name="utility_token_name" class="f-ctrl" value="{{ $settings['utility_token_name'] ?? 'NEXA 1.0' }}" placeholder="e.g. NEXA 1.0">
         </div>
         <div>
           <label class="f-label">Token Value ($) per 1 Token</label>
@@ -49,13 +49,13 @@
       </div>
     </div>
 
-    <!-- Renewal Token -->
+    <!-- NEXA 2.0 -->
     <div class="s-card">
-      <div class="s-header"><i class="fa-solid fa-rotate text-cyan-400"></i><h3>Renewal Token (RT)</h3></div>
+      <div class="s-header"><i class="fa-solid fa-rotate text-cyan-400"></i><h3>NEXA 2.0 (RT)</h3></div>
       <div class="s-body grid grid-cols-1 md:grid-cols-2 gap-4">
         <div>
           <label class="f-label">Token Display Name</label>
-          <input type="text" readonly name="renewal_token_name" class="f-ctrl" value="{{ $settings['renewal_token_name'] ?? 'Renewal Token' }}" placeholder="e.g. Renewal Token">
+          <input type="text" readonly name="renewal_token_name" class="f-ctrl" value="{{ $settings['renewal_token_name'] ?? 'NEXA 2.0' }}" placeholder="e.g. NEXA 2.0">
         </div>
         <div>
           <label class="f-label">Token Value ($) per 1 Token</label>

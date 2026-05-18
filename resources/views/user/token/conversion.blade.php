@@ -8,7 +8,7 @@
 <div class="tailwind-scope mt-4 max-w-3xl mx-auto">
     <div class="mb-6">
         <h2 class="text-2xl font-bold text-gray-100">Token Conversion</h2>
-        <p class="text-gray-400">Convert your Utility Tokens into Package Wallet funds to upgrade your account.</p>
+        <p class="text-gray-400">Convert your NEXA 1.0s into Package Wallet funds to upgrade your account.</p>
     </div>
 
     @if(session('success'))
@@ -32,10 +32,10 @@
     @endif
 
     <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-        <!-- Utility Tokens -->
+        <!-- NEXA 1.0s -->
         <div class="bg-[#1a222d] rounded-lg shadow-lg border border-[#334155] overflow-hidden">
             <div class="bg-gradient-to-r from-blue-900 to-indigo-900 p-6 text-center">
-                <p class="text-blue-200 text-sm font-medium mb-1">Utility Tokens</p>
+                <p class="text-blue-200 text-sm font-medium mb-1">NEXA 1.0s</p>
                 <h3 class="text-3xl font-bold text-white mb-2">{{ number_format($balance, 2) }} UT</h3>
                 <p class="text-xs text-blue-300">Rate: 1 UT = ${{ number_format($utilityValue, 2) }}</p>
             </div>
@@ -58,10 +58,10 @@
             </div>
         </div>
 
-        <!-- Renewal Tokens -->
+        <!-- NEXA 2.0s -->
         <div class="bg-[#1a222d] rounded-lg shadow-lg border border-[#334155] overflow-hidden">
             <div class="bg-gradient-to-r from-emerald-900 to-teal-900 p-6 text-center">
-                <p class="text-emerald-200 text-sm font-medium mb-1">Renewal Tokens</p>
+                <p class="text-emerald-200 text-sm font-medium mb-1">NEXA 2.0s</p>
                 <h3 class="text-3xl font-bold text-white mb-2">{{ number_format($renewalBalance, 2) }} RT</h3>
                 <p class="text-xs text-emerald-300">Rate: 1 RT = ${{ number_format($renewalValue, 2) }}</p>
             </div>

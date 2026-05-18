@@ -21,11 +21,11 @@
     <!-- Analytics Overview -->
     <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-8">
         <div class="bg-[#1a222d] border border-[#334155] p-5 rounded-xl shadow-lg">
-            <h3 class="text-gray-400 font-medium mb-1 text-xs uppercase">Lifetime Utility Tokens ({{ strtoupper($tokenName) }})</h3>
+            <h3 class="text-gray-400 font-medium mb-1 text-xs uppercase">Lifetime NEXA 1.0s ({{ strtoupper($tokenName) }})</h3>
             <div class="text-2xl font-bold text-blue-400">{{ number_format($totalUtility, 2) }}</div>
         </div>
         <div class="bg-[#1a222d] border border-[#334155] p-5 rounded-xl shadow-lg">
-            <h3 class="text-gray-400 font-medium mb-1 text-xs uppercase">Lifetime Renewal Tokens (RT)</h3>
+            <h3 class="text-gray-400 font-medium mb-1 text-xs uppercase">Lifetime NEXA 2.0s (RT)</h3>
             <div class="text-2xl font-bold text-orange-400">{{ number_format($totalRenewal, 2) }}</div>
         </div>
     </div>

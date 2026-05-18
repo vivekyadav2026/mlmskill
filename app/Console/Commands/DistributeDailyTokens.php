@@ -19,7 +19,7 @@ class DistributeDailyTokens extends Command
      *
      * @var string
      */
-    protected $description = 'Distribute 1 Utility + 1 Renewal token daily to all active users';
+    protected $description = 'Distribute 1 Utility + 1 NEXA 2.0 daily to all active users';
 
     /**
      * Execute the console command.

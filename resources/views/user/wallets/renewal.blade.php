@@ -7,14 +7,14 @@
 </style>
 <div class="tailwind-scope mt-4">
     <div class="mb-6">
-        <h2 class="text-2xl font-bold text-gray-100">Renewal Token Wallet</h2>
+        <h2 class="text-2xl font-bold text-gray-100">NEXA 2.0 Wallet</h2>
         <p class="text-gray-400">Tokens accumulated specifically for your ID renewal.</p>
     </div>
 
     <!-- Balance Card -->
     <div class="bg-gradient-to-r from-orange-600 to-red-900 rounded-lg shadow-lg overflow-hidden border border-orange-500/50 mb-8 max-w-sm">
         <div class="p-6">
-            <h3 class="text-orange-100 font-medium text-lg mb-1">Renewal Tokens</h3>
+            <h3 class="text-orange-100 font-medium text-lg mb-1">NEXA 2.0s</h3>
             <div class="text-4xl font-bold text-white">{{ number_format($balance, 2) }} RT</div>
             <div class="mt-4">
                 <div class="w-full bg-gray-900 rounded-full h-2.5 mb-1 dark:bg-gray-700">
@@ -46,7 +46,7 @@
                         <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-400">{{ \Carbon\Carbon::parse($item->created_at)->format('M d, Y') }}</td>
                         <td class="px-6 py-4 whitespace-nowrap">
                             <span class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-orange-100 text-orange-800">
-                                Renewal Token
+                                NEXA 2.0
                             </span>
                         </td>
                         <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-300">

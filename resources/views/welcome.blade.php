@@ -450,7 +450,7 @@
                     <div class="text-green-500 text-2xl mt-1"><i class="fa-solid fa-wallet"></i></div>
                     <div>
                         <h4 class="font-bold text-gray-900 mb-1">Wallet Management</h4>
-                        <p class="text-sm text-gray-600">Track your engagement rewards and utility tokens easily.</p>
+                        <p class="text-sm text-gray-600">Track your engagement rewards and NEXA 1.0s easily.</p>
                     </div>
                 </div>
 
