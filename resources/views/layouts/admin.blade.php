@@ -320,7 +320,7 @@
           <i class="fa-solid fa-chevron-down nav-arrow"></i>
         </a>
         <ul class="nav-submenu list-unstyled mb-0">
-          <li><a href="{{ url('admin/settings/general') }}" class="nav-link sub-link"><span>General Settings</span></a></li>
+          <!-- <li><a href="{{ url('admin/settings/general') }}" class="nav-link sub-link"><span>General Settings</span></a></li> -->
           <li><a href="{{ url('admin/settings/plan') }}" class="nav-link sub-link"><span>MLM Plan Settings</span></a></li>
           <li><a href="{{ url('admin/settings/token') }}" class="nav-link sub-link"><span>Token Settings</span></a></li>
           <li><a href="{{ url('admin/settings/payment') }}" class="nav-link sub-link"><span>Payment Settings</span></a></li>
