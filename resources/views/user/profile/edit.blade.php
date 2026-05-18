@@ -17,6 +17,16 @@
         </div>
     @endif
 
+    @if($errors->any())
+        <div class="bg-red-500/10 border border-red-500/20 text-red-400 px-4 py-3 rounded relative mb-6" role="alert">
+            <ul class="list-disc pl-5 space-y-1">
+                @foreach($errors->all() as $error)
+                    <li>{{ $error }}</li>
+                @endforeach
+            </ul>
+        </div>
+    @endif
+
     <div class="bg-[#1a222d] rounded-lg shadow-lg overflow-hidden border border-[#334155]">
         <form action="{{ route('profile.update') }}" method="POST" enctype="multipart/form-data" class="p-8">
             @csrf
@@ -59,7 +69,8 @@
                 <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
                     <div>
                         <label class="block text-sm font-medium text-gray-300 mb-1">Mobile Number</label>
-                        <input type="text" name="phone" value="{{ old('phone', auth()->user()->phone) }}" class="w-full bg-[#0b1220] border border-[#334155] rounded-md py-2 px-3 text-gray-100 focus:ring-1 focus:ring-indigo-500 focus:border-indigo-500">
+                        <input type="tel" name="phone" value="{{ old('phone', auth()->user()->phone) }}" placeholder="e.g. 9876543210" maxlength="10" pattern="[6-9][0-9]{9}" title="Please enter a valid 10-digit Indian mobile number starting with 6, 7, 8, or 9" class="w-full bg-[#0b1220] border border-[#334155] rounded-md py-2 px-3 text-gray-100 focus:ring-1 focus:ring-indigo-500 focus:border-indigo-500">
+                        <p class="text-xs text-gray-500 mt-1">Must be a valid 10-digit Indian mobile number starting with 6-9</p>
                     </div>
                     <div>
                         <label class="block text-sm font-medium text-gray-300 mb-1">Gender</label>
@@ -193,6 +204,24 @@
             stateSelect.addEventListener('change', function() {
                 populateCities(this.value);
             });
+
+            // Enforce 10-digit Indian Mobile Number input restrictions
+            const phoneInput = document.querySelector('input[name="phone"]');
+            if (phoneInput) {
+                phoneInput.addEventListener('input', function(e) {
+                    // Strip out non-digits
+                    let val = e.target.value.replace(/\D/g, '');
+                    // Limit to 10 digits
+                    if (val.length > 10) {
+                        val = val.substring(0, 10);
+                    }
+                    // Enforce starting digit (6, 7, 8, 9)
+                    if (val.length > 0 && !/^[6-9]/.test(val)) {
+                        val = '';
+                    }
+                    e.target.value = val;
+                });
+            }
         });
     </script>
 </div>

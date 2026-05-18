@@ -38,7 +38,8 @@
                 </div>
                 <div>
                     <label class="block text-sm font-medium text-gray-300 mb-1">Mobile Number *</label>
-                    <input type="text" name="phone" required value="{{ old('phone') }}" placeholder="e.g. 1234567890" class="w-full bg-[#0b1220] border border-[#334155] rounded px-4 py-2 text-white focus:outline-none focus:border-indigo-500">
+                    <input type="tel" name="phone" required value="{{ old('phone') }}" placeholder="e.g. 9876543210" maxlength="10" pattern="[6-9][0-9]{9}" title="Please enter a valid 10-digit Indian mobile number starting with 6, 7, 8, or 9" class="w-full bg-[#0b1220] border border-[#334155] rounded px-4 py-2 text-white focus:outline-none focus:border-indigo-500">
+                    <p class="text-xs text-gray-500 mt-1">Must be a valid 10-digit Indian mobile number starting with 6-9</p>
                 </div>
             </div>
 
@@ -154,6 +155,24 @@
         stateSelect.addEventListener('change', function() {
             populateCities(this.value);
         });
+
+        // Enforce 10-digit Indian Mobile Number input restrictions
+        const phoneInput = document.querySelector('input[name="phone"]');
+        if (phoneInput) {
+            phoneInput.addEventListener('input', function(e) {
+                // Strip out non-digits
+                let val = e.target.value.replace(/\D/g, '');
+                // Limit to 10 digits
+                if (val.length > 10) {
+                    val = val.substring(0, 10);
+                }
+                // Enforce starting digit (6, 7, 8, 9)
+                if (val.length > 0 && !/^[6-9]/.test(val)) {
+                    val = '';
+                }
+                e.target.value = val;
+            });
+        }
     });
 </script>
 @endsection

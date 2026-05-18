@@ -21,12 +21,19 @@ class CompleteProfileController extends Controller
         $request->validate([
             'profile_image' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
             'gender' => 'required|in:male,female,other',
-            'phone' => 'required|string|max:20|unique:users,phone,' . Auth::id(),
+            'phone' => [
+                'required',
+                'string',
+                'regex:/^[6-9]\d{9}$/',
+                'unique:users,phone,' . Auth::id(),
+            ],
             'address' => 'required|string|max:255',
             'city' => 'required|string|max:100',
             'state' => 'required|string|max:100',
             'zip' => 'required|string|max:20',
             'mpin' => 'required|digits:4',
+        ], [
+            'phone.regex' => 'The mobile number must be a valid 10-digit Indian mobile number starting with 6, 7, 8, or 9.',
         ]);
 
         $user = Auth::user();
