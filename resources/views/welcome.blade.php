@@ -1,20 +1,27 @@
 <!DOCTYPE html>
-<html lang="en" class="scroll-smooth">
+<html lang="hi" class="scroll-smooth">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Samarth Digital | Global Skill Development Platform</title>
-    <meta name="description" content="Join Samarth Digital, a next-generation learning platform designed to help individuals grow through education, digital training, and professional development.">
+    <title>Samarth Digital | कौशल विकास और स्व रोजगार को समर्पित</title>
+    <meta name="description" content="अब नौकरी नहीं अपना व्यवसाय करें, वो भी घर बैठे। Samarth Digital के साथ जुड़ें - ऑनलाइन व ऑफलाइन ट्रेनिंग, सर्टिफिकेट और बिजनेस सपोर्ट।">
+    
+    <!-- Tailwind CSS CDN -->
     <script src="https://cdn.tailwindcss.com"></script>
+    <!-- FontAwesome Icons -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Outfit:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+    <!-- Google Fonts: Poppins & Noto Sans Devanagari -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+Devanagari:wght@400;500;600;700;800;900&family=Poppins:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+    
     <script>
         tailwind.config = {
             theme: {
                 extend: {
                     fontFamily: {
-                        sans: ['Inter', 'sans-serif'],
-                        heading: ['Outfit', 'sans-serif'],
+                        sans: ['Poppins', 'Noto Sans Devanagari', 'sans-serif'],
+                        devanagari: ['Noto Sans Devanagari', 'sans-serif'],
                     },
                     colors: {
                         brand: {
@@ -23,755 +30,1006 @@
                             200: '#a5d6a7',
                             300: '#81c784',
                             400: '#66bb6a',
-                            500: '#4caf50',
-                            600: '#43a047',
-                            700: '#388e3c',
-                            800: '#2e7d32',
-                            900: '#1f512c', // Logo Dark Green
+                            500: '#2e7d32', // Main green
+                            600: '#1f512c', // Dark green
+                            700: '#173f22',
+                            800: '#0f2c18',
+                            900: '#081a0e',
+                        },
+                        navy: {
+                            50: '#eef2f6',
+                            100: '#d9e2ec',
+                            500: '#243b55',
+                            800: '#142834',
+                            900: '#0b192c', // Deep Navy Banner
                         },
                         accent: {
-                            50: '#fff3e0',
-                            100: '#ffe0b2',
-                            200: '#ffcc80',
-                            300: '#ffb74d',
-                            400: '#ffa726',
-                            500: '#f48a20', // Logo Orange
-                            600: '#fb8c00',
-                            700: '#f57c00',
-                            800: '#ef6c00',
-                            900: '#e65100',
+                            100: '#ffedd5',
+                            500: '#f48a20', // Vibrant orange
+                            600: '#ea580c',
+                            700: '#c2410c',
+                        },
+                        gold: {
+                            400: '#facc15',
+                            500: '#eab308',
                         }
                     },
                     boxShadow: {
                         'soft': '0 10px 40px -10px rgba(0,0,0,0.08)',
+                        'premium': '0 20px 50px -15px rgba(0, 0, 0, 0.15)',
+                        'glow-green': '0 0 25px -5px rgba(46, 125, 50, 0.4)',
+                        'glow-orange': '0 0 25px -5px rgba(244, 138, 32, 0.4)',
+                    },
+                    keyframes: {
+                        floatSlow: {
+                            '0%, 100%': { transform: 'translateY(0)' },
+                            '50%': { transform: 'translateY(-10px)' },
+                        },
+                        pulseGlow: {
+                            '0%, 100%': { transform: 'scale(1)', opacity: '1' },
+                            '50%': { transform: 'scale(1.05)', opacity: '0.9' },
+                        }
+                    },
+                    animation: {
+                        'float': 'floatSlow 4s ease-in-out infinite',
+                        'pulse-glow': 'pulseGlow 3s ease-in-out infinite',
                     }
                 }
             }
         }
     </script>
     <style>
-        .glass-card {
-            background: rgba(255, 255, 255, 0.95);
-            backdrop-filter: blur(10px);
-            border: 1px solid rgba(255, 255, 255, 0.5);
-            box-shadow: 0 10px 40px -10px rgba(0,0,0,0.08);
+        .glass-panel {
+            background: rgba(255, 255, 255, 0.92);
+            backdrop-filter: blur(12px);
+            border: 1px solid rgba(255, 255, 255, 0.6);
         }
-        .gradient-text {
-            background: linear-gradient(135deg, #43a047, #f48a20);
+        .glass-dark {
+            background: rgba(11, 25, 44, 0.85);
+            backdrop-filter: blur(16px);
+            border: 1px solid rgba(255, 255, 255, 0.12);
+        }
+        .text-gradient-green {
+            background: linear-gradient(135deg, #1f512c 0%, #4caf50 100%);
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
         }
-        .gradient-bg {
-            background: linear-gradient(135deg, #1f512c 0%, #2e7d32 100%);
+        .text-gradient-orange {
+            background: linear-gradient(135deg, #ea580c 0%, #f48a20 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+        .bg-gradient-premium {
+            background: linear-gradient(135deg, #0b192c 0%, #1e3a8a 100%);
+        }
+        .bg-pattern {
+            background-color: #f8fafc;
+            background-image: radial-gradient(#e2e8f0 1px, transparent 1px);
+            background-size: 24px 24px;
         }
     </style>
 </head>
-<body class="antialiased font-sans bg-gray-50 text-gray-800 overflow-x-hidden relative">
+<body class="antialiased font-sans bg-pattern text-gray-800 overflow-x-hidden selection:bg-brand-500 selection:text-white">
 
     @include('components.preloader')
-    <!-- Navigation -->
-    <nav class="fixed w-full z-50 bg-white/90 backdrop-blur-md border-b border-gray-100 transition-all duration-300 shadow-sm" id="navbar">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div class="flex justify-between items-center h-20">
-                <!-- Logo -->
-                <div class="flex items-center gap-3">
-                    <img src="{{ asset('logo.png') }}" alt="Logo" class="w-10 h-10 rounded-full object-cover shadow-lg shadow-brand-500/30">
-                    <span class="font-heading font-bold text-2xl text-brand-900 tracking-tight">Samarth <span class="text-brand-600">Digital</span></span>
+
+    <!-- Top Announcement Bar -->
+    <div class="bg-navy-900 text-white text-xs py-2.5 px-4 sm:px-6 lg:px-8 border-b border-white/10 relative z-50 shadow-sm">
+        <div class="max-w-7xl mx-auto flex flex-col sm:flex-row justify-between items-center gap-2 font-medium">
+            <div class="flex items-center gap-6">
+                <span class="flex items-center gap-2 text-gold-400 font-bold">
+                    <i class="fa-solid fa-phone text-accent-500 animate-pulse"></i> +91 70579 0000
+                </span>
+                <span class="hidden sm:flex items-center gap-2 text-gray-300">
+                    <i class="fa-solid fa-envelope text-brand-400"></i> info@samarthdigital.com
+                </span>
+            </div>
+            <div class="flex items-center gap-4">
+                <span class="inline-flex items-center bg-brand-500 text-white font-bold px-2.5 py-0.5 rounded-full text-[11px] uppercase tracking-wide">
+                    कौशल से स्वावलंबन
+                </span>
+                <div class="hidden md:flex items-center gap-3 text-gray-400">
+                    <a href="#" class="hover:text-white transition"><i class="fa-brands fa-facebook"></i></a>
+                    <a href="#" class="hover:text-white transition"><i class="fa-brands fa-instagram"></i></a>
+                    <a href="#" class="hover:text-white transition"><i class="fa-brands fa-youtube"></i></a>
+                    <a href="#" class="hover:text-white transition"><i class="fa-brands fa-whatsapp"></i></a>
                 </div>
-                
+            </div>
+        </div>
+    </div>
+
+    <!-- Navigation Header -->
+    <nav id="navbar" class="sticky top-0 w-full z-50 glass-panel border-b border-gray-100 transition-all duration-300 shadow-sm">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between items-center h-22 py-3">
+                <!-- Brand Logo & Tagline -->
+                <a href="/" class="flex items-center gap-3.5 group">
+                    <div class="relative">
+                        <img src="{{ asset('logo.png') }}" onerror="this.src='https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?q=80&w=150&auto=format&fit=crop'" alt="Samarth Digital Logo" class="w-12 h-12 rounded-xl object-cover shadow-md shadow-brand-500/20 group-hover:scale-105 transition transform duration-300">
+                        <div class="absolute -bottom-1 -right-1 w-4 h-4 bg-green-500 border-2 border-white rounded-full"></div>
+                    </div>
+                    <div class="flex flex-col">
+                        <span class="font-extrabold text-2xl lg:text-3xl tracking-tight text-navy-900 font-sans leading-none">
+                            SAMARTH <span class="text-brand-500">DIGITAL</span>
+                        </span>
+                        <span class="text-[11px] lg:text-xs font-semibold text-accent-600 font-devanagari tracking-wide mt-1">
+                            — कौशल विकास और स्व रोजगार को समर्पित —
+                        </span>
+                    </div>
+                </a>
+
                 <!-- Desktop Menu -->
-                <div class="hidden lg:flex space-x-8 items-center">
-                    <a href="#about" class="text-gray-600 hover:text-brand-600 transition font-medium">About</a>
-                    <a href="#programs" class="text-gray-600 hover:text-brand-600 transition font-medium">Programs</a>
-                    <a href="#benefits" class="text-gray-600 hover:text-brand-600 transition font-medium">Benefits</a>
-                    <a href="#features" class="text-gray-600 hover:text-brand-600 transition font-medium">Features</a>
-                    <div class="w-px h-6 bg-gray-200"></div>
-                    <a href="{{ route('login') }}" class="text-gray-600 hover:text-brand-600 font-bold transition">Sign In</a>
-                    <!-- <a href="{{ route('register') }}" class="bg-brand-600 text-white hover:bg-brand-700 px-6 py-2.5 rounded-lg font-semibold shadow-lg shadow-brand-500/30 transition transform hover:-translate-y-0.5">Get Started</a> -->
+                <div class="hidden xl:flex items-center space-x-8 font-semibold text-gray-700 font-devanagari text-base">
+                    <a href="/" class="text-brand-500 hover:text-brand-600 transition">होम</a>
+                    <a href="#about" class="hover:text-brand-500 transition">हमारे बारे में</a>
+                    <a href="#features" class="hover:text-brand-500 transition">हम क्या देते हैं</a>
+                    <a href="#training" class="hover:text-brand-500 transition">ट्रेनिंग विकल्प</a>
+                    <a href="#courses" class="hover:text-brand-500 transition">प्रमुख कोर्सेज</a>
+                    <a href="#contact" class="hover:text-brand-500 transition">संपर्क करें</a>
+                </div>
+
+                <!-- Action Buttons -->
+                <div class="hidden lg:flex items-center gap-3">
+                    <a href="{{ route('login') }}" class="px-5 py-2.5 text-navy-900 font-bold hover:text-brand-600 transition flex items-center gap-2">
+                        <i class="fa-solid fa-user-lock text-sm"></i> लॉगिन
+                    </a>
+                    <a href="{{ route('register') }}" class="bg-brand-500 hover:bg-brand-600 text-white px-6 py-2.5 rounded-xl font-bold shadow-lg shadow-brand-500/30 transition transform hover:-translate-y-0.5 flex items-center gap-2">
+                        <i class="fa-solid fa-user-plus text-sm"></i> आज ही जुड़ें
+                    </a>
                 </div>
 
                 <!-- Mobile Menu Button -->
-                <div class="lg:hidden flex items-center">
-                    <button id="mobile-menu-btn" class="text-gray-600 hover:text-brand-600 focus:outline-none p-2 transition">
-                        <i id="mobile-menu-icon" class="fa-solid fa-bars text-2xl"></i>
+                <div class="xl:hidden flex items-center">
+                    <button id="mobile-menu-btn" class="text-navy-900 p-2 focus:outline-none hover:text-brand-500 transition text-2xl">
+                        <i id="mobile-menu-icon" class="fa-solid fa-bars"></i>
                     </button>
                 </div>
             </div>
         </div>
 
         <!-- Mobile Menu Panel -->
-        <div id="mobile-menu" class="hidden lg:hidden bg-white/95 backdrop-blur-md border-t border-gray-100 shadow-xl absolute w-full left-0 transition-all duration-300 transform -translate-y-2 opacity-0 pointer-events-none">
-            <div class="px-4 pt-2 pb-6 space-y-2 flex flex-col">
-                <a href="#about" class="mobile-link block px-3 py-3 text-base font-medium text-gray-700 hover:text-brand-600 hover:bg-brand-50 rounded-lg transition">About</a>
-                <a href="#programs" class="mobile-link block px-3 py-3 text-base font-medium text-gray-700 hover:text-brand-600 hover:bg-brand-50 rounded-lg transition">Programs</a>
-                <a href="#benefits" class="mobile-link block px-3 py-3 text-base font-medium text-gray-700 hover:text-brand-600 hover:bg-brand-50 rounded-lg transition">Benefits</a>
-                <a href="#features" class="mobile-link block px-3 py-3 text-base font-medium text-gray-700 hover:text-brand-600 hover:bg-brand-50 rounded-lg transition">Features</a>
-                <div class="border-t border-gray-100 my-2 pt-2"></div>
-                <a href="{{ route('login') }}" class="block px-3 py-3 text-base font-bold text-brand-600 hover:bg-brand-50 rounded-lg transition">Sign In</a>
+        <div id="mobile-menu" class="hidden xl:hidden bg-white/95 backdrop-blur-xl border-t border-gray-100 shadow-2xl absolute w-full left-0 transition-all duration-300">
+            <div class="px-6 py-6 space-y-3 flex flex-col font-devanagari font-semibold text-lg text-gray-800">
+                <a href="/" class="mobile-link p-3 hover:bg-brand-50 hover:text-brand-500 rounded-xl transition flex items-center gap-3">
+                    <i class="fa-solid fa-home text-brand-500 w-6"></i> होम
+                </a>
+                <a href="#about" class="mobile-link p-3 hover:bg-brand-50 hover:text-brand-500 rounded-xl transition flex items-center gap-3">
+                    <i class="fa-solid fa-circle-info text-brand-500 w-6"></i> हमारे बारे में
+                </a>
+                <a href="#features" class="mobile-link p-3 hover:bg-brand-50 hover:text-brand-500 rounded-xl transition flex items-center gap-3">
+                    <i class="fa-solid fa-star text-brand-500 w-6"></i> हम क्या देते हैं
+                </a>
+                <a href="#training" class="mobile-link p-3 hover:bg-brand-50 hover:text-brand-500 rounded-xl transition flex items-center gap-3">
+                    <i class="fa-solid fa-chalkboard-user text-brand-500 w-6"></i> ट्रेनिंग विकल्प
+                </a>
+                <a href="#courses" class="mobile-link p-3 hover:bg-brand-50 hover:text-brand-500 rounded-xl transition flex items-center gap-3">
+                    <i class="fa-solid fa-graduation-cap text-brand-500 w-6"></i> प्रमुख कोर्सेज
+                </a>
+                <a href="#contact" class="mobile-link p-3 hover:bg-brand-50 hover:text-brand-500 rounded-xl transition flex items-center gap-3">
+                    <i class="fa-solid fa-phone text-brand-500 w-6"></i> संपर्क करें
+                </a>
+                <div class="border-t border-gray-100 my-4 pt-4 flex flex-col sm:flex-row gap-3">
+                    <a href="{{ route('login') }}" class="text-center py-3 bg-gray-100 text-navy-900 rounded-xl font-bold hover:bg-gray-200 transition">लॉगिन करें</a>
+                    <a href="{{ route('register') }}" class="text-center py-3 bg-brand-500 text-white rounded-xl font-bold hover:bg-brand-600 transition shadow-lg shadow-brand-500/20">आज ही जुड़ें</a>
+                </div>
             </div>
         </div>
     </nav>
 
-    <!-- 1. HERO SECTION -->
-    <section class="relative pt-32 pb-20 lg:pt-48 lg:pb-32 overflow-hidden bg-brand-900 text-white">
-        <div class="absolute inset-0 z-0">
-            <div class="absolute inset-0 bg-[url('https://images.unsplash.com/photo-1522071820081-009f0129c71c?q=80&w=2070&auto=format&fit=crop')] bg-cover bg-center opacity-10 mix-blend-overlay"></div>
-            <div class="absolute inset-0 bg-gradient-to-r from-brand-900 via-brand-800/95 to-brand-700/90"></div>
-            <!-- Decorative gradient blobs -->
-            <div class="absolute top-0 right-0 -mr-40 -mt-40 w-96 h-96 rounded-full bg-accent-500/30 blur-3xl"></div>
-            <div class="absolute bottom-0 left-0 -ml-40 -mb-40 w-96 h-96 rounded-full bg-brand-500/30 blur-3xl"></div>
-        </div>
-
+    <!-- 1. HERO BANNER SECTION (Matching Flyer Exact Layout) -->
+    <section class="relative pt-12 pb-20 lg:pt-16 lg:pb-28 overflow-hidden bg-gradient-to-b from-white via-brand-50/30 to-white border-b border-gray-100">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
-            <div class="grid lg:grid-cols-2 gap-12 items-center">
-                <div class="text-left">
-                    <div class="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-white/10 border border-white/20 mb-6 text-sm font-medium backdrop-blur-sm">
-                        <span class="w-2 h-2 rounded-full bg-green-400 animate-pulse"></span>
-                        Professional Skill Development Platform
+            <div class="grid lg:grid-cols-12 gap-12 items-center">
+                <!-- Left Content Column (7 Cols) -->
+                <div class="lg:col-span-7 text-left space-y-6">
+                    <!-- Top Ribbon / Tagline -->
+                    <div class="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-brand-50 border border-brand-200 text-brand-700 font-bold text-sm sm:text-base animate-pulse-glow shadow-sm font-devanagari">
+                        <span class="w-2.5 h-2.5 rounded-full bg-accent-500 animate-ping"></span>
+                        कौशल विकास और स्व रोजगार को समर्पित
                     </div>
-                    <h1 class="font-heading text-4xl md:text-5xl lg:text-6xl font-black leading-tight mb-6">
-                        Upgrade Your Skills.<br>
-                        <span class="text-transparent bg-clip-text bg-gradient-to-r from-accent-400 to-accent-600">Unlock New Opportunities.</span>
+
+                    <!-- Main Slogan -->
+                    <h1 class="font-devanagari text-4xl sm:text-5xl lg:text-6xl font-black text-navy-900 leading-tight">
+                        कौशल से रोजगार नहीं,<br>
+                        <span class="text-gradient-orange text-5xl sm:text-6xl lg:text-7xl block mt-2 drop-shadow-sm font-extrabold">कौशल से स्वावलंबन!</span>
                     </h1>
-                    <p class="text-lg md:text-xl text-gray-300 mb-8 max-w-xl font-light leading-relaxed">
-                        Join a next-generation learning platform designed to help individuals grow through education, digital training, and performance-based rewards.
+
+                    <!-- Sub Slogan -->
+                    <div class="flex items-center gap-4 py-3 text-lg sm:text-2xl font-bold text-brand-600 bg-brand-50/80 px-6 rounded-2xl border-l-4 border-brand-500 w-fit font-devanagari shadow-sm">
+                        <span>सीखें</span>
+                        <span class="text-accent-500">•</span>
+                        <span>सशक्त बनें</span>
+                        <span class="text-accent-500">•</span>
+                        <span>सफल बनें</span>
+                    </div>
+
+                    <p class="text-gray-600 text-base sm:text-lg leading-relaxed max-w-xl font-medium">
+                        Samarth Digital के साथ जुड़कर घर बैठे प्रोफेशनल और लाभकारी व्यापारिक कौशल सीखें। अपने करियर को नई दिशा दें और आत्मनिर्भर बनें।
                     </p>
-                    <div class="flex flex-col sm:flex-row gap-4">
-                        <a href="{{ route('register') }}" class="bg-white text-brand-900 hover:bg-gray-50 font-bold py-3.5 px-8 rounded-lg shadow-xl transition flex items-center justify-center">
-                            Get Started
+
+                    <!-- Action Buttons -->
+                    <div class="flex flex-col sm:flex-row gap-4 pt-4">
+                        <a href="{{ route('register') }}" class="bg-brand-500 hover:bg-brand-600 text-white font-extrabold text-lg py-4 px-8 rounded-2xl shadow-xl shadow-brand-500/30 transition transform hover:-translate-y-1 flex items-center justify-center gap-3">
+                            <i class="fa-solid fa-rocket text-xl"></i> आज ही जुड़ें, भविष्य संवारें
                         </a>
-                        <a href="#programs" class="bg-white/10 hover:bg-white/20 border border-white/20 text-white font-bold py-3.5 px-8 rounded-lg transition backdrop-blur-sm flex items-center justify-center">
-                            Explore Programs
+                        <a href="#courses" class="bg-white hover:bg-gray-50 text-navy-900 border-2 border-navy-900 font-extrabold text-lg py-4 px-8 rounded-2xl shadow-md transition flex items-center justify-center gap-2">
+                            प्रमुख कोर्स देखें <i class="fa-solid fa-arrow-down text-sm"></i>
                         </a>
                     </div>
-                    
-                    <div class="mt-12 grid grid-cols-3 gap-6 pt-8 border-t border-white/10">
-                        <div>
-                            <div class="text-3xl font-bold">50+</div>
-                            <div class="text-sm text-gray-400 mt-1">Training Modules</div>
+
+                    <!-- Live Stats Banner -->
+                    <div class="grid grid-cols-3 gap-4 sm:gap-8 pt-8 border-t border-gray-200">
+                        <div class="bg-white p-4 rounded-2xl shadow-sm border border-gray-100 text-center">
+                            <div class="text-2xl sm:text-3xl font-black text-brand-500">50+</div>
+                            <div class="text-xs sm:text-sm font-semibold text-gray-500 mt-1">ट्रेनिंग कोर्सेज</div>
                         </div>
-                        <div>
-                            <div class="text-3xl font-bold">10k+</div>
-                            <div class="text-sm text-gray-400 mt-1">Active Learners</div>
+                        <div class="bg-white p-4 rounded-2xl shadow-sm border border-gray-100 text-center">
+                            <div class="text-2xl sm:text-3xl font-black text-accent-600">10k+</div>
+                            <div class="text-xs sm:text-sm font-semibold text-gray-500 mt-1">सफल छात्र</div>
                         </div>
-                        <div>
-                            <div class="text-3xl font-bold">100%</div>
-                            <div class="text-sm text-gray-400 mt-1">Digital Access</div>
+                        <div class="bg-white p-4 rounded-2xl shadow-sm border border-gray-100 text-center">
+                            <div class="text-2xl sm:text-3xl font-black text-navy-900">100%</div>
+                            <div class="text-xs sm:text-sm font-semibold text-gray-500 mt-1">सपोर्ट सिस्टम</div>
                         </div>
                     </div>
                 </div>
 
-                <div class="relative hidden lg:block">
-                    <div class="absolute inset-0 bg-gradient-to-tr from-brand-500 to-accent-500 rounded-2xl transform rotate-3 scale-105 opacity-50 blur-lg"></div>
-                    <img src="https://images.unsplash.com/photo-1516321318423-f06f85e504b3?q=80&w=2070&auto=format&fit=crop" alt="Professionals Learning" class="relative rounded-2xl shadow-2xl border border-white/10 object-cover h-[500px] w-full">
-                    
-                    <!-- Floating Card -->
-                    <div class="absolute -bottom-6 -left-6 bg-white text-gray-900 p-4 rounded-xl shadow-2xl border border-gray-100 flex items-center gap-4 animate-bounce" style="animation-duration: 3s;">
-                        <div class="w-12 h-12 bg-green-100 rounded-full flex items-center justify-center text-green-600 text-xl">
-                            <i class="fa-solid fa-check"></i>
-                        </div>
-                        <div>
-                            <div class="font-bold">Certificate Issued</div>
-                            <div class="text-sm text-gray-500">Digital Marketing Pro</div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
+                <!-- Right Column Banner Graphic (5 Cols) -->
+                <div class="lg:col-span-5 relative">
+                    <!-- Decorative Background Gradient Blobs -->
+                    <div class="absolute -top-10 -left-10 w-72 h-72 bg-brand-500/20 rounded-full blur-3xl"></div>
+                    <div class="absolute -bottom-10 -right-10 w-72 h-72 bg-accent-500/20 rounded-full blur-3xl"></div>
 
-    <!-- 2. ABOUT US SECTION -->
-    <section id="about" class="py-20 bg-white">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div class="text-center max-w-3xl mx-auto mb-16">
-                <h2 class="text-brand-600 font-bold tracking-wider uppercase text-sm mb-2">About Samarth Digital</h2>
-                <h3 class="font-heading text-3xl md:text-4xl font-bold text-gray-900 mb-4">Empowering Growth Through Education & Technology</h3>
-                <p class="text-gray-600 text-lg">We are building an ecosystem that bridges the gap between traditional education and modern digital opportunities, fostering personal and professional growth.</p>
-            </div>
-
-            <div class="grid md:grid-cols-2 lg:grid-cols-4 gap-8">
-                <!-- Card 1 -->
-                <div class="bg-gray-50 rounded-2xl p-8 border border-gray-100 hover:shadow-soft transition group">
-                    <div class="w-14 h-14 bg-blue-100 rounded-xl flex items-center justify-center text-blue-600 text-2xl mb-6 group-hover:bg-blue-600 group-hover:text-white transition">
-                        <i class="fa-solid fa-award"></i>
-                    </div>
-                    <h4 class="text-xl font-bold text-gray-900 mb-3">Certified Learning</h4>
-                    <p class="text-gray-600">Access industry-standard courses and earn verifiable certificates upon completion.</p>
-                </div>
-                <!-- Card 2 -->
-                <div class="bg-gray-50 rounded-2xl p-8 border border-gray-100 hover:shadow-soft transition group">
-                    <div class="w-14 h-14 bg-purple-100 rounded-xl flex items-center justify-center text-purple-600 text-2xl mb-6 group-hover:bg-purple-600 group-hover:text-white transition">
-                        <i class="fa-solid fa-users"></i>
-                    </div>
-                    <h4 class="text-xl font-bold text-gray-900 mb-3">Community Support</h4>
-                    <p class="text-gray-600">Join a network of driven individuals, mentors, and professionals sharing knowledge.</p>
-                </div>
-                <!-- Card 3 -->
-                <div class="bg-gray-50 rounded-2xl p-8 border border-gray-100 hover:shadow-soft transition group">
-                    <div class="w-14 h-14 bg-indigo-100 rounded-xl flex items-center justify-center text-indigo-600 text-2xl mb-6 group-hover:bg-indigo-600 group-hover:text-white transition">
-                        <i class="fa-solid fa-laptop-code"></i>
-                    </div>
-                    <h4 class="text-xl font-bold text-gray-900 mb-3">Smart Ecosystem</h4>
-                    <p class="text-gray-600">A seamless digital platform for learning, tracking progress, and managing rewards.</p>
-                </div>
-                <!-- Card 4 -->
-                <div class="bg-gray-50 rounded-2xl p-8 border border-gray-100 hover:shadow-soft transition group">
-                    <div class="w-14 h-14 bg-teal-100 rounded-xl flex items-center justify-center text-teal-600 text-2xl mb-6 group-hover:bg-teal-600 group-hover:text-white transition">
-                        <i class="fa-solid fa-arrow-trend-up"></i>
-                    </div>
-                    <h4 class="text-xl font-bold text-gray-900 mb-3">Long-Term Growth</h4>
-                    <p class="text-gray-600">Continuous skill upgrades designed to accelerate your career trajectory.</p>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- 3. COURSE / TRAINING SECTION -->
-    <section id="programs" class="py-20 bg-gray-50">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div class="flex flex-col md:flex-row justify-between items-end mb-12">
-                <div class="max-w-2xl">
-                    <h2 class="text-brand-600 font-bold tracking-wider uppercase text-sm mb-2">Learning Tracks</h2>
-                    <h3 class="font-heading text-3xl md:text-4xl font-bold text-gray-900">Digital Training Programs</h3>
-                </div>
-                <a href="{{ route('register') }}" class="hidden md:inline-flex text-brand-600 font-semibold hover:text-brand-800 transition items-center">
-                    View All Programs <i class="fa-solid fa-arrow-right ml-2"></i>
-                </a>
-            </div>
-
-            <div class="grid md:grid-cols-3 gap-8">
-                <!-- Course 1 -->
-                <div class="bg-white rounded-2xl overflow-hidden shadow-soft border border-gray-100 flex flex-col">
-                    <div class="relative h-48">
-                        <img src="https://images.unsplash.com/photo-1432888498266-38ffec3eaf0a?q=80&w=2074&auto=format&fit=crop" class="w-full h-full object-cover" alt="Digital Marketing">
-                        <div class="absolute top-4 right-4 bg-white/90 backdrop-blur text-xs font-bold px-3 py-1 rounded-full text-brand-600 shadow-sm">
-                            Certification
-                        </div>
-                    </div>
-                    <div class="p-6 flex-1 flex flex-col">
-                        <div class="flex items-center text-sm text-gray-500 mb-3 gap-4">
-                            <span><i class="fa-regular fa-clock mr-1"></i> 4 Weeks</span>
-                            <span><i class="fa-solid fa-signal mr-1"></i> Beginner</span>
-                        </div>
-                        <h4 class="text-xl font-bold text-gray-900 mb-2">Digital Marketing Essentials</h4>
-                        <p class="text-gray-600 text-sm flex-1 mb-6">Master SEO, content strategy, and social media management to thrive in the digital economy.</p>
-                        <a href="{{ route('register') }}" class="w-full text-center bg-gray-50 hover:bg-brand-50 text-brand-700 font-semibold py-2.5 rounded-lg border border-gray-200 transition">Explore Module</a>
-                    </div>
-                </div>
-
-                <!-- Course 2 -->
-                <div class="bg-white rounded-2xl overflow-hidden shadow-soft border border-gray-100 flex flex-col">
-                    <div class="relative h-48">
-                        <img src="https://images.unsplash.com/photo-1460925895917-afdab827c52f?q=80&w=2015&auto=format&fit=crop" class="w-full h-full object-cover" alt="Business Analytics">
-                        <div class="absolute top-4 right-4 bg-white/90 backdrop-blur text-xs font-bold px-3 py-1 rounded-full text-brand-600 shadow-sm">
-                            Certification
-                        </div>
-                    </div>
-                    <div class="p-6 flex-1 flex flex-col">
-                        <div class="flex items-center text-sm text-gray-500 mb-3 gap-4">
-                            <span><i class="fa-regular fa-clock mr-1"></i> 6 Weeks</span>
-                            <span><i class="fa-solid fa-signal mr-1"></i> Intermediate</span>
-                        </div>
-                        <h4 class="text-xl font-bold text-gray-900 mb-2">Business Analytics Pro</h4>
-                        <p class="text-gray-600 text-sm flex-1 mb-6">Learn to interpret data, generate business insights, and utilize modern reporting tools effectively.</p>
-                        <a href="{{ route('register') }}" class="w-full text-center bg-gray-50 hover:bg-brand-50 text-brand-700 font-semibold py-2.5 rounded-lg border border-gray-200 transition">Explore Module</a>
-                    </div>
-                </div>
-
-                <!-- Course 3 -->
-                <div class="bg-white rounded-2xl overflow-hidden shadow-soft border border-gray-100 flex flex-col">
-                    <div class="relative h-48">
-                        <img src="https://images.unsplash.com/photo-1552664730-d307ca884978?q=80&w=2070&auto=format&fit=crop" class="w-full h-full object-cover" alt="Leadership">
-                        <div class="absolute top-4 right-4 bg-white/90 backdrop-blur text-xs font-bold px-3 py-1 rounded-full text-brand-600 shadow-sm">
-                            Certification
-                        </div>
-                    </div>
-                    <div class="p-6 flex-1 flex flex-col">
-                        <div class="flex items-center text-sm text-gray-500 mb-3 gap-4">
-                            <span><i class="fa-regular fa-clock mr-1"></i> 8 Weeks</span>
-                            <span><i class="fa-solid fa-signal mr-1"></i> Advanced</span>
-                        </div>
-                        <h4 class="text-xl font-bold text-gray-900 mb-2">Corporate Leadership</h4>
-                        <p class="text-gray-600 text-sm flex-1 mb-6">Develop critical thinking, team management, and strategic planning skills for modern workplaces.</p>
-                        <a href="{{ route('register') }}" class="w-full text-center bg-gray-50 hover:bg-brand-50 text-brand-700 font-semibold py-2.5 rounded-lg border border-gray-200 transition">Explore Module</a>
-                    </div>
-                </div>
-            </div>
-            
-            <div class="mt-8 text-center md:hidden">
-                <a href="{{ route('register') }}" class="inline-flex text-brand-600 font-semibold hover:text-brand-800 transition items-center">
-                    View All Programs <i class="fa-solid fa-arrow-right ml-2"></i>
-                </a>
-            </div>
-        </div>
-    </section>
-
-    <!-- 4. BENEFITS SECTION -->
-    <section id="benefits" class="py-20 bg-white">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div class="grid lg:grid-cols-2 gap-16 items-center">
-                <div class="order-2 lg:order-1 relative">
-                    <div class="absolute inset-0 bg-brand-100 rounded-3xl transform -rotate-3 scale-105"></div>
-                    <img src="https://images.unsplash.com/photo-1521737604893-d14cc237f11d?q=80&w=2084&auto=format&fit=crop" class="relative rounded-3xl shadow-xl border border-gray-100 object-cover w-full h-[600px]" alt="Benefits of learning">
-                    
-                    <div class="absolute bottom-8 -right-8 glass-card p-6 rounded-2xl hidden md:block w-64 animate-float" style="animation-duration: 4s;">
-                        <div class="flex items-center gap-4 mb-2">
-                            <div class="w-10 h-10 rounded-full bg-yellow-100 flex items-center justify-center text-yellow-600">
-                                <i class="fa-solid fa-star"></i>
+                    <!-- Main Premium Banner Box -->
+                    <div class="relative rounded-3xl overflow-hidden shadow-premium border-4 border-white bg-gradient-premium text-white flex flex-col">
+                        <!-- Top Dark Blue Slogan Header -->
+                        <div class="p-8 text-center bg-navy-900/90 backdrop-blur border-b border-white/10 relative">
+                            <div class="absolute top-0 right-0 transform translate-x-4 -translate-y-4 w-24 h-24 bg-gold-500/20 rounded-full blur-xl"></div>
+                            <span class="text-xl sm:text-2xl font-bold tracking-wide text-gray-200 block mb-1">
+                                अब नौकरी नहीं
+                            </span>
+                            <h2 class="text-3xl sm:text-4xl lg:text-5xl font-black text-gold-400 drop-shadow mb-3 font-devanagari">
+                                अपना व्यवसाय करें
+                            </h2>
+                            <div class="inline-block bg-white text-navy-900 font-extrabold px-6 py-2 rounded-full text-base sm:text-lg shadow-lg">
+                                वो भी घर बैठे <i class="fa-solid fa-house text-brand-500 ml-1"></i>
                             </div>
-                            <h5 class="font-bold text-gray-900">Top Rated</h5>
                         </div>
-                        <p class="text-sm text-gray-600">Platform recognized for excellence in digital education.</p>
+
+                        <!-- Banner Image & Floating Badges -->
+                        <div class="relative bg-navy-800 flex items-center justify-center overflow-hidden h-80 sm:h-96">
+                            <!-- Background pattern or ambient glow -->
+                            <div class="absolute inset-0 bg-gradient-to-t from-navy-900 via-transparent to-transparent z-10"></div>
+                            
+                            <!-- High Quality Image representing the smiling professional woman on laptop -->
+                            <img src="https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?q=80&w=1000&auto=format&fit=crop" alt="Woman working from home on laptop" class="absolute inset-0 w-full h-full object-cover object-top opacity-90">
+                            
+                            <!-- Floating Circular Stamp / Badge (Matching flyer circular badge) -->
+                            <div class="absolute top-6 left-6 z-20 bg-navy-900/95 text-white p-5 rounded-full border-2 border-dashed border-gold-400 shadow-2xl w-36 h-36 sm:w-40 sm:h-40 flex flex-col items-center justify-center text-center animate-float">
+                                <span class="text-xs sm:text-sm font-bold text-gold-400 uppercase tracking-wider mb-1">विशेष अवसर</span>
+                                <span class="text-xs sm:text-sm font-black leading-tight">घर बैठे काम करें अच्छी कमाई करें</span>
+                                <i class="fa-solid fa-laptop-house text-brand-400 text-lg sm:text-xl mt-1.5 animate-bounce"></i>
+                            </div>
+
+                            <!-- Laptop / Brand Watermark overlay at bottom right -->
+                            <div class="absolute bottom-4 right-4 z-20 bg-white/95 backdrop-blur text-navy-900 py-2 px-4 rounded-xl shadow-xl border border-white flex items-center gap-3">
+                                <div class="w-8 h-8 rounded-full bg-brand-500 text-white flex items-center justify-center font-bold text-xs">S</div>
+                                <div class="text-xs font-black leading-tight">SAMARTH<br><span class="text-brand-500">DIGITAL</span></div>
+                            </div>
+                        </div>
                     </div>
                 </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 2. "हम आपको देते हैं -" (WHAT WE PROVIDE) SECTION -->
+    <section id="features" class="py-20 bg-white">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <!-- Section Header -->
+            <div class="text-center max-w-3xl mx-auto mb-16">
+                <span class="text-brand-600 font-extrabold text-sm uppercase tracking-wider bg-brand-50 px-4 py-1.5 rounded-full border border-brand-200">
+                    हमारी विशेषताएँ
+                </span>
+                <h2 class="font-devanagari text-3xl sm:text-4xl lg:text-5xl font-black text-navy-900 mt-4 mb-4">
+                    हम आपको देते हैं
+                </h2>
+                <div class="w-24 h-1.5 bg-accent-500 mx-auto rounded-full mb-4"></div>
+                <p class="text-gray-600 text-lg">व्यावहारिक ज्ञान और आधुनिक टूल्स का एक बेहतरीन संगम जो आपको सफल बनाता है।</p>
+            </div>
+
+            <!-- Main Layout: 5 Feature Cards on Left/Grid, 1 Gift Box on Right -->
+            <div class="grid lg:grid-cols-12 gap-8 items-stretch">
                 
-                <div class="order-1 lg:order-2">
-                    <h2 class="text-brand-600 font-bold tracking-wider uppercase text-sm mb-2">Why Join Us</h2>
-                    <h3 class="font-heading text-3xl md:text-4xl font-bold text-gray-900 mb-6">Designed for Your Success</h3>
-                    <p class="text-gray-600 text-lg mb-8">We provide more than just courses. Samarth Digital is a comprehensive ecosystem that rewards active learning and professional engagement.</p>
-                    
-                    <div class="space-y-6">
-                        <div class="flex gap-4">
-                            <div class="flex-shrink-0 w-12 h-12 rounded-lg bg-brand-50 flex items-center justify-center text-brand-600 text-xl border border-brand-100">
-                                <i class="fa-solid fa-globe"></i>
+                <!-- Features Grid (8 Cols) -->
+                <div class="lg:col-span-8 grid sm:grid-cols-2 md:grid-cols-3 gap-6">
+                    <!-- Feature 1 -->
+                    <div class="bg-gray-50 p-8 rounded-3xl border border-gray-200 hover:border-brand-500 hover:shadow-premium transition-all duration-300 flex flex-col justify-between group bg-gradient-to-b hover:from-brand-50/20 hover:to-white">
+                        <div>
+                            <div class="w-16 h-16 bg-navy-900 text-white rounded-2xl flex items-center justify-center text-3xl mb-6 shadow-md group-hover:bg-brand-500 group-hover:rotate-6 transition duration-300">
+                                <i class="fa-solid fa-book-open-reader"></i>
+                            </div>
+                            <h3 class="font-devanagari text-xl font-bold text-navy-900 mb-3 leading-snug">व्यावहारिक ऑनलाइन ट्रेनिंग</h3>
+                            <p class="text-gray-600 text-sm leading-relaxed">घर बैठे अपने समय के अनुसार लाइव और रिकॉर्डेड सेशंस के माध्यम से बेहतरीन ट्रेनिंग प्राप्त करें।</p>
+                        </div>
+                        <div class="mt-6 pt-4 border-t border-gray-200 text-brand-500 font-bold text-xs flex items-center gap-1 group-hover:translate-x-1 transition transform">
+                            अधिक जानें <i class="fa-solid fa-arrow-right"></i>
+                        </div>
+                    </div>
+
+                    <!-- Feature 2 -->
+                    <div class="bg-gray-50 p-8 rounded-3xl border border-gray-200 hover:border-brand-500 hover:shadow-premium transition-all duration-300 flex flex-col justify-between group bg-gradient-to-b hover:from-brand-50/20 hover:to-white">
+                        <div>
+                            <div class="w-16 h-16 bg-brand-500 text-white rounded-2xl flex items-center justify-center text-3xl mb-6 shadow-md group-hover:bg-accent-500 group-hover:rotate-6 transition duration-300">
+                                <i class="fa-solid fa-award"></i>
+                            </div>
+                            <h3 class="font-devanagari text-xl font-bold text-navy-900 mb-3 leading-snug">सर्टिफिकेट के साथ मान्यता</h3>
+                            <p class="text-gray-600 text-sm leading-relaxed">कोर्स पूरा करने के बाद आपको एक प्रतिष्ठित और मान्य सर्टिफिकेट दिया जाएगा जो आपके करियर में सहायक होगा।</p>
+                        </div>
+                        <div class="mt-6 pt-4 border-t border-gray-200 text-brand-500 font-bold text-xs flex items-center gap-1 group-hover:translate-x-1 transition transform">
+                            अधिक जानें <i class="fa-solid fa-arrow-right"></i>
+                        </div>
+                    </div>
+
+                    <!-- Feature 3 -->
+                    <div class="bg-gray-50 p-8 rounded-3xl border border-gray-200 hover:border-brand-500 hover:shadow-premium transition-all duration-300 flex flex-col justify-between group bg-gradient-to-b hover:from-brand-50/20 hover:to-white">
+                        <div>
+                            <div class="w-16 h-16 bg-accent-500 text-white rounded-2xl flex items-center justify-center text-3xl mb-6 shadow-md group-hover:bg-navy-900 group-hover:rotate-6 transition duration-300">
+                                <i class="fa-solid fa-headset"></i>
+                            </div>
+                            <h3 class="font-devanagari text-xl font-bold text-navy-900 mb-3 leading-snug">पूरी तरह से सपोर्ट सिस्टम</h3>
+                            <p class="text-gray-600 text-sm leading-relaxed">किसी भी समस्या के समाधान के लिए 24x7 हमारी सपोर्ट टीम और एक्सपर्ट मेंटर्स हमेशा आपके साथ हैं।</p>
+                        </div>
+                        <div class="mt-6 pt-4 border-t border-gray-200 text-brand-500 font-bold text-xs flex items-center gap-1 group-hover:translate-x-1 transition transform">
+                            अधिक जानें <i class="fa-solid fa-arrow-right"></i>
+                        </div>
+                    </div>
+
+                    <!-- Feature 4 -->
+                    <div class="bg-gray-50 p-8 rounded-3xl border border-gray-200 hover:border-brand-500 hover:shadow-premium transition-all duration-300 flex flex-col justify-between group bg-gradient-to-b hover:from-brand-50/20 hover:to-white sm:col-span-1 md:col-span-1 lg:col-span-1">
+                        <div>
+                            <div class="w-16 h-16 bg-purple-600 text-white rounded-2xl flex items-center justify-center text-3xl mb-6 shadow-md group-hover:bg-purple-700 group-hover:rotate-6 transition duration-300">
+                                <i class="fa-solid fa-briefcase"></i>
+                            </div>
+                            <h3 class="font-devanagari text-xl font-bold text-navy-900 mb-3 leading-snug">बिजनेस शुरू करने में मार्गदर्शन</h3>
+                            <p class="text-gray-600 text-sm leading-relaxed">ट्रेनिंग के बाद आपको अपना खुद का व्यवसाय (स्व-रोजगार) स्थापित करने के लिए हर संभव मार्गदर्शन दिया जाएगा।</p>
+                        </div>
+                        <div class="mt-6 pt-4 border-t border-gray-200 text-purple-600 font-bold text-xs flex items-center gap-1 group-hover:translate-x-1 transition transform">
+                            अधिक जानें <i class="fa-solid fa-arrow-right"></i>
+                        </div>
+                    </div>
+
+                    <!-- Feature 5 -->
+                    <div class="bg-gray-50 p-8 rounded-3xl border border-gray-200 hover:border-brand-500 hover:shadow-premium transition-all duration-300 flex flex-col justify-between group bg-gradient-to-b hover:from-brand-50/20 hover:to-white sm:col-span-1 md:col-span-2 lg:col-span-2">
+                        <div>
+                            <div class="w-16 h-16 bg-teal-600 text-white rounded-2xl flex items-center justify-center text-3xl mb-6 shadow-md group-hover:bg-teal-700 group-hover:rotate-6 transition duration-300">
+                                <i class="fa-solid fa-hand-holding-dollar"></i>
+                            </div>
+                            <h3 class="font-devanagari text-xl font-bold text-navy-900 mb-3 leading-snug">कम निवेश में बेहतर आमदनी</h3>
+                            <p class="text-gray-600 text-sm leading-relaxed">हमारे कोर्सेज इस प्रकार डिजाइन किए गए हैं कि आप बहुत कम लागत लगाकर भी शानदार और निरंतर आमदनी कमा सकें।</p>
+                        </div>
+                        <div class="mt-6 pt-4 border-t border-gray-200 text-teal-600 font-bold text-xs flex items-center gap-1 group-hover:translate-x-1 transition transform">
+                            अधिक जानें <i class="fa-solid fa-arrow-right"></i>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Right Gift Banner Box (4 Cols) -->
+                <div class="lg:col-span-4 flex flex-col justify-between bg-gradient-to-br from-navy-900 via-navy-800 to-brand-900 rounded-3xl p-8 text-white shadow-premium border-2 border-white/20 relative overflow-hidden">
+                    <!-- Background ambient glow -->
+                    <div class="absolute -top-20 -right-20 w-60 h-60 bg-gold-500/20 rounded-full blur-3xl"></div>
+                    <div class="absolute -bottom-20 -left-20 w-60 h-60 bg-brand-500/30 rounded-full blur-3xl"></div>
+
+                    <div class="relative z-10 space-y-6">
+                        <!-- Gift Header Banner -->
+                        <div class="flex items-center gap-4 border-b border-white/15 pb-6">
+                            <div class="w-16 h-16 bg-white/10 rounded-2xl border border-white/20 flex items-center justify-center text-4xl text-gold-400 shadow-inner animate-bounce" style="animation-duration: 3s;">
+                                🎁
                             </div>
                             <div>
-                                <h4 class="text-xl font-bold text-gray-900 mb-1">Learn from Anywhere</h4>
-                                <p class="text-gray-600">Access our premium content 24/7 from any device, anywhere in the world.</p>
+                                <h3 class="font-devanagari text-2xl sm:text-3xl font-black text-gold-400 tracking-tight">जुड़ें और पाएं</h3>
+                                <p class="text-xs text-gray-300">विशेष सदस्य लाभ</p>
                             </div>
                         </div>
-                        
-                        <div class="flex gap-4">
-                            <div class="flex-shrink-0 w-12 h-12 rounded-lg bg-purple-50 flex items-center justify-center text-purple-600 text-xl border border-purple-100">
-                                <i class="fa-solid fa-gift"></i>
-                            </div>
-                            <div>
-                                <h4 class="text-xl font-bold text-gray-900 mb-1">Daily Engagement Rewards</h4>
-                                <p class="text-gray-600">Earn platform points and benefits simply by staying active and completing your daily tasks.</p>
-                            </div>
-                        </div>
-                        
-                        <div class="flex gap-4">
-                            <div class="flex-shrink-0 w-12 h-12 rounded-lg bg-green-50 flex items-center justify-center text-green-600 text-xl border border-green-100">
-                                <i class="fa-solid fa-chart-line"></i>
-                            </div>
-                            <div>
-                                <h4 class="text-xl font-bold text-gray-900 mb-1">Performance Recognition</h4>
-                                <p class="text-gray-600">Outstanding learners are recognized and rewarded through our community affiliate program.</p>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
 
-    <!-- 5. HOW IT WORKS SECTION -->
-    <section class="py-20 bg-brand-900 text-white relative overflow-hidden">
-        <!-- Background accents -->
-        <div class="absolute top-0 right-0 w-1/2 h-full bg-brand-800 skew-x-12 translate-x-32 opacity-50"></div>
-        
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
-            <div class="text-center max-w-3xl mx-auto mb-16">
-                <h2 class="text-brand-400 font-bold tracking-wider uppercase text-sm mb-2">Process</h2>
-                <h3 class="font-heading text-3xl md:text-4xl font-bold text-white mb-4">Start Your Journey in 4 Steps</h3>
-                <p class="text-gray-400">Our streamlined onboarding process ensures you get access to the tools you need immediately.</p>
-            </div>
-
-            <div class="grid md:grid-cols-4 gap-8">
-                <!-- Step 1 -->
-                <div class="text-center relative">
-                    <div class="hidden md:block absolute top-8 left-[60%] w-full h-[2px] bg-brand-700"></div>
-                    <div class="w-16 h-16 mx-auto bg-brand-800 border-2 border-brand-500 rounded-2xl flex items-center justify-center text-xl font-bold text-white mb-6 relative z-10 shadow-lg shadow-brand-500/20">
-                        1
-                    </div>
-                    <h4 class="text-lg font-bold mb-2">Create Account</h4>
-                    <p class="text-sm text-gray-400">Sign up on our secure portal and verify your professional profile.</p>
-                </div>
-                
-                <!-- Step 2 -->
-                <div class="text-center relative">
-                    <div class="hidden md:block absolute top-8 left-[60%] w-full h-[2px] bg-brand-700"></div>
-                    <div class="w-16 h-16 mx-auto bg-brand-800 border-2 border-brand-500 rounded-2xl flex items-center justify-center text-xl font-bold text-white mb-6 relative z-10 shadow-lg shadow-brand-500/20">
-                        2
-                    </div>
-                    <h4 class="text-lg font-bold mb-2">Access Training</h4>
-                    <p class="text-sm text-gray-400">Choose your preferred learning track and unlock the digital library.</p>
-                </div>
-
-                <!-- Step 3 -->
-                <div class="text-center relative">
-                    <div class="hidden md:block absolute top-8 left-[60%] w-full h-[2px] bg-brand-700"></div>
-                    <div class="w-16 h-16 mx-auto bg-brand-800 border-2 border-brand-500 rounded-2xl flex items-center justify-center text-xl font-bold text-white mb-6 relative z-10 shadow-lg shadow-brand-500/20">
-                        3
-                    </div>
-                    <h4 class="text-lg font-bold mb-2">Learn & Participate</h4>
-                    <p class="text-sm text-gray-400">Complete modules, take assessments, and engage with the community.</p>
-                </div>
-
-                <!-- Step 4 -->
-                <div class="text-center relative">
-                    <div class="w-16 h-16 mx-auto bg-brand-600 border-2 border-brand-400 rounded-2xl flex items-center justify-center text-xl font-bold text-white mb-6 relative z-10 shadow-lg shadow-brand-400/50">
-                        4
-                    </div>
-                    <h4 class="text-lg font-bold mb-2">Unlock Benefits</h4>
-                    <p class="text-sm text-gray-400">Earn your certification and unlock platform rewards and features.</p>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- 6. FEATURES SECTION -->
-    <section id="features" class="py-20 bg-gray-50">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div class="text-center max-w-3xl mx-auto mb-16">
-                <h2 class="text-brand-600 font-bold tracking-wider uppercase text-sm mb-2">Platform Capabilities</h2>
-                <h3 class="font-heading text-3xl md:text-4xl font-bold text-gray-900 mb-4">Enterprise-Grade Features</h3>
-            </div>
-
-            <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
-                <div class="bg-white p-6 rounded-2xl shadow-sm border border-gray-100 flex gap-4">
-                    <div class="text-brand-500 text-2xl mt-1"><i class="fa-solid fa-shield-halved"></i></div>
-                    <div>
-                        <h4 class="font-bold text-gray-900 mb-1">Secure Dashboard</h4>
-                        <p class="text-sm text-gray-600">Encrypted user portal to manage your profile and data safely.</p>
-                    </div>
-                </div>
-                
-                <div class="bg-white p-6 rounded-2xl shadow-sm border border-gray-100 flex gap-4">
-                    <div class="text-purple-500 text-2xl mt-1"><i class="fa-solid fa-chart-pie"></i></div>
-                    <div>
-                        <h4 class="font-bold text-gray-900 mb-1">Progress Tracking</h4>
-                        <p class="text-sm text-gray-600">Visual analytics showing your learning milestones and metrics.</p>
-                    </div>
-                </div>
-
-                <div class="bg-white p-6 rounded-2xl shadow-sm border border-gray-100 flex gap-4">
-                    <div class="text-green-500 text-2xl mt-1"><i class="fa-solid fa-wallet"></i></div>
-                    <div>
-                        <h4 class="font-bold text-gray-900 mb-1">Wallet Management</h4>
-                        <p class="text-sm text-gray-600">Track your engagement rewards and NEXA 1.0 easily.</p>
-                    </div>
-                </div>
-
-                <div class="bg-white p-6 rounded-2xl shadow-sm border border-gray-100 flex gap-4">
-                    <div class="text-blue-500 text-2xl mt-1"><i class="fa-solid fa-file-invoice"></i></div>
-                    <div>
-                        <h4 class="font-bold text-gray-900 mb-1">Smart Reporting</h4>
-                        <p class="text-sm text-gray-600">Generate detailed reports of your achievements and community growth.</p>
-                    </div>
-                </div>
-
-                <div class="bg-white p-6 rounded-2xl shadow-sm border border-gray-100 flex gap-4">
-                    <div class="text-orange-500 text-2xl mt-1"><i class="fa-solid fa-certificate"></i></div>
-                    <div>
-                        <h4 class="font-bold text-gray-900 mb-1">Digital Certificates</h4>
-                        <p class="text-sm text-gray-600">Download and share verifiable credentials on LinkedIn.</p>
-                    </div>
-                </div>
-
-                <div class="bg-white p-6 rounded-2xl shadow-sm border border-gray-100 flex gap-4">
-                    <div class="text-teal-500 text-2xl mt-1"><i class="fa-solid fa-headset"></i></div>
-                    <div>
-                        <h4 class="font-bold text-gray-900 mb-1">24/7 Support</h4>
-                        <p class="text-sm text-gray-600">Dedicated helpdesk to assist with technical and learning queries.</p>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- 7. CERTIFICATE SECTION -->
-    <section class="py-20 bg-white border-y border-gray-100">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div class="bg-brand-50 rounded-3xl p-8 lg:p-16 border border-brand-100">
-                <div class="grid lg:grid-cols-2 gap-12 items-center">
-                    <div>
-                        <div class="w-16 h-16 bg-white rounded-full shadow-sm flex items-center justify-center text-brand-600 text-2xl mb-6">
-                            <i class="fa-solid fa-graduation-cap"></i>
-                        </div>
-                        <h3 class="font-heading text-3xl md:text-4xl font-bold text-gray-900 mb-4">Achievement-Based Recognition</h3>
-                        <p class="text-gray-600 text-lg mb-8">Upon completing your training track, receive an official digital certificate. Showcase your newly acquired skills to employers and your professional network.</p>
-                        <ul class="space-y-3 mb-8">
-                            <li class="flex items-center text-gray-700"><i class="fa-solid fa-check text-green-500 mr-3"></i> Industry-recognized format</li>
-                            <li class="flex items-center text-gray-700"><i class="fa-solid fa-check text-green-500 mr-3"></i> Unique verification ID</li>
-                            <li class="flex items-center text-gray-700"><i class="fa-solid fa-check text-green-500 mr-3"></i> Instantly shareable online</li>
+                        <!-- Benefit List -->
+                        <ul class="space-y-4 font-devanagari text-base sm:text-lg font-bold">
+                            <li class="flex items-center gap-3 bg-white/5 p-3.5 rounded-2xl border border-white/10">
+                                <i class="fa-solid fa-circle-check text-brand-400 text-xl"></i>
+                                <span>विशेष ट्रेनिंग ऑफर</span>
+                            </li>
+                            <li class="flex items-center gap-3 bg-white/5 p-3.5 rounded-2xl border border-white/10">
+                                <i class="fa-solid fa-circle-check text-brand-400 text-xl"></i>
+                                <span>बिजनेस टूल्स एवं सपोर्ट</span>
+                            </li>
+                            <li class="flex items-center gap-3 bg-white/5 p-3.5 rounded-2xl border border-white/10">
+                                <i class="fa-solid fa-circle-check text-brand-400 text-xl"></i>
+                                <span>निरंतर मार्गदर्शन</span>
+                            </li>
                         </ul>
-                        <a href="{{ route('register') }}" class="bg-brand-600 hover:bg-brand-700 text-white font-bold py-3 px-8 rounded-lg shadow-md transition inline-flex items-center">
-                            Start Learning <i class="fa-solid fa-arrow-right ml-2"></i>
+                    </div>
+
+                    <!-- Action Button at Bottom -->
+                    <div class="relative z-10 mt-8 pt-6 border-t border-white/15">
+                        <a href="{{ route('register') }}" class="w-full text-center bg-brand-500 hover:bg-brand-600 text-white font-black text-lg sm:text-xl py-4 px-6 rounded-2xl shadow-xl shadow-brand-500/40 transition block transform hover:scale-[1.02]">
+                            आज ही जुड़ें, भविष्य संवारें!
+                        </a>
+                        <p class="text-center text-xs text-gray-300 mt-3">सीमित समय के लिए विशेष रजिस्ट्रेशन खुला है</p>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </section>
+
+    <!-- 3. "ट्रेनिंग के दो विकल्प" (TWO TRAINING OPTIONS) SECTION -->
+    <section id="training" class="py-20 bg-gray-50 border-y border-gray-200 relative overflow-hidden">
+        <!-- Decorative subtle background grid -->
+        <div class="absolute inset-0 bg-[linear-gradient(to_right,#e2e8f0_1px,transparent_1px),linear-gradient(to_bottom,#e2e8f0_1px,transparent_1px)] bg-[size:4rem_4rem] [mask-image:radial-gradient(ellipse_60%_50%_at_50%_50%,#000_70%,transparent_100%)] opacity-40"></div>
+
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+            <!-- Section Title Box -->
+            <div class="text-center max-w-3xl mx-auto mb-16">
+                <div class="inline-block bg-navy-900 text-white font-devanagari font-black text-xl sm:text-2xl px-8 py-3 rounded-full shadow-lg border-2 border-brand-500 mb-4 tracking-wide">
+                    ट्रेनिंग के दो विकल्प
+                </div>
+                <p class="text-gray-600 text-lg">आप अपनी सुविधा के अनुसार हमारे ऑनलाइन या ऑफलाइन दोनों में से किसी भी माध्यम का चयन कर सकते हैं।</p>
+            </div>
+
+            <!-- Two Options Split Card connected by 'और' -->
+            <div class="relative max-w-5xl mx-auto">
+                <!-- Center Connector Circle / Line (Desktop only) -->
+                <div class="hidden md:block absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 z-30">
+                    <div class="w-20 h-20 bg-navy-900 text-white rounded-full flex items-center justify-center font-devanagari font-black text-2xl border-4 border-white shadow-2xl animate-pulse">
+                        और
+                    </div>
+                </div>
+                
+                <div class="grid md:grid-cols-2 gap-8 md:gap-12 relative z-20">
+                    
+                    <!-- Option 1: ONLINE TRAINING (Green Accent) -->
+                    <div class="bg-white rounded-3xl p-8 sm:p-10 shadow-premium border-t-8 border-brand-500 flex flex-col justify-between transform hover:-translate-y-1 transition duration-300 relative overflow-hidden">
+                        <div class="absolute top-0 right-0 w-32 h-32 bg-brand-50 rounded-bl-full opacity-50 pointer-events-none"></div>
+                        
+                        <div class="space-y-6 relative z-10">
+                            <div class="flex items-center gap-4">
+                                <div class="w-16 h-16 bg-brand-50 text-brand-500 rounded-2xl flex items-center justify-center text-3xl border border-brand-200 shadow-inner">
+                                    <i class="fa-solid fa-laptop"></i>
+                                </div>
+                                <div>
+                                    <span class="text-xs font-bold text-gray-500 tracking-wider uppercase block">विकल्प 1</span>
+                                    <h3 class="font-extrabold text-2xl sm:text-3xl text-brand-600 tracking-tight">ONLINE TRAINING</h3>
+                                </div>
+                            </div>
+
+                            <div class="w-full h-px bg-gray-200"></div>
+
+                            <ul class="space-y-4 font-devanagari text-lg text-gray-700 font-semibold">
+                                <li class="flex items-start gap-3.5">
+                                    <i class="fa-solid fa-circle-check text-brand-500 text-xl mt-1 flex-shrink-0"></i>
+                                    <span>घर बैठे लाइव क्लासेस</span>
+                                </li>
+                                <li class="flex items-start gap-3.5">
+                                    <i class="fa-solid fa-circle-check text-brand-500 text-xl mt-1 flex-shrink-0"></i>
+                                    <span>वीडियो लेक्चर</span>
+                                </li>
+                                <li class="flex items-start gap-3.5">
+                                    <i class="fa-solid fa-circle-check text-brand-500 text-xl mt-1 flex-shrink-0"></i>
+                                    <span>24x7 रिकॉर्डेड एक्सेस</span>
+                                </li>
+                                <li class="flex items-start gap-3.5">
+                                    <i class="fa-solid fa-circle-check text-brand-500 text-xl mt-1 flex-shrink-0"></i>
+                                    <span>कहीं से भी, कभी भी सीखें</span>
+                                </li>
+                            </ul>
+                        </div>
+
+                        <div class="mt-8 pt-6 border-t border-gray-100 relative z-10">
+                            <a href="{{ route('register') }}" class="w-full py-4 bg-brand-50 hover:bg-brand-500 text-brand-700 hover:text-white rounded-2xl font-bold text-center block transition duration-300 border border-brand-200">
+                                ऑनलाइन ट्रेनिंग चुनें
+                            </a>
+                        </div>
+                    </div>
+
+                    <!-- Option 2: OFFLINE TRAINING (Orange Accent) -->
+                    <div class="bg-white rounded-3xl p-8 sm:p-10 shadow-premium border-t-8 border-accent-500 flex flex-col justify-between transform hover:-translate-y-1 transition duration-300 relative overflow-hidden">
+                        <div class="absolute top-0 right-0 w-32 h-32 bg-accent-100 rounded-bl-full opacity-50 pointer-events-none"></div>
+                        
+                        <div class="space-y-6 relative z-10">
+                            <div class="flex items-center gap-4">
+                                <div class="w-16 h-16 bg-accent-100 text-accent-600 rounded-2xl flex items-center justify-center text-3xl border border-accent-200 shadow-inner">
+                                    <i class="fa-solid fa-chalkboard-user"></i>
+                                </div>
+                                <div>
+                                    <span class="text-xs font-bold text-gray-500 tracking-wider uppercase block">विकल्प 2</span>
+                                    <h3 class="font-extrabold text-2xl sm:text-3xl text-accent-600 tracking-tight">OFFLINE TRAINING</h3>
+                                </div>
+                            </div>
+
+                            <div class="w-full h-px bg-gray-200"></div>
+
+                            <ul class="space-y-4 font-devanagari text-lg text-gray-700 font-semibold">
+                                <li class="flex items-start gap-3.5">
+                                    <i class="fa-solid fa-circle-check text-accent-500 text-xl mt-1 flex-shrink-0"></i>
+                                    <span>एक्सपर्ट ट्रेनर द्वारा क्लासरूम ट्रेनिंग</span>
+                                </li>
+                                <li class="flex items-start gap-3.5">
+                                    <i class="fa-solid fa-circle-check text-accent-500 text-xl mt-1 flex-shrink-0"></i>
+                                    <span>प्रैक्टिकल वर्कशॉप</span>
+                                </li>
+                                <li class="flex items-start gap-3.5">
+                                    <i class="fa-solid fa-circle-check text-accent-500 text-xl mt-1 flex-shrink-0"></i>
+                                    <span>व्यक्तिगत मार्गदर्शन</span>
+                                </li>
+                                <li class="flex items-start gap-3.5">
+                                    <i class="fa-solid fa-circle-check text-accent-500 text-xl mt-1 flex-shrink-0"></i>
+                                    <span>नजदीकी प्रशिक्षण केंद्र पर</span>
+                                </li>
+                            </ul>
+                        </div>
+
+                        <div class="mt-8 pt-6 border-t border-gray-100 relative z-10">
+                            <a href="{{ route('register') }}" class="w-full py-4 bg-accent-100 hover:bg-accent-500 text-accent-700 hover:text-white rounded-2xl font-bold text-center block transition duration-300 border border-accent-200">
+                                ऑफलाइन ट्रेनिंग चुनें
+                            </a>
+                        </div>
+                    </div>
+
+                </div>
+
+                <!-- Mobile only 'और' badge -->
+                <div class="md:hidden my-6 text-center">
+                    <span class="inline-block bg-navy-900 text-white font-devanagari font-bold px-6 py-2 rounded-full border-2 border-white shadow">
+                        और
+                    </span>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 4. "हमारे प्रमुख कोर्स (घर बैठे करें व्यवसाय)" (MAJOR COURSES) SECTION -->
+    <section id="courses" class="py-20 bg-white">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <!-- Section Header -->
+            <div class="text-center max-w-3xl mx-auto mb-16">
+                <span class="text-brand-600 font-bold text-sm uppercase tracking-wider bg-brand-50 px-4 py-1.5 rounded-full border border-brand-200">
+                    व्यावसायिक प्रशिक्षण
+                </span>
+                <h2 class="font-devanagari text-3xl sm:text-4xl lg:text-5xl font-black text-navy-900 mt-4 mb-4">
+                    हमारे प्रमुख कोर्स <span class="text-brand-500 block sm:inline">(घर बैठे करें व्यवसाय)</span>
+                </h2>
+                <div class="w-24 h-1.5 bg-brand-500 mx-auto rounded-full mb-4"></div>
+                <p class="text-gray-600 text-lg font-medium">इन कोर्सेज को सीखकर आप अपने घर से ही एक सफल और लाभदायक व्यवसाय शुरू कर सकते हैं।</p>
+            </div>
+
+            <!-- Course Cards Grid (3 Columns) -->
+            <div class="grid sm:grid-cols-2 lg:grid-cols-3 gap-8">
+                
+                <!-- Course 1: Cleaning Products -->
+                <div class="bg-white rounded-3xl overflow-hidden shadow-premium border border-gray-100 flex flex-col group hover:-translate-y-1.5 transition-all duration-300">
+                    <div class="relative h-60 overflow-hidden">
+                        <img src="https://images.unsplash.com/photo-1585837575651-042b58189c4e?q=80&w=800&auto=format&fit=crop" class="w-full h-full object-cover group-hover:scale-110 transition duration-500" alt="Cleaning Products Making Course">
+                        <div class="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent"></div>
+                        <div class="absolute top-4 right-4 bg-brand-500 text-white text-xs font-black px-3.5 py-1.5 rounded-full uppercase tracking-wider shadow">
+                            Practical Pro
+                        </div>
+                        <div class="absolute bottom-4 left-4 right-4">
+                            <span class="text-gold-400 font-bold text-xs uppercase tracking-wider">Business Course</span>
+                            <h4 class="text-white font-extrabold text-xl leading-tight">CLEANING PRODUCTS MAKING COURSE</h4>
+                        </div>
+                    </div>
+                    <div class="p-6 flex-1 flex flex-col justify-between space-y-4 bg-gray-50/50">
+                        <p class="font-devanagari text-lg font-bold text-brand-600 flex items-center gap-2">
+                            <i class="fa-solid fa-flask text-brand-500"></i> क्लीनिंग प्रोडक्ट्स बनाना सीखें
+                        </p>
+                        <p class="text-gray-600 text-sm leading-relaxed">फिनाइल, लिक्विड सोप, डिश वॉश, टॉयलेट क्लीनर आदि बनाने का संपूर्ण प्रैक्टिकल प्रशिक्षण।</p>
+                        <a href="{{ route('register') }}" class="w-full text-center bg-white hover:bg-brand-500 text-navy-900 hover:text-white font-bold py-3 rounded-xl border border-gray-200 transition duration-300 shadow-sm block">
+                            कोर्स में नामांकन लें <i class="fa-solid fa-arrow-right ml-1"></i>
                         </a>
                     </div>
-                    <div class="relative">
-                        <div class="absolute inset-0 bg-gradient-to-tr from-brand-300 to-purple-300 rounded-lg transform rotate-2 scale-105 opacity-30"></div>
-                        <div class="bg-white p-2 rounded-lg shadow-xl relative border border-gray-200">
-                            <!-- Placeholder for Certificate Image -->
-                            <div class="border-4 border-double border-gray-200 p-8 text-center bg-gray-50 h-80 flex flex-col justify-center items-center">
-                                <div class="text-brand-800 font-heading font-bold text-2xl mb-2">Samarth Digital</div>
-                                <div class="text-sm text-gray-500 uppercase tracking-widest mb-6">Certificate of Completion</div>
-                                <div class="w-32 h-1 bg-brand-500 mb-6"></div>
-                                <div class="text-gray-400 italic font-serif">This certifies that the user has successfully completed the digital training program.</div>
-                                <div class="mt-8 w-16 h-16 rounded-full border-2 border-yellow-400 flex items-center justify-center text-yellow-500 bg-yellow-50"><i class="fa-solid fa-award text-2xl"></i></div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- 8. TESTIMONIAL SECTION -->
-    <section class="py-20 bg-gray-50">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div class="text-center max-w-3xl mx-auto mb-16">
-                <h2 class="text-brand-600 font-bold tracking-wider uppercase text-sm mb-2">Success Stories</h2>
-                <h3 class="font-heading text-3xl md:text-4xl font-bold text-gray-900 mb-4">Trusted by Professionals</h3>
-            </div>
-
-            <div class="grid md:grid-cols-3 gap-8">
-                <!-- Review 1 -->
-                <div class="bg-white p-8 rounded-2xl shadow-soft border border-gray-100">
-                    <div class="flex text-yellow-400 mb-4 text-sm">
-                        <i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i>
-                    </div>
-                    <p class="text-gray-600 italic mb-6">"The training modules are incredibly well-structured. I upgraded my digital skills and the platform's reward ecosystem keeps me motivated every day."</p>
-                    <div class="flex items-center gap-4 border-t border-gray-100 pt-4">
-                        <div class="w-10 h-10 rounded-full bg-gray-200 flex items-center justify-center font-bold text-gray-500">AJ</div>
-                        <div>
-                            <h5 class="font-bold text-gray-900 text-sm">Amit Joshi</h5>
-                            <span class="text-xs text-gray-500">Digital Marketer</span>
-                        </div>
-                    </div>
                 </div>
 
-                <!-- Review 2 -->
-                <div class="bg-white p-8 rounded-2xl shadow-soft border border-gray-100 relative transform md:-translate-y-4 border-brand-200">
-                    <div class="absolute -top-4 right-8 bg-brand-500 text-white text-xs font-bold px-3 py-1 rounded-full">Featured</div>
-                    <div class="flex text-yellow-400 mb-4 text-sm">
-                        <i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i>
-                    </div>
-                    <p class="text-gray-600 italic mb-6">"Samarth Digital provides a corporate-level learning experience. The dashboard is intuitive, and the certification holds real value in the industry."</p>
-                    <div class="flex items-center gap-4 border-t border-gray-100 pt-4">
-                        <div class="w-10 h-10 rounded-full bg-brand-100 flex items-center justify-center font-bold text-brand-600">SP</div>
-                        <div>
-                            <h5 class="font-bold text-gray-900 text-sm">Sneha Patel</h5>
-                            <span class="text-xs text-gray-500">Business Analyst</span>
+                <!-- Course 2: Gau Products -->
+                <div class="bg-white rounded-3xl overflow-hidden shadow-premium border border-gray-100 flex flex-col group hover:-translate-y-1.5 transition-all duration-300">
+                    <div class="relative h-60 overflow-hidden">
+                        <img src="https://images.unsplash.com/photo-1570042225831-d98fa7577f1e?q=80&w=800&auto=format&fit=crop" class="w-full h-full object-cover group-hover:scale-110 transition duration-500" alt="Gau Products Making Course">
+                        <div class="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent"></div>
+                        <div class="absolute top-4 right-4 bg-brand-500 text-white text-xs font-black px-3.5 py-1.5 rounded-full uppercase tracking-wider shadow">
+                            Organic Pro
+                        </div>
+                        <div class="absolute bottom-4 left-4 right-4">
+                            <span class="text-gold-400 font-bold text-xs uppercase tracking-wider">Business Course</span>
+                            <h4 class="text-white font-extrabold text-xl leading-tight">GAU PRODUCTS MAKING COURSE</h4>
                         </div>
                     </div>
-                </div>
-
-                <!-- Review 3 -->
-                <div class="bg-white p-8 rounded-2xl shadow-soft border border-gray-100">
-                    <div class="flex text-yellow-400 mb-4 text-sm">
-                        <i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i>
-                    </div>
-                    <p class="text-gray-600 italic mb-6">"A highly professional ecosystem. It's not just about learning; it's about building a sustainable digital career and networking with peers."</p>
-                    <div class="flex items-center gap-4 border-t border-gray-100 pt-4">
-                        <div class="w-10 h-10 rounded-full bg-gray-200 flex items-center justify-center font-bold text-gray-500">RK</div>
-                        <div>
-                            <h5 class="font-bold text-gray-900 text-sm">Rahul Kumar</h5>
-                            <span class="text-xs text-gray-500">Entrepreneur</span>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- 9. FAQ SECTION -->
-    <section class="py-20 bg-white">
-        <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div class="text-center mb-12">
-                <h2 class="font-heading text-3xl md:text-4xl font-bold text-gray-900 mb-4">Frequently Asked Questions</h2>
-            </div>
-
-            <div class="space-y-4">
-                <!-- FAQ Item -->
-                <div class="border border-gray-200 rounded-xl overflow-hidden">
-                    <details class="group p-6 [&_summary::-webkit-details-marker]:hidden" open>
-                        <summary class="flex justify-between items-center font-bold cursor-pointer text-gray-900">
-                            How do I access the training programs?
-                            <span class="transition group-open:rotate-180">
-                                <i class="fa-solid fa-chevron-down text-brand-500"></i>
-                            </span>
-                        </summary>
-                        <p class="text-gray-600 mt-4 leading-relaxed">
-                            Once you create an account and activate your profile, you will instantly gain access to the secure user dashboard where all digital learning tracks and modules are available 24/7.
+                    <div class="p-6 flex-1 flex flex-col justify-between space-y-4 bg-gray-50/50">
+                        <p class="font-devanagari text-lg font-bold text-brand-600 flex items-center gap-2">
+                            <i class="fa-solid fa-leaf text-brand-500"></i> गौ उत्पाद बनाकर स्वस्थ और समृद्ध बनें
                         </p>
-                    </details>
+                        <p class="text-gray-600 text-sm leading-relaxed">पंचगव्य और गौ उत्पादों से हर्बल व ऑर्गेनिक वस्तुएं बनाकर बाजार में अपना ब्रांड बनाएं।</p>
+                        <a href="{{ route('register') }}" class="w-full text-center bg-white hover:bg-brand-500 text-navy-900 hover:text-white font-bold py-3 rounded-xl border border-gray-200 transition duration-300 shadow-sm block">
+                            कोर्स में नामांकन लें <i class="fa-solid fa-arrow-right ml-1"></i>
+                        </a>
+                    </div>
                 </div>
+
+                <!-- Course 3: Hawan Cup & Dhoopbatti -->
+                <div class="bg-white rounded-3xl overflow-hidden shadow-premium border border-gray-100 flex flex-col group hover:-translate-y-1.5 transition-all duration-300">
+                    <div class="relative h-60 overflow-hidden">
+                        <img src="https://images.unsplash.com/photo-1608571423902-eed4a5ad8108?q=80&w=800&auto=format&fit=crop" class="w-full h-full object-cover group-hover:scale-110 transition duration-500" alt="Hawan Cup & Dhoopbatti Making Course">
+                        <div class="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent"></div>
+                        <div class="absolute top-4 right-4 bg-brand-500 text-white text-xs font-black px-3.5 py-1.5 rounded-full uppercase tracking-wider shadow">
+                            High Demand
+                        </div>
+                        <div class="absolute bottom-4 left-4 right-4">
+                            <span class="text-gold-400 font-bold text-xs uppercase tracking-wider">Business Course</span>
+                            <h4 class="text-white font-extrabold text-xl leading-tight">HAWAN CUP & DHOOPBATTI MAKING</h4>
+                        </div>
+                    </div>
+                    <div class="p-6 flex-1 flex flex-col justify-between space-y-4 bg-gray-50/50">
+                        <p class="font-devanagari text-lg font-bold text-brand-600 flex items-center gap-2">
+                            <i class="fa-solid fa-fire text-brand-500"></i> हवन कप और धूपबत्ती बनाएं
+                        </p>
+                        <p class="text-gray-600 text-sm leading-relaxed">धार्मिक और सुगंधित उत्पादों की अत्यधिक मांग का लाभ उठाएं। कम निवेश में घर से शुरुआत करें।</p>
+                        <a href="{{ route('register') }}" class="w-full text-center bg-white hover:bg-brand-500 text-navy-900 hover:text-white font-bold py-3 rounded-xl border border-gray-200 transition duration-300 shadow-sm block">
+                            कोर्स में नामांकन लें <i class="fa-solid fa-arrow-right ml-1"></i>
+                        </a>
+                    </div>
+                </div>
+
+                <!-- Course 4: Computer Course -->
+                <div class="bg-white rounded-3xl overflow-hidden shadow-premium border border-gray-100 flex flex-col group hover:-translate-y-1.5 transition-all duration-300">
+                    <div class="relative h-60 overflow-hidden">
+                        <img src="https://images.unsplash.com/photo-1517694712202-14dd9538aa97?q=80&w=800&auto=format&fit=crop" class="w-full h-full object-cover group-hover:scale-110 transition duration-500" alt="Computer Course">
+                        <div class="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent"></div>
+                        <div class="absolute top-4 right-4 bg-navy-900 text-white text-xs font-black px-3.5 py-1.5 rounded-full uppercase tracking-wider shadow">
+                            Digital Skill
+                        </div>
+                        <div class="absolute bottom-4 left-4 right-4">
+                            <span class="text-gold-400 font-bold text-xs uppercase tracking-wider">Skill Course</span>
+                            <h4 class="text-white font-extrabold text-xl leading-tight">COMPUTER COURSE</h4>
+                        </div>
+                    </div>
+                    <div class="p-6 flex-1 flex flex-col justify-between space-y-4 bg-gray-50/50">
+                        <p class="font-devanagari text-lg font-bold text-brand-600 flex items-center gap-2">
+                            <i class="fa-solid fa-desktop text-brand-500"></i> बेसिक से एडवांस कंप्यूटर सीखें
+                        </p>
+                        <p class="text-gray-600 text-sm leading-relaxed">ऑफिस ऑटोमेशन, एक्सेल, इंटरनेट और डिजिटल एकाउंटिंग टूल्स में दक्षता हासिल करें।</p>
+                        <a href="{{ route('register') }}" class="w-full text-center bg-white hover:bg-brand-500 text-navy-900 hover:text-white font-bold py-3 rounded-xl border border-gray-200 transition duration-300 shadow-sm block">
+                            कोर्स में नामांकन लें <i class="fa-solid fa-arrow-right ml-1"></i>
+                        </a>
+                    </div>
+                </div>
+
+                <!-- Course 5: Artificial Intelligence -->
+                <div class="bg-white rounded-3xl overflow-hidden shadow-premium border border-gray-100 flex flex-col group hover:-translate-y-1.5 transition-all duration-300">
+                    <div class="relative h-60 overflow-hidden">
+                        <img src="https://images.unsplash.com/photo-1677442136019-21780efad99a?q=80&w=800&auto=format&fit=crop" class="w-full h-full object-cover group-hover:scale-110 transition duration-500" alt="Artificial Intelligence Course">
+                        <div class="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent"></div>
+                        <div class="absolute top-4 right-4 bg-accent-500 text-white text-xs font-black px-3.5 py-1.5 rounded-full uppercase tracking-wider shadow">
+                            Future Tech
+                        </div>
+                        <div class="absolute bottom-4 left-4 right-4">
+                            <span class="text-gold-400 font-bold text-xs uppercase tracking-wider">Skill Course</span>
+                            <h4 class="text-white font-extrabold text-xl leading-tight">ARTIFICIAL INTELLIGENCE COURSE</h4>
+                        </div>
+                    </div>
+                    <div class="p-6 flex-1 flex flex-col justify-between space-y-4 bg-gray-50/50">
+                        <p class="font-devanagari text-lg font-bold text-brand-600 flex items-center gap-2">
+                            <i class="fa-solid fa-robot text-brand-500"></i> AI की तकनीक सीखें, भविष्य के लिए तैयार रहें
+                        </p>
+                        <p class="text-gray-600 text-sm leading-relaxed">आर्टिफिशियल इंटेलिजेंस (AI) और प्रॉम्प्ट इंजीनियरिंग सीखकर अपने काम की गति को 10 गुना बढ़ाएं।</p>
+                        <a href="{{ route('register') }}" class="w-full text-center bg-white hover:bg-brand-500 text-navy-900 hover:text-white font-bold py-3 rounded-xl border border-gray-200 transition duration-300 shadow-sm block">
+                            कोर्स में नामांकन लें <i class="fa-solid fa-arrow-right ml-1"></i>
+                        </a>
+                    </div>
+                </div>
+
+                <!-- Course 6: Other Profitable Courses -->
+                <div class="bg-white rounded-3xl overflow-hidden shadow-premium border border-gray-100 flex flex-col group hover:-translate-y-1.5 transition-all duration-300">
+                    <div class="relative h-60 overflow-hidden">
+                        <img src="https://images.unsplash.com/photo-1556228720-195a672e8a03?q=80&w=800&auto=format&fit=crop" class="w-full h-full object-cover group-hover:scale-110 transition duration-500" alt="Other Profitable Courses">
+                        <div class="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent"></div>
+                        <div class="absolute top-4 right-4 bg-brand-500 text-white text-xs font-black px-3.5 py-1.5 rounded-full uppercase tracking-wider shadow">
+                            Multi Skill
+                        </div>
+                        <div class="absolute bottom-4 left-4 right-4">
+                            <span class="text-gold-400 font-bold text-xs uppercase tracking-wider">Business Course</span>
+                            <h4 class="text-white font-extrabold text-xl leading-tight">अन्य लाभकारी कोर्स</h4>
+                        </div>
+                    </div>
+                    <div class="p-6 flex-1 flex flex-col justify-between space-y-4 bg-gray-50/50">
+                        <p class="font-devanagari text-lg font-bold text-brand-600 flex items-center gap-2">
+                            <i class="fa-solid fa-gifts text-brand-500"></i> मोमबत्ती, अगरबत्ती, फिनाइल व अन्य
+                        </p>
+                        <p class="text-gray-600 text-sm leading-relaxed">मोमबत्ती बनाना, अगरबत्ती, हैंडवॉश, सिलाेद, फेस वॉश, शैम्पू, साबुन आदि बनाने का संपूर्ण ज्ञान।</p>
+                        <a href="{{ route('register') }}" class="w-full text-center bg-white hover:bg-brand-500 text-navy-900 hover:text-white font-bold py-3 rounded-xl border border-gray-200 transition duration-300 shadow-sm block">
+                            कोर्स में नामांकन लें <i class="fa-solid fa-arrow-right ml-1"></i>
+                        </a>
+                    </div>
+                </div>
+
+            </div>
+
+            <!-- Bottom Floating Dream Ribbon -->
+            <div class="mt-16 bg-navy-900 text-white p-6 sm:p-8 rounded-3xl shadow-xl flex flex-col sm:flex-row items-center justify-center gap-4 text-center border-2 border-gold-400/40 relative overflow-hidden">
+                <div class="absolute top-0 right-0 transform translate-x-10 -translate-y-10 w-40 h-40 bg-brand-500/30 rounded-full blur-2xl pointer-events-none"></div>
+                <div class="text-3xl sm:text-4xl text-accent-500 animate-bounce">✈️</div>
+                <h3 class="font-devanagari text-xl sm:text-2xl lg:text-3xl font-black text-gold-400 tracking-wide">
+                    और भी कई कोर्स जो आपके सपनों को देंगे नई उड़ान!
+                </h3>
+            </div>
+
+        </div>
+    </section>
+
+    <!-- 5. CALL TO ACTION SPLIT BANNER (Bottom Banner from Flyer) -->
+    <section class="py-16 bg-gradient-premium text-white relative z-20 overflow-hidden shadow-2xl border-t-4 border-brand-500">
+        <div class="absolute inset-0 bg-[url('https://images.unsplash.com/photo-1522071820081-009f0129c71c?q=80&w=2070&auto=format&fit=crop')] bg-cover bg-center opacity-10 mix-blend-overlay z-0"></div>
+        
+        <!-- Ambient background glows -->
+        <div class="absolute top-0 left-1/4 w-96 h-96 bg-brand-500/20 rounded-full blur-3xl pointer-events-none"></div>
+        <div class="absolute bottom-0 right-1/4 w-96 h-96 bg-accent-500/20 rounded-full blur-3xl pointer-events-none"></div>
+
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+            <div class="grid lg:grid-cols-12 gap-12 items-center">
                 
-                <!-- FAQ Item -->
-                <div class="border border-gray-200 rounded-xl overflow-hidden">
-                    <details class="group p-6 [&_summary::-webkit-details-marker]:hidden">
-                        <summary class="flex justify-between items-center font-bold cursor-pointer text-gray-900">
-                            Are the certificates professionally recognized?
-                            <span class="transition group-open:rotate-180">
-                                <i class="fa-solid fa-chevron-down text-brand-500"></i>
-                            </span>
-                        </summary>
-                        <p class="text-gray-600 mt-4 leading-relaxed">
-                            Yes, our certificates demonstrate successful completion of skill-based training modules. They include verification details and can be proudly displayed on professional networks like LinkedIn.
-                        </p>
-                    </details>
-                </div>
-
-                <!-- FAQ Item -->
-                <div class="border border-gray-200 rounded-xl overflow-hidden">
-                    <details class="group p-6 [&_summary::-webkit-details-marker]:hidden">
-                        <summary class="flex justify-between items-center font-bold cursor-pointer text-gray-900">
-                            How does the rewards system work?
-                            <span class="transition group-open:rotate-180">
-                                <i class="fa-solid fa-chevron-down text-brand-500"></i>
-                            </span>
-                        </summary>
-                        <p class="text-gray-600 mt-4 leading-relaxed">
-                            We use a gamified learning approach. By engaging with the platform daily, completing modules, and participating in the community ecosystem, you earn platform utility rewards that reflect your performance.
-                        </p>
-                    </details>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- 10. CONTACT SECTION -->
-    <section class="py-20 bg-gray-50 border-t border-gray-100">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div class="grid lg:grid-cols-2 gap-16">
-                <div>
-                    <h2 class="text-brand-600 font-bold tracking-wider uppercase text-sm mb-2">Get In Touch</h2>
-                    <h3 class="font-heading text-3xl md:text-4xl font-bold text-gray-900 mb-6">Contact Our Support Team</h3>
-                    <p class="text-gray-600 mb-8">Have questions about our programs, enterprise solutions, or need technical assistance? We are here to help.</p>
-                    
-                    <div class="space-y-6">
-                        <div class="flex items-start gap-4">
-                            <div class="w-12 h-12 rounded-lg bg-white border border-gray-200 flex items-center justify-center text-brand-600 text-lg shadow-sm">
-                                <i class="fa-solid fa-envelope"></i>
-                            </div>
-                            <div>
-                                <h4 class="font-bold text-gray-900">Email Us</h4>
-                                <p class="text-gray-600">support@samarth.digital</p>
-                            </div>
-                        </div>
-                        <div class="flex items-start gap-4">
-                            <div class="w-12 h-12 rounded-lg bg-white border border-gray-200 flex items-center justify-center text-brand-600 text-lg shadow-sm">
-                                <i class="fa-solid fa-phone"></i>
-                            </div>
-                            <div>
-                                <h4 class="font-bold text-gray-900">Call Us</h4>
-                                <p class="text-gray-600">+91 98765 43210</p>
-                            </div>
-                        </div>
-                        <div class="flex items-start gap-4">
-                            <div class="w-12 h-12 rounded-lg bg-white border border-gray-200 flex items-center justify-center text-brand-600 text-lg shadow-sm">
-                                <i class="fa-solid fa-location-dot"></i>
-                            </div>
-                            <div>
-                                <h4 class="font-bold text-gray-900">Corporate Office</h4>
-                                <p class="text-gray-600">Business Park, Digital Hub,<br>New Delhi, India</p>
-                            </div>
-                        </div>
+                <!-- Left Banner Split (7 Cols) -->
+                <div class="lg:col-span-7 space-y-6 text-center lg:text-left border-b lg:border-b-0 lg:border-r border-white/20 pb-10 lg:pb-0 lg:pr-12">
+                    <div class="inline-block bg-white text-navy-900 font-extrabold text-sm uppercase px-5 py-2 rounded-full tracking-wider shadow">
+                        आज ही शुरुआत करें
                     </div>
-                </div>
-                
-                <div class="bg-white p-8 rounded-2xl shadow-soft border border-gray-100">
-                    <form class="space-y-6">
-                        <div class="grid grid-cols-2 gap-6">
-                            <div>
-                                <label class="block text-sm font-medium text-gray-700 mb-2">First Name</label>
-                                <input type="text" class="w-full px-4 py-3 rounded-lg border border-gray-300 focus:ring-2 focus:ring-brand-500 focus:border-brand-500 outline-none transition" placeholder="John">
-                            </div>
-                            <div>
-                                <label class="block text-sm font-medium text-gray-700 mb-2">Last Name</label>
-                                <input type="text" class="w-full px-4 py-3 rounded-lg border border-gray-300 focus:ring-2 focus:ring-brand-500 focus:border-brand-500 outline-none transition" placeholder="Doe">
-                            </div>
-                        </div>
-                        <div>
-                            <label class="block text-sm font-medium text-gray-700 mb-2">Email Address</label>
-                            <input type="email" class="w-full px-4 py-3 rounded-lg border border-gray-300 focus:ring-2 focus:ring-brand-500 focus:border-brand-500 outline-none transition" placeholder="john@company.com">
-                        </div>
-                        <div>
-                            <label class="block text-sm font-medium text-gray-700 mb-2">Message</label>
-                            <textarea rows="4" class="w-full px-4 py-3 rounded-lg border border-gray-300 focus:ring-2 focus:ring-brand-500 focus:border-brand-500 outline-none transition" placeholder="How can we help you?"></textarea>
-                        </div>
-                        <button type="button" class="w-full bg-brand-600 hover:bg-brand-700 text-white font-bold py-3.5 rounded-lg shadow-md transition">
-                            Send Message
-                        </button>
-                    </form>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- 11. FOOTER -->
-    <footer class="bg-brand-900 text-gray-300 pt-16 pb-8 border-t border-brand-800">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-12 mb-12">
-                <div class="lg:col-span-1">
-                    <div class="flex items-center gap-3 mb-6">
-                        <img src="{{ asset('logo.png') }}" alt="Logo" class="w-10 h-10 rounded-full object-cover">
-                        <span class="font-heading font-bold text-xl text-white tracking-tight">Samarth Digital</span>
-                    </div>
-                    <p class="text-sm text-gray-400 mb-6 leading-relaxed">
-                        A premium digital education ecosystem empowering individuals with high-income skills and professional networking opportunities.
+                    <h2 class="font-devanagari text-3xl sm:text-4xl lg:text-5xl font-black leading-tight text-white">
+                        आज ही <span class="text-gold-400">SAMARTH DIGITAL</span> के साथ जुड़ें
+                    </h2>
+                    <div class="w-32 h-1 bg-brand-400 mx-auto lg:mx-0 rounded-full"></div>
+                    <p class="font-devanagari text-xl sm:text-2xl font-bold text-gray-200">
+                        आत्मनिर्भर बनें, दूसरों को भी आत्मनिर्भर बनाएं!
                     </p>
-                    <div class="flex gap-4">
-                        <a href="#" class="w-10 h-10 rounded-full bg-brand-800 flex items-center justify-center hover:bg-brand-600 hover:text-white transition"><i class="fa-brands fa-linkedin-in"></i></a>
-                        <a href="#" class="w-10 h-10 rounded-full bg-brand-800 flex items-center justify-center hover:bg-brand-600 hover:text-white transition"><i class="fa-brands fa-twitter"></i></a>
-                        <a href="#" class="w-10 h-10 rounded-full bg-brand-800 flex items-center justify-center hover:bg-brand-600 hover:text-white transition"><i class="fa-brands fa-facebook-f"></i></a>
-                        <a href="#" class="w-10 h-10 rounded-full bg-brand-800 flex items-center justify-center hover:bg-brand-600 hover:text-white transition"><i class="fa-brands fa-instagram"></i></a>
+                    <div class="pt-4 flex flex-col sm:flex-row gap-4 justify-center lg:justify-start">
+                        <a href="{{ route('register') }}" class="bg-brand-500 hover:bg-brand-600 text-white font-extrabold text-lg py-4 px-8 rounded-2xl shadow-xl shadow-brand-500/50 transition transform hover:-translate-y-1 text-center inline-block">
+                            रजिस्टर करें और ट्रेनिंग शुरू करें
+                        </a>
+                        <a href="{{ route('login') }}" class="bg-white/10 hover:bg-white/20 border border-white/30 text-white font-bold py-4 px-8 rounded-2xl backdrop-blur transition text-center inline-block">
+                            सदस्य लॉगिन
+                        </a>
                     </div>
                 </div>
-                
-                <div>
-                    <h4 class="text-white font-bold mb-6">Quick Links</h4>
-                    <ul class="space-y-3 text-sm">
-                        <li><a href="#about" class="hover:text-brand-400 transition">About Us</a></li>
-                        <li><a href="#programs" class="hover:text-brand-400 transition">Training Programs</a></li>
-                        <li><a href="#benefits" class="hover:text-brand-400 transition">Platform Benefits</a></li>
-                        <li><a href="#features" class="hover:text-brand-400 transition">Features</a></li>
+
+                <!-- Right Banner Split (5 Cols) -->
+                <div class="lg:col-span-5 space-y-6 text-center">
+                    <div>
+                        <h3 class="font-devanagari text-2xl sm:text-3xl font-extrabold text-gray-200 mb-1">
+                            आपकी मेहनत, हमारा साथ
+                        </h3>
+                        <h2 class="font-devanagari text-4xl sm:text-5xl font-black text-gold-400 drop-shadow">
+                            सफलता आपके हाथ!
+                        </h2>
+                    </div>
+
+                    <div class="bg-white/10 backdrop-blur-md p-6 rounded-3xl border border-white/20 shadow-xl max-w-md mx-auto space-y-4">
+                        <p class="text-xs sm:text-sm font-semibold text-gray-300 uppercase tracking-widest">
+                            अधिक जानकारी के लिए संपर्क करें
+                        </p>
+                        <a href="tel:+91705790000" class="flex items-center justify-center gap-3 bg-white text-navy-900 py-4 px-6 rounded-2xl font-black text-2xl sm:text-3xl shadow-lg hover:bg-brand-50 transition group">
+                            <i class="fa-solid fa-phone text-brand-500 group-hover:rotate-12 transition"></i>
+                            <span>+91 70579 0000</span>
+                        </a>
+                        <div class="flex items-center justify-center gap-2 text-gold-400 font-bold text-base sm:text-lg pt-2">
+                            <i class="fa-solid fa-globe"></i> www.samarthdigital.com
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </section>
+
+    <!-- 6. FEATURE HIGHLIGHTS FOOTER BAR (4 Bottom Points from Flyer) -->
+    <section class="bg-white py-12 border-b border-gray-200 relative z-30 shadow-md">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="grid sm:grid-cols-2 lg:grid-cols-4 gap-6">
+                <!-- Highlight 1 -->
+                <div class="bg-gray-50 p-6 rounded-2xl border border-gray-200 shadow-sm flex items-center gap-4 hover:border-brand-500 transition group">
+                    <div class="w-14 h-14 bg-brand-100 text-brand-600 rounded-2xl flex items-center justify-center text-2xl font-bold flex-shrink-0 group-hover:bg-brand-500 group-hover:text-white transition">
+                        <i class="fa-solid fa-user-tie"></i>
+                    </div>
+                    <h4 class="font-devanagari font-bold text-navy-900 text-lg leading-snug">
+                        महिलाओं के लिए विशेष अवसर
+                    </h4>
+                </div>
+
+                <!-- Highlight 2 -->
+                <div class="bg-gray-50 p-6 rounded-2xl border border-gray-200 shadow-sm flex items-center gap-4 hover:border-accent-500 transition group">
+                    <div class="w-14 h-14 bg-accent-100 text-accent-600 rounded-2xl flex items-center justify-center text-2xl font-bold flex-shrink-0 group-hover:bg-accent-500 group-hover:text-white transition">
+                        <i class="fa-solid fa-clock"></i>
+                    </div>
+                    <h4 class="font-devanagari font-bold text-navy-900 text-lg leading-snug">
+                        अपने समय का खुद मालिक बनें
+                    </h4>
+                </div>
+
+                <!-- Highlight 3 -->
+                <div class="bg-gray-50 p-6 rounded-2xl border border-gray-200 shadow-sm flex items-center gap-4 hover:border-brand-500 transition group">
+                    <div class="w-14 h-14 bg-green-100 text-green-600 rounded-2xl flex items-center justify-center text-2xl font-bold flex-shrink-0 group-hover:bg-green-600 group-hover:text-white transition">
+                        <i class="fa-solid fa-indian-rupee-sign"></i>
+                    </div>
+                    <h4 class="font-devanagari font-bold text-navy-900 text-lg leading-snug">
+                        अतिरिक्त आय से वित्तीय स्वतंत्रता पाएं
+                    </h4>
+                </div>
+
+                <!-- Highlight 4 -->
+                <div class="bg-gray-50 p-6 rounded-2xl border border-gray-200 shadow-sm flex items-center gap-4 hover:border-navy-900 transition group">
+                    <div class="w-14 h-14 bg-blue-100 text-blue-600 rounded-2xl flex items-center justify-center text-2xl font-bold flex-shrink-0 group-hover:bg-navy-900 group-hover:text-white transition">
+                        <i class="fa-solid fa-bullseye"></i>
+                    </div>
+                    <h4 class="font-devanagari font-bold text-navy-900 text-lg leading-snug">
+                        छोटा कदम, बड़ा बदलाव आज से शुरू करें!
+                    </h4>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 7. FREQUENTLY ASKED QUESTIONS -->
+    <section id="faq" class="py-20 bg-gray-50">
+        <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center mb-16">
+                <span class="text-brand-600 font-bold text-sm uppercase tracking-wider bg-brand-50 px-4 py-1.5 rounded-full border border-brand-200">
+                    अक्सर पूछे जाने वाले प्रश्न
+                </span>
+                <h2 class="font-devanagari text-3xl sm:text-4xl font-black text-navy-900 mt-4 mb-4">
+                    आपके सवालों के जवाब
+                </h2>
+                <div class="w-20 h-1 bg-brand-500 mx-auto rounded-full"></div>
+            </div>
+
+            <div class="space-y-6 font-devanagari">
+                <!-- FAQ 1 -->
+                <div class="bg-white rounded-2xl border border-gray-200 shadow-sm overflow-hidden">
+                    <details class="group p-6 [&_summary::-webkit-details-marker]:hidden" open>
+                        <summary class="flex justify-between items-center font-bold text-xl cursor-pointer text-navy-900 select-none">
+                            <span>1. ट्रेनिंग कोर्सेज में नामांकन कैसे लें?</span>
+                            <span class="transition group-open:rotate-180 bg-gray-100 p-2 rounded-full text-brand-500 flex items-center justify-center">
+                                <i class="fa-solid fa-chevron-down text-sm"></i>
+                            </span>
+                        </summary>
+                        <p class="text-gray-600 mt-4 text-base leading-relaxed border-t border-gray-100 pt-4">
+                            आप वेबसाइट के 'आज ही जुड़ें' बटन पर क्लिक करके अपना अकाउंट बना सकते हैं। रजिस्ट्रेशन के पश्चात आपको अपने डैशबोर्ड में सभी कोर्सेज और ट्रेनिंग विकल्पों का एक्सेस मिल जाएगा।
+                        </p>
+                    </details>
+                </div>
+
+                <!-- FAQ 2 -->
+                <div class="bg-white rounded-2xl border border-gray-200 shadow-sm overflow-hidden">
+                    <details class="group p-6 [&_summary::-webkit-details-marker]:hidden">
+                        <summary class="flex justify-between items-center font-bold text-xl cursor-pointer text-navy-900 select-none">
+                            <span>2. क्या ट्रेनिंग के बाद सर्टिफिकेट मिलेगा?</span>
+                            <span class="transition group-open:rotate-180 bg-gray-100 p-2 rounded-full text-brand-500 flex items-center justify-center">
+                                <i class="fa-solid fa-chevron-down text-sm"></i>
+                            </span>
+                        </summary>
+                        <p class="text-gray-600 mt-4 text-base leading-relaxed border-t border-gray-100 pt-4">
+                            हाँ, प्रत्येक कोर्स को सफलतापूर्वक पूरा करने के बाद आपको Samarth Digital द्वारा एक आधिकारिक और मान्य सर्टिफिकेट जारी किया जाता है जिसे आप अपने पेशेवर नेटवर्क में उपयोग कर सकते हैं।
+                        </p>
+                    </details>
+                </div>
+
+                <!-- FAQ 3 -->
+                <div class="bg-white rounded-2xl border border-gray-200 shadow-sm overflow-hidden">
+                    <details class="group p-6 [&_summary::-webkit-details-marker]:hidden">
+                        <summary class="flex justify-between items-center font-bold text-xl cursor-pointer text-navy-900 select-none">
+                            <span>3. क्या घर बैठे व्यवसाय शुरू करने में मदद की जाएगी?</span>
+                            <span class="transition group-open:rotate-180 bg-gray-100 p-2 rounded-full text-brand-500 flex items-center justify-center">
+                                <i class="fa-solid fa-chevron-down text-sm"></i>
+                            </span>
+                        </summary>
+                        <p class="text-gray-600 mt-4 text-base leading-relaxed border-t border-gray-100 pt-4">
+                            बिल्कुल! हमारा मुख्य उद्देश्य केवल कौशल सिखाना नहीं बल्कि आपको स्वावलंबी बनाना है। हम आपको बिजनेस टूल्स, मार्केटिंग सपोर्ट और निरंतर मार्गदर्शन प्रदान करते हैं।
+                        </p>
+                    </details>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 8. FOOTER SECTION -->
+    <footer id="contact" class="bg-navy-900 text-gray-300 pt-20 pb-12 border-t border-navy-800 relative z-20">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-12 mb-16">
+                <!-- Col 1 -->
+                <div class="lg:col-span-1 space-y-6">
+                    <div class="flex items-center gap-3.5">
+                        <img src="{{ asset('logo.png') }}" onerror="this.src='https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?q=80&w=150&auto=format&fit=crop'" alt="Logo" class="w-12 h-12 rounded-xl object-cover bg-white p-1">
+                        <span class="font-extrabold text-2xl text-white tracking-tight leading-none">SAMARTH<br><span class="text-brand-400">DIGITAL</span></span>
+                    </div>
+                    <p class="text-sm text-gray-400 font-devanagari leading-relaxed font-medium">
+                        कौशल विकास और स्व रोजगार को समर्पित एक अग्रणी डिजिटल प्लेटफॉर्म जो आपको घर बैठे काम करने और अच्छी कमाई करने के अवसर प्रदान करता है।
+                    </p>
+                    <div class="flex gap-4 text-lg">
+                        <a href="#" class="w-10 h-10 rounded-xl bg-white/10 flex items-center justify-center hover:bg-brand-500 hover:text-white transition"><i class="fa-brands fa-facebook-f"></i></a>
+                        <a href="#" class="w-10 h-10 rounded-xl bg-white/10 flex items-center justify-center hover:bg-brand-500 hover:text-white transition"><i class="fa-brands fa-instagram"></i></a>
+                        <a href="#" class="w-10 h-10 rounded-xl bg-white/10 flex items-center justify-center hover:bg-brand-500 hover:text-white transition"><i class="fa-brands fa-whatsapp"></i></a>
+                        <a href="#" class="w-10 h-10 rounded-xl bg-white/10 flex items-center justify-center hover:bg-brand-500 hover:text-white transition"><i class="fa-brands fa-youtube"></i></a>
+                    </div>
+                </div>
+
+                <!-- Col 2 -->
+                <div class="font-devanagari">
+                    <h4 class="text-white font-extrabold text-lg mb-6 border-l-4 border-brand-500 pl-3">त्वरित लिंक</h4>
+                    <ul class="space-y-3.5 font-semibold text-gray-400">
+                        <li><a href="/" class="hover:text-white transition flex items-center gap-2"><i class="fa-solid fa-angle-right text-brand-500 text-sm"></i> होम</a></li>
+                        <li><a href="#about" class="hover:text-white transition flex items-center gap-2"><i class="fa-solid fa-angle-right text-brand-500 text-sm"></i> हमारे बारे में</a></li>
+                        <li><a href="#features" class="hover:text-white transition flex items-center gap-2"><i class="fa-solid fa-angle-right text-brand-500 text-sm"></i> हम क्या देते हैं</a></li>
+                        <li><a href="#training" class="hover:text-white transition flex items-center gap-2"><i class="fa-solid fa-angle-right text-brand-500 text-sm"></i> ट्रेनिंग विकल्प</a></li>
+                        <li><a href="#courses" class="hover:text-white transition flex items-center gap-2"><i class="fa-solid fa-angle-right text-brand-500 text-sm"></i> हमारे प्रमुख कोर्स</a></li>
                     </ul>
                 </div>
 
-                <div>
-                    <h4 class="text-white font-bold mb-6">Support</h4>
-                    <ul class="space-y-3 text-sm">
-                        <li><a href="#" class="hover:text-brand-400 transition">Help Center</a></li>
-                        <li><a href="#" class="hover:text-brand-400 transition">Privacy Policy</a></li>
-                        <li><a href="#" class="hover:text-brand-400 transition">Terms & Conditions</a></li>
-                        <li><a href="#" class="hover:text-brand-400 transition">Contact Us</a></li>
+                <!-- Col 3 -->
+                <div class="font-devanagari">
+                    <h4 class="text-white font-extrabold text-lg mb-6 border-l-4 border-brand-500 pl-3">ट्रेनिंग कोर्सेज</h4>
+                    <ul class="space-y-3.5 font-semibold text-gray-400">
+                        <li><a href="#courses" class="hover:text-white transition flex items-center gap-2"><i class="fa-solid fa-angle-right text-accent-500 text-sm"></i> क्लीनिंग प्रोडक्ट्स कोर्स</a></li>
+                        <li><a href="#courses" class="hover:text-white transition flex items-center gap-2"><i class="fa-solid fa-angle-right text-accent-500 text-sm"></i> गौ उत्पाद मेकिंग कोर्स</a></li>
+                        <li><a href="#courses" class="hover:text-white transition flex items-center gap-2"><i class="fa-solid fa-angle-right text-accent-500 text-sm"></i> हवन कप और धूपबत्ती कोर्स</a></li>
+                        <li><a href="#courses" class="hover:text-white transition flex items-center gap-2"><i class="fa-solid fa-angle-right text-accent-500 text-sm"></i> बेसिक व एडवांस कंप्यूटर कोर्स</a></li>
+                        <li><a href="#courses" class="hover:text-white transition flex items-center gap-2"><i class="fa-solid fa-angle-right text-accent-500 text-sm"></i> आर्टिफिशियल इंटेलिजेंस (AI) कोर्स</a></li>
                     </ul>
                 </div>
 
-                <div>
-                    <h4 class="text-white font-bold mb-6">Contact Info</h4>
-                    <ul class="space-y-3 text-sm">
-                        <li class="flex items-start gap-3"><i class="fa-solid fa-envelope mt-1 text-brand-500"></i> support@samarth.digital</li>
-                        <li class="flex items-start gap-3"><i class="fa-solid fa-phone mt-1 text-brand-500"></i> +91 98765 43210</li>
-                        <li class="flex items-start gap-3"><i class="fa-solid fa-location-dot mt-1 text-brand-500"></i> Business Park, New Delhi, India</li>
+                <!-- Col 4 -->
+                <div class="font-devanagari">
+                    <h4 class="text-white font-extrabold text-lg mb-6 border-l-4 border-brand-500 pl-3">संपर्क जानकारी</h4>
+                    <ul class="space-y-4 text-sm font-medium text-gray-300">
+                        <li class="flex items-start gap-3.5">
+                            <i class="fa-solid fa-phone text-gold-400 text-lg mt-1 flex-shrink-0"></i>
+                            <div>
+                                <strong class="block text-white font-bold">फोन नंबर:</strong>
+                                <a href="tel:+91705790000" class="hover:text-white transition">+91 70579 0000</a>
+                            </div>
+                        </li>
+                        <li class="flex items-start gap-3.5">
+                            <i class="fa-solid fa-envelope text-brand-400 text-lg mt-1 flex-shrink-0"></i>
+                            <div>
+                                <strong class="block text-white font-bold">ईमेल पता:</strong>
+                                <a href="mailto:info@samarthdigital.com" class="hover:text-white transition">info@samarthdigital.com</a>
+                            </div>
+                        </li>
+                        <li class="flex items-start gap-3.5">
+                            <i class="fa-solid fa-globe text-accent-400 text-lg mt-1 flex-shrink-0"></i>
+                            <div>
+                                <strong class="block text-white font-bold">वेबसाइट:</strong>
+                                <a href="https://www.samarthdigital.com" target="_blank" class="hover:text-white transition">www.samarthdigital.com</a>
+                            </div>
+                        </li>
                     </ul>
                 </div>
             </div>
             
-            <div class="border-t border-brand-800 pt-8 flex flex-col md:flex-row justify-between items-center gap-4">
-                <p class="text-sm text-gray-500">
-                    &copy; 2026 samarth.digital. All rights reserved.
-                </p>
-                <div class="flex items-center gap-2 text-sm text-gray-500">
-                    <span>Designed for Professional Excellence</span>
+            <!-- Bottom Bar -->
+            <div class="border-t border-white/10 pt-8 flex flex-col sm:flex-row justify-between items-center gap-4 text-xs sm:text-sm text-gray-500 font-devanagari font-semibold">
+                <p>&copy; 2026 SAMARTH DIGITAL. सर्वाधिकार सुरक्षित।</p>
+                <div class="flex items-center gap-4">
+                    <a href="#" class="hover:text-gray-300 transition">नियम व शर्तें</a>
+                    <span>•</span>
+                    <a href="#" class="hover:text-gray-300 transition">गोपनीयता नीति</a>
                 </div>
             </div>
         </div>
     </footer>
 
+    <!-- Script for sticky header & mobile menu -->
     <script>
         // Navbar scroll effect
         window.addEventListener('scroll', () => {
             const nav = document.getElementById('navbar');
             if (window.scrollY > 20) {
-                nav.classList.add('shadow-md');
+                nav.classList.add('shadow-lg', 'bg-white/95');
                 nav.classList.remove('shadow-sm');
             } else {
-                nav.classList.remove('shadow-md');
+                nav.classList.remove('shadow-lg', 'bg-white/95');
                 nav.classList.add('shadow-sm');
             }
         });
@@ -786,16 +1044,13 @@
         function toggleMenu() {
             menuOpen = !menuOpen;
             if (menuOpen) {
-                menu.classList.remove('hidden', '-translate-y-2', 'opacity-0', 'pointer-events-none');
+                menu.classList.remove('hidden');
                 icon.classList.remove('fa-bars');
                 icon.classList.add('fa-xmark');
             } else {
-                menu.classList.add('-translate-y-2', 'opacity-0', 'pointer-events-none');
                 icon.classList.remove('fa-xmark');
                 icon.classList.add('fa-bars');
-                setTimeout(() => {
-                    if(!menuOpen) menu.classList.add('hidden');
-                }, 300);
+                menu.classList.add('hidden');
             }
         }
 
@@ -807,7 +1062,6 @@
                 if(menuOpen) toggleMenu();
             });
         });
-
     </script>
 </body>
 </html>
