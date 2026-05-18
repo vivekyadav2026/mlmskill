@@ -116,14 +116,14 @@
         <div class="stat-card border-l-4 border-l-blue-500">
             <div class="stat-icon bg-blue-500/10 text-blue-500"><i class="fa-solid fa-coins"></i></div>
             <div class="flex-grow">
-                <p class="text-sm font-medium text-gray-400">NEXA 1.0s</p>
+                <p class="text-sm font-medium text-gray-400">NEXA 1.0</p>
                 <h3 class="text-2xl font-bold text-gray-100">{{ number_format($wallet->utility_token_wallet ?? 0, 2) }} {{ strtoupper($tokenName) }}</h3>
             </div>
         </div>
         <div class="stat-card border-l-4 border-l-orange-500">
             <div class="stat-icon bg-orange-500/10 text-orange-500"><i class="fa-solid fa-arrows-spin"></i></div>
             <div class="flex-grow">
-                <p class="text-sm font-medium text-gray-400">NEXA 2.0s</p>
+                <p class="text-sm font-medium text-gray-400">NEXA 2.0</p>
                 <h3 class="text-2xl font-bold text-gray-100">{{ number_format($wallet->renewal_token_wallet ?? 0, 2) }} RT</h3>
             </div>
         </div>
@@ -136,23 +136,8 @@
         </div>
     </div>
 
-    <!-- Usage & Network Snapshot Row -->
+    <!-- Network Snapshot & Rank Progression Row -->
     <div class="grid grid-cols-1 lg:grid-cols-2 gap-6 mb-6">
-        <div class="bg-[#1a222d] rounded-lg border border-[#334155] p-6">
-            <div class="flex justify-between items-center mb-4">
-                <h3 class="text-gray-200 font-medium"><i class="fa-solid fa-shield mr-2 text-yellow-500"></i>Renewal Progress</h3>
-                <span class="text-xs font-bold bg-cyan-900 text-cyan-300 px-2 py-1 rounded">Target: {{ $renewalTarget }} RT</span>
-            </div>
-            @php $renewPct = min(100, (($wallet->renewal_token_wallet ?? 0) / max(1, $renewalTarget)) * 100); @endphp
-            <div class="w-full bg-gray-900 rounded-full h-2 mb-2 border border-[#334155]">
-                <div class="bg-cyan-500 h-2 rounded-full" style="width: {{ $renewPct }}%"></div>
-            </div>
-            <div class="flex justify-between text-sm mt-4 border-t border-[#334155] pt-4">
-                <div><p class="text-gray-500">Current Saved</p><p class="text-green-400 font-bold">{{ number_format($wallet->renewal_token_wallet ?? 0, 2) }} RT</p></div>
-                <div class="text-right"><p class="text-gray-500">Remaining to Renew</p><p class="text-gray-200 font-bold">{{ number_format(max(0, $renewalTarget - ($wallet->renewal_token_wallet ?? 0)), 2) }} RT</p></div>
-            </div>
-        </div>
-
         <div class="bg-[#1a222d] rounded-lg border border-[#334155] p-6">
             <h3 class="text-gray-200 font-medium mb-4"><i class="fa-solid fa-users mr-2 text-blue-400"></i>Network Snapshot</h3>
             <div class="grid grid-cols-3 gap-2">
@@ -523,7 +508,7 @@ document.addEventListener('DOMContentLoaded', function() {
     new Chart(assetCtx, {
         type: 'polarArea',
         data: {
-            labels: ['Income Wallet', 'Package Wallet', 'NEXA 1.0s'],
+            labels: ['Income Wallet', 'Package Wallet', 'NEXA 1.0'],
             datasets: [{
                 data: [
                     {{ $wallet->income_wallet ?? 0 }},

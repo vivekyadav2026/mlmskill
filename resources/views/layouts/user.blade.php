@@ -192,7 +192,7 @@
           <i class="fa-solid fa-chevron-down nav-arrow"></i>
         </a>
         <ul class="nav-submenu list-unstyled mb-0">
-          <li><a href="{{ url('user/token/history') }}" class="nav-link sub-link"><span>Daily Token History</span></a></li>
+          <!-- <li><a href="{{ url('user/token/history') }}" class="nav-link sub-link"><span>Daily Token History</span></a></li> -->
           <li><a href="{{ url('user/token/utility') }}" class="nav-link sub-link"><span>NEXA 1.0 Details</span></a></li>
           <li><a href="{{ url('user/token/renewal') }}" class="nav-link sub-link"><span>NEXA 2.0 Details</span></a></li>
           <li><a href="{{ url('user/token/conversion') }}" class="nav-link sub-link"><span>Token Conversion</span></a></li>

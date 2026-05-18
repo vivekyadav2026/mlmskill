@@ -24,7 +24,7 @@
 
         <!-- Chart Card -->
         <div class="md:col-span-2 bg-[#1a222d] rounded-lg shadow-lg border border-[#334155] p-6">
-            <h3 class="text-gray-300 font-medium mb-4">NEXA 1.0s Earned (Last 30 Days)</h3>
+            <h3 class="text-gray-300 font-medium mb-4">NEXA 1.0 Earned (Last 30 Days)</h3>
             <div class="h-48 w-full relative">
                 <canvas id="tokenChart"></canvas>
             </div>
@@ -45,7 +45,7 @@
                 data: {
                     labels: labels,
                     datasets: [{
-                        label: 'NEXA 1.0s',
+                        label: 'NEXA 1.0',
                         data: dataPoints,
                         borderColor: '#60a5fa',
                         backgroundColor: 'rgba(96, 165, 250, 0.2)',

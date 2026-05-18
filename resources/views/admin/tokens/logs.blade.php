@@ -17,7 +17,7 @@
     <div class="flex items-center justify-between mb-6 flex-wrap gap-3">
         <div>
             <h2 class="text-2xl font-bold text-gray-100">Token Distribution Logs</h2>
-            <p class="text-gray-400 text-sm mt-1">Complete history of all Utility & NEXA 2.0s distributed to users.</p>
+            <p class="text-gray-400 text-sm mt-1">Complete history of all Utility & NEXA 2.0 distributed to users.</p>
         </div>
         <a href="{{ url('admin/tokens/manual') }}"
            class="bg-indigo-600 hover:bg-indigo-700 text-white text-sm font-semibold px-4 py-2 rounded transition flex items-center gap-2">
@@ -39,11 +39,11 @@
             <p class="text-2xl font-bold text-white">{{ $logs->total() }}</p>
         </div>
         <div class="bg-[#1a222d] border border-indigo-900 rounded-lg p-4">
-            <p class="text-gray-400 text-xs uppercase tracking-wider mb-1">NEXA 1.0s Issued</p>
+            <p class="text-gray-400 text-xs uppercase tracking-wider mb-1">NEXA 1.0 Issued</p>
             <p class="text-2xl font-bold text-indigo-400">{{ number_format($totalUtility, 2) }}</p>
         </div>
         <div class="bg-[#1a222d] border border-yellow-900 rounded-lg p-4">
-            <p class="text-gray-400 text-xs uppercase tracking-wider mb-1">NEXA 2.0s Issued</p>
+            <p class="text-gray-400 text-xs uppercase tracking-wider mb-1">NEXA 2.0 Issued</p>
             <p class="text-2xl font-bold text-yellow-400">{{ number_format($totalRenewal, 2) }}</p>
         </div>
         <div class="bg-[#1a222d] border border-[#334155] rounded-lg p-4">

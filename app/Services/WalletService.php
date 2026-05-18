@@ -16,12 +16,9 @@ class WalletService
             $wallet = $user->wallet;
             
             if (!$wallet || $wallet->utility_token_wallet < $tokenAmount) {
-                throw new Exception("Insufficient NEXA 1.0s.");
+                throw new Exception("Insufficient NEXA 1.0.");
             }
 
-            if ($tokenAmount < 50) {
-                throw new Exception("Minimum 50 NEXA 1.0s required for conversion.");
-            }
 
             // Calculate value
             $tokenValue = 0.125;

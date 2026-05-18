@@ -29,14 +29,27 @@
 
     <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
         <!-- Balance Info -->
-        <div class="bg-[#1a222d] border border-[#334155] rounded-xl p-6 shadow-lg h-min">
-            <div class="text-center">
-                <div class="w-16 h-16 bg-green-500/20 text-green-400 rounded-full flex items-center justify-center mx-auto mb-4 text-2xl">
+        <div class="space-y-4">
+            <div id="card_income_wallet" class="bg-[#1f2937] border-2 border-green-500 rounded-xl p-6 shadow-lg text-center cursor-pointer transition transform hover:-translate-y-1" onclick="selectWallet('income_wallet')">
+                <div class="w-12 h-12 bg-green-500/20 text-green-400 rounded-full flex items-center justify-center mx-auto mb-3 text-xl">
                     <i class="fa-solid fa-wallet"></i>
                 </div>
-                <h3 class="text-gray-400 font-semibold uppercase tracking-wider text-xs mb-1">Available Income</h3>
-                <div class="text-3xl font-bold text-white mb-2">${{ number_format($balance, 2) }}</div>
-                <p class="text-xs text-gray-500">Only funds from Income Wallet can be transferred.</p>
+                <h3 class="text-gray-300 font-bold uppercase tracking-wider text-xs mb-1">Income Wallet</h3>
+                <div class="text-3xl font-black text-white mb-2">${{ number_format($balance, 2) }}</div>
+                <div class="inline-flex items-center gap-1.5 px-3 py-1 bg-green-500/10 text-green-400 rounded-full text-xs font-semibold">
+                    <input type="radio" name="source_wallet_display" checked value="income_wallet" class="accent-green-500 pointer-events-none"> Selected
+                </div>
+            </div>
+
+            <div id="card_package_wallet" class="bg-[#1a222d] border-2 border-[#334155] rounded-xl p-6 shadow-lg text-center cursor-pointer transition transform hover:-translate-y-1" onclick="selectWallet('package_wallet')">
+                <div class="w-12 h-12 bg-purple-500/20 text-purple-400 rounded-full flex items-center justify-center mx-auto mb-3 text-xl">
+                    <i class="fa-solid fa-box-open"></i>
+                </div>
+                <h3 class="text-gray-300 font-bold uppercase tracking-wider text-xs mb-1">Package Wallet</h3>
+                <div class="text-3xl font-black text-white mb-2">${{ number_format($packageBalance, 2) }}</div>
+                <div class="inline-flex items-center gap-1.5 px-3 py-1 bg-purple-500/10 text-purple-400 rounded-full text-xs font-semibold">
+                    <input type="radio" name="source_wallet_display" value="package_wallet" class="accent-purple-500 pointer-events-none"> Select
+                </div>
             </div>
         </div>
 
@@ -46,6 +59,7 @@
             
             <form action="{{ route('wallets.transfer.submit') }}" method="POST">
                 @csrf
+                <input type="hidden" name="source_wallet" id="source_wallet" value="income_wallet">
                 <div class="mb-6 relative z-10">
                     <label class="block text-sm font-medium text-gray-300 mb-2">Recipient User ID (Referral Code) *</label>
                     <div class="relative">
@@ -78,6 +92,21 @@
                     </div>
 
                     <p class="text-xs text-gray-500 mt-2">The exact Referral Code of the user you wish to send funds to.</p>
+                </div>
+
+                <div class="mb-8 relative z-10">
+                    <label class="block text-sm font-medium text-gray-300 mb-2">Transfer To (Recipient's Destination Wallet) *</label>
+                    <div class="grid grid-cols-2 gap-4">
+                        <label id="lbl_dest_package" class="bg-[#1f2937] border-2 border-purple-500 text-purple-300 p-4 rounded-lg flex items-center justify-between cursor-pointer font-bold transition">
+                            <span class="flex items-center gap-2"><i class="fa-solid fa-box-open text-purple-400"></i> Package Wallet</span>
+                            <input type="radio" name="destination_wallet" checked value="package_wallet" class="accent-purple-500 pointer-events-none" onclick="updateDestStyle('package_wallet')">
+                        </label>
+                        <label id="lbl_dest_income" class="bg-[#0b1220] border-2 border-[#334155] text-gray-400 p-4 rounded-lg flex items-center justify-between cursor-pointer font-bold transition">
+                            <span class="flex items-center gap-2"><i class="fa-solid fa-wallet text-green-400"></i> Income Wallet</span>
+                            <input type="radio" name="destination_wallet" value="income_wallet" class="accent-green-500 pointer-events-none" onclick="updateDestStyle('income_wallet')">
+                        </label>
+                    </div>
+                    <p class="text-xs text-gray-500 mt-2">Select which wallet in the recipient's account should receive these funds.</p>
                 </div>
 
                 <div class="mb-8 relative z-10">
@@ -128,8 +157,47 @@ document.addEventListener('DOMContentLoaded', function() {
     
     const amountErrorDiv = document.getElementById('amount-error');
 
-    const availableBalance = {{ (float) $balance }};
+    const incomeBalance = {{ (float) $balance }};
+    const packageBalance = {{ (float) $packageBalance }};
+    let availableBalance = incomeBalance;
+    let selectedWalletName = 'Income Wallet';
     const currentUserReferral = '{{ auth()->user()->referral_code }}';
+
+    window.selectWallet = function(type) {
+        document.getElementById('source_wallet').value = type;
+        
+        const cardIncome = document.getElementById('card_income_wallet');
+        const cardPackage = document.getElementById('card_package_wallet');
+        
+        if (type === 'income_wallet') {
+            availableBalance = incomeBalance;
+            selectedWalletName = 'Income Wallet';
+            cardIncome.className = 'bg-[#1f2937] border-2 border-green-500 rounded-xl p-6 shadow-lg text-center cursor-pointer transition transform hover:-translate-y-1';
+            cardIncome.querySelector('input').checked = true;
+            cardPackage.className = 'bg-[#1a222d] border-2 border-[#334155] rounded-xl p-6 shadow-lg text-center cursor-pointer transition transform hover:-translate-y-1';
+            cardPackage.querySelector('input').checked = false;
+        } else {
+            availableBalance = packageBalance;
+            selectedWalletName = 'Package Wallet';
+            cardPackage.className = 'bg-[#1f2937] border-2 border-purple-500 rounded-xl p-6 shadow-lg text-center cursor-pointer transition transform hover:-translate-y-1';
+            cardPackage.querySelector('input').checked = true;
+            cardIncome.className = 'bg-[#1a222d] border-2 border-[#334155] rounded-xl p-6 shadow-lg text-center cursor-pointer transition transform hover:-translate-y-1';
+            cardIncome.querySelector('input').checked = false;
+        }
+        checkFormValidity();
+    };
+
+    window.updateDestStyle = function(val) {
+        const lblPackage = document.getElementById('lbl_dest_package');
+        const lblIncome = document.getElementById('lbl_dest_income');
+        if (val === 'package_wallet') {
+            lblPackage.className = 'bg-[#1f2937] border-2 border-purple-500 text-purple-300 p-4 rounded-lg flex items-center justify-between cursor-pointer font-bold transition';
+            lblIncome.className = 'bg-[#0b1220] border-2 border-[#334155] text-gray-400 p-4 rounded-lg flex items-center justify-between cursor-pointer font-bold transition';
+        } else {
+            lblIncome.className = 'bg-[#1f2937] border-2 border-green-500 text-green-300 p-4 rounded-lg flex items-center justify-between cursor-pointer font-bold transition';
+            lblPackage.className = 'bg-[#0b1220] border-2 border-[#334155] text-gray-400 p-4 rounded-lg flex items-center justify-between cursor-pointer font-bold transition';
+        }
+    };
 
     let isRecipientValid = false;
     let isAmountValid = true;
@@ -144,7 +212,7 @@ document.addEventListener('DOMContentLoaded', function() {
             amountErrorDiv.classList.add('hidden');
         } else if (amount > availableBalance) {
             isAmountValid = false;
-            amountErrorDiv.querySelector('span').textContent = 'Insufficient funds in your Income Wallet.';
+            amountErrorDiv.querySelector('span').textContent = `Insufficient funds in your ${selectedWalletName}.`;
             amountErrorDiv.classList.remove('hidden');
         } else {
             isAmountValid = true;
@@ -250,7 +318,7 @@ document.addEventListener('DOMContentLoaded', function() {
 
             if (amountVal > availableBalance) {
                 e.preventDefault();
-                alert(`Insufficient funds. Your available Income Wallet balance is $${availableBalance.toFixed(2)}.`);
+                alert(`Insufficient funds. Your available ${selectedWalletName} balance is $${availableBalance.toFixed(2)}.`);
                 amountInput.focus();
                 return;
             }
@@ -273,12 +341,23 @@ document.addEventListener('DOMContentLoaded', function() {
                 }
             }
 
+            const sourceVal = document.getElementById('source_wallet').value;
+            const destRadio = document.querySelector('input[name="destination_wallet"]:checked');
+            const destVal = destRadio ? destRadio.value : 'package_wallet';
+            const destLabel = (destVal === 'income_wallet') ? 'Income Wallet' : 'Package Wallet';
+
+            if (recipientVal === currentUserReferral && sourceVal === destVal) {
+                e.preventDefault();
+                alert(`Cannot transfer from ${selectedWalletName} to your own ${destLabel}. Please choose different source and destination wallets.`);
+                return;
+            }
+
             let msg = '';
             if (recipientVal === currentUserReferral) {
-                msg = `Are you sure you want to convert $${amountVal.toFixed(2)} from your Income Wallet to your Package Wallet?`;
+                msg = `Are you sure you want to convert $${amountVal.toFixed(2)} from your ${selectedWalletName} to your ${destLabel}?`;
             } else {
                 const name = recipientName.textContent;
-                msg = `Are you sure you want to transfer $${amountVal.toFixed(2)} to ${name} (${recipientVal})?\nThis action cannot be undone.`;
+                msg = `Are you sure you want to transfer $${amountVal.toFixed(2)} from your ${selectedWalletName} to ${name}'s ${destLabel} (${recipientVal})?\nThis action cannot be undone.`;
             }
             
             if (!confirm(msg)) {

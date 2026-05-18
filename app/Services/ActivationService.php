@@ -45,7 +45,7 @@ class ActivationService
                 }
             }
 
-            // Give 300 free NEXA 1.0s upon activation
+            // Give 300 free NEXA 1.0 upon activation
             $tokenValue = (float) \App\Models\Setting::get('utility_token_value', 0.10);
             \App\Models\TokenLedger::create([
                 'user_id' => $user->id,
@@ -58,7 +58,7 @@ class ActivationService
             ]);
             $wallet->utility_token_wallet += 300;
 
-            // Give 300 free NEXA 2.0s upon activation (locked for 300 days)
+            // Give 300 free NEXA 2.0 upon activation (locked for 300 days)
             $renewalValue = (float) \App\Models\Setting::get('renewal_token_value', 0.50);
             \App\Models\TokenLedger::create([
                 'user_id' => $user->id,

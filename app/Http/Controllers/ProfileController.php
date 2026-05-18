@@ -133,6 +133,8 @@ class ProfileController extends Controller
         if ($user->status !== 'active') {
             return redirect()->route('dashboard')->with('error', 'You must activate your account to generate an ID card.');
         }
-        return view('user.id-card', compact('user'));
+        $progress = \App\Models\CourseProgress::with('course.module')->where('user_id', $user->id)->first();
+        $moduleName = $progress->course->module->name ?? 'Foundation Course';
+        return view('user.id-card', compact('user', 'moduleName'));
     }
 }

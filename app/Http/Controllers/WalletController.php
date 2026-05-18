@@ -180,7 +180,8 @@ class WalletController extends Controller
     {
         $user = Auth::user();
         $balance = $user->wallet->income_wallet ?? 0;
-        return view('user.wallets.transfer', compact('balance'));
+        $packageBalance = $user->wallet->package_wallet ?? 0;
+        return view('user.wallets.transfer', compact('balance', 'packageBalance'));
     }
 
     public function processTransfer(Request $request)
@@ -189,6 +190,8 @@ class WalletController extends Controller
             'recipient_id' => 'required|string|exists:users,referral_code',
             'amount' => 'required|numeric|min:1',
             'mpin' => 'required|digits:4',
+            'source_wallet' => 'required|in:income_wallet,package_wallet',
+            'destination_wallet' => 'required|in:income_wallet,package_wallet',
         ]);
         $sender = Auth::user();
         
@@ -207,31 +210,39 @@ class WalletController extends Controller
         }
 
         $amount = (float) $request->amount;
+        $sourceWalletCol = $request->source_wallet;
+        $destWalletCol = $request->destination_wallet;
+        $walletLabel = ($sourceWalletCol === 'income_wallet') ? 'Income Wallet' : 'Package Wallet';
+        $destLabel = ($destWalletCol === 'income_wallet') ? 'Income Wallet' : 'Package Wallet';
         $senderWallet = $sender->wallet;
 
-        if (!$senderWallet || $senderWallet->income_wallet < $amount) {
-            return back()->with('error', 'Insufficient funds in your Income Wallet.');
+        if (!$senderWallet || $senderWallet->$sourceWalletCol < $amount) {
+            return back()->with('error', "Insufficient funds in your {$walletLabel}.");
         }
 
         $isSelfTransfer = ($sender->id === $recipient->id);
 
-        DB::transaction(function () use ($sender, $senderWallet, $recipient, $amount, $isSelfTransfer) {
-            $senderWallet->decrement('income_wallet', $amount);
+        if ($isSelfTransfer && $sourceWalletCol === $destWalletCol) {
+            return back()->with('error', "Cannot transfer from {$walletLabel} to your own {$destLabel}. Select different source and destination wallets.");
+        }
+
+        DB::transaction(function () use ($sender, $senderWallet, $recipient, $amount, $isSelfTransfer, $sourceWalletCol, $destWalletCol, $walletLabel, $destLabel) {
+            $senderWallet->decrement($sourceWalletCol, $amount);
             $recipientWallet = \App\Models\Wallet::firstOrCreate(['user_id' => $recipient->id]);
-            $recipientWallet->increment('package_wallet', $amount);
+            $recipientWallet->increment($destWalletCol, $amount);
             if ($isSelfTransfer) {
-                \App\Models\ActivityLog::log('wallet_conversion', 'Converted $' . $amount . ' from Income Wallet to Package Wallet', $sender->id);
+                \App\Models\ActivityLog::log('wallet_conversion', "Converted \${$amount} from {$walletLabel} to {$destLabel}", $sender->id);
             } else {
-                \App\Models\ActivityLog::log('p2p_transfer', 'Transferred $' . $amount . ' to ' . $recipient->name . ' (' . $recipient->referral_code . ')', $sender->id);
-                \App\Models\ActivityLog::log('p2p_received', 'Received $' . $amount . ' from ' . $sender->name . ' (' . $sender->referral_code . ')', $recipient->id);
+                \App\Models\ActivityLog::log('p2p_transfer', "Transferred \${$amount} ({$walletLabel}) to {$recipient->name}'s {$destLabel} ({$recipient->referral_code})", $sender->id);
+                \App\Models\ActivityLog::log('p2p_received', "Received \${$amount} into your {$destLabel} from {$sender->name} ({$sender->referral_code})", $recipient->id);
             }
         });
 
         if ($isSelfTransfer) {
-            return redirect()->route('dashboard')->with('success', '$' . number_format($amount, 2) . ' successfully converted to your Package Wallet.');
+            return redirect()->route('dashboard')->with('success', '$' . number_format($amount, 2) . " successfully converted from your {$walletLabel} to your {$destLabel}.");
         }
 
-        return redirect()->route('dashboard')->with('success', '$' . number_format($amount, 2) . ' successfully transferred to ' . $recipient->name . '. They can now activate their account.');
+        return redirect()->route('dashboard')->with('success', '$' . number_format($amount, 2) . " successfully transferred from your {$walletLabel} to {$recipient->name}'s {$destLabel}.");
     }
 
     public function p2pHistory()

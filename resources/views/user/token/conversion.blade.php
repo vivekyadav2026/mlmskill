@@ -8,7 +8,7 @@
 <div class="tailwind-scope mt-4 max-w-3xl mx-auto">
     <div class="mb-6">
         <h2 class="text-2xl font-bold text-gray-100">Token Conversion</h2>
-        <p class="text-gray-400">Convert your NEXA 1.0s into Package Wallet funds to upgrade your account.</p>
+        <p class="text-gray-400">Convert your NEXA 1.0 into Package Wallet funds to upgrade your account.</p>
     </div>
 
     @if(session('success'))
@@ -32,38 +32,38 @@
     @endif
 
     <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-        <!-- NEXA 1.0s -->
+        <!-- NEXA 1.0 -->
         <div class="bg-[#1a222d] rounded-lg shadow-lg border border-[#334155] overflow-hidden">
             <div class="bg-gradient-to-r from-blue-900 to-indigo-900 p-6 text-center">
-                <p class="text-blue-200 text-sm font-medium mb-1">NEXA 1.0s</p>
-                <h3 class="text-3xl font-bold text-white mb-2">{{ number_format($balance, 2) }} UT</h3>
-                <p class="text-xs text-blue-300">Rate: 1 UT = ${{ number_format($utilityValue, 2) }}</p>
+                <p class="text-blue-200 text-sm font-medium mb-1">NEXA 1.0</p>
+                <h3 class="text-3xl font-bold text-white mb-2">{{ number_format($balance, 2) }} NEXA 1.0</h3>
+                <p class="text-xs text-blue-300">Rate: 1 NEXA 1.0 = ${{ number_format($utilityValue, 2) }}</p>
             </div>
             <div class="p-6">
                 <form action="{{ route('token.conversion.submit') }}" method="POST">
                     @csrf
                     <input type="hidden" name="token_type" value="utility">
                     <div class="mb-4">
-                        <label class="block text-sm text-gray-300 mb-2">Amount to Convert (Min: 50)</label>
-                        <input type="number" name="amount" min="50" max="{{ $balance }}" id="utilityAmount" class="w-full bg-[#0b1220] border border-[#334155] rounded py-2 px-3 text-gray-100" placeholder="50">
+                        <label class="block text-sm text-gray-300 mb-2">Amount to Convert (Min: 1)</label>
+                        <input type="number" name="amount" min="1" max="{{ $balance }}" id="utilityAmount" class="w-full bg-[#0b1220] border border-[#334155] rounded py-2 px-3 text-gray-100" placeholder="1">
                     </div>
                     <div class="text-sm text-gray-400 mb-6 flex justify-between">
                         <span>You will receive:</span>
                         <span class="font-bold text-green-400" id="utilityReceive">$0.00</span>
                     </div>
-                    <button type="submit" class="w-full bg-indigo-600 hover:bg-indigo-700 text-white font-bold py-2 px-4 rounded transition" {{ $balance < 50 ? 'disabled' : '' }}>
-                        {{ $balance < 50 ? 'Insufficient Balance (Min 50)' : 'Convert to Package Wallet' }}
+                    <button type="submit" class="w-full bg-indigo-600 hover:bg-indigo-700 text-white font-bold py-2 px-4 rounded transition" {{ $balance < 1 ? 'disabled' : '' }}>
+                        {{ $balance < 1 ? 'Insufficient Balance' : 'Convert to Package Wallet' }}
                     </button>
                 </form>
             </div>
         </div>
 
-        <!-- NEXA 2.0s -->
+        <!-- NEXA 2.0 -->
         <div class="bg-[#1a222d] rounded-lg shadow-lg border border-[#334155] overflow-hidden">
             <div class="bg-gradient-to-r from-emerald-900 to-teal-900 p-6 text-center">
-                <p class="text-emerald-200 text-sm font-medium mb-1">NEXA 2.0s</p>
-                <h3 class="text-3xl font-bold text-white mb-2">{{ number_format($renewalBalance, 2) }} RT</h3>
-                <p class="text-xs text-emerald-300">Rate: 1 RT = ${{ number_format($renewalValue, 2) }}</p>
+                <p class="text-emerald-200 text-sm font-medium mb-1">NEXA 2.0</p>
+                <h3 class="text-3xl font-bold text-white mb-2">{{ number_format($renewalBalance, 2) }} NEXA 2.0</h3>
+                <p class="text-xs text-emerald-300">Rate: 1 NEXA 2.0 = ${{ number_format($renewalValue, 2) }}</p>
             </div>
             <div class="p-6">
                 <div class="mb-4 text-center">

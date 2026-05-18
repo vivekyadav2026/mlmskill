@@ -74,11 +74,11 @@
                         <span class="text-green-400 font-bold">${{ number_format($user->wallet->income_wallet ?? 0, 2) }}</span>
                     </div>
                     <div class="flex justify-between items-center border-b border-[#334155] pb-2">
-                        <span class="text-gray-400 text-sm">NEXA 1.0s</span>
+                        <span class="text-gray-400 text-sm">NEXA 1.0</span>
                         <span class="text-indigo-400 font-bold">{{ number_format($user->wallet->utility_token_wallet ?? 0, 2) }}</span>
                     </div>
                     <div class="flex justify-between items-center border-b border-[#334155] pb-2">
-                        <span class="text-gray-400 text-sm">NEXA 2.0s</span>
+                        <span class="text-gray-400 text-sm">NEXA 2.0</span>
                         <span class="text-orange-400 font-bold">{{ number_format($user->wallet->renewal_token_wallet ?? 0, 2) }}</span>
                     </div>
                 </div>

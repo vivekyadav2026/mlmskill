@@ -57,7 +57,7 @@
 
                 <!-- Name & Role -->
                 <h2 class="text-[20px] font-black text-[#1e2380] uppercase tracking-wide mb-0.5 leading-tight">{{ $user->name }}</h2>
-                <p class="text-[#3b41c5] text-[13px] font-medium tracking-wide mb-6">Independent Rep</p>
+                <p class="text-[#3b41c5] text-[13px] font-medium tracking-wide mb-6"></p>
 
                 <!-- Details List -->
                 <div class="w-full px-10 relative z-20 bg-white/40 backdrop-blur-[2px] rounded-lg">
@@ -79,7 +79,7 @@
                                 <td class="font-bold text-[#1e2380] py-1">Package</td>
                                 <td class="text-[#3b41c5] py-1 pl-2 font-bold"><span class="mr-2 text-[#1e2380] font-medium">:</span> 
                                     @if($user->status === 'active')
-                                        NGO Sponsored
+                                        NGO Sponsored - {{ $moduleName ?? 'Foundation Course' }}
                                     @else
                                         Not Enrolled
                                     @endif

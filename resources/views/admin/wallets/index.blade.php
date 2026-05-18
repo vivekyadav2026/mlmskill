@@ -5,7 +5,7 @@
     <div class="mb-6"><h2 class="text-2xl font-bold text-gray-100">Master Wallets Ledger</h2></div>
     <div class="bg-[#1a222d] border border-[#334155] rounded-lg overflow-hidden">
         <table class="w-full table-custom">
-            <thead><tr><th>User</th><th>Income Wallet</th><th>Package Wallet</th><th>NEXA 1.0s</th><th>NEXA 2.0s</th></tr></thead>
+            <thead><tr><th>User</th><th>Income Wallet</th><th>Package Wallet</th><th>NEXA 1.0</th><th>NEXA 2.0</th></tr></thead>
             <tbody>
                 @forelse($wallets as $w)
                 <tr>

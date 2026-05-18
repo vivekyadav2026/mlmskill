@@ -30,11 +30,11 @@
     {{-- Stats Row --}}
     <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-3 mb-6">
         <div class="stat-card border-indigo-900">
-            <p class="text-gray-400 text-xs uppercase tracking-wider mb-1">NEXA 1.0s</p>
+            <p class="text-gray-400 text-xs uppercase tracking-wider mb-1">NEXA 1.0</p>
             <p class="text-xl font-bold text-indigo-400">{{ number_format($totalUtility, 2) }}</p>
         </div>
         <div class="stat-card border-yellow-900">
-            <p class="text-gray-400 text-xs uppercase tracking-wider mb-1">NEXA 2.0s</p>
+            <p class="text-gray-400 text-xs uppercase tracking-wider mb-1">NEXA 2.0</p>
             <p class="text-xl font-bold text-yellow-400">{{ number_format($totalRenewal, 2) }}</p>
         </div>
         <div class="stat-card">
@@ -150,7 +150,7 @@ new Chart(document.getElementById('tokenChart'), {
         labels: @json($monthlyLabels),
         datasets: [
             {
-                label: 'NEXA 1.0s',
+                label: 'NEXA 1.0',
                 data: @json($utilityMonthly),
                 backgroundColor: 'rgba(99,102,241,0.3)',
                 borderColor: '#818cf8',
@@ -158,7 +158,7 @@ new Chart(document.getElementById('tokenChart'), {
                 borderRadius: 4,
             },
             {
-                label: 'NEXA 2.0s',
+                label: 'NEXA 2.0',
                 data: @json($renewalMonthly),
                 backgroundColor: 'rgba(245,158,11,0.3)',
                 borderColor: '#fbbf24',

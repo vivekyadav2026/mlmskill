@@ -26,8 +26,8 @@ class WalletAdjustmentLog extends Model
         return match($this->wallet_type) {
             'income_wallet'        => 'Income Wallet',
             'package_wallet'       => 'Package Wallet',
-            'utility_token_wallet' => 'NEXA 1.0s',
-            'renewal_token_wallet' => 'NEXA 2.0s',
+            'utility_token_wallet' => 'NEXA 1.0',
+            'renewal_token_wallet' => 'NEXA 2.0',
             default                => ucfirst($this->wallet_type),
         };
     }

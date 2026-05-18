@@ -72,8 +72,8 @@
 
                     <div class="mb-8 p-4 bg-indigo-500/5 border border-indigo-500/20 rounded-lg">
                         <label class="block text-gray-300 font-bold mb-2">Security MPIN <span class="text-red-500">*</span></label>
-                        <input type="password" name="mpin" maxlength="6" placeholder="Enter your security PIN" class="w-full bg-[#0b1220] text-white border border-[#334155] rounded-lg px-4 py-3 focus:outline-none focus:border-indigo-500 font-mono tracking-[0.5em] text-center" required>
-                        <p class="text-xs text-gray-500 mt-2"><i class="fa-solid fa-shield-halved"></i> For security, verify your 4-6 digit MPIN to authorize this transaction.</p>
+                        <input type="password" name="mpin" maxlength="4" pattern="\d{4}" title="Please enter exactly 4 digits" placeholder="••••" class="w-full bg-[#0b1220] text-white border border-[#334155] rounded-lg px-4 py-3 focus:outline-none focus:border-indigo-500 font-mono tracking-[1em] text-center text-2xl" required>
+                        <p class="text-xs text-gray-500 mt-2"><i class="fa-solid fa-shield-halved"></i> For security, verify your 4-digit MPIN to authorize this transaction.</p>
                     </div>
 
                     <div class="border-t border-[#334155] pt-6 flex justify-end">

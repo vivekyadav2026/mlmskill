@@ -114,7 +114,7 @@
         </div>
         <div class="stat-card border-l-4 border-l-indigo-500">
             <div class="flex-grow">
-                <p class="text-sm font-medium text-gray-400">NEXA 1.0s</p>
+                <p class="text-sm font-medium text-gray-400">NEXA 1.0</p>
                 <h3 class="text-2xl font-bold text-gray-100">{{ number_format($totalUtilityTokens, 2) }}</h3>
                 <p class="text-xs text-gray-500 mt-1">Distributed globally</p>
             </div>
@@ -147,7 +147,7 @@
         </div>
         <div class="bg-[#1a222d] rounded-lg p-4 border border-[#334155] text-center">
             <i class="fa-solid fa-sync text-orange-400 mb-2"></i>
-            <p class="text-xs text-gray-400 uppercase tracking-wide">NEXA 2.0s</p>
+            <p class="text-xs text-gray-400 uppercase tracking-wide">NEXA 2.0</p>
             <p class="text-lg font-bold text-gray-100">{{ number_format($totalRenewalTokens, 2) }}</p>
         </div>
         <div class="bg-[#1a222d] rounded-lg p-4 border border-[#334155] text-center opacity-50">
