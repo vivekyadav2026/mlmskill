@@ -111,6 +111,8 @@
   [data-bs-theme="light"] .tailwind-scope .text-gray-300 { color: #0f172a !important; }
   [data-bs-theme="light"] .tailwind-scope .text-gray-400,
   [data-bs-theme="light"] .tailwind-scope .text-gray-500 { color: #64748b !important; }
+  [data-bs-theme="light"] .table-custom th { background-color: #f8fafc !important; color: #475569 !important; border-bottom-color: #e2e8f0 !important; }
+  [data-bs-theme="light"] .table-custom td { background-color: #ffffff !important; color: #0f172a !important; border-bottom-color: #e2e8f0 !important; }
 
   </style>
 

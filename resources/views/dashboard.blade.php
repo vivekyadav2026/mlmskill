@@ -5,7 +5,9 @@
 <style>
   .app-main { padding: 20px; }
   .stat-card { background: #1e293b; border: 1px solid #334155; border-radius: 0.5rem; padding: 1.25rem; display: flex; align-items: center; transition: all 0.3s ease; }
+  [data-bs-theme="light"] .stat-card { background: #ffffff; border-color: #e2e8f0; }
   .stat-card:hover { border-color: #475569; transform: translateY(-2px); }
+  [data-bs-theme="light"] .stat-card:hover { border-color: #cbd5e1; }
   .stat-icon { width: 48px; height: 48px; border-radius: 0.5rem; display: flex; align-items: center; justify-content: center; font-size: 1.25rem; margin-right: 1rem; flex-shrink: 0; }
   .table-custom th { background: #0f172a; color: #94a3b8; font-weight: 600; font-size: 0.75rem; text-transform: uppercase; padding: 0.75rem 1rem; border-bottom: 1px solid #334155; }
   .table-custom td { padding: 1rem; border-bottom: 1px solid #334155; color: #e2e8f0; font-size: 0.875rem; }

@@ -13,9 +13,16 @@
       align-items: center;
       transition: all 0.3s ease;
   }
+  [data-bs-theme="light"] .stat-card {
+      background: #ffffff;
+      border-color: #e2e8f0;
+  }
   .stat-card:hover {
       border-color: #475569;
       transform: translateY(-2px);
+  }
+  [data-bs-theme="light"] .stat-card:hover {
+      border-color: #cbd5e1;
   }
   .stat-icon {
       width: 48px;
