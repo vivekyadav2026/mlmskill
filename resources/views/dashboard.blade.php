@@ -126,7 +126,7 @@
             <div class="stat-icon bg-orange-500/10 text-orange-500"><i class="fa-solid fa-arrows-spin"></i></div>
             <div class="flex-grow">
                 <p class="text-sm font-medium text-gray-400">NEXA 2.0</p>
-                <h3 class="text-2xl font-bold text-gray-100">{{ number_format($wallet->renewal_token_wallet ?? 0, 2) }} RT</h3>
+                <h3 class="text-2xl font-bold text-gray-100">{{ number_format($wallet->renewal_token_wallet ?? 0, 2) }} NEXA 2.0</h3>
             </div>
         </div>
         <div class="stat-card border-l-4 border-l-indigo-500">
@@ -355,7 +355,7 @@
                 <tbody>
                     @forelse($recentTokens as $tok)
                     <tr>
-                        <td><span class="text-xs bg-indigo-900 text-indigo-300 px-2 py-1 rounded capitalize">{{ $tok->token_type }}</span></td>
+                        <td><span class="text-xs bg-indigo-900 text-indigo-300 px-2 py-1 rounded capitalize">{{ $tok->token_type === 'utility' ? 'NEXA 1.0' : ($tok->token_type === 'renewal' ? 'NEXA 2.0' : $tok->token_type) }}</span></td>
                         <td class="font-bold text-indigo-400">+{{ number_format($tok->token_count, 2) }}</td>
                         <td>{{ \Carbon\Carbon::parse($tok->created_at)->format('Y-m-d H:i') }}</td>
                     </tr>

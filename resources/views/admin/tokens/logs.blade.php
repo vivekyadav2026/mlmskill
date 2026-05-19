@@ -17,7 +17,7 @@
     <div class="flex items-center justify-between mb-6 flex-wrap gap-3">
         <div>
             <h2 class="text-2xl font-bold text-gray-100">Token Distribution Logs</h2>
-            <p class="text-gray-400 text-sm mt-1">Complete history of all Utility & NEXA 2.0 distributed to users.</p>
+            <p class="text-gray-400 text-sm mt-1">Complete history of all NEXA 1.0 & NEXA 2.0 distributed to users.</p>
         </div>
         <a href="{{ url('admin/tokens/manual') }}"
            class="bg-indigo-600 hover:bg-indigo-700 text-white text-sm font-semibold px-4 py-2 rounded transition flex items-center gap-2">
@@ -89,9 +89,9 @@
                         </td>
                         <td>
                             @if($log->token_type === 'utility')
-                                <span class="badge-utility"><i class="fa-solid fa-circle-bolt mr-1"></i>Utility</span>
+                                <span class="badge-utility"><i class="fa-solid fa-circle-bolt mr-1"></i>NEXA 1.0</span>
                             @else
-                                <span class="badge-renewal"><i class="fa-solid fa-rotate mr-1"></i>Renewal</span>
+                                <span class="badge-renewal"><i class="fa-solid fa-rotate mr-1"></i>NEXA 2.0</span>
                             @endif
                         </td>
                         <td class="font-mono font-bold text-indigo-300">

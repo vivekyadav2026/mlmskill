@@ -105,7 +105,14 @@
   [data-bs-theme="light"] .card         { background: var(--xvt-card-bg); border-color: #e2e8f0; }
   [data-bs-theme="light"] .tailwind-scope .bg-\[\#1a222d\] { background-color: #ffffff !important; }
   [data-bs-theme="light"] .tailwind-scope .bg-\[\#0f172a\] { background-color: #f8fafc !important; }
+  [data-bs-theme="light"] .tailwind-scope .bg-\[\#0b1220\] { background-color: #f1f5f9 !important; }
+  [data-bs-theme="light"] .tailwind-scope .bg-gray-800 { background-color: #e2e8f0 !important; }
+  [data-bs-theme="light"] .tailwind-scope .bg-gray-900 { background-color: #cbd5e1 !important; }
+  [data-bs-theme="light"] .tailwind-scope .bg-\[\#161f2d\] { background-color: #f8fafc !important; }
+  [data-bs-theme="light"] .tailwind-scope .bg-\[\#14172a\] { background-color: #f1f5f9 !important; }
+  [data-bs-theme="light"] .tailwind-scope .hover\:bg-\[\#1f2937\]:hover { background-color: #f1f5f9 !important; }
   [data-bs-theme="light"] .tailwind-scope .border-\[\#334155\] { border-color: #e2e8f0 !important; }
+  [data-bs-theme="light"] .tailwind-scope .divide-\[\#334155\] > :not([hidden]) ~ :not([hidden]) { border-color: #e2e8f0 !important; }
   [data-bs-theme="light"] .tailwind-scope .text-gray-100,
   [data-bs-theme="light"] .tailwind-scope .text-gray-200,
   [data-bs-theme="light"] .tailwind-scope .text-gray-300 { color: #0f172a !important; }

@@ -5,7 +5,7 @@
     {{-- Header --}}
     <div class="mb-6">
         <h2 class="text-2xl font-bold text-gray-100">Manual Token Credit</h2>
-        <p class="text-gray-400 text-sm mt-1">Manually credit Utility or NEXA 2.0 to any active user. All credits are logged.</p>
+        <p class="text-gray-400 text-sm mt-1">Manually credit NEXA 1.0 or NEXA 2.0 to any active user. All credits are logged.</p>
     </div>
 
     {{-- Success Alert --}}

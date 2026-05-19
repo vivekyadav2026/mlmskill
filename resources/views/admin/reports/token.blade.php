@@ -22,7 +22,7 @@
     <div class="report-header flex items-center justify-between mb-6 flex-wrap gap-3">
         <div>
             <h2 class="text-2xl font-bold text-gray-100">Token Distribution Reports</h2>
-            <p class="text-gray-400 text-sm mt-1">All Utility & NEXA 2.0 distributions across the platform.</p>
+            <p class="text-gray-400 text-sm mt-1">All NEXA 1.0 & NEXA 2.0 distributions across the platform.</p>
         </div>
         <span class="text-xs text-gray-500">Generated: {{ now()->format('d M Y, h:i A') }}</span>
     </div>
@@ -96,9 +96,9 @@
                         </td>
                         <td>
                             @if($token->token_type === 'utility')
-                                <span class="text-xs bg-indigo-900/40 text-indigo-400 border border-indigo-800 px-2 py-1 rounded-full"><i class="fa-solid fa-circle-bolt mr-1"></i>Utility</span>
+                                <span class="text-xs bg-indigo-900/40 text-indigo-400 border border-indigo-800 px-2 py-1 rounded-full"><i class="fa-solid fa-circle-bolt mr-1"></i>NEXA 1.0</span>
                             @else
-                                <span class="text-xs bg-yellow-900/40 text-yellow-400 border border-yellow-800 px-2 py-1 rounded-full"><i class="fa-solid fa-rotate mr-1"></i>Renewal</span>
+                                <span class="text-xs bg-yellow-900/40 text-yellow-400 border border-yellow-800 px-2 py-1 rounded-full"><i class="fa-solid fa-rotate mr-1"></i>NEXA 2.0</span>
                             @endif
                         </td>
                         <td class="font-mono font-bold {{ $token->status === 'credited' ? 'text-green-400' : 'text-gray-400' }}">

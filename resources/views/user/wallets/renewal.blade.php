@@ -15,7 +15,7 @@
     <div class="bg-gradient-to-r from-orange-600 to-red-900 rounded-lg shadow-lg overflow-hidden border border-orange-500/50 mb-8 max-w-sm">
         <div class="p-6">
             <h3 class="text-orange-100 font-medium text-lg mb-1">NEXA 2.0</h3>
-            <div class="text-4xl font-bold text-white">{{ number_format($balance, 2) }} RT</div>
+            <div class="text-4xl font-bold text-white">{{ number_format($balance, 2) }} NEXA 2.0</div>
             <div class="mt-4">
                 <div class="w-full bg-gray-900 rounded-full h-2.5 mb-1 dark:bg-gray-700">
                   <div class="bg-orange-400 h-2.5 rounded-full" style="width: {{ min(100, ($balance / max(1, $renewalTarget)) * 100) }}%"></div>

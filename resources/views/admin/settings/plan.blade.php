@@ -97,14 +97,14 @@
       </div>
     </div>
 
-    <!-- Renewal Target -->
+    <!-- NEXA 2.0 Target -->
     <div class="s-card">
-      <div class="s-header"><i class="fa-solid fa-rotate text-cyan-400"></i><h3>Account Renewal Target</h3></div>
+      <div class="s-header"><i class="fa-solid fa-rotate text-cyan-400"></i><h3>NEXA 2.0 Target</h3></div>
       <div class="s-body grid grid-cols-1 md:grid-cols-2 gap-4">
         <div>
-          <label class="f-label">Renewal Target Amount ($)</label>
+          <label class="f-label">NEXA 2.0 Target Amount ($)</label>
           <input type="number" step="0.01" name="renewal_target" class="f-ctrl" value="{{ $settings['renewal_target'] ?? '300' }}" required>
-          <p class="info-box">Users must accumulate this amount in renewal wallet to renew their account</p>
+          <p class="info-box">Users must accumulate this amount in NEXA 2.0 to renew their account</p>
         </div>
       </div>
     </div>

@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <!-- saved from url=(0042)../user/index.html -->
-<html lang="en" data-bs-theme="dark"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<html lang="en" data-bs-theme="{{ \App\Models\Setting::get('theme_mode', 'dark') }}"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>My Dashboard â€” XVolty Trade</title>
@@ -78,6 +78,46 @@
   [data-bs-theme="dark"] .app-sidebar  { background: var(--xvt-sidebar-bg) !important; }
   [data-bs-theme="dark"] .app-topbar   { background: var(--xvt-topbar-bg)  !important; }
   [data-bs-theme="dark"] .app-content  { background: var(--xvt-body-bg)    !important; }
+  [data-bs-theme="dark"] .card,
+  [data-bs-theme="dark"] .bg-card      { background: var(--xvt-card-bg)    !important; }
+
+  /* ── LIGHT MODE ── */
+  [data-bs-theme="light"] {
+    --xvt-body-bg:    #f1f5f9;
+    --xvt-card-bg:    #ffffff;
+    --xvt-sidebar-bg: #1e293b;
+    --xvt-topbar-bg:  #ffffff;
+    --xvt-text:   #0f172a;
+    --xvt-muted:  #64748b;
+    --xvt-border: #e2e8f0;
+    --bs-body-bg:    var(--xvt-body-bg);
+    --bs-body-color: var(--xvt-text);
+    --bs-border-color: var(--xvt-border);
+    background-color: var(--xvt-body-bg);
+  }
+  [data-bs-theme="light"] .app-sidebar  { background: var(--xvt-sidebar-bg) !important; }
+  [data-bs-theme="light"] .app-sidebar .nav-link,
+  [data-bs-theme="light"] .app-sidebar .sidebar-brand { color: #e2e8f0 !important; }
+  [data-bs-theme="light"] .app-topbar   { background: var(--xvt-topbar-bg);  border-bottom: 1px solid #e2e8f0; }
+  [data-bs-theme="light"] .app-content  { background: var(--xvt-body-bg)    !important; }
+  [data-bs-theme="light"] .card         { background: var(--xvt-card-bg); border-color: #e2e8f0; }
+  [data-bs-theme="light"] .tailwind-scope .bg-\[\#1a222d\] { background-color: #ffffff !important; }
+  [data-bs-theme="light"] .tailwind-scope .bg-\[\#0f172a\] { background-color: #f8fafc !important; }
+  [data-bs-theme="light"] .tailwind-scope .bg-\[\#0b1220\] { background-color: #f1f5f9 !important; }
+  [data-bs-theme="light"] .tailwind-scope .bg-gray-800 { background-color: #e2e8f0 !important; }
+  [data-bs-theme="light"] .tailwind-scope .bg-gray-900 { background-color: #cbd5e1 !important; }
+  [data-bs-theme="light"] .tailwind-scope .bg-\[\#161f2d\] { background-color: #f8fafc !important; }
+  [data-bs-theme="light"] .tailwind-scope .bg-\[\#14172a\] { background-color: #f1f5f9 !important; }
+  [data-bs-theme="light"] .tailwind-scope .hover\:bg-\[\#1f2937\]:hover { background-color: #f1f5f9 !important; }
+  [data-bs-theme="light"] .tailwind-scope .border-\[\#334155\] { border-color: #e2e8f0 !important; }
+  [data-bs-theme="light"] .tailwind-scope .divide-\[\#334155\] > :not([hidden]) ~ :not([hidden]) { border-color: #e2e8f0 !important; }
+  [data-bs-theme="light"] .tailwind-scope .text-gray-100,
+  [data-bs-theme="light"] .tailwind-scope .text-gray-200,
+  [data-bs-theme="light"] .tailwind-scope .text-gray-300 { color: #0f172a !important; }
+  [data-bs-theme="light"] .tailwind-scope .text-gray-400,
+  [data-bs-theme="light"] .tailwind-scope .text-gray-500 { color: #64748b !important; }
+  [data-bs-theme="light"] .table-custom th { background-color: #f8fafc !important; color: #475569 !important; border-bottom-color: #e2e8f0 !important; }
+  [data-bs-theme="light"] .table-custom td { background-color: #ffffff !important; color: #0f172a !important; border-bottom-color: #e2e8f0 !important; }
   </style>
 
   <!-- Theme component CSS -->
@@ -88,10 +128,10 @@
   <!-- ===== App Shell ===== -->
 <div class="app-shell">
 
-  <!-- ===== User Sidebar ===== -->
-  <aside id="appSidebar" class="app-sidebar">
-        <a href="{{ url('user/index') }}" class="sidebar-brand d-flex align-items-center gap-2">
-              <img src="{{ asset('logo.png') }}" alt="Logo" style="width: 40px; height: 40px; border-radius: 50%; object-fit: cover;">
+  <!-- ===== Sidebar (Left) -->
+  <aside id="appSidebar" class="app-sidebar shadow-lg">
+        <a href="{{ route('dashboard') }}" class="sidebar-brand d-flex align-items-center gap-2">
+            <img src="{{ asset('logo.png') }}" alt="Logo" style="width: 40px; height: 40px; border-radius: 50%; object-fit: cover;">
         <span> Samarth Digital</span>
           </a>
     <ul class="list-unstyled mb-0 pb-3">

@@ -49,9 +49,9 @@
                         <td class="whitespace-nowrap text-gray-400">{{ \Carbon\Carbon::parse($item->created_at)->format('M d, Y') }}<br><span class="text-xs">{{ \Carbon\Carbon::parse($item->created_at)->format('H:i') }}</span></td>
                         <td>
                             @if($item->token_type == 'utility')
-                                <span class="bg-blue-900/50 text-blue-400 border border-blue-500/30 px-2 py-1 rounded text-xs uppercase">Utility ({{ strtoupper($tokenName) }})</span>
+                                <span class="bg-blue-900/50 text-blue-400 border border-blue-500/30 px-2 py-1 rounded text-xs uppercase">NEXA 1.0 ({{ strtoupper($tokenName) }})</span>
                             @else
-                                <span class="bg-orange-900/50 text-orange-400 border border-orange-500/30 px-2 py-1 rounded text-xs uppercase">Renewal (RT)</span>
+                                <span class="bg-orange-900/50 text-orange-400 border border-orange-500/30 px-2 py-1 rounded text-xs uppercase">NEXA 2.0 (RT)</span>
                             @endif
                         </td>
                         <td class="text-gray-300 capitalize">{{ $item->source ?? 'Distribution' }}</td>

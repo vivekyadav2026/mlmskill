@@ -190,7 +190,7 @@
       <i class="fa-solid fa-wallet mr-2 text-indigo-400"></i>Wallet Balances
     </h4>
     <div class="wallet-grid grid grid-cols-2 md:grid-cols-4 gap-3">
-      @foreach(['income_balance' => 'Income', 'package_balance' => 'Package', 'utility_balance' => 'Utility', 'renewal_balance' => 'Renewal'] as $col => $label)
+      @foreach(['income_balance' => 'Income', 'package_balance' => 'Package', 'utility_balance' => 'NEXA 1.0', 'renewal_balance' => 'NEXA 2.0'] as $col => $label)
         @if(isset($wallet->$col))
         <div class="bg-[#0b1220] rounded-lg p-3 md:p-4 border border-[#1e293b]">
           <p class="text-xs text-gray-500 mb-1">{{ $label }}</p>

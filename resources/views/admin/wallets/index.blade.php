@@ -12,8 +12,8 @@
                     <td class="font-bold">{{ $w->user->name ?? 'Unknown' }}</td>
                     <td class="text-green-400 font-mono">$\{{ number_format($w->income_wallet, 2) }}</td>
                     <td class="text-purple-400 font-mono">$\{{ number_format($w->package_wallet, 2) }}</td>
-                    <td class="text-blue-400 font-mono">{{ number_format($w->utility_token_wallet, 2) }} UT</td>
-                    <td class="text-orange-400 font-mono">{{ number_format($w->renewal_token_wallet, 2) }} RT</td>
+                    <td class="text-blue-400 font-mono">{{ number_format($w->utility_token_wallet, 2) }} NEXA 1.0</td>
+                    <td class="text-orange-400 font-mono">{{ number_format($w->renewal_token_wallet, 2) }} NEXA 2.0</td>
                 </tr>
                 @empty
                 <tr><td colspan="5" class="text-center p-8 text-gray-500">No wallets found.</td></tr>

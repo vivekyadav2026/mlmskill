@@ -96,6 +96,10 @@ class DashboardController extends Controller
 
     public function userView($section, $subsection = null)
     {
+        if ($section === 'index' && !$subsection) {
+            return redirect()->route('dashboard');
+        }
+
         $title = ucfirst($section) . ($subsection ? ' - ' . ucfirst($subsection) : '');
         $path = $subsection ? "{$section} / {$subsection}" : $section;
         $user = Auth::user();
