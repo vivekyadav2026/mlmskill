@@ -15,6 +15,8 @@ Route::post('/register', [\App\Http\Controllers\AuthController::class, 'register
 
 Route::get('/forgot-password', [\App\Http\Controllers\AuthController::class, 'showForgot'])->name('forgot.password');
 Route::post('/forgot-password', [\App\Http\Controllers\AuthController::class, 'processForgot'])->name('forgot.password.submit');
+Route::get('/reset-password/{token}', [\App\Http\Controllers\AuthController::class, 'showResetForm'])->name('password.reset');
+Route::post('/reset-password', [\App\Http\Controllers\AuthController::class, 'processReset'])->name('password.update');
 
 Route::post('/logout', [\App\Http\Controllers\AuthController::class, 'logout'])->name('logout');
 Route::get('/logout', [\App\Http\Controllers\AuthController::class, 'logout']); // Fallback GET logout
