@@ -119,14 +119,14 @@
             <div class="stat-icon bg-blue-500/10 text-blue-500"><i class="fa-solid fa-coins"></i></div>
             <div class="flex-grow">
                 <p class="text-sm font-medium text-gray-400">NEXA 1.0</p>
-                <h3 class="text-2xl font-bold text-gray-100">{{ number_format($wallet->utility_token_wallet ?? 0, 2) }} {{ strtoupper($tokenName) }}</h3>
+                <h3 class="text-2xl font-bold text-gray-100">{{ number_format($wallet->utility_token_wallet ?? 0, 2) }}</h3>
             </div>
         </div>
         <div class="stat-card border-l-4 border-l-orange-500">
             <div class="stat-icon bg-orange-500/10 text-orange-500"><i class="fa-solid fa-arrows-spin"></i></div>
             <div class="flex-grow">
                 <p class="text-sm font-medium text-gray-400">NEXA 2.0</p>
-                <h3 class="text-2xl font-bold text-gray-100">{{ number_format($wallet->renewal_token_wallet ?? 0, 2) }} NEXA 2.0</h3>
+                <h3 class="text-2xl font-bold text-gray-100">{{ number_format($wallet->renewal_token_wallet ?? 0, 2) }} </h3>
             </div>
         </div>
         <div class="stat-card border-l-4 border-l-indigo-500">
@@ -230,7 +230,7 @@
                 <div class="bg-[#0b1220] border border-[#334155] rounded p-3 text-center">
                     <p class="text-xs text-gray-500 uppercase">Active Salary Tier</p>
                     @if($salaryStatus['active_amount'] > 0)
-                        <p class="text-xl font-bold text-green-400">${{ number_format($salaryStatus['active_amount'], 0) }} /mo</p>
+                        <p class="text-xl font-bold text-green-400">${{ number_format($salaryStatus['active_amount'], 0) }} /Monthly</p>
                     @else
                         <p class="text-xl font-bold text-gray-500">None</p>
                     @endif

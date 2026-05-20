@@ -16,7 +16,7 @@
         <!-- Balance Card -->
         <div class="bg-gradient-to-r from-blue-600 to-indigo-900 rounded-lg shadow-lg overflow-hidden border border-indigo-500/50 flex flex-col justify-center p-6">
             <h3 class="text-indigo-100 font-medium text-lg mb-1">Available Tokens</h3>
-            <div class="text-4xl font-bold text-white">{{ number_format($balance, 2) }} {{ strtoupper($tokenName) }}</div>
+            <div class="text-4xl font-bold text-white">{{ number_format($balance, 2) }} </div>
             <div class="mt-4 flex gap-3">
                 <a href="{{ url('user/token/conversion') }}" class="bg-white text-indigo-800 px-4 py-2 rounded font-medium shadow hover:bg-gray-100 transition">Convert to Package Wallet</a>
             </div>
