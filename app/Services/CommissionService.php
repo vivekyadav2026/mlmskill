@@ -13,16 +13,16 @@ class CommissionService
      * Generation Income amounts per level (as per the MLM plan).
      */
     private array $levelCommissionAmounts = [
-        1  => 15.00, // $15  — No direct condition
+        1  => 20.00, // $20  — No direct condition
         2  => 10.00, // $10  — No direct condition
-        3  =>  6.00, // $6   — Requires >= 2 active directs
+        3  =>  5.00, // $5   — Requires >= 2 active directs
         4  =>  3.00, // $3   — Requires >= 4 active directs
         5  =>  2.00, // $2   — Requires >= 6 active directs
-        6  =>  0.50, // $0.50 — Requires >= 10 active directs
+        6  =>  1.00, // $1   — Requires >= 10 active directs
         7  =>  0.50, // $0.50 — Requires >= 10 active directs
         8  =>  0.50, // $0.50 — Requires >= 10 active directs
-        9  =>  0.50, // $0.50 — Requires >= 10 active directs
-        10 =>  0.50, // $0.50 — Requires >= 10 active directs
+        9  =>  0.25, // $0.25 — Requires >= 10 active directs
+        10 =>  0.25, // $0.25 — Requires >= 10 active directs
     ];
 
     /**

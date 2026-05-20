@@ -1,172 +1,87 @@
-﻿@extends('layouts.admin')
-@section('title', 'Weekly Salary Settings — XVolty Trade')
+@extends('layouts.admin')
+@section('title', 'Monthly Salary Settings')
 
 @section('content')
-<div class="d-flex align-items-center justify-content-between mb-4"><div><h3 class="fw-heading mb-1"><i class="fa-solid fa-money-bill me-2"></i>Weekly Salary Settings</h3><p class="text-muted mb-0 small">Rank-based weekly salary. Document presets: S1–S5 with chained qualifications.</p></div></div>
-<form method="POST">
-  <input type="hidden" name="action" value="save_all">
+<div class="d-flex align-items-center justify-content-between mb-4">
+  <div>
+    <h3 class="fw-heading mb-1"><i class="fa-solid fa-money-bill me-2"></i>Monthly Salary Settings</h3>
+    <p class="text-muted mb-0 small">Direct-referral–based monthly salary. Paid for up to 12 months per tier. Changes apply immediately on the next run.</p>
+  </div>
+</div>
+
+@if(session('success'))
+  <div class="alert alert-success">{{ session('success') }}</div>
+@endif
+@if(session('error'))
+  <div class="alert alert-danger">{{ session('error') }}</div>
+@endif
+
+<form method="POST" action="{{ route('admin.settings.salary') }}">
+  @csrf
 
   <div class="card border-themed mb-4">
-    <div class="card-header d-flex align-items-center justify-content-between">
-      <h6 class="mb-0"><i class="fa-solid fa-gauge me-2"></i>Engine &amp; Cron Status</h6>
-    </div>
+    <div class="card-header"><h6 class="mb-0"><i class="fa-solid fa-calendar-day me-2"></i>Payout Schedule</h6></div>
     <div class="card-body">
-      <div class="row g-3">
-        <div class="col-md-4"><label class="form-label">Salary Engine</label>
-          <select name="salary_engine_enabled" class="form-select">
-            <option value="enabled" selected="">Enabled</option>
-            <option value="disabled">Disabled</option>
-          </select>
-        </div>
-        <div class="col-md-4"><label class="form-label">Weekly Cron</label>
-          <select name="cron_weekly_salary" class="form-select">
-            <option value="enabled" selected="">Enabled</option>
-            <option value="disabled">Disabled</option>
-          </select>
+      <div class="row align-items-center">
+        <div class="col-md-6">
+          <label class="form-label fw-semibold">Distribution Date (Day of the month)</label>
+          <div class="input-group">
+            <input type="number" name="salary_payout_day" class="form-control" min="1" max="28" value="{{ old('salary_payout_day', $payout_day ?? 20) }}">
+            <span class="input-group-text">of every month</span>
+          </div>
+          <div class="form-text">Choose a day between 1 and 28 when the automated script will pay out monthly salaries.</div>
         </div>
       </div>
     </div>
   </div>
 
   <div class="card border-themed mb-4">
-    <div class="card-header"><h6 class="mb-0"><i class="fa-solid fa-list-ol me-2"></i>Salary Ranks (S1–S5)</h6></div>
+    <div class="card-header"><h6 class="mb-0"><i class="fa-solid fa-list-ol me-2"></i>Salary Tiers (T1 = lowest, T5 = highest)</h6></div>
     <div class="card-body p-0">
       <div class="table-responsive">
         <table class="table table-hover align-middle mb-0">
           <thead class="table-light">
             <tr>
-              <th class="ps-3">Rank</th>
-              <th>Required Directs</th>
-              <th>Must Have Achieved</th>
-              <th>Weekly Salary ($)</th>
-              <th>Status</th>
+              <th class="ps-3">Tier</th>
+              <th>Min. Active Directs Required</th>
+              <th>Monthly Salary ($)</th>
+              <th class="text-muted small">Notes</th>
             </tr>
           </thead>
           <tbody>
-                          <tr>
-                <td class="ps-3 fw-semibold">S1 — Bronze</td>
-                <td><input type="number" min="0" name="rank[1][directs]" class="form-control form-control-sm" style="max-width:100px;" value="5"></td>
-                <td>
-                  <select name="rank[1][required_rank_id]" class="form-select form-select-sm" style="max-width:200px;">
-                    <option value="">— None (base rank)</option>
-                                          <option value="2">S2 — Silver</option>
-                                          <option value="3">S3 — Gold</option>
-                                          <option value="4">S4 — Platinum</option>
-                                          <option value="5">S5 — Diamond</option>
-                                      </select>
-                </td>
-                <td><input type="number" step="0.01" min="0" name="rank[1][salary]" class="form-control form-control-sm" style="max-width:130px;" value="12.00"></td>
-                <td>
-                  <select name="rank[1][status]" class="form-select form-select-sm" style="max-width:120px;">
-                    <option value="active" selected="">Active</option>
-                    <option value="inactive">Inactive</option>
-                  </select>
-                </td>
-              </tr>
-                          <tr>
-                <td class="ps-3 fw-semibold">S2 — Silver</td>
-                <td><input type="number" min="0" name="rank[2][directs]" class="form-control form-control-sm" style="max-width:100px;" value="3"></td>
-                <td>
-                  <select name="rank[2][required_rank_id]" class="form-select form-select-sm" style="max-width:200px;">
-                    <option value="">— None (base rank)</option>
-                                          <option value="1" selected="">S1 — Bronze</option>
-                                          <option value="3">S3 — Gold</option>
-                                          <option value="4">S4 — Platinum</option>
-                                          <option value="5">S5 — Diamond</option>
-                                      </select>
-                </td>
-                <td><input type="number" step="0.01" min="0" name="rank[2][salary]" class="form-control form-control-sm" style="max-width:130px;" value="25.00"></td>
-                <td>
-                  <select name="rank[2][status]" class="form-select form-select-sm" style="max-width:120px;">
-                    <option value="active" selected="">Active</option>
-                    <option value="inactive">Inactive</option>
-                  </select>
-                </td>
-              </tr>
-                          <tr>
-                <td class="ps-3 fw-semibold">S3 — Gold</td>
-                <td><input type="number" min="0" name="rank[3][directs]" class="form-control form-control-sm" style="max-width:100px;" value="3"></td>
-                <td>
-                  <select name="rank[3][required_rank_id]" class="form-select form-select-sm" style="max-width:200px;">
-                    <option value="">— None (base rank)</option>
-                                          <option value="1">S1 — Bronze</option>
-                                          <option value="2" selected="">S2 — Silver</option>
-                                          <option value="4">S4 — Platinum</option>
-                                          <option value="5">S5 — Diamond</option>
-                                      </select>
-                </td>
-                <td><input type="number" step="0.01" min="0" name="rank[3][salary]" class="form-control form-control-sm" style="max-width:130px;" value="50.00"></td>
-                <td>
-                  <select name="rank[3][status]" class="form-select form-select-sm" style="max-width:120px;">
-                    <option value="active" selected="">Active</option>
-                    <option value="inactive">Inactive</option>
-                  </select>
-                </td>
-              </tr>
-                          <tr>
-                <td class="ps-3 fw-semibold">S4 — Platinum</td>
-                <td><input type="number" min="0" name="rank[4][directs]" class="form-control form-control-sm" style="max-width:100px;" value="3"></td>
-                <td>
-                  <select name="rank[4][required_rank_id]" class="form-select form-select-sm" style="max-width:200px;">
-                    <option value="">— None (base rank)</option>
-                                          <option value="1">S1 — Bronze</option>
-                                          <option value="2">S2 — Silver</option>
-                                          <option value="3" selected="">S3 — Gold</option>
-                                          <option value="5">S5 — Diamond</option>
-                                      </select>
-                </td>
-                <td><input type="number" step="0.01" min="0" name="rank[4][salary]" class="form-control form-control-sm" style="max-width:130px;" value="100.00"></td>
-                <td>
-                  <select name="rank[4][status]" class="form-select form-select-sm" style="max-width:120px;">
-                    <option value="active" selected="">Active</option>
-                    <option value="inactive">Inactive</option>
-                  </select>
-                </td>
-              </tr>
-                          <tr>
-                <td class="ps-3 fw-semibold">S5 — Diamond</td>
-                <td><input type="number" min="0" name="rank[5][directs]" class="form-control form-control-sm" style="max-width:100px;" value="3"></td>
-                <td>
-                  <select name="rank[5][required_rank_id]" class="form-select form-select-sm" style="max-width:200px;">
-                    <option value="">— None (base rank)</option>
-                                          <option value="1">S1 — Bronze</option>
-                                          <option value="2">S2 — Silver</option>
-                                          <option value="3">S3 — Gold</option>
-                                          <option value="4" selected="">S4 — Platinum</option>
-                                      </select>
-                </td>
-                <td><input type="number" step="0.01" min="0" name="rank[5][salary]" class="form-control form-control-sm" style="max-width:130px;" value="200.00"></td>
-                <td>
-                  <select name="rank[5][status]" class="form-select form-select-sm" style="max-width:120px;">
-                    <option value="active" selected="">Active</option>
-                    <option value="inactive">Inactive</option>
-                  </select>
-                </td>
-              </tr>
-                      </tbody>
+            @php
+              $tierNames = ['T1 — Bronze', 'T2 — Silver', 'T3 — Gold', 'T4 — Platinum', 'T5 — Diamond'];
+            @endphp
+            @foreach($tiers as $n => $tier)
+            <tr>
+              <td class="ps-3 fw-semibold">{{ $tierNames[$n - 1] }}</td>
+              <td>
+                <input type="number" min="0" name="tier[{{ $n }}][directs]"
+                       class="form-control form-control-sm" style="max-width:110px;"
+                       value="{{ old("tier.{$n}.directs", $tier['directs']) }}">
+              </td>
+              <td>
+                <input type="number" step="0.01" min="0" name="tier[{{ $n }}][amount]"
+                       class="form-control form-control-sm" style="max-width:130px;"
+                       value="{{ old("tier.{$n}.amount", $tier['amount']) }}">
+              </td>
+              <td class="text-muted small">
+                @if($n === 1) Base tier (no prerequisite)
+                @else Requires meeting a lower tier first
+                @endif
+              </td>
+            </tr>
+            @endforeach
+          </tbody>
         </table>
       </div>
       <div class="p-3 small text-muted border-top">
-        <i class="fa-solid fa-info-circle me-1"></i> Document presets — S1: 5 directs w/ $100 min = $12, S2: 3×S1 = $25, S3: 3×S2 = $50, S4: 3×S3 = $100, S5: 3×S4 = $200.
-        To <strong>rename</strong> ranks, use <a href="{{ url('admin/settings-ranks') }}">Rank Management</a>.
+        <i class="fa-solid fa-info-circle me-1"></i>
+        The <strong>highest</strong> qualifying tier is paid each month. A user with 5 active directs gets T1; with 8+ directs they get T2 (if T2 requires ≤ 8). Max 12 payments per tier.
       </div>
     </div>
   </div>
 
   <button type="submit" class="btn btn-primary"><i class="fa-solid fa-check me-1"></i> Save Salary Settings</button>
 </form>
-
-<!-- Add New Salary Rank -->
-<div class="card border-themed mt-4">
-  <div class="card-header"><h6 class="mb-0"><i class="fa-solid fa-plus me-2"></i>Add New Salary Rank</h6></div>
-  <div class="card-body">
-    <form method="POST" class="row g-3">
-      <input type="hidden" name="action" value="add">
-      <div class="col-md-5"><label class="form-label">Rank Name</label><input type="text" name="new_name" class="form-control" placeholder="e.g. S6 — Emerald" required=""></div>
-      <div class="col-md-2"><label class="form-label">Required Directs</label><input type="number" min="0" name="new_directs" class="form-control" value="3"></div>
-      <div class="col-md-3"><label class="form-label">Weekly Salary ($)</label><input type="number" step="0.01" min="0" name="new_salary" class="form-control" required=""></div>
-      <div class="col-md-2 d-flex align-items-end"><button type="submit" class="btn btn-success w-100"><i class="fa-solid fa-plus me-1"></i> Add</button></div>
-    </form>
-  </div>
-</div>
 @endsection

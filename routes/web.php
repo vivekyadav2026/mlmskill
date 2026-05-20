@@ -291,6 +291,9 @@ Route::middleware(['auth', 'admin'])->prefix('admin')->group(function () {
     Route::get('/settings/payment', [\App\Http\Controllers\AdminSettingController::class, 'payment'])->name('admin.settings.payment');
     Route::post('/settings/payment', [\App\Http\Controllers\AdminSettingController::class, 'savePayment']);
 
+    Route::get('/settings/salary', [\App\Http\Controllers\AdminSettingController::class, 'salary'])->name('admin.settings.salary');
+    Route::post('/settings/salary', [\App\Http\Controllers\AdminSettingController::class, 'saveSalary']);
+
     Route::post('/settings/theme', [\App\Http\Controllers\AdminSettingController::class, 'saveTheme'])->name('admin.settings.theme');
 
     // Roles & Permissions

@@ -208,7 +208,49 @@ class AdminSettingController extends Controller
         return back()->with('success', 'Payment settings saved successfully!');
     }
 
+    // ── Salary Settings ────────────────────────────────────────
+    public function salary()
+    {
+        $settings = Setting::pluck('value', 'key');
+        // Build tiers array for the view (defaults match BonusService)
+        $defaults = [
+            1 => ['directs' =>  20, 'amount' =>  10.00],
+            2 => ['directs' =>  50, 'amount' =>  20.00],
+            3 => ['directs' => 100, 'amount' =>  30.00],
+            4 => ['directs' => 200, 'amount' =>  50.00],
+            5 => ['directs' => 500, 'amount' => 100.00],
+        ];
+        $tiers = [];
+        for ($i = 1; $i <= 5; $i++) {
+            $tiers[$i] = [
+                'directs' => $settings->get("salary_tier_{$i}_directs", $defaults[$i]['directs']),
+                'amount'  => $settings->get("salary_tier_{$i}_amount",  $defaults[$i]['amount']),
+            ];
+        }
+        $payout_day = $settings->get('salary_payout_day', 20);
+        return view('admin.settings-salary', compact('settings', 'tiers', 'payout_day'));
+    }
+
+    public function saveSalary(Request $request)
+    {
+        $request->validate([
+            'tier.*.directs' => 'required|integer|min:0',
+            'tier.*.amount'  => 'required|numeric|min:0',
+            'salary_payout_day' => 'required|integer|min:1|max:28',
+        ]);
+
+        for ($i = 1; $i <= 5; $i++) {
+            Setting::set("salary_tier_{$i}_directs", (int)   $request->input("tier.{$i}.directs", 0));
+            Setting::set("salary_tier_{$i}_amount",  (float) $request->input("tier.{$i}.amount",  0));
+        }
+        
+        Setting::set('salary_payout_day', (int) $request->input('salary_payout_day', 20));
+
+        return back()->with('success', 'Salary tier settings saved successfully!');
+    }
+
     // ── Theme Customizer ───────────────────────────────────────
+
     public function saveTheme(Request $request)
     {
         $fields = [

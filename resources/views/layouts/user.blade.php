@@ -186,7 +186,6 @@
           <li><a href="{{ url('user/network/sponsor') }}" class="nav-link sub-link"><span>My Sponsor</span></a></li>
           <li><a href="{{ url('user/network/direct') }}" class="nav-link sub-link"><span>Direct Referrals</span></a></li>
           <li><a href="{{ url('user/network/tree') }}" class="nav-link sub-link"><span>Team Tree (Level View)</span></a></li>
-          <li><a href="{{ url('user/network/level') }}" class="nav-link sub-link"><span>Level Income Report</span></a></li>
         </ul>
       </li>
 
@@ -209,6 +208,7 @@
         </a>
         <ul class="nav-submenu list-unstyled mb-0">
           <li><a href="{{ url('user/earnings/direct') }}" class="nav-link sub-link"><span>Direct Income</span></a></li>
+          <li><a href="{{ url('user/network/level') }}" class="nav-link sub-link"><span>Level Income</span></a></li>
           <li><a href="{{ url('user/earnings/team') }}" class="nav-link sub-link"><span>Team Income</span></a></li>
           <li><a href="{{ url('user/earnings/total') }}" class="nav-link sub-link"><span>Total Earnings Report</span></a></li>
         </ul>

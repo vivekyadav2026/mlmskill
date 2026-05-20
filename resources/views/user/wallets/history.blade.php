@@ -6,9 +6,34 @@
   .app-main { padding: 20px; }
 </style>
 <div class="tailwind-scope mt-4">
-    <div class="mb-6">
-        <h2 class="text-2xl font-bold text-gray-100">Consolidated Wallet History</h2>
-        <p class="text-gray-400">A comprehensive view of all your wallet activities across the platform.</p>
+    <div class="mb-6 flex flex-col md:flex-row md:items-center justify-between gap-4">
+        <div>
+            <h2 class="text-2xl font-bold text-gray-100">Consolidated Wallet History</h2>
+            <p class="text-gray-400">A comprehensive view of all your wallet activities across the platform.</p>
+        </div>
+        
+        <!-- Date Filter Form -->
+        <form method="GET" action="{{ route('wallets.history') }}" class="flex items-center gap-3 bg-[#1a222d] p-3 rounded-lg border border-[#334155] shadow-sm">
+            <div class="flex items-center gap-2">
+                <label class="text-xs text-gray-400 font-semibold uppercase">From</label>
+                <input type="date" name="from_date" value="{{ request('from_date') }}" class="bg-[#0f172a] border border-[#334155] text-gray-200 text-sm rounded px-2 py-1 focus:outline-none focus:border-indigo-500">
+            </div>
+            <div class="flex items-center gap-2">
+                <label class="text-xs text-gray-400 font-semibold uppercase">To</label>
+                <input type="date" name="to_date" value="{{ request('to_date') }}" class="bg-[#0f172a] border border-[#334155] text-gray-200 text-sm rounded px-2 py-1 focus:outline-none focus:border-indigo-500">
+            </div>
+            <button type="submit" class="bg-indigo-600 hover:bg-indigo-700 text-white text-sm font-semibold px-4 py-1.5 rounded transition shadow">
+                Filter
+            </button>
+            <button type="submit" name="export" value="csv" class="bg-[#334155] hover:bg-[#475569] text-white text-sm font-semibold px-4 py-1.5 rounded transition shadow" title="Download CSV Statement">
+                <i class="fa-solid fa-file-csv mr-1"></i> Export
+            </button>
+            @if(request('from_date') || request('to_date'))
+                <a href="{{ route('wallets.history') }}" class="bg-gray-600 hover:bg-gray-700 text-white text-sm font-semibold px-3 py-1.5 rounded transition shadow" title="Clear Filters">
+                    <i class="fa-solid fa-xmark"></i>
+                </a>
+            @endif
+        </form>
     </div>
 
     <!-- Overview Stats -->

@@ -39,7 +39,7 @@ class ProfileController extends Controller
             'address' => 'nullable|string|max:255',
             'city' => 'nullable|string|max:100',
             'state' => 'nullable|string|max:100',
-            'zip' => 'nullable|string|max:20',
+            'zip' => 'nullable|digits:6',
         ], [
             'phone.regex' => 'The mobile number must be a valid 10-digit Indian mobile number starting with 6, 7, 8, or 9.',
         ]);

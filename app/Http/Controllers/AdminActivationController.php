@@ -6,6 +6,7 @@ use App\Models\User;
 use App\Models\ActivationRequest;
 use App\Services\ActivationService;
 use App\Models\ActivityLog;
+use Illuminate\Support\Facades\DB;
 
 class AdminActivationController extends Controller
 {
@@ -51,22 +52,29 @@ class AdminActivationController extends Controller
     // Reject Request
     public function rejectRequest(Request $request, $id) 
     {
-        $req = ActivationRequest::findOrFail($id);
-        
-        // Refund wallet if payment method was Wallet Balance
-        if ($req->payment_method === 'Wallet Balance') {
-            $wallet = \App\Models\Wallet::firstOrCreate(['user_id' => $req->user_id]);
-            $wallet->increment('package_wallet', $req->amount);
+        try {
+            DB::beginTransaction();
+            $req = ActivationRequest::findOrFail($id);
+            
+            // Refund wallet if payment method was Wallet Balance
+            if ($req->payment_method === 'Wallet Balance') {
+                $wallet = \App\Models\Wallet::firstOrCreate(['user_id' => $req->user_id]);
+                $wallet->increment('package_wallet', $req->amount);
+            }
+            
+            $req->update([
+                'status' => 'rejected', 
+                'remarks' => $request->input('remarks', 'Rejected due to invalid payment.')
+            ]);
+            
+            ActivityLog::log('activation_rejected', 'Rejected activation request for ' . $req->user->email);
+            
+            DB::commit();
+            return redirect()->back()->with('success', 'Request rejected successfully. User wallet refunded if applicable.');
+        } catch (\Exception $e) {
+            DB::rollBack();
+            return redirect()->back()->with('error', 'Error processing rejection: ' . $e->getMessage());
         }
-        
-        $req->update([
-            'status' => 'rejected', 
-            'remarks' => $request->input('remarks', 'Rejected due to invalid payment.')
-        ]);
-        
-        ActivityLog::log('activation_rejected', 'Rejected activation request for ' . $req->user->email);
-        
-        return redirect()->back()->with('success', 'Request rejected successfully. User wallet refunded if applicable.');
     }
 
 

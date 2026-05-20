@@ -132,7 +132,7 @@
         <div class="stat-card border-l-4 border-l-indigo-500">
             <div class="stat-icon bg-indigo-500/10 text-indigo-500"><i class="fa-solid fa-chart-line"></i></div>
             <div class="flex-grow">
-                <p class="text-sm font-medium text-gray-400">Total Earned</p>
+                <p class="text-sm font-medium text-gray-400">Total Income (All-Time)</p>
                 <h3 class="text-2xl font-bold text-gray-100">${{ number_format($totalEarned, 2) }}</h3>
             </div>
         </div>

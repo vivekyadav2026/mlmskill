@@ -20,13 +20,11 @@ class BonusService
      * Those are enforced in evaluateUserRewardIncome().
      */
     private array $rewardIncomeMilestones = [
-        'direct' => [
-            //  directs => reward
-             5 =>  25.00,  // Active Associate
-            10 =>  50.00,  // Star
-        ],
+        'direct' => [],
         'team' => [
             //  team   => reward
+              5 =>    25.00,  // Active Associate
+             10 =>    50.00,  // Star
              50 =>   100.00,  // Manager       (also needs >= 5 directs)
             100 =>   150.00,  // Sr. Manager   (also needs >= 10 directs)
             500 =>  1000.00,  // Director
@@ -49,17 +47,34 @@ class BonusService
     ];
 
     /**
-     * Salary Bonus tiers (monthly, paid for up to 12 months).
-     * Keyed by minimum active direct referrals → monthly amount.
+     * Build salary bonus tiers dynamically from admin settings.
+     * Keys: salary_tier_N_directs / salary_tier_N_amount (N = 1..5)
+     * Defaults match the admin salary settings UI (S1–S5).
      * Sorted descending so the highest eligible tier is matched first.
      */
-    private array $salaryBonusMilestones = [
-        500 => 100.00,
-        200 =>  50.00,
-        100 =>  30.00,
-         50 =>  20.00,
-         20 =>  10.00,
-    ];
+    private function getSalaryBonusMilestones(): array
+    {
+        $defaults = [
+            1 => ['directs' =>  20, 'amount' =>  10.00],
+            2 => ['directs' =>  50, 'amount' =>  20.00],
+            3 => ['directs' => 100, 'amount' =>  30.00],
+            4 => ['directs' => 200, 'amount' =>  50.00],
+            5 => ['directs' => 500, 'amount' => 100.00],
+        ];
+
+        $milestones = [];
+        for ($i = 1; $i <= 5; $i++) {
+            $directs = (int)   \App\Models\Setting::get("salary_tier_{$i}_directs", $defaults[$i]['directs']);
+            $amount  = (float) \App\Models\Setting::get("salary_tier_{$i}_amount",  $defaults[$i]['amount']);
+            if ($directs > 0 && $amount > 0) {
+                $milestones[$directs] = $amount;
+            }
+        }
+
+        // Sort descending by directs so the highest matching tier wins first
+        krsort($milestones);
+        return $milestones;
+    }
 
     /**
      * Called when a new user activates in the network.
@@ -196,7 +211,7 @@ class BonusService
             $eligibleAmount = 0;
             $eligibleTier = 0;
 
-            foreach ($this->salaryBonusMilestones as $directsNeeded => $amount) {
+            foreach ($this->getSalaryBonusMilestones() as $directsNeeded => $amount) {
                 if ($directCount >= $directsNeeded) {
                     $eligibleTier = $directsNeeded;
                     $eligibleAmount = $amount;
@@ -345,7 +360,7 @@ class BonusService
         $eligibleAmount = 0;
         $eligibleTier = 0;
 
-        foreach ($this->salaryBonusMilestones as $directsNeeded => $amount) {
+        foreach ($this->getSalaryBonusMilestones() as $directsNeeded => $amount) {
             if ($directCount >= $directsNeeded) {
                 $eligibleTier = $directsNeeded;
                 $eligibleAmount = $amount;
@@ -355,7 +370,7 @@ class BonusService
         
         $nextTier = 0;
         $nextAmount = 0;
-        $reversedMilestones = array_reverse($this->salaryBonusMilestones, true);
+        $reversedMilestones = array_reverse($this->getSalaryBonusMilestones(), true);
         foreach ($reversedMilestones as $directsNeeded => $amount) {
             if ($directCount < $directsNeeded) {
                 $nextTier = $directsNeeded;

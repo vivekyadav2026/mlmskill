@@ -104,14 +104,28 @@ class WalletController extends Controller
         return view('user.wallets.renewal', compact('balance', 'history', 'renewalTarget'));
     }
 
-    public function history()
+    public function history(Request $request)
     {
         $user = Auth::user();
         $tokenName = \App\Models\Setting::get('utility_token_name', 'SKT');
         $renewalTarget = \App\Models\Setting::get('renewal_limit', 300);
         
+        $fromDate = $request->input('from_date');
+        $toDate = $request->input('to_date');
+        
+        // Helper function to apply date filters
+        $applyDateFilter = function($query) use ($fromDate, $toDate) {
+            if ($fromDate) {
+                $query->whereDate('created_at', '>=', $fromDate);
+            }
+            if ($toDate) {
+                $query->whereDate('created_at', '<=', $toDate);
+            }
+            return $query;
+        };
+        
         // Create consolidated history
-        $commissions = DB::table('commission_ledgers')->where('user_id', $user->id)
+        $commissions = $applyDateFilter(DB::table('commission_ledgers')->where('user_id', $user->id))
             ->get()->map(function($item) {
                 return [
                     'date' => $item->created_at,
@@ -123,7 +137,7 @@ class WalletController extends Controller
                 ];
             });
             
-        $tokens = DB::table('token_ledgers')->where('user_id', $user->id)
+        $tokens = $applyDateFilter(DB::table('token_ledgers')->where('user_id', $user->id))
             ->get()->map(function($item) use ($tokenName) {
                 $isAdd = $item->token_count > 0;
                 $label = $item->token_type == 'utility' ? strtoupper($tokenName) : 'RT';
@@ -137,7 +151,7 @@ class WalletController extends Controller
                 ];
             });
             
-        $withdrawals = DB::table('withdrawals')->where('user_id', $user->id)
+        $withdrawals = $applyDateFilter(DB::table('withdrawals')->where('user_id', $user->id))
             ->get()->map(function($item) {
                 return [
                     'date' => $item->created_at,
@@ -149,16 +163,23 @@ class WalletController extends Controller
                 ];
             });
             
-        $p2p = \App\Models\ActivityLog::where('user_id', $user->id)
-            ->whereIn('action', ['p2p_received', 'p2p_transfer'])
+        $p2p = $applyDateFilter(\App\Models\ActivityLog::where('user_id', $user->id)
+            ->whereIn('action', ['p2p_received', 'p2p_transfer']))
             ->get()->map(function($item) {
                 $isReceived = $item->action == 'p2p_received';
+                
+                // Parse amount from description if possible
+                $amountDisplay = 'View Details';
+                if (preg_match('/\$([\d\.]+)/', $item->description, $m)) {
+                    $amountDisplay = ($isReceived ? '+' : '-') . '$' . $m[1];
+                }
+                
                 return [
                     'date' => $item->created_at,
                     'wallet' => $isReceived ? 'Package Wallet' : 'Income Wallet',
                     'type' => 'P2P ' . ($isReceived ? 'Received' : 'Transfer'),
-                    'amount' => 'View Details', // Exact amount is in description, keeping it simple
-                    'color' => $isReceived ? 'text-purple-400' : 'text-gray-400',
+                    'amount' => $amountDisplay,
+                    'color' => $isReceived ? 'text-green-400' : 'text-red-400',
                     'bg' => 'bg-purple-100 text-purple-800'
                 ];
             });
@@ -166,11 +187,39 @@ class WalletController extends Controller
         $historyList = collect()->concat($commissions)->concat($tokens)->concat($withdrawals)->concat($p2p)
             ->sortByDesc('date')->values();
             
+        if ($request->has('export') && $request->export == 'csv') {
+            $headers = [
+                "Content-type"        => "text/csv",
+                "Content-Disposition" => "attachment; filename=wallet_history.csv",
+                "Pragma"              => "no-cache",
+                "Cache-Control"       => "must-revalidate, post-check=0, pre-check=0",
+                "Expires"             => "0"
+            ];
+            
+            $callback = function() use ($historyList) {
+                $file = fopen('php://output', 'w');
+                fputcsv($file, ['Date', 'Wallet', 'Transaction Type', 'Amount']);
+                
+                foreach ($historyList as $row) {
+                    fputcsv($file, [
+                        \Carbon\Carbon::parse($row['date'])->format('Y-m-d H:i:s'),
+                        $row['wallet'],
+                        $row['type'],
+                        strip_tags($row['amount'])
+                    ]);
+                }
+                fclose($file);
+            };
+            
+            return response()->stream($callback, 200, $headers);
+        }
+            
         $currentPage = \Illuminate\Pagination\Paginator::resolveCurrentPage();
         $perPage = 15;
         $currentItems = $historyList->slice(($currentPage - 1) * $perPage, $perPage)->all();
         $paginatedHistory = new \Illuminate\Pagination\LengthAwarePaginator($currentItems, count($historyList), $perPage, $currentPage, [
-            'path' => \Illuminate\Pagination\Paginator::resolveCurrentPath()
+            'path' => \Illuminate\Pagination\Paginator::resolveCurrentPath(),
+            'query' => $request->query()
         ]);
 
         return view('user.wallets.history', compact('user', 'tokenName', 'renewalTarget', 'paginatedHistory'));
@@ -248,10 +297,38 @@ class WalletController extends Controller
     public function p2pHistory()
     {
         $user = Auth::user();
-        $history = \App\Models\ActivityLog::where('user_id', $user->id)
+        $paginator = \App\Models\ActivityLog::where('user_id', $user->id)
                     ->whereIn('action', ['p2p_transfer', 'p2p_received'])
                     ->orderBy('created_at', 'desc')
                     ->paginate(15);
+                    
+        $history = $paginator->through(function($log) {
+            $parsed = [
+                'type' => $log->action,
+                'date' => $log->created_at,
+                'amount' => '0.00',
+                'target_name' => 'Unknown',
+                'target_id' => 'Unknown',
+                'raw' => $log->description,
+            ];
+            
+            if ($log->action === 'p2p_transfer') {
+                if (preg_match('/Transferred\s+\\$([\d\.]+).*to\s+([^\']+)\'s.*\\(([^)]+)\\)/', $log->description, $m)) {
+                    $parsed['amount'] = $m[1];
+                    $parsed['target_name'] = trim($m[2]);
+                    $parsed['target_id'] = trim($m[3]);
+                }
+            } 
+            else if ($log->action === 'p2p_received') {
+                if (preg_match('/Received\s+\\$([\d\.]+).*from\s+(.*?)\s+\\(([^)]+)\\)/', $log->description, $m)) {
+                    $parsed['amount'] = $m[1];
+                    $parsed['target_name'] = trim($m[2]);
+                    $parsed['target_id'] = trim($m[3]);
+                }
+            }
+            return (object) $parsed;
+        });
+
         return view('user.p2p.history', compact('history'));
     }
 

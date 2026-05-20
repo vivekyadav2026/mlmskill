@@ -18,7 +18,9 @@
                 <thead>
                     <tr>
                         <th class="bg-[#0f172a] text-gray-400 font-semibold text-xs uppercase tracking-wider p-4 border-b border-[#334155]">Transaction Type</th>
-                        <th class="bg-[#0f172a] text-gray-400 font-semibold text-xs uppercase tracking-wider p-4 border-b border-[#334155]">Details</th>
+                        <th class="bg-[#0f172a] text-gray-400 font-semibold text-xs uppercase tracking-wider p-4 border-b border-[#334155]">Sender</th>
+                        <th class="bg-[#0f172a] text-gray-400 font-semibold text-xs uppercase tracking-wider p-4 border-b border-[#334155]">Receiver</th>
+                        <th class="bg-[#0f172a] text-gray-400 font-semibold text-xs uppercase tracking-wider p-4 border-b border-[#334155]">Amount</th>
                         <th class="bg-[#0f172a] text-gray-400 font-semibold text-xs uppercase tracking-wider p-4 border-b border-[#334155]">Date & Time</th>
                     </tr>
                 </thead>
@@ -26,7 +28,7 @@
                     @forelse($history as $log)
                         <tr class="hover:bg-[#0b1220] transition">
                             <td class="p-4">
-                                @if($log->action === 'p2p_transfer')
+                                @if($log->type === 'p2p_transfer')
                                     <span class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-bold bg-red-900/30 text-red-400 border border-red-500/30">
                                         <i class="fa-solid fa-arrow-up"></i> Sent
                                     </span>
@@ -36,11 +38,40 @@
                                     </span>
                                 @endif
                             </td>
-                            <td class="p-4 text-gray-200">
-                                {{ $log->details }}
+                            
+                            <!-- Sender Column -->
+                            <td class="p-4">
+                                @if($log->type === 'p2p_transfer')
+                                    <!-- I sent this -->
+                                    <div class="font-semibold text-gray-200">You ({{ auth()->user()->name }})</div>
+                                    <div class="text-xs text-indigo-400">{{ auth()->user()->referral_code }}</div>
+                                @else
+                                    <!-- Someone sent to me -->
+                                    <div class="font-semibold text-gray-200">{{ $log->target_name }}</div>
+                                    <div class="text-xs text-indigo-400">{{ $log->target_id }}</div>
+                                @endif
+                            </td>
+                            
+                            <!-- Receiver Column -->
+                            <td class="p-4">
+                                @if($log->type === 'p2p_transfer')
+                                    <!-- I sent to someone -->
+                                    <div class="font-semibold text-gray-200">{{ $log->target_name }}</div>
+                                    <div class="text-xs text-indigo-400">{{ $log->target_id }}</div>
+                                @else
+                                    <!-- Someone sent to me -->
+                                    <div class="font-semibold text-gray-200">You ({{ auth()->user()->name }})</div>
+                                    <div class="text-xs text-indigo-400">{{ auth()->user()->referral_code }}</div>
+                                @endif
+                            </td>
+
+                            <td class="p-4">
+                                <span class="font-bold {{ $log->type === 'p2p_transfer' ? 'text-red-400' : 'text-green-400' }}">
+                                    {{ $log->type === 'p2p_transfer' ? '-' : '+' }}${{ number_format((float)$log->amount, 2) }}
+                                </span>
                             </td>
                             <td class="p-4 text-gray-400 text-sm">
-                                {{ $log->created_at->format('M d, Y h:i A') }}
+                                {{ $log->date->format('d M, Y h:i A') }}
                             </td>
                         </tr>
                     @empty

@@ -62,7 +62,7 @@
         @for($i=1; $i<=10; $i++)
         <div>
           <label class="f-label">Level {{ $i }} ($)</label>
-          <input type="number" step="0.01" name="level_{{ $i }}_amt" class="f-ctrl" value="{{ $settings['level_'.$i.'_amt'] ?? ($i==1 ? '15' : ($i==2 ? '10' : ($i==3 ? '6' : ($i==4 ? '3' : ($i==5 ? '2' : '0.5'))))) }}" required>
+          <input type="number" step="0.01" name="level_{{ $i }}_amt" class="f-ctrl" value="{{ $settings['level_'.$i.'_amt'] ?? ($i==1 ? '20' : ($i==2 ? '10' : ($i==3 ? '5' : ($i==4 ? '3' : ($i==5 ? '2' : ($i==6 ? '1' : ($i==9||$i==10 ? '0.25' : '0.5'))))))) }}" required>
         </div>
         @endfor
       </div>

@@ -2,6 +2,7 @@
 namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
 
 class PackageController extends Controller
 {
@@ -67,49 +68,57 @@ class PackageController extends Controller
             return back()->with('error', 'Insufficient funds in your Package Wallet. You need $300.');
         }
 
-        // Deduct from wallet
-        $wallet->decrement('package_wallet', $price);
+        try {
+            DB::beginTransaction();
 
-        // Get the selected module
-        $module = \App\Models\CourseModule::with('courses')->findOrFail($request->module_id);
+            // Deduct from wallet
+            $wallet->decrement('package_wallet', $price);
 
-        // Grant access to all courses inside this module
-        foreach ($module->courses as $course) {
-            if ($course->status == 'active') {
-                \App\Models\CourseProgress::firstOrCreate([
-                    'user_id' => $user->id,
-                    'course_id' => $course->id,
-                ]);
+            // Get the selected module
+            $module = \App\Models\CourseModule::with('courses')->findOrFail($request->module_id);
+
+            // Grant access to all courses inside this module
+            foreach ($module->courses as $course) {
+                if ($course->status == 'active') {
+                    \App\Models\CourseProgress::firstOrCreate([
+                        'user_id' => $user->id,
+                        'course_id' => $course->id,
+                    ]);
+                }
             }
+
+            // Activate User
+            $user->status = 'active';
+            $user->activation_date = now();
+            $user->save();
+
+            // Distribute upline commissions
+            $commissionService->distributeCommissions($user, $price);
+
+            // Check for Reward Income milestones
+            app(\App\Services\BonusService::class)->checkAndDistributeRewardIncome($user);
+
+            // Give 300 free NEXA 1.0 upon activation
+            $tokenValue = (float) \App\Models\Setting::get('utility_token_value', 0.10);
+            \App\Models\TokenLedger::create([
+                'user_id' => $user->id,
+                'token_type' => 'utility',
+                'token_count' => 300,
+                'token_value' => $tokenValue,
+                'source' => 'activation_bonus',
+                'status' => 'credited',
+                'credited_date' => now(),
+            ]);
+            $wallet->increment('utility_token_wallet', 300);
+
+            \App\Models\ActivityLog::log('account_activated', 'Activated account with NGO Package for $' . $price, $user->id);
+
+            DB::commit();
+            return redirect()->route('dashboard')->with('success', 'Account activated successfully! You now have full access to the platform and courses.');
+        } catch (\Exception $e) {
+            DB::rollBack();
+            return back()->with('error', 'An error occurred during activation: ' . $e->getMessage());
         }
-
-        // Activate User
-        $user->status = 'active';
-        $user->activation_date = now();
-        $user->save();
-
-        // Distribute upline commissions
-        $commissionService->distributeCommissions($user, $price);
-
-        // Check for Reward Income milestones
-        app(\App\Services\BonusService::class)->checkAndDistributeRewardIncome($user);
-
-        // Give 300 free NEXA 1.0 upon activation
-        $tokenValue = (float) \App\Models\Setting::get('utility_token_value', 0.10);
-        \App\Models\TokenLedger::create([
-            'user_id' => $user->id,
-            'token_type' => 'utility',
-            'token_count' => 300,
-            'token_value' => $tokenValue,
-            'source' => 'activation_bonus',
-            'status' => 'credited',
-            'credited_date' => now(),
-        ]);
-        $wallet->increment('utility_token_wallet', 300);
-
-        \App\Models\ActivityLog::log('account_activated', 'Activated account with NGO Package for $' . $price, $user->id);
-
-        return redirect()->route('dashboard')->with('success', 'Account activated successfully! You now have full access to the platform and courses.');
     }
 
     public function activateMember()
@@ -158,51 +167,59 @@ class PackageController extends Controller
             return back()->with('error', 'Insufficient funds in your Package Wallet. You need $300.');
         }
 
-        // Deduct from current user
-        $wallet->decrement('package_wallet', $price);
+        try {
+            DB::beginTransaction();
 
-        // Get the selected module
-        $module = \App\Models\CourseModule::with('courses')->findOrFail($request->module_id);
+            // Deduct from current user
+            $wallet->decrement('package_wallet', $price);
 
-        // Grant access to all courses inside this module for TARGET user
-        foreach ($module->courses as $course) {
-            if ($course->status == 'active') {
-                \App\Models\CourseProgress::firstOrCreate([
-                    'user_id' => $targetUser->id,
-                    'course_id' => $course->id,
-                ]);
+            // Get the selected module
+            $module = \App\Models\CourseModule::with('courses')->findOrFail($request->module_id);
+
+            // Grant access to all courses inside this module for TARGET user
+            foreach ($module->courses as $course) {
+                if ($course->status == 'active') {
+                    \App\Models\CourseProgress::firstOrCreate([
+                        'user_id' => $targetUser->id,
+                        'course_id' => $course->id,
+                    ]);
+                }
             }
+
+            // Activate TARGET User
+            $targetUser->status = 'active';
+            $targetUser->activation_date = now();
+            $targetUser->save();
+
+            // Distribute upline commissions
+            $commissionService->distributeCommissions($targetUser, $price);
+
+            // Check for Reward Income milestones
+            app(\App\Services\BonusService::class)->checkAndDistributeRewardIncome($targetUser);
+
+            // Give 300 free NEXA 1.0 upon activation
+            $tokenValue = (float) \App\Models\Setting::get('utility_token_value', 0.10);
+            \App\Models\TokenLedger::create([
+                'user_id' => $targetUser->id,
+                'token_type' => 'utility',
+                'token_count' => 300,
+                'token_value' => $tokenValue,
+                'source' => 'activation_bonus',
+                'status' => 'credited',
+                'credited_date' => now(),
+            ]);
+            $targetWallet = \App\Models\Wallet::firstOrCreate(['user_id' => $targetUser->id]);
+            $targetWallet->increment('utility_token_wallet', 300);
+
+            \App\Models\ActivityLog::log('account_activated_by_sponsor', 'Activated account '.$targetUser->username.' with NGO Package for $' . $price, $currentUser->id);
+            \App\Models\ActivityLog::log('account_activated', 'Account activated by sponsor '.$currentUser->username.' for $' . $price, $targetUser->id);
+
+            DB::commit();
+            return back()->with('success', "Account for {$targetUser->name} activated successfully!");
+        } catch (\Exception $e) {
+            DB::rollBack();
+            return back()->with('error', 'An error occurred during activation: ' . $e->getMessage());
         }
-
-        // Activate TARGET User
-        $targetUser->status = 'active';
-        $targetUser->activation_date = now();
-        $targetUser->save();
-
-        // Distribute upline commissions
-        $commissionService->distributeCommissions($targetUser, $price);
-
-        // Check for Reward Income milestones
-        app(\App\Services\BonusService::class)->checkAndDistributeRewardIncome($targetUser);
-
-        // Give 300 free NEXA 1.0 upon activation
-        $tokenValue = (float) \App\Models\Setting::get('utility_token_value', 0.10);
-        \App\Models\TokenLedger::create([
-            'user_id' => $targetUser->id,
-            'token_type' => 'utility',
-            'token_count' => 300,
-            'token_value' => $tokenValue,
-            'source' => 'activation_bonus',
-            'status' => 'credited',
-            'credited_date' => now(),
-        ]);
-        $targetWallet = \App\Models\Wallet::firstOrCreate(['user_id' => $targetUser->id]);
-        $targetWallet->increment('utility_token_wallet', 300);
-
-        \App\Models\ActivityLog::log('account_activated_by_sponsor', 'Activated account '.$targetUser->username.' with NGO Package for $' . $price, $currentUser->id);
-        \App\Models\ActivityLog::log('account_activated', 'Account activated by sponsor '.$currentUser->username.' for $' . $price, $targetUser->id);
-
-        return back()->with('success', "Account for {$targetUser->name} activated successfully!");
     }
 
     public function lookupMember(Request $request)

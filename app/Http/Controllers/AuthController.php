@@ -32,8 +32,11 @@ class AuthController extends Controller
             ActivityLog::log('login', 'User logged in successfully');
             
             if (Auth::user()->role === 'admin') {
-                return redirect()->intended('/admin/dashboard');
+                // Force admins to admin dashboard, ignoring previous 'intended' user URLs
+                return redirect('/admin/dashboard');
             }
+            
+            // Force regular users to user dashboard
             return redirect()->route('dashboard');
         }
 

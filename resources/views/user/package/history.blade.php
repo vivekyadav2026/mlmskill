@@ -15,7 +15,7 @@
 
     <div class="bg-[#1a222d] border border-[#334155] rounded-lg overflow-hidden shadow-lg">
         <div class="overflow-x-auto">
-            <table class="w-full table-custom">
+            <table class="w-full table-custom min-w-[600px]">
                 <thead>
                     <tr>
                         <th class="text-left">Date</th>
@@ -28,15 +28,15 @@
                     @forelse($history as $item)
                     <tr class="transition">
                         <td class="whitespace-nowrap text-gray-400">{{ \Carbon\Carbon::parse($item->created_at)->format('M d, Y - H:i') }}</td>
-                        <td>
+                        <td class="whitespace-nowrap">
                             @if($item->action == 'account_activated_by_sponsor')
-                                <span class="bg-blue-900/50 text-blue-400 border border-blue-500/30 px-2 py-1 rounded text-xs">Sponsor Activation</span>
+                                <span class="bg-blue-900/50 text-blue-400 border border-blue-500/30 px-2 py-1 rounded text-xs whitespace-nowrap">Sponsor Activation</span>
                             @else
-                                <span class="bg-green-900/50 text-green-400 border border-green-500/30 px-2 py-1 rounded text-xs">Self Activation</span>
+                                <span class="bg-green-900/50 text-green-400 border border-green-500/30 px-2 py-1 rounded text-xs whitespace-nowrap">Self Activation</span>
                             @endif
                         </td>
-                        <td class="text-gray-300">{{ $item->description }}</td>
-                        <td class="text-right">
+                        <td class="text-gray-300 min-w-[200px]">{{ $item->description }}</td>
+                        <td class="text-right whitespace-nowrap">
                             <span class="text-green-400 font-bold"><i class="fa-solid fa-check"></i> Completed</span>
                         </td>
                     </tr>
@@ -52,8 +52,9 @@
             </table>
         </div>
         @if($history->hasPages())
-        <div class="px-6 py-4 border-t border-[#334155]">
-            {{ $history->links() }}
+        <!-- Added pb-20 so mobile chat widgets don't overlap the Next button -->
+        <div class="px-6 py-4 border-t border-[#334155] pb-24">
+            {{ $history->links('pagination::simple-tailwind') }}
         </div>
         @endif
     </div>
