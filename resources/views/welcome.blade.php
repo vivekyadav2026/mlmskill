@@ -107,6 +107,39 @@
             background-image: radial-gradient(#e2e8f0 1px, transparent 1px);
             background-size: 24px 24px;
         }
+        /* Custom Google Translate Styling and Hide defaults */
+        iframe.VIpgJd-yAWgpe-hZsed-HLg1ee-JhKxnd {
+            display: none !important;
+        }
+        .VIpgJd-yAWgpe-hZsed-HLg1ee-JhKxnd {
+            display: none !important;
+        }
+        body {
+            top: 0px !important;
+        }
+        #google_translate_element {
+            display: none !important;
+        }
+        .skiptranslate {
+            display: none !important;
+        }
+        .goog-te-banner-frame {
+            display: none !important;
+        }
+        .goog-te-balloon-frame {
+            display: none !important;
+        }
+        .goog-tooltip {
+            display: none !important;
+        }
+        .goog-tooltip:hover {
+            display: none !important;
+        }
+        .goog-text-highlight {
+            background-color: transparent !important;
+            border: none !important;
+            box-shadow: none !important;
+        }
     </style>
 </head>
 <body class="antialiased font-sans bg-pattern text-gray-800 overflow-x-hidden selection:bg-brand-500 selection:text-white">
@@ -117,63 +150,88 @@
     <div class="bg-navy-900 text-white text-xs py-2.5 px-4 sm:px-6 lg:px-8 border-b border-white/10 relative z-50 shadow-sm">
         <div class="max-w-7xl mx-auto flex flex-col sm:flex-row justify-between items-center gap-2 font-medium">
             <div class="flex items-center gap-6">
-                <span class="flex items-center gap-2 text-gold-400 font-bold">
-                    <i class="fa-solid fa-phone text-accent-500 animate-pulse"></i> +91 70579 0000
-                </span>
+                <a href="https://wa.me/919891176777?text=नमस्ते,%20मुझे%20Samarth%20Digital%20के%20कोर्सेज%20और%20स्व-रोजगार%20के%20बारे%20में%20जानकारी%20चाहिए।" target="_blank" class="flex items-center gap-2 text-gold-400 font-bold hover:text-white transition">
+                    <i class="fa-brands fa-whatsapp text-green-400 text-sm animate-pulse"></i> 9891176777
+                </a>
                 <span class="hidden sm:flex items-center gap-2 text-gray-300">
                     <i class="fa-solid fa-envelope text-brand-400"></i> info@samarthdigital.com
                 </span>
             </div>
             <div class="flex items-center gap-4">
-                <span class="inline-flex items-center bg-brand-500 text-white font-bold px-2.5 py-0.5 rounded-full text-[11px] uppercase tracking-wide">
+                <span class="inline-flex items-center bg-brand-500 text-white font-bold px-2.5 py-0.5 rounded-full text-[11px] uppercase tracking-wide font-devanagari">
                     कौशल से स्वावलंबन
                 </span>
+                <!-- Custom Language Toggle Button for Topbar -->
+                <button class="custom-lang-toggle bg-white/10 hover:bg-white/20 border border-white/20 text-white text-[11px] font-bold px-2.5 py-1 rounded-full flex items-center gap-1.5 transition">
+                    <!-- Loaded dynamically via JS -->
+                </button>
                 <div class="hidden md:flex items-center gap-3 text-gray-400">
                     <a href="#" class="hover:text-white transition"><i class="fa-brands fa-facebook"></i></a>
                     <a href="#" class="hover:text-white transition"><i class="fa-brands fa-instagram"></i></a>
                     <a href="#" class="hover:text-white transition"><i class="fa-brands fa-youtube"></i></a>
-                    <a href="#" class="hover:text-white transition"><i class="fa-brands fa-whatsapp"></i></a>
+                    <a href="https://wa.me/919891176777?text=नमस्ते,%20मुझे%20Samarth%20Digital%20के%20कोर्सेज%20और%20स्व-रोजगार%20के%20बारे%20में%20जानकारी%20चाहिए।" target="_blank" class="hover:text-green-400 transition"><i class="fa-brands fa-whatsapp"></i></a>
                 </div>
             </div>
         </div>
     </div>
 
     <!-- Navigation Header -->
-    <nav id="navbar" class="sticky top-0 w-full z-50 glass-panel border-b border-gray-100 transition-all duration-300 shadow-sm">
+    <nav id="navbar" class="sticky top-0 w-full z-50 bg-white/85 backdrop-blur-lg border-b border-gray-100/80 transition-all duration-300 shadow-sm">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div class="flex justify-between items-center h-22 py-3">
+            <div id="navbar-container" class="flex justify-between items-center transition-all duration-300 py-4">
                 <!-- Brand Logo & Tagline -->
-                <a href="/" class="flex items-center gap-3.5 group">
+                <a href="/" class="flex items-center gap-3 group flex-shrink-0">
                     <div class="relative">
-                        <img src="{{ asset('logo.png') }}" onerror="this.src='https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?q=80&w=150&auto=format&fit=crop'" alt="Samarth Digital Logo" class="w-12 h-12 rounded-xl object-cover shadow-md shadow-brand-500/20 group-hover:scale-105 transition transform duration-300">
-                        <div class="absolute -bottom-1 -right-1 w-4 h-4 bg-green-500 border-2 border-white rounded-full"></div>
+                        <img src="{{ asset('logo.png') }}" onerror="this.src='https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?q=80&w=150&auto=format&fit=crop'" alt="Samarth Digital Logo" class="w-11 h-11 rounded-xl object-cover shadow-premium shadow-brand-500/10 group-hover:scale-105 transition transform duration-300">
+                        <div class="absolute -bottom-0.5 -right-0.5 w-3 h-3 bg-emerald-500 border-2 border-white rounded-full shadow-sm animate-pulse"></div>
                     </div>
                     <div class="flex flex-col">
-                        <span class="font-extrabold text-2xl lg:text-3xl tracking-tight text-navy-900 font-sans leading-none">
+                        <span class="font-extrabold text-xl sm:text-2xl tracking-tight text-navy-900 font-sans leading-none whitespace-nowrap">
                             SAMARTH <span class="text-brand-500">DIGITAL</span>
                         </span>
-                        <span class="text-[11px] lg:text-xs font-semibold text-accent-600 font-devanagari tracking-wide mt-1">
+                        <span class="text-[9px] sm:text-[10px] xl:text-[11px] font-semibold text-accent-500 font-devanagari tracking-wider mt-1 whitespace-nowrap transition-colors duration-300 group-hover:text-accent-600">
                             — कौशल विकास और स्व रोजगार को समर्पित —
                         </span>
                     </div>
                 </a>
 
                 <!-- Desktop Menu -->
-                <div class="hidden xl:flex items-center space-x-8 font-semibold text-gray-700 font-devanagari text-base">
-                    <a href="/" class="text-brand-500 hover:text-brand-600 transition">होम</a>
-                    <a href="#about" class="hover:text-brand-500 transition">हमारे बारे में</a>
-                    <a href="#features" class="hover:text-brand-500 transition">हम क्या देते हैं</a>
-                    <a href="#training" class="hover:text-brand-500 transition">ट्रेनिंग विकल्प</a>
-                    <a href="#courses" class="hover:text-brand-500 transition">प्रमुख कोर्सेज</a>
-                    <a href="#contact" class="hover:text-brand-500 transition">संपर्क करें</a>
+                <div class="hidden xl:flex items-center space-x-4 2xl:space-x-6 font-semibold text-slate-600 font-devanagari text-[14px] 2xl:text-base flex-shrink-0">
+                    <a href="/" class="relative py-2 text-brand-500 transition duration-300 group whitespace-nowrap">
+                        होम
+                        <span class="absolute bottom-0 left-0 w-full h-0.5 bg-brand-500 rounded-full"></span>
+                    </a>
+                    <a href="#about" class="relative py-2 hover:text-brand-500 text-slate-600 transition duration-300 group whitespace-nowrap">
+                        हमारे बारे में
+                        <span class="absolute bottom-0 left-0 w-0 h-0.5 bg-brand-500 rounded-full transition-all duration-300 group-hover:w-full"></span>
+                    </a>
+                    <a href="#features" class="relative py-2 hover:text-brand-500 text-slate-600 transition duration-300 group whitespace-nowrap">
+                        हम क्या देते हैं
+                        <span class="absolute bottom-0 left-0 w-0 h-0.5 bg-brand-500 rounded-full transition-all duration-300 group-hover:w-full"></span>
+                    </a>
+                    <a href="#training" class="relative py-2 hover:text-brand-500 text-slate-600 transition duration-300 group whitespace-nowrap">
+                        ट्रेनिंग विकल्प
+                        <span class="absolute bottom-0 left-0 w-0 h-0.5 bg-brand-500 rounded-full transition-all duration-300 group-hover:w-full"></span>
+                    </a>
+                    <a href="#courses" class="relative py-2 hover:text-brand-500 text-slate-600 transition duration-300 group whitespace-nowrap">
+                        प्रमुख कोर्सेज
+                        <span class="absolute bottom-0 left-0 w-0 h-0.5 bg-brand-500 rounded-full transition-all duration-300 group-hover:w-full"></span>
+                    </a>
+                    <a href="#contact" class="relative py-2 hover:text-brand-500 text-slate-600 transition duration-300 group whitespace-nowrap">
+                        संपर्क करें
+                        <span class="absolute bottom-0 left-0 w-0 h-0.5 bg-brand-500 rounded-full transition-all duration-300 group-hover:w-full"></span>
+                    </a>
                 </div>
 
                 <!-- Action Buttons -->
-                <div class="hidden lg:flex items-center gap-3">
-                    <a href="{{ route('login') }}" class="px-5 py-2.5 text-navy-900 font-bold hover:text-brand-600 transition flex items-center gap-2">
+                <div class="hidden lg:flex items-center gap-2 xl:gap-3 flex-shrink-0">
+                    <button class="custom-lang-toggle px-4 py-2 text-xs xl:text-sm text-slate-700 hover:text-brand-600 font-semibold flex items-center gap-2 bg-slate-50 hover:bg-brand-50/40 border border-slate-200 hover:border-brand-200 rounded-full transition duration-300 shadow-sm whitespace-nowrap flex-shrink-0">
+                        <!-- Loaded dynamically via JS -->
+                    </button>
+                    <a href="{{ route('login') }}" class="px-4 py-2 text-xs xl:text-sm text-slate-700 font-semibold hover:text-brand-600 hover:bg-slate-100/60 rounded-full transition duration-300 flex items-center gap-2 whitespace-nowrap flex-shrink-0">
                         <i class="fa-solid fa-user-lock text-sm"></i> लॉगिन
                     </a>
-                    <a href="{{ route('register') }}" class="bg-brand-500 hover:bg-brand-600 text-white px-6 py-2.5 rounded-xl font-bold shadow-lg shadow-brand-500/30 transition transform hover:-translate-y-0.5 flex items-center gap-2">
+                    <a href="{{ route('register') }}" class="bg-gradient-to-r from-brand-500 via-brand-600 to-emerald-600 hover:opacity-95 text-white px-5 py-2 xl:px-6 xl:py-2.5 rounded-full font-semibold text-xs xl:text-sm shadow-md shadow-brand-500/10 hover:shadow-lg hover:shadow-brand-500/20 transition transform hover:-translate-y-0.5 flex items-center gap-2 whitespace-nowrap flex-shrink-0">
                         <i class="fa-solid fa-user-plus text-sm"></i> आज ही जुड़ें
                     </a>
                 </div>
@@ -208,9 +266,14 @@
                 <a href="#contact" class="mobile-link p-3 hover:bg-brand-50 hover:text-brand-500 rounded-xl transition flex items-center gap-3">
                     <i class="fa-solid fa-phone text-brand-500 w-6"></i> संपर्क करें
                 </a>
-                <div class="border-t border-gray-100 my-4 pt-4 flex flex-col sm:flex-row gap-3">
-                    <a href="{{ route('login') }}" class="text-center py-3 bg-gray-100 text-navy-900 rounded-xl font-bold hover:bg-gray-200 transition">लॉगिन करें</a>
-                    <a href="{{ route('register') }}" class="text-center py-3 bg-brand-500 text-white rounded-xl font-bold hover:bg-brand-600 transition shadow-lg shadow-brand-500/20">आज ही जुड़ें</a>
+                <div class="border-t border-gray-100 my-4 pt-4 flex flex-col gap-3">
+                    <button class="custom-lang-toggle py-3 bg-slate-50 text-slate-800 rounded-full font-semibold hover:bg-slate-100 transition flex items-center justify-center gap-2 border border-slate-200">
+                        <!-- Loaded dynamically via JS -->
+                    </button>
+                    <div class="grid grid-cols-2 gap-3">
+                        <a href="{{ route('login') }}" class="text-center py-3 bg-slate-100 text-slate-800 rounded-full font-semibold hover:bg-slate-200/80 transition">लॉगिन करें</a>
+                        <a href="{{ route('register') }}" class="text-center py-3 bg-gradient-to-r from-brand-500 to-emerald-600 text-white rounded-full font-semibold hover:opacity-95 transition shadow-lg shadow-brand-500/10">आज ही जुड़ें</a>
+                    </div>
                 </div>
             </div>
         </div>
@@ -608,7 +671,7 @@
                 <!-- Course 1: Cleaning Products -->
                 <div class="bg-white rounded-3xl overflow-hidden shadow-premium border border-gray-100 flex flex-col group hover:-translate-y-1.5 transition-all duration-300">
                     <div class="relative h-60 overflow-hidden">
-                        <img src="https://images.unsplash.com/photo-1585837575651-042b58189c4e?q=80&w=800&auto=format&fit=crop" class="w-full h-full object-cover group-hover:scale-110 transition duration-500" alt="Cleaning Products Making Course">
+                        <img src="{{ asset('images/landing/cleaning_products.png') }}" class="w-full h-full object-cover group-hover:scale-110 transition duration-500" alt="Cleaning Products Making Course">
                         <div class="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent"></div>
                         <div class="absolute top-4 right-4 bg-brand-500 text-white text-xs font-black px-3.5 py-1.5 rounded-full uppercase tracking-wider shadow">
                             Practical Pro
@@ -632,7 +695,7 @@
                 <!-- Course 2: Gau Products -->
                 <div class="bg-white rounded-3xl overflow-hidden shadow-premium border border-gray-100 flex flex-col group hover:-translate-y-1.5 transition-all duration-300">
                     <div class="relative h-60 overflow-hidden">
-                        <img src="https://images.unsplash.com/photo-1570042225831-d98fa7577f1e?q=80&w=800&auto=format&fit=crop" class="w-full h-full object-cover group-hover:scale-110 transition duration-500" alt="Gau Products Making Course">
+                        <img src="{{ asset('images/landing/desi_cow.png') }}" class="w-full h-full object-cover group-hover:scale-110 transition duration-500" alt="Gau Products Making Course">
                         <div class="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent"></div>
                         <div class="absolute top-4 right-4 bg-brand-500 text-white text-xs font-black px-3.5 py-1.5 rounded-full uppercase tracking-wider shadow">
                             Organic Pro
@@ -646,7 +709,7 @@
                         <p class="font-devanagari text-lg font-bold text-brand-600 flex items-center gap-2">
                             <i class="fa-solid fa-leaf text-brand-500"></i> गौ उत्पाद बनाकर स्वस्थ और समृद्ध बनें
                         </p>
-                        <p class="text-gray-600 text-sm leading-relaxed">पंचगव्य और गौ उत्पादों से हर्बल व ऑर्गेनिक वस्तुएं बनाकर बाजार में अपना ब्रांड बनाएं।</p>
+                        <p class="text-gray-600 text-sm leading-relaxed">पंचगव्य और गौ उत्पादों से हर्बल व ऑर्गेनिक वस्तुएं बनाकर बाजार में अपना BRAND बनाएं।</p>
                         <a href="{{ route('register') }}" class="w-full text-center bg-white hover:bg-brand-500 text-navy-900 hover:text-white font-bold py-3 rounded-xl border border-gray-200 transition duration-300 shadow-sm block">
                             कोर्स में नामांकन लें <i class="fa-solid fa-arrow-right ml-1"></i>
                         </a>
@@ -656,7 +719,7 @@
                 <!-- Course 3: Hawan Cup & Dhoopbatti -->
                 <div class="bg-white rounded-3xl overflow-hidden shadow-premium border border-gray-100 flex flex-col group hover:-translate-y-1.5 transition-all duration-300">
                     <div class="relative h-60 overflow-hidden">
-                        <img src="https://images.unsplash.com/photo-1608571423902-eed4a5ad8108?q=80&w=800&auto=format&fit=crop" class="w-full h-full object-cover group-hover:scale-110 transition duration-500" alt="Hawan Cup & Dhoopbatti Making Course">
+                        <img src="{{ asset('images/landing/hawan_cup_dhoopbatti.png') }}" class="w-full h-full object-cover group-hover:scale-110 transition duration-500" alt="Hawan Cup & Dhoopbatti Making Course">
                         <div class="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent"></div>
                         <div class="absolute top-4 right-4 bg-brand-500 text-white text-xs font-black px-3.5 py-1.5 rounded-full uppercase tracking-wider shadow">
                             High Demand
@@ -704,7 +767,7 @@
                 <!-- Course 5: Artificial Intelligence -->
                 <div class="bg-white rounded-3xl overflow-hidden shadow-premium border border-gray-100 flex flex-col group hover:-translate-y-1.5 transition-all duration-300">
                     <div class="relative h-60 overflow-hidden">
-                        <img src="https://images.unsplash.com/photo-1677442136019-21780efad99a?q=80&w=800&auto=format&fit=crop" class="w-full h-full object-cover group-hover:scale-110 transition duration-500" alt="Artificial Intelligence Course">
+                        <img src="{{ asset('images/landing/computer_skill.png') }}" class="w-full h-full object-cover group-hover:scale-110 transition duration-500" alt="Artificial Intelligence Course">
                         <div class="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent"></div>
                         <div class="absolute top-4 right-4 bg-accent-500 text-white text-xs font-black px-3.5 py-1.5 rounded-full uppercase tracking-wider shadow">
                             Future Tech
@@ -728,7 +791,7 @@
                 <!-- Course 6: Other Profitable Courses -->
                 <div class="bg-white rounded-3xl overflow-hidden shadow-premium border border-gray-100 flex flex-col group hover:-translate-y-1.5 transition-all duration-300">
                     <div class="relative h-60 overflow-hidden">
-                        <img src="https://images.unsplash.com/photo-1556228720-195a672e8a03?q=80&w=800&auto=format&fit=crop" class="w-full h-full object-cover group-hover:scale-110 transition duration-500" alt="Other Profitable Courses">
+                        <img src="{{ asset('images/landing/multi_skill_business.png') }}" class="w-full h-full object-cover group-hover:scale-110 transition duration-500" alt="Other Profitable Courses">
                         <div class="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent"></div>
                         <div class="absolute top-4 right-4 bg-brand-500 text-white text-xs font-black px-3.5 py-1.5 rounded-full uppercase tracking-wider shadow">
                             Multi Skill
@@ -807,13 +870,13 @@
                         </h2>
                     </div>
 
-                    <div class="bg-white/10 backdrop-blur-md p-6 rounded-3xl border border-white/20 shadow-xl max-w-md mx-auto space-y-4">
+                    <div class="bg-white/10 backdrop-blur-md p-6 rounded-3xl border border-white/20 shadow-xl max-w-md mx-auto space-y-4 font-devanagari">
                         <p class="text-xs sm:text-sm font-semibold text-gray-300 uppercase tracking-widest">
                             अधिक जानकारी के लिए संपर्क करें
                         </p>
-                        <a href="tel:+91705790000" class="flex items-center justify-center gap-3 bg-white text-navy-900 py-4 px-6 rounded-2xl font-black text-2xl sm:text-3xl shadow-lg hover:bg-brand-50 transition group">
-                            <i class="fa-solid fa-phone text-brand-500 group-hover:rotate-12 transition"></i>
-                            <span>+91 70579 0000</span>
+                        <a href="https://wa.me/919891176777?text=नमस्ते,%20मुझे%20Samarth%20Digital%20के%20कोर्सेज%20और%20स्व-रोजगार%20के%20बारे%20में%20जानकारी%20चाहिए।" target="_blank" class="flex items-center justify-center gap-3 bg-green-500 hover:bg-green-600 text-white py-4 px-6 rounded-2xl font-black text-2xl sm:text-3xl shadow-lg transition group">
+                            <i class="fa-brands fa-whatsapp text-white text-3.5xl group-hover:scale-110 transition animate-bounce"></i>
+                            <span>9891176777</span>
                         </a>
                         <div class="flex items-center justify-center gap-2 text-gold-400 font-bold text-base sm:text-lg pt-2">
                             <i class="fa-solid fa-globe"></i> www.samarthdigital.com
@@ -950,7 +1013,7 @@
                     <div class="flex gap-4 text-lg">
                         <a href="#" class="w-10 h-10 rounded-xl bg-white/10 flex items-center justify-center hover:bg-brand-500 hover:text-white transition"><i class="fa-brands fa-facebook-f"></i></a>
                         <a href="#" class="w-10 h-10 rounded-xl bg-white/10 flex items-center justify-center hover:bg-brand-500 hover:text-white transition"><i class="fa-brands fa-instagram"></i></a>
-                        <a href="#" class="w-10 h-10 rounded-xl bg-white/10 flex items-center justify-center hover:bg-brand-500 hover:text-white transition"><i class="fa-brands fa-whatsapp"></i></a>
+                        <a href="https://wa.me/919891176777?text=नमस्ते,%20मुझे%20Samarth%20Digital%20के%20कोर्सेज%20और%20स्व-रोजगार%20के%20बारे%20में%20जानकारी%20चाहिए।" target="_blank" class="w-10 h-10 rounded-xl bg-white/10 flex items-center justify-center hover:bg-brand-500 hover:text-white transition"><i class="fa-brands fa-whatsapp"></i></a>
                         <a href="#" class="w-10 h-10 rounded-xl bg-white/10 flex items-center justify-center hover:bg-brand-500 hover:text-white transition"><i class="fa-brands fa-youtube"></i></a>
                     </div>
                 </div>
@@ -984,10 +1047,10 @@
                     <h4 class="text-white font-extrabold text-lg mb-6 border-l-4 border-brand-500 pl-3">संपर्क जानकारी</h4>
                     <ul class="space-y-4 text-sm font-medium text-gray-300">
                         <li class="flex items-start gap-3.5">
-                            <i class="fa-solid fa-phone text-gold-400 text-lg mt-1 flex-shrink-0"></i>
+                            <i class="fa-brands fa-whatsapp text-green-400 text-xl mt-1 flex-shrink-0"></i>
                             <div>
-                                <strong class="block text-white font-bold">फोन नंबर:</strong>
-                                <a href="tel:+91705790000" class="hover:text-white transition">+91 70579 0000</a>
+                                <strong class="block text-white font-bold">व्हाट्सएप:</strong>
+                                <a href="https://wa.me/919891176777?text=नमस्ते,%20मुझे%20Samarth%20Digital%20के%20कोर्सेज%20और%20स्व-रोजगार%20के%20बारे%20में%20जानकारी%20चाहिए।" target="_blank" class="hover:text-white transition">9891176777</a>
                             </div>
                         </li>
                         <li class="flex items-start gap-3.5">
@@ -1025,12 +1088,21 @@
         // Navbar scroll effect
         window.addEventListener('scroll', () => {
             const nav = document.getElementById('navbar');
+            const navContainer = document.getElementById('navbar-container');
             if (window.scrollY > 20) {
-                nav.classList.add('shadow-lg', 'bg-white/95');
-                nav.classList.remove('shadow-sm');
+                nav.classList.add('shadow-lg', 'bg-white/95', 'backdrop-blur-md');
+                nav.classList.remove('shadow-sm', 'bg-white/85');
+                if (navContainer) {
+                    navContainer.classList.remove('py-4');
+                    navContainer.classList.add('py-2.5');
+                }
             } else {
-                nav.classList.remove('shadow-lg', 'bg-white/95');
-                nav.classList.add('shadow-sm');
+                nav.classList.remove('shadow-lg', 'bg-white/95', 'backdrop-blur-md');
+                nav.classList.add('shadow-sm', 'bg-white/85');
+                if (navContainer) {
+                    navContainer.classList.remove('py-2.5');
+                    navContainer.classList.add('py-4');
+                }
             }
         });
 
@@ -1063,5 +1135,92 @@
             });
         });
     </script>
+
+    <!-- Hidden Google Translate Element -->
+    <div id="google_translate_element" style="display:none"></div>
+
+    <!-- Floating WhatsApp Widget -->
+    <div class="fixed bottom-6 right-6 z-50 flex items-center group">
+        <!-- Text Tooltip -->
+        <span class="mr-3 bg-navy-900 text-white text-sm font-bold font-devanagari px-4 py-2 rounded-2xl shadow-xl border border-white/10 opacity-0 group-hover:opacity-100 transition-opacity duration-300 pointer-events-none whitespace-nowrap">
+            WhatsApp पर बात करें
+        </span>
+        <!-- Floating Button -->
+        <a href="https://wa.me/919891176777?text=नमस्ते,%20मुझे%20Samarth%20Digital%20के%20कोर्सेज%20और%20स्व-रोजगार%20के%20बारे%20में%20जानकारी%20चाहिए।" target="_blank" class="w-16 h-16 bg-gradient-to-tr from-green-500 to-green-400 text-white rounded-full flex items-center justify-center text-3xl shadow-glow-green hover:shadow-2xl hover:scale-110 active:scale-95 transition transform duration-300 relative animate-float">
+            <!-- Pulsing outer ring -->
+            <span class="absolute inset-0 rounded-full bg-green-500 animate-ping opacity-25"></span>
+            <i class="fa-brands fa-whatsapp relative z-10"></i>
+        </a>
+    </div>
+
+    <!-- Google Translate Script -->
+    <script type="text/javascript">
+        function googleTranslateElementInit() {
+            new google.translate.TranslateElement({
+                pageLanguage: 'hi',
+                includedLanguages: 'hi,en',
+                layout: google.translate.TranslateElement.InlineLayout.SIMPLE,
+                autoDisplay: false
+            }, 'google_translate_element');
+        }
+
+        function getTranslateLanguage() {
+            var name = "googtrans=";
+            var decodedCookie = decodeURIComponent(document.cookie);
+            var ca = decodedCookie.split(';');
+            for(var i = 0; i < ca.length; i++) {
+                var c = ca[i];
+                while (c.charAt(0) == ' ') {
+                    c = c.substring(1);
+                }
+                if (c.indexOf(name) == 0) {
+                    var val = c.substring(name.length, c.length);
+                    var parts = val.split('/');
+                    if (parts.length >= 3) {
+                        return parts[2];
+                    }
+                }
+            }
+            return "hi";
+        }
+
+        function toggleLanguage(lang) {
+            var domain = window.location.hostname;
+            document.cookie = "googtrans=/hi/" + lang + "; path=/; expires=Fri, 31 Dec 9999 23:59:59 GMT";
+            document.cookie = "googtrans=/hi/" + lang + "; path=/; domain=" + domain + "; expires=Fri, 31 Dec 9999 23:59:59 GMT";
+            document.cookie = "googtrans=/hi/" + lang + "; path=/; domain=." + domain + "; expires=Fri, 31 Dec 9999 23:59:59 GMT";
+            if (domain === 'localhost' || domain === '127.0.0.1') {
+                document.cookie = "googtrans=/hi/" + lang + "; path=/; expires=Fri, 31 Dec 9999 23:59:59 GMT";
+            }
+            window.location.reload();
+        }
+
+        document.addEventListener("DOMContentLoaded", function() {
+            var currentLang = getTranslateLanguage();
+            var toggles = document.querySelectorAll('.custom-lang-toggle');
+            toggles.forEach(function(btn, index) {
+                if (currentLang === 'en') {
+                    if (index === 0) {
+                        btn.innerHTML = '<i class="fa-solid fa-language text-xs"></i> हिन्दी';
+                    } else if (index === 1) {
+                        btn.innerHTML = '<i class="fa-solid fa-language text-lg text-brand-500"></i> हिन्दी';
+                    } else {
+                        btn.innerHTML = '<i class="fa-solid fa-language text-lg text-brand-500"></i> हिन्दी में पढ़ें';
+                    }
+                    btn.onclick = function() { toggleLanguage('hi'); };
+                } else {
+                    if (index === 0) {
+                        btn.innerHTML = '<i class="fa-solid fa-language text-xs"></i> English';
+                    } else if (index === 1) {
+                        btn.innerHTML = '<i class="fa-solid fa-language text-lg text-brand-500"></i> English';
+                    } else {
+                        btn.innerHTML = '<i class="fa-solid fa-language text-lg text-brand-500"></i> Translate to English';
+                    }
+                    btn.onclick = function() { toggleLanguage('en'); };
+                }
+            });
+        });
+    </script>
+    <script type="text/javascript" src="https://translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"></script>
 </body>
 </html>
