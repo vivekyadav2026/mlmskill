@@ -21,5 +21,5 @@ Schedule::command('bonuses:salary')
     ->runInBackground();                             // don't block other scheduled jobs
 
 // ─── Daily Token Distribution ───────────────────────────────────────────────
-Schedule::command('app:distribute-daily-tokens')->dailyAt('00:00');
+// Schedule::command('app:distribute-daily-tokens')->dailyAt('00:00');
 
