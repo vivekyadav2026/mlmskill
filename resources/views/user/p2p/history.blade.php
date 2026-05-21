@@ -12,6 +12,33 @@
         </a>
     </div>
 
+    <!-- Filter Form -->
+    <div class="bg-[#1a222d] border border-[#334155] rounded-xl p-4 mb-6 shadow-xl">
+        <form method="GET" action="{{ route('p2p.history') }}" class="flex flex-col sm:flex-row gap-4 items-end">
+            <div class="flex-1">
+                <label class="block text-sm font-medium text-gray-400 mb-1">From Date</label>
+                <input type="date" name="date_from" value="{{ request('date_from') }}" class="w-full bg-[#0b1220] border border-[#334155] rounded-md py-2 px-3 text-gray-100 focus:ring-1 focus:ring-indigo-500 focus:border-indigo-500 outline-none">
+            </div>
+            <div class="flex-1">
+                <label class="block text-sm font-medium text-gray-400 mb-1">To Date</label>
+                <input type="date" name="date_to" value="{{ request('date_to') }}" class="w-full bg-[#0b1220] border border-[#334155] rounded-md py-2 px-3 text-gray-100 focus:ring-1 focus:ring-indigo-500 focus:border-indigo-500 outline-none">
+            </div>
+            <div class="flex flex-col sm:flex-row gap-2">
+                <button type="submit" class="px-6 py-2 bg-[#334155] hover:bg-[#475569] text-white rounded-md shadow transition">
+                    <i class="fa-solid fa-filter mr-1"></i> Filter
+                </button>
+                <button type="submit" name="export" value="csv" class="px-4 py-2 bg-green-600 hover:bg-green-700 text-white rounded-md shadow transition">
+                    <i class="fa-solid fa-file-csv mr-1"></i> Export
+                </button>
+                @if(request('date_from') || request('date_to'))
+                    <a href="{{ route('p2p.history') }}" class="px-4 py-2 bg-red-900/30 text-red-400 border border-red-500/30 hover:bg-red-900/50 rounded-md shadow transition flex items-center justify-center">
+                        Clear
+                    </a>
+                @endif
+            </div>
+        </form>
+    </div>
+
     <div class="bg-[#1a222d] border border-[#334155] rounded-xl overflow-hidden shadow-xl">
         <div class="overflow-x-auto">
             <table class="w-full text-left border-collapse">

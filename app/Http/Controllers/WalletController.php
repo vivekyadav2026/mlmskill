@@ -294,13 +294,76 @@ class WalletController extends Controller
         return redirect()->route('dashboard')->with('success', '$' . number_format($amount, 2) . " successfully transferred from your {$walletLabel} to {$recipient->name}'s {$destLabel}.");
     }
 
-    public function p2pHistory()
+    public function p2pHistory(Request $request)
     {
         $user = Auth::user();
-        $paginator = \App\Models\ActivityLog::where('user_id', $user->id)
-                    ->whereIn('action', ['p2p_transfer', 'p2p_received'])
-                    ->orderBy('created_at', 'desc')
-                    ->paginate(15);
+        
+        $query = \App\Models\ActivityLog::where('user_id', $user->id)
+                    ->whereIn('action', ['p2p_transfer', 'p2p_received']);
+                    
+        if ($request->filled('date_from')) {
+            $query->whereDate('created_at', '>=', $request->date_from);
+        }
+        
+        if ($request->filled('date_to')) {
+            $query->whereDate('created_at', '<=', $request->date_to);
+        }
+
+        if ($request->has('export') && $request->export === 'csv') {
+            $historyList = $query->orderBy('created_at', 'desc')->get()->map(function($log) {
+                $parsed = [
+                    'type' => $log->action === 'p2p_transfer' ? 'Sent' : 'Received',
+                    'date' => $log->created_at,
+                    'amount' => '0.00',
+                    'sender' => 'Unknown',
+                    'receiver' => 'Unknown',
+                ];
+                
+                if ($log->action === 'p2p_transfer') {
+                    if (preg_match('/Transferred\s+\\$([\d\.]+).*to\s+([^\']+)\'s.*\\(([^)]+)\\)/', $log->description, $m)) {
+                        $parsed['amount'] = '-' . $m[1];
+                        $parsed['sender'] = auth()->user()->name . ' (' . auth()->user()->referral_code . ')';
+                        $parsed['receiver'] = trim($m[2]) . ' (' . trim($m[3]) . ')';
+                    }
+                } 
+                else if ($log->action === 'p2p_received') {
+                    if (preg_match('/Received\s+\\$([\d\.]+).*from\s+(.*?)\s+\\(([^)]+)\\)/', $log->description, $m)) {
+                        $parsed['amount'] = '+' . $m[1];
+                        $parsed['sender'] = trim($m[2]) . ' (' . trim($m[3]) . ')';
+                        $parsed['receiver'] = auth()->user()->name . ' (' . auth()->user()->referral_code . ')';
+                    }
+                }
+                return $parsed;
+            });
+
+            $headers = [
+                "Content-type"        => "text/csv",
+                "Content-Disposition" => "attachment; filename=p2p_history.csv",
+                "Pragma"              => "no-cache",
+                "Cache-Control"       => "must-revalidate, post-check=0, pre-check=0",
+                "Expires"             => "0"
+            ];
+            
+            $callback = function() use ($historyList) {
+                $file = fopen('php://output', 'w');
+                fputcsv($file, ['Date & Time', 'Transaction Type', 'Sender', 'Receiver', 'Amount']);
+                
+                foreach ($historyList as $row) {
+                    fputcsv($file, [
+                        \Carbon\Carbon::parse($row['date'])->format('Y-m-d H:i:s'),
+                        $row['type'],
+                        $row['sender'],
+                        $row['receiver'],
+                        $row['amount']
+                    ]);
+                }
+                fclose($file);
+            };
+            
+            return response()->stream($callback, 200, $headers);
+        }
+
+        $paginator = $query->orderBy('created_at', 'desc')->paginate(15);
                     
         $history = $paginator->through(function($log) {
             $parsed = [
