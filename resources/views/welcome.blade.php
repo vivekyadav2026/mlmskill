@@ -879,7 +879,7 @@
                             <span>9891176777</span>
                         </a>
                         <div class="flex items-center justify-center gap-2 text-gold-400 font-bold text-base sm:text-lg pt-2">
-                            <i class="fa-solid fa-globe"></i> www.samarthdigital.com
+                            <i class="fa-solid fa-globe"></i> www.samarth.digital
                         </div>
                     </div>
                 </div>
