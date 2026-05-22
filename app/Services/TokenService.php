@@ -12,6 +12,9 @@ class TokenService
 {
     public function distributeDailyTokens()
     {
+        // Daily token reward distribution has been disabled as requested by the user.
+        return;
+
         $activeUsers = User::where('status', 'active')->get();
 
         foreach ($activeUsers as $user) {

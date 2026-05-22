@@ -156,7 +156,7 @@
   </div>
 
   {{-- ── STATS GRID ──────────────────────────────────────────────── --}}
-  <div class="stat-grid grid grid-cols-2 md:grid-cols-4 gap-3 md:gap-4 mb-5">
+  <!-- <div class="stat-grid grid grid-cols-2 md:grid-cols-4 gap-3 md:gap-4 mb-5">
     <div class="stat-card">
       <p class="text-xs text-gray-500 uppercase tracking-wide mb-2">Total Earned</p>
       <p class="text-lg md:text-2xl font-bold text-green-400">${{ number_format($totalEarned, 2) }}</p>
@@ -181,10 +181,10 @@
         <p class="text-xs text-gray-500 mt-1">No pending</p>
       @endif
     </div>
-  </div>
+  </div> -->
 
   {{-- ── WALLET BALANCES ────────────────────────────────────────── --}}
-  @if($wallet)
+  <!-- @if($wallet)
   <div class="bg-[#1a222d] rounded-xl border border-[#334155] p-4 md:p-6 mb-5">
     <h4 class="text-xs md:text-sm font-semibold text-gray-300 uppercase tracking-wide mb-3">
       <i class="fa-solid fa-wallet mr-2 text-indigo-400"></i>Wallet Balances
@@ -200,7 +200,7 @@
       @endforeach
     </div>
   </div>
-  @endif
+  @endif -->
 
   {{-- ── EARNINGS BREAKDOWN ────────────────────────────────────── --}}
   <div class="bg-[#1a222d] rounded-xl border border-[#334155] p-4 md:p-6 mb-5">

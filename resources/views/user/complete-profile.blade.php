@@ -48,7 +48,7 @@
                 <textarea name="address" required rows="3" class="w-full bg-[#0b1220] border border-[#334155] rounded px-4 py-2 text-white focus:outline-none focus:border-indigo-500">{{ old('address') }}</textarea>
             </div>
 
-            <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
                 <div>
                     <label class="block text-sm font-medium text-gray-300 mb-1">State *</label>
                     <select name="state" id="stateSelect" required class="w-full bg-[#0b1220] border border-[#334155] rounded px-4 py-2 text-white focus:outline-none focus:border-indigo-500">
@@ -60,10 +60,6 @@
                     <select name="city" id="citySelect" required class="w-full bg-[#0b1220] border border-[#334155] rounded px-4 py-2 text-white focus:outline-none focus:border-indigo-500">
                         <option value="">Select City/District</option>
                     </select>
-                </div>
-                <div>
-                    <label class="block text-sm font-medium text-gray-300 mb-1">Zip Code *</label>
-                    <input type="text" name="zip" required value="{{ old('zip') }}" maxlength="6" minlength="6" pattern="[0-9]{6}" title="Please enter a 6 digit PIN code" class="w-full bg-[#0b1220] border border-[#334155] rounded px-4 py-2 text-white focus:outline-none focus:border-indigo-500">
                 </div>
             </div>
 

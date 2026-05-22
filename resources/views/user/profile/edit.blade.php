@@ -89,7 +89,7 @@
                     <textarea name="address" rows="2" class="w-full bg-[#0b1220] border border-[#334155] rounded-md py-2 px-3 text-gray-100 focus:ring-1 focus:ring-indigo-500 focus:border-indigo-500">{{ old('address', auth()->user()->address) }}</textarea>
                 </div>
 
-                <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
                     <div>
                         <label class="block text-sm font-medium text-gray-300 mb-1">State</label>
                         <select name="state" id="stateSelect" class="w-full bg-[#0b1220] border border-[#334155] rounded-md py-2 px-3 text-gray-100 focus:ring-1 focus:ring-indigo-500 focus:border-indigo-500">
@@ -101,10 +101,6 @@
                         <select name="city" id="citySelect" class="w-full bg-[#0b1220] border border-[#334155] rounded-md py-2 px-3 text-gray-100 focus:ring-1 focus:ring-indigo-500 focus:border-indigo-500">
                             <option value="">Select City/District</option>
                         </select>
-                    </div>
-                    <div>
-                        <label class="block text-sm font-medium text-gray-300 mb-1">Zip Code</label>
-                        <input type="text" name="zip" value="{{ old('zip', auth()->user()->zip) }}" maxlength="6" minlength="6" pattern="[0-9]{6}" title="Please enter a valid 6-digit PIN code" class="w-full bg-[#0b1220] border border-[#334155] rounded-md py-2 px-3 text-gray-100 focus:ring-1 focus:ring-indigo-500 focus:border-indigo-500">
                     </div>
                 </div>
                 
@@ -217,20 +213,6 @@
                     // Enforce starting digit (6, 7, 8, 9)
                     if (val.length > 0 && !/^[6-9]/.test(val)) {
                         val = '';
-                    }
-                    e.target.value = val;
-                });
-            }
-
-            // Enforce 6-digit Indian PIN Code input restrictions
-            const zipInput = document.querySelector('input[name="zip"]');
-            if (zipInput) {
-                zipInput.addEventListener('input', function(e) {
-                    // Strip out non-digits
-                    let val = e.target.value.replace(/\D/g, '');
-                    // Limit to 6 digits
-                    if (val.length > 6) {
-                        val = val.substring(0, 6);
                     }
                     e.target.value = val;
                 });

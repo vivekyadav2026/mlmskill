@@ -48,11 +48,11 @@
         </div>
         <div class="bg-[#1a222d] rounded-lg p-5 border border-[#334155]">
             <p class="text-sm text-gray-400 mb-1">NEXA 1.0</p>
-            <p class="text-2xl font-bold text-blue-400">{{ number_format($user->wallet->utility_token_wallet ?? 0, 2) }} NEXA 1.0</p>
+            <p class="text-2xl font-bold text-blue-400">{{ number_format($user->wallet->utility_token_wallet ?? 0, 2) }}</p>
         </div>
         <div class="bg-[#1a222d] rounded-lg p-5 border border-[#334155]">
             <p class="text-sm text-gray-400 mb-1">NEXA 2.0</p>
-            <p class="text-2xl font-bold text-orange-400">{{ number_format($user->wallet->renewal_token_wallet ?? 0, 2) }} NEXA 2.0</p>
+            <p class="text-2xl font-bold text-orange-400">{{ number_format($user->wallet->renewal_token_wallet ?? 0, 2) }}  </p>
         </div>
     </div>
 

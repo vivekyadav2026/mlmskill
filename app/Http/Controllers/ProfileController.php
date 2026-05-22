@@ -39,7 +39,6 @@ class ProfileController extends Controller
             'address' => 'nullable|string|max:255',
             'city' => 'nullable|string|max:100',
             'state' => 'nullable|string|max:100',
-            'zip' => 'nullable|digits:6',
         ], [
             'phone.regex' => 'The mobile number must be a valid 10-digit Indian mobile number starting with 6, 7, 8, or 9.',
         ]);
@@ -57,7 +56,6 @@ class ProfileController extends Controller
         $user->address = $request->address;
         $user->city = $request->city;
         $user->state = $request->state;
-        $user->zip = $request->zip;
         $user->save();
 
         return redirect()->back()->with('success', 'Profile updated successfully!');

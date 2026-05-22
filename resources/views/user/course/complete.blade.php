@@ -25,7 +25,7 @@
             <h3 class="text-2xl font-bold text-white mb-4">Ready to Complete?</h3>
             <p class="text-gray-400 mb-8">By clicking the button below, you confirm that you have watched all training modules and understand the platform mechanics.</p>
             
-            <form action="{{ route('course.complete') }}" method="POST">
+            <form action="{{ route('course.complete') }}" method="POST" onsubmit="return confirm('⚠️ Warning: Are you sure you have completed your course? Once you proceed, incomplete learning progress may affect your assessment and certificate eligibility.');">
                 @csrf
                 <button type="submit" class="bg-green-600 hover:bg-green-700 text-white font-bold py-3 px-8 rounded shadow-lg transition text-lg w-full">
                     <i class="fa-solid fa-check-double mr-2"></i> Mark Course as Completed
