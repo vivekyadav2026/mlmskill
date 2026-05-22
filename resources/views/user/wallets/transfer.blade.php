@@ -101,10 +101,10 @@
                             <span class="flex items-center gap-2"><i class="fa-solid fa-box-open text-purple-400"></i> Package Wallet</span>
                             <input type="radio" name="destination_wallet" checked value="package_wallet" class="accent-purple-500 pointer-events-none" onclick="updateDestStyle('package_wallet')">
                         </label>
-                        <label id="lbl_dest_income" class="bg-[#0b1220] border-2 border-[#334155] text-gray-400 p-4 rounded-lg flex items-center justify-between cursor-pointer font-bold transition">
+                        <!-- <label id="lbl_dest_income" class="bg-[#0b1220] border-2 border-[#334155] text-gray-400 p-4 rounded-lg flex items-center justify-between cursor-pointer font-bold transition">
                             <span class="flex items-center gap-2"><i class="fa-solid fa-wallet text-green-400"></i> Income Wallet</span>
                             <input type="radio" name="destination_wallet" value="income_wallet" class="accent-green-500 pointer-events-none" onclick="updateDestStyle('income_wallet')">
-                        </label>
+                        </label> -->
                     </div>
                     <p class="text-xs text-gray-500 mt-2">Select which wallet in the recipient's account should receive these funds.</p>
                 </div>
