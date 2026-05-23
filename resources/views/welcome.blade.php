@@ -154,7 +154,7 @@
                     <i class="fa-brands fa-whatsapp text-green-400 text-sm animate-pulse"></i> 9891176777
                 </a>
                 <span class="hidden sm:flex items-center gap-2 text-gray-300">
-                    <i class="fa-solid fa-envelope text-brand-400"></i> info@samarthdigital.com
+                    <i class="fa-solid fa-envelope text-brand-400"></i> info@samarth.digital
                 </span>
             </div>
             <div class="flex items-center gap-4">
@@ -1057,14 +1057,14 @@
                             <i class="fa-solid fa-envelope text-brand-400 text-lg mt-1 flex-shrink-0"></i>
                             <div>
                                 <strong class="block text-white font-bold">ईमेल पता:</strong>
-                                <a href="mailto:info@samarthdigital.com" class="hover:text-white transition">info@samarthdigital.com</a>
+                                <a href="mailto:info@samarth.digital" class="hover:text-white transition">info@samarth.digital</a>
                             </div>
                         </li>
                         <li class="flex items-start gap-3.5">
                             <i class="fa-solid fa-globe text-accent-400 text-lg mt-1 flex-shrink-0"></i>
                             <div>
                                 <strong class="block text-white font-bold">वेबसाइट:</strong>
-                                <a href="https://www.samarthdigital.com" target="_blank" class="hover:text-white transition">www.samarthdigital.com</a>
+                                <a href="https://www.samarth.digital" target="_blank" class="hover:text-white transition">www.samarth.digital</a>
                             </div>
                         </li>
                     </ul>

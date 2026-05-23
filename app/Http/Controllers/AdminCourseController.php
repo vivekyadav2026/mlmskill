@@ -27,7 +27,10 @@ class AdminCourseController extends Controller
         
         $data = $request->all();
         if ($request->hasFile('pdf_file')) {
-            $data['pdf_path'] = $request->file('pdf_file')->store('course_pdfs', 'public');
+            $file = $request->file('pdf_file');
+            $filename = time() . '_' . $file->getClientOriginalName();
+            $file->move(public_path('course_pdfs'), $filename);
+            $data['pdf_path'] = 'course_pdfs/' . $filename;
         }
 
         Course::create($data);
@@ -51,10 +54,13 @@ class AdminCourseController extends Controller
         
         $data = $request->all();
         if ($request->hasFile('pdf_file')) {
-            if ($course->pdf_path) {
-                Storage::disk('public')->delete($course->pdf_path);
+            if ($course->pdf_path && file_exists(public_path($course->pdf_path))) {
+                @unlink(public_path($course->pdf_path));
             }
-            $data['pdf_path'] = $request->file('pdf_file')->store('course_pdfs', 'public');
+            $file = $request->file('pdf_file');
+            $filename = time() . '_' . $file->getClientOriginalName();
+            $file->move(public_path('course_pdfs'), $filename);
+            $data['pdf_path'] = 'course_pdfs/' . $filename;
         }
 
         $course->update($data);

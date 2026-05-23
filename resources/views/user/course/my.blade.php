@@ -31,7 +31,7 @@
                     </p>
                     <div class="flex flex-wrap gap-4">
                         @if($course->pdf_path)
-                        <a href="{{ asset('storage/' . $course->pdf_path) }}" target="_blank" class="bg-[#0b1220] hover:bg-gray-800 border border-[#334155] text-white px-6 py-2 rounded shadow transition">
+                        <a href="{{ file_exists(public_path($course->pdf_path)) ? asset($course->pdf_path) : asset('storage/' . $course->pdf_path) }}" target="_blank" class="bg-[#0b1220] hover:bg-gray-800 border border-[#334155] text-white px-6 py-2 rounded shadow transition">
                             <i class="fa-solid fa-file-pdf mr-2 text-red-500"></i> View PDF
                         </a>
                         @endif
