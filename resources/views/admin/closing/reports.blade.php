@@ -71,8 +71,12 @@
                     $netRetention = $closing->total_income_generated - $closing->total_withdrawals;
                 @endphp
                 <tr class="hover:bg-[#1e293b] transition">
-                    <td class="font-bold text-indigo-400">
-                        {{ date('F Y', mktime(0, 0, 0, $closing->month, 10, $closing->year)) }}
+                    <td class="font-bold text-indigo-400 font-mono text-xs">
+                        @if(isset($closing->report_json['start_date']) && isset($closing->report_json['end_date']))
+                            {{ \Carbon\Carbon::parse($closing->report_json['start_date'])->format('d-m-Y') }} to {{ \Carbon\Carbon::parse($closing->report_json['end_date'])->format('d-m-Y') }}
+                        @else
+                            {{ date('F Y', mktime(0, 0, 0, $closing->month, 10, $closing->year)) }}
+                        @endif
                     </td>
                     <td class="font-medium text-green-400">${{ number_format($closing->total_income_generated, 2) }}</td>
                     <td class="font-medium text-orange-400">${{ number_format($closing->total_withdrawals, 2) }}</td>

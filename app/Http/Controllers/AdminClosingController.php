@@ -58,7 +58,14 @@ class AdminClosingController extends Controller
         $chartWithdrawals = [];
         
         foreach ($chartClosings as $c) {
-            $chartLabels[] = date('M Y', mktime(0, 0, 0, $c->month, 10, $c->year));
+            $report = $c->report_json;
+            if (isset($report['start_date']) && isset($report['end_date'])) {
+                $startDateFormatted = Carbon::parse($report['start_date'])->format('d/m');
+                $endDateFormatted = Carbon::parse($report['end_date'])->format('d/m');
+                $chartLabels[] = $startDateFormatted . '-' . $endDateFormatted;
+            } else {
+                $chartLabels[] = date('M Y', mktime(0, 0, 0, $c->month, 10, $c->year));
+            }
             $chartIncome[] = (float) $c->total_income_generated;
             $chartWithdrawals[] = (float) $c->total_withdrawals;
         }
@@ -71,14 +78,14 @@ class AdminClosingController extends Controller
         $request->validate([
             'start_date' => 'required|date',
             'end_date' => 'required|date|after_or_equal:start_date',
-            'month' => 'required|integer|min:1|max:12',
-            'year' => 'required|integer|min:2000|max:2100',
         ]);
 
         $startDate = Carbon::parse($request->start_date)->startOfDay();
         $endDate = Carbon::parse($request->end_date)->endOfDay();
-        $month = $request->month;
-        $year = $request->year;
+        
+        // Automatically derive display month and year from the end date
+        $month = $endDate->month;
+        $year = $endDate->year;
 
         // Check if a closing for the exact same start_date and end_date has already been processed
         $exists = MonthlyClosing::where('month', $month)

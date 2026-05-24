@@ -4,7 +4,7 @@
 <div class="tailwind-scope mt-4 max-w-4xl mx-auto">
     <div class="flex items-center justify-between mb-6 flex-wrap gap-3">
         <div>
-            <h2 class="text-2xl font-bold text-gray-100">Process Monthly Closing</h2>
+            <h2 class="text-2xl font-bold text-gray-100">Process Closing Report</h2>
             <p class="text-gray-400 text-sm">Finalize statements for the current period</p>
         </div>
         <a href="{{ route('admin.closing.history') }}" class="px-4 py-2 bg-[#334155] hover:bg-[#475569] text-white rounded shadow transition"><i class="fa-solid fa-clock-rotate-left mr-1"></i> View History</a>
@@ -82,25 +82,15 @@
 
             <form action="{{ url('admin/closing/generate') }}" method="POST">
                 @csrf
-                <input type="hidden" name="start_date" value="{{ $startDateInput }}">
-                <input type="hidden" name="end_date" value="{{ $endDateInput }}">
-                <input type="hidden" name="month" value="{{ $currentMonth }}">
-                <input type="hidden" name="year" value="{{ $currentYear }}">
                 
-                <div class="grid grid-cols-2 gap-4 mb-4">
+                <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 mb-4">
                     <div>
-                        <label class="block text-gray-400 text-sm mb-2">Display Month</label>
-                        <div class="w-full bg-[#0f172a]/60 border border-[#334155]/60 text-gray-300 rounded-lg px-4 py-2.5 cursor-not-allowed select-none flex items-center gap-2">
-                            <i class="fa-solid fa-calendar text-gray-500"></i>
-                            <span>{{ date('F', mktime(0, 0, 0, $currentMonth, 10)) }}</span>
-                        </div>
+                        <label class="block text-gray-400 text-sm mb-2">Start Date</label>
+                        <input type="date" name="start_date" id="closing_start_date" class="w-full bg-[#0f172a] border border-[#334155] text-white rounded-lg px-4 py-2 focus:outline-none focus:border-indigo-500" value="{{ $startDateInput }}" required>
                     </div>
                     <div>
-                        <label class="block text-gray-400 text-sm mb-2">Display Year</label>
-                        <div class="w-full bg-[#0f172a]/60 border border-[#334155]/60 text-gray-300 rounded-lg px-4 py-2.5 cursor-not-allowed select-none flex items-center gap-2">
-                            <i class="fa-solid fa-clock text-gray-500"></i>
-                            <span>{{ $currentYear }}</span>
-                        </div>
+                        <label class="block text-gray-400 text-sm mb-2">End Date</label>
+                        <input type="date" name="end_date" id="closing_end_date" class="w-full bg-[#0f172a] border border-[#334155] text-white rounded-lg px-4 py-2 focus:outline-none focus:border-indigo-500" value="{{ $endDateInput }}" required>
                     </div>
                 </div>
 
@@ -116,4 +106,31 @@
         </div>
     </div>
 </div>
+
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    const filterStart = document.querySelector('form[method="GET"] input[name="start_date"]');
+    const filterEnd = document.querySelector('form[method="GET"] input[name="end_date"]');
+    const closingStart = document.getElementById('closing_start_date');
+    const closingEnd = document.getElementById('closing_end_date');
+
+    if (filterStart && closingStart) {
+        filterStart.addEventListener('change', function() {
+            closingStart.value = this.value;
+        });
+        closingStart.addEventListener('change', function() {
+            filterStart.value = this.value;
+        });
+    }
+
+    if (filterEnd && closingEnd) {
+        filterEnd.addEventListener('change', function() {
+            closingEnd.value = this.value;
+        });
+        closingEnd.addEventListener('change', function() {
+            filterEnd.value = this.value;
+        });
+    }
+});
+</script>
 @endsection

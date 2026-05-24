@@ -16,8 +16,8 @@
 <div class="tailwind-scope mt-4 max-w-[1400px] mx-auto">
     <div class="report-header flex justify-between items-center mb-6 gap-4">
         <div>
-            <h2 class="text-2xl font-bold text-gray-100">Monthly Closing History</h2>
-            <p class="text-gray-400 text-sm">Review past finalized monthly statements</p>
+            <h2 class="text-2xl font-bold text-gray-100">Closing History</h2>
+            <p class="text-gray-400 text-sm">Review past finalized closing statements</p>
         </div>
         <a href="{{ route('admin.closing.generate') }}" class="px-4 py-2 bg-indigo-600 hover:bg-indigo-700 text-white rounded shadow transition"><i class="fa-solid fa-calculator mr-1"></i> Process New Closing</a>
     </div>
@@ -44,8 +44,12 @@
             <tbody>
                 @forelse($closings as $closing)
                 <tr class="hover:bg-[#1e293b] transition">
-                    <td class="font-bold text-indigo-400">
-                        {{ date('F', mktime(0, 0, 0, $closing->month, 10)) }} {{ $closing->year }}
+                    <td class="font-bold text-indigo-400 font-mono text-xs">
+                        @if(isset($closing->report_json['start_date']) && isset($closing->report_json['end_date']))
+                            {{ \Carbon\Carbon::parse($closing->report_json['start_date'])->format('d-m-Y') }} to {{ \Carbon\Carbon::parse($closing->report_json['end_date'])->format('d-m-Y') }}
+                        @else
+                            {{ date('F Y', mktime(0, 0, 0, $closing->month, 10, $closing->year)) }}
+                        @endif
                     </td>
                     <td class="text-gray-400 text-sm hide-mobile">{{ $closing->created_at->format('M d, Y h:i A') }}</td>
                     <td class="font-medium text-gray-200 hide-mobile">{{ number_format($closing->total_active_users) }}</td>
