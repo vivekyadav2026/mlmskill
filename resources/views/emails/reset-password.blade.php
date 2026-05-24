@@ -11,7 +11,28 @@
                 <table width="600" cellpadding="0" cellspacing="0" style="background-color: #ffffff; border-radius: 8px; overflow: hidden; box-shadow: 0 4px 10px rgba(0,0,0,0.1);">
                     <tr>
                         <td style="background-color: #1e293b; padding: 25px 20px; text-align: center; border-bottom: 3px solid #4f46e5;">
-                            <img src="{{ \App\Models\Setting::get('site_logo') ?: asset('logo.png') }}" alt="{{ \App\Models\Setting::get('site_name', 'Samarth Digital') }}" style="max-height: 60px; margin-bottom: 12px; border-radius: 4px; display: inline-block;">
+                            @php
+                                $logoUrl = \App\Models\Setting::get('site_logo');
+                                $logoPath = null;
+                                if ($logoUrl) {
+                                    $filename = basename(parse_url($logoUrl, PHP_URL_PATH));
+                                    $potentialPath = public_path('uploads/branding/' . $filename);
+                                    if (file_exists($potentialPath)) {
+                                        $logoPath = $potentialPath;
+                                    }
+                                }
+                                if (!$logoPath) {
+                                    $potentialPath = public_path('logo.png');
+                                    if (file_exists($potentialPath)) {
+                                        $logoPath = $potentialPath;
+                                    }
+                                }
+                            @endphp
+                            @if($logoPath && isset($message))
+                                <img src="{{ $message->embed($logoPath) }}" alt="{{ \App\Models\Setting::get('site_name', 'Samarth Digital') }}" style="max-height: 60px; margin-bottom: 12px; border-radius: 4px; display: inline-block;">
+                            @else
+                                <img src="{{ $logoUrl ?: asset('logo.png') }}" alt="{{ \App\Models\Setting::get('site_name', 'Samarth Digital') }}" style="max-height: 60px; margin-bottom: 12px; border-radius: 4px; display: inline-block;">
+                            @endif
                             <h2 style="color: #ffffff; margin: 0; font-family: Arial, sans-serif; font-size: 22px;">Password Reset Request</h2>
                         </td>
                     </tr>
