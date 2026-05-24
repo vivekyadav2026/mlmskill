@@ -551,6 +551,35 @@ document.addEventListener('DOMContentLoaded', function() {
     }, 1500);
 });
 </script>
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+@if(session('success'))
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        Swal.fire({
+            icon: 'success',
+            title: 'Success!',
+            text: {!! json_encode(session('success')) !!},
+            confirmButtonColor: '#4f46e5',
+            background: '#1a222d',
+            color: '#fff'
+        });
+    });
+</script>
+@endif
+@if(session('error'))
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        Swal.fire({
+            icon: 'error',
+            title: 'Error!',
+            text: {!! json_encode(session('error')) !!},
+            confirmButtonColor: '#4f46e5',
+            background: '#1a222d',
+            color: '#fff'
+        });
+    });
+</script>
+@endif
 </body>
 </html>
 

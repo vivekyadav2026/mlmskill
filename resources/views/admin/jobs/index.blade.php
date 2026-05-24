@@ -48,8 +48,11 @@
                     <td>{{ $job->created_at->format('M d, Y') }}</td>
                     <td>
                         <div class="flex gap-2">
-                            <button class="text-gray-400 hover:text-white"><i class="fa-solid fa-pen-to-square"></i></button>
-                            <button class="text-red-400 hover:text-red-300"><i class="fa-solid fa-trash"></i></button>
+                            <a href="{{ route('admin.jobs.edit', $job->id) }}" class="text-gray-400 hover:text-white"><i class="fa-solid fa-pen-to-square"></i></a>
+                            <form action="{{ route('admin.jobs.destroy', $job->id) }}" method="POST" onsubmit="return confirm('Are you sure you want to delete this job posting?');" style="display:inline;">
+                                @csrf
+                                <button type="submit" class="text-red-400 hover:text-red-300"><i class="fa-solid fa-trash"></i></button>
+                            </form>
                         </div>
                     </td>
                 </tr>

@@ -35,6 +35,37 @@ class AdminJobController extends Controller
         return redirect()->route('admin.jobs.index')->with('success', 'Job/Placement posted successfully!');
     }
 
+    public function edit($id)
+    {
+        $job = JobPosting::findOrFail($id);
+        return view('admin.jobs.edit', compact('job'));
+    }
+
+    public function update(Request $request, $id)
+    {
+        $request->validate([
+            'title' => 'required|string|max:255',
+            'company_name' => 'required|string|max:255',
+            'description' => 'required|string',
+            'category' => 'required|in:job,company_placement',
+            'job_type' => 'required|in:full_time,part_time,internship,contract',
+            'status' => 'required|in:active,inactive',
+        ]);
+
+        $job = JobPosting::findOrFail($id);
+        $job->update($request->all());
+
+        return redirect()->route('admin.jobs.index')->with('success', 'Job/Placement updated successfully!');
+    }
+
+    public function destroy($id)
+    {
+        $job = JobPosting::findOrFail($id);
+        $job->delete();
+
+        return redirect()->route('admin.jobs.index')->with('success', 'Job/Placement deleted successfully!');
+    }
+
     public function applications()
     {
         $applications = JobApplication::with(['user', 'job'])->latest()->paginate(20);

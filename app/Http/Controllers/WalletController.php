@@ -237,7 +237,7 @@ class WalletController extends Controller
     {
         $request->validate([
             'recipient_id' => 'required|string|exists:users,referral_code',
-            'amount' => 'required|numeric|min:1',
+            'amount' => 'required|numeric|min:10',
             'mpin' => 'required|digits:4',
             'source_wallet' => 'required|in:income_wallet,package_wallet',
             'destination_wallet' => 'required|in:income_wallet,package_wallet',

@@ -323,6 +323,9 @@ Route::middleware(['auth', 'admin'])->prefix('admin')->group(function () {
     Route::get('/jobs', [\App\Http\Controllers\Admin\AdminJobController::class, 'index'])->name('admin.jobs.index');
     Route::get('/jobs/create', [\App\Http\Controllers\Admin\AdminJobController::class, 'create'])->name('admin.jobs.create');
     Route::post('/jobs/store', [\App\Http\Controllers\Admin\AdminJobController::class, 'store'])->name('admin.jobs.store');
+    Route::get('/jobs/{id}/edit', [\App\Http\Controllers\Admin\AdminJobController::class, 'edit'])->name('admin.jobs.edit');
+    Route::post('/jobs/{id}/update', [\App\Http\Controllers\Admin\AdminJobController::class, 'update'])->name('admin.jobs.update');
+    Route::post('/jobs/{id}/delete', [\App\Http\Controllers\Admin\AdminJobController::class, 'destroy'])->name('admin.jobs.destroy');
     Route::get('/jobs/applications', [\App\Http\Controllers\Admin\AdminJobController::class, 'applications'])->name('admin.jobs.applications');
     Route::post('/jobs/applications/{id}/update', [\App\Http\Controllers\Admin\AdminJobController::class, 'updateApplication'])->name('admin.jobs.applications.update');
 
