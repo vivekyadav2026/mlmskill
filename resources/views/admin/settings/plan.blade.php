@@ -37,7 +37,7 @@
     @csrf
 
     <!-- Plan Identity -->
-    <div class="s-card">
+    <div class="s-card" style="display:none;">
       <div class="s-header"><i class="fa-solid fa-diagram-project text-indigo-400"></i><h3>Plan Identity</h3></div>
       <div class="s-body grid grid-cols-1 md:grid-cols-2 gap-4">
         <div>

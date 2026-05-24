@@ -316,8 +316,8 @@
               <p class="text-xs text-gray-500">{{ $t->created_at->format('d M Y, h:i A') }}</p>
             </div>
             <span class="text-yellow-400 font-bold text-sm flex-shrink-0">
-              {{ $t->token_count > 0 ? '+' : '' }}{{ number_format($t->token_count, 2) }} {{ $tokenName }}
-            </span>
+              {{ $t->token_count > 0 ? '+' : '' }}{{ number_format($t->token_count, 2) }}
+                        </span>
           </div>
         @empty
           <p class="text-gray-500 text-sm text-center py-8">No token records yet.</p>

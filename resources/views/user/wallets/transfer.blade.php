@@ -101,7 +101,7 @@
                             <span class="flex items-center gap-2"><i class="fa-solid fa-box-open text-purple-400"></i> Package Wallet</span>
                             <input type="radio" name="destination_wallet" checked value="package_wallet" class="accent-purple-500 pointer-events-none" onclick="updateDestStyle('package_wallet')">
                         </label>
-                        <!-- <label id="lbl_dest_income" class="bg-[#0b1220] border-2 border-[#334155] text-gray-400 p-4 rounded-lg flex items-center justify-between cursor-pointer font-bold transition">
+                            <!-- <label id="lbl_dest_income" class="bg-[#0b1220] border-2 border-[#334155] text-gray-400 p-4 rounded-lg flex items-center justify-between cursor-pointer font-bold transition">
                             <span class="flex items-center gap-2"><i class="fa-solid fa-wallet text-green-400"></i> Income Wallet</span>
                             <input type="radio" name="destination_wallet" value="income_wallet" class="accent-green-500 pointer-events-none" onclick="updateDestStyle('income_wallet')">
                         </label> -->
@@ -115,7 +115,7 @@
                         <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
                             <i class="fa-solid fa-dollar-sign text-gray-500"></i>
                         </div>
-                        <input type="number" name="amount" id="amount" value="{{ old('amount', 300) }}" step="0.01" class="w-full bg-[#0b1220] border border-[#334155] rounded-lg pl-10 pr-4 py-3 text-white text-xl font-bold focus:outline-none focus:border-indigo-500 transition shadow-inner">
+                        <input type="number" name="amount" id="amount" value="{{ old('amount') }}" required step="0.01" class="w-full bg-[#0b1220] border border-[#334155] rounded-lg pl-10 pr-4 py-3 text-white text-xl font-bold focus:outline-none focus:border-indigo-500 transition shadow-inner">
                     </div>
                     <div id="amount-error" class="mt-3 hidden text-red-400 text-sm flex items-center gap-2">
                         <i class="fa-solid fa-circle-exclamation"></i> <span>Insufficient funds in your Income Wallet.</span>

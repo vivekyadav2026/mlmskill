@@ -20,7 +20,9 @@
                 <div class="w-full bg-gray-900 rounded-full h-2.5 mb-1 dark:bg-gray-700">
                   <div class="bg-orange-400 h-2.5 rounded-full" style="width: {{ min(100, ($balance / max(1, $renewalTarget)) * 100) }}%"></div>
                 </div>
-                <p class="text-xs text-orange-200 text-right">{{ number_format(min(100, ($balance / max(1, $renewalTarget)) * 100), 1) }}% to Renewal target (${{ $renewalTarget }})</p>
+                <p class="text-xs text-orange-200 text-right">
+                 Tokens accumulated specifically for your Future Bonus which will be given behalf of company profits    <!-- {{ number_format(min(100, ($balance / max(1, $renewalTarget)) * 100), 1) }}% to Renewal target (${{ $renewalTarget }}) -->
+                </p>
             </div>
         </div>
     </div>

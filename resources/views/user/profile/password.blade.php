@@ -24,7 +24,7 @@
             <div class="space-y-6">
                 <div>
                     <label for="current_password" class="block text-sm font-medium text-gray-300 mb-1">Current Password</label>
-                    <input type="password" name="current_password" id="current_password" class="w-full bg-[#0b1220] border border-[#334155] rounded-md shadow-sm py-2 px-3 text-gray-100 focus:outline-none focus:ring-1 focus:ring-indigo-500 focus:border-indigo-500">
+                    <input type="password" name="current_password" maxlength="8" minlength="6" id="current_password" class="w-full bg-[#0b1220] border border-[#334155] rounded-md shadow-sm py-2 px-3 text-gray-100 focus:outline-none focus:ring-1 focus:ring-indigo-500 focus:border-indigo-500">
                     @error('current_password') <span class="text-red-400 text-sm mt-1 block">{{ $message }}</span> @enderror
                 </div>
 
