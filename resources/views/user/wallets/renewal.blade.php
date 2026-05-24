@@ -8,7 +8,10 @@
 <div class="tailwind-scope mt-4">
     <div class="mb-6">
         <h2 class="text-2xl font-bold text-gray-100">NEXA 2.0 Wallet</h2>
-        <p class="text-gray-400">Tokens accumulated specifically for your ID renewal.</p>
+        <p class="text-gray-400">
+        Tokens accumulated specifically for your Future Bonus which will be given behalf of company profits    <!-- {{ number_format(min(100, ($balance / max(1, $renewalTarget)) * 100), 1) }}% to Renewal target (${{ $renewalTarget }}) -->
+    
+      .</p>
     </div>
 
     <!-- Balance Card -->
@@ -21,7 +24,6 @@
                   <div class="bg-orange-400 h-2.5 rounded-full" style="width: {{ min(100, ($balance / max(1, $renewalTarget)) * 100) }}%"></div>
                 </div>
                 <p class="text-xs text-orange-200 text-right">
-                 Tokens accumulated specifically for your Future Bonus which will be given behalf of company profits    <!-- {{ number_format(min(100, ($balance / max(1, $renewalTarget)) * 100), 1) }}% to Renewal target (${{ $renewalTarget }}) -->
                 </p>
             </div>
         </div>

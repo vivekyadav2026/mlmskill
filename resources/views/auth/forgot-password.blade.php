@@ -101,7 +101,6 @@
                         </div>
                         <input type="email" name="email" class="w-full pl-11 pr-4 py-3 rounded-xl border border-white/10 bg-white/5 text-white placeholder-gray-400 focus:bg-white/10 focus:border-brand-400 focus:ring-1 focus:ring-brand-400 outline-none transition" required value="{{ old('email') }}" placeholder="you@example.com">
                     </div>
-                    </div>
                 </div>
 
                 <button type="submit" class="w-full bg-gradient-to-r from-brand-600 to-brand-500 hover:from-brand-500 hover:to-brand-400 text-white font-bold py-3.5 rounded-xl shadow-lg shadow-brand-500/30 transition transform hover:-translate-y-0.5 border border-white/10 mt-6">

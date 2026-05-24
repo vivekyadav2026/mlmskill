@@ -10,8 +10,9 @@
             <td align="center">
                 <table width="600" cellpadding="0" cellspacing="0" style="background-color: #ffffff; border-radius: 8px; overflow: hidden; box-shadow: 0 4px 10px rgba(0,0,0,0.1);">
                     <tr>
-                        <td style="background-color: #4f46e5; padding: 20px; text-align: center;">
-                            <h2 style="color: #ffffff; margin: 0;">Password Reset Request</h2>
+                        <td style="background-color: #1e293b; padding: 25px 20px; text-align: center; border-bottom: 3px solid #4f46e5;">
+                            <img src="{{ \App\Models\Setting::get('site_logo') ?: asset('logo.png') }}" alt="{{ \App\Models\Setting::get('site_name', 'Samarth Digital') }}" style="max-height: 60px; margin-bottom: 12px; border-radius: 4px; display: inline-block;">
+                            <h2 style="color: #ffffff; margin: 0; font-family: Arial, sans-serif; font-size: 22px;">Password Reset Request</h2>
                         </td>
                     </tr>
                     <tr>

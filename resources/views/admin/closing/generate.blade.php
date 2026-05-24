@@ -16,14 +16,40 @@
         </div>
     @endif
 
+    <!-- Date Filter Form -->
+    <form method="GET" action="{{ url('admin/closing/generate') }}" class="bg-[#1a222d] border border-[#334155] rounded-xl p-6 shadow-xl mb-6">
+        <h3 class="text-gray-200 font-bold mb-4 flex items-center border-b border-[#334155] pb-2">
+            <i class="fa-solid fa-calendar-days text-indigo-500 mr-2"></i> Select Date Range
+        </h3>
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-4 items-end">
+            <div>
+                <label class="block text-gray-400 text-sm mb-2">Start Date</label>
+                <input type="date" name="start_date" class="w-full bg-[#0f172a] border border-[#334155] text-white rounded-lg px-4 py-2 focus:outline-none focus:border-indigo-500" value="{{ $startDateInput }}" required>
+            </div>
+            <div>
+                <label class="block text-gray-400 text-sm mb-2">End Date</label>
+                <input type="date" name="end_date" class="w-full bg-[#0f172a] border border-[#334155] text-white rounded-lg px-4 py-2 focus:outline-none focus:border-indigo-500" value="{{ $endDateInput }}" required>
+            </div>
+            <div>
+                <button type="submit" class="w-full px-6 py-2 bg-indigo-600 hover:bg-indigo-700 text-white font-bold rounded-lg transition">
+                    <i class="fa-solid fa-arrows-rotate mr-1"></i> Update Preview
+                </button>
+            </div>
+        </div>
+    </form>
+
     <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8">
         <!-- Preview Data -->
         <div class="bg-[#1a222d] border border-[#334155] rounded-xl p-6 shadow-xl">
             <h3 class="text-gray-200 font-bold mb-4 flex items-center border-b border-[#334155] pb-2">
-                <i class="fa-solid fa-magnifying-glass-chart text-indigo-500 mr-2"></i> Current Month Preview
+                <i class="fa-solid fa-magnifying-glass-chart text-indigo-500 mr-2"></i> Selected Period Preview
             </h3>
             
             <div class="space-y-4">
+                <div class="flex justify-between items-center border-b border-[#334155]/30 pb-2">
+                    <span class="text-gray-400 text-sm">Period</span>
+                    <span class="text-indigo-300 font-mono text-xs">{{ $startDateInput }} to {{ $endDateInput }}</span>
+                </div>
                 <div class="flex justify-between items-center">
                     <span class="text-gray-400 text-sm">Active Users</span>
                     <span class="text-white font-medium">{{ number_format($preview['total_active_users']) }}</span>
@@ -56,36 +82,35 @@
 
             <form action="{{ url('admin/closing/generate') }}" method="POST">
                 @csrf
+                <input type="hidden" name="start_date" value="{{ $startDateInput }}">
+                <input type="hidden" name="end_date" value="{{ $endDateInput }}">
+                <input type="hidden" name="month" value="{{ $currentMonth }}">
+                <input type="hidden" name="year" value="{{ $currentYear }}">
+                
                 <div class="grid grid-cols-2 gap-4 mb-4">
                     <div>
-                        <label class="block text-gray-400 text-sm mb-2">Target Month</label>
-                        <select name="month" class="w-full bg-[#0f172a] border border-[#334155] text-white rounded-lg px-4 py-2 focus:outline-none focus:border-indigo-500">
-                            @for($i = 1; $i <= 12; $i++)
-                                <option value="{{ $i }}" {{ $currentMonth == $i ? 'selected' : '' }}>
-                                    {{ date('F', mktime(0, 0, 0, $i, 10)) }}
-                                </option>
-                            @endfor
-                        </select>
+                        <label class="block text-gray-400 text-sm mb-2">Display Month</label>
+                        <div class="w-full bg-[#0f172a]/60 border border-[#334155]/60 text-gray-300 rounded-lg px-4 py-2.5 cursor-not-allowed select-none flex items-center gap-2">
+                            <i class="fa-solid fa-calendar text-gray-500"></i>
+                            <span>{{ date('F', mktime(0, 0, 0, $currentMonth, 10)) }}</span>
+                        </div>
                     </div>
                     <div>
-                        <label class="block text-gray-400 text-sm mb-2">Target Year</label>
-                        <select name="year" class="w-full bg-[#0f172a] border border-[#334155] text-white rounded-lg px-4 py-2 focus:outline-none focus:border-indigo-500">
-                            @for($i = $currentYear - 2; $i <= $currentYear + 1; $i++)
-                                <option value="{{ $i }}" {{ $currentYear == $i ? 'selected' : '' }}>
-                                    {{ $i }}
-                                </option>
-                            @endfor
-                        </select>
+                        <label class="block text-gray-400 text-sm mb-2">Display Year</label>
+                        <div class="w-full bg-[#0f172a]/60 border border-[#334155]/60 text-gray-300 rounded-lg px-4 py-2.5 cursor-not-allowed select-none flex items-center gap-2">
+                            <i class="fa-solid fa-clock text-gray-500"></i>
+                            <span>{{ $currentYear }}</span>
+                        </div>
                     </div>
                 </div>
 
                 <div class="mb-6">
                     <label class="block text-gray-400 text-sm mb-2">Closing Notes (Optional)</label>
-                    <textarea name="notes" rows="3" class="w-full bg-[#0f172a] border border-[#334155] text-white rounded-lg px-4 py-2 focus:outline-none focus:border-indigo-500" placeholder="e.g. November final statement processed before holiday bonuses."></textarea>
+                    <textarea name="notes" rows="3" class="w-full bg-[#0f172a] border border-[#334155] text-white rounded-lg px-4 py-2 focus:outline-none focus:border-indigo-500" placeholder="e.g. Statement processed for specified custom date range..."></textarea>
                 </div>
 
-                <button type="submit" class="w-full px-6 py-3 bg-red-600 hover:bg-red-700 text-white font-bold rounded-lg shadow-lg transition flex justify-center items-center gap-2" onclick="return confirm('Are you absolutely sure you want to finalize this monthly closing? This action will securely lock the current metrics for this month.');">
-                    <i class="fa-solid fa-lock"></i> Finalize Monthly Closing
+                <button type="submit" class="w-full px-6 py-3 bg-red-600 hover:bg-red-700 text-white font-bold rounded-lg shadow-lg transition flex justify-center items-center gap-2" onclick="return confirm('Are you absolutely sure you want to finalize this closing? This action will securely lock the metrics for the specified date range.');">
+                    <i class="fa-solid fa-lock"></i> Finalize Closing Report
                 </button>
             </form>
         </div>

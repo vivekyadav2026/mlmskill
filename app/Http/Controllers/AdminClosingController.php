@@ -18,15 +18,24 @@ class AdminClosingController extends Controller
         return view('admin.closing.history', compact('closings'));
     }
 
-    public function generate()
+    public function generate(Request $request)
     {
-        // Suggest current month and year
-        $currentMonth = date('n');
-        $currentYear = date('Y');
-        
-        // Calculate preview data for current month
-        $startDate = Carbon::createFromDate($currentYear, $currentMonth, 1)->startOfMonth();
-        $endDate = Carbon::createFromDate($currentYear, $currentMonth, 1)->endOfMonth();
+        $startDateInput = $request->input('start_date');
+        $endDateInput = $request->input('end_date');
+
+        if ($startDateInput && $endDateInput) {
+            $startDate = Carbon::parse($startDateInput)->startOfDay();
+            $endDate = Carbon::parse($endDateInput)->endOfDay();
+            $currentMonth = Carbon::parse($endDateInput)->month;
+            $currentYear = Carbon::parse($endDateInput)->year;
+        } else {
+            $currentMonth = (int) date('n');
+            $currentYear = (int) date('Y');
+            $startDate = Carbon::createFromDate($currentYear, $currentMonth, 1)->startOfMonth();
+            $endDate = Carbon::createFromDate($currentYear, $currentMonth, 1)->endOfMonth();
+            $startDateInput = $startDate->format('Y-m-d');
+            $endDateInput = $endDate->format('Y-m-d');
+        }
 
         $preview = [
             'total_active_users' => User::where('status', 'active')->count(),
@@ -35,7 +44,7 @@ class AdminClosingController extends Controller
             'total_tokens_issued' => TokenLedger::whereBetween('created_at', [$startDate, $endDate])->where('status', 'credited')->sum('token_count')
         ];
 
-        return view('admin.closing.generate', compact('currentMonth', 'currentYear', 'preview'));
+        return view('admin.closing.generate', compact('currentMonth', 'currentYear', 'startDateInput', 'endDateInput', 'preview'));
     }
 
     public function reports()
@@ -60,21 +69,31 @@ class AdminClosingController extends Controller
     public function store(Request $request)
     {
         $request->validate([
+            'start_date' => 'required|date',
+            'end_date' => 'required|date|after_or_equal:start_date',
             'month' => 'required|integer|min:1|max:12',
             'year' => 'required|integer|min:2000|max:2100',
         ]);
 
+        $startDate = Carbon::parse($request->start_date)->startOfDay();
+        $endDate = Carbon::parse($request->end_date)->endOfDay();
         $month = $request->month;
         $year = $request->year;
 
-        // Check if already closed
-        $exists = MonthlyClosing::where('month', $month)->where('year', $year)->first();
-        if ($exists) {
-            return back()->with('error', 'Closing for this month and year has already been processed.');
-        }
+        // Check if a closing for the exact same start_date and end_date has already been processed
+        $exists = MonthlyClosing::where('month', $month)
+            ->where('year', $year)
+            ->get()
+            ->first(function ($closing) use ($startDate, $endDate) {
+                $report = $closing->report_json;
+                return isset($report['start_date']) && isset($report['end_date']) &&
+                       $report['start_date'] === $startDate->toDateString() &&
+                       $report['end_date'] === $endDate->toDateString();
+            });
 
-        $startDate = Carbon::createFromDate($year, $month, 1)->startOfMonth();
-        $endDate = Carbon::createFromDate($year, $month, 1)->endOfMonth();
+        if ($exists) {
+            return back()->with('error', 'Closing for this specific date range has already been processed.');
+        }
 
         $activeUsers = User::where('status', 'active')->count();
         $income = CommissionLedger::whereBetween('created_at', [$startDate, $endDate])->sum('amount');
@@ -82,9 +101,11 @@ class AdminClosingController extends Controller
         $tokens = TokenLedger::whereBetween('created_at', [$startDate, $endDate])->where('status', 'credited')->sum('token_count');
 
         $reportJson = [
+            'start_date' => $startDate->toDateString(),
+            'end_date' => $endDate->toDateString(),
             'processed_at' => now()->toDateTimeString(),
             'processed_by' => auth()->user()->id,
-            'notes' => $request->notes ?? 'Automated monthly closing.'
+            'notes' => $request->notes ?? 'Automated custom date closing.'
         ];
 
         MonthlyClosing::create([

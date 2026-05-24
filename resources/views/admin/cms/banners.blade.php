@@ -82,6 +82,7 @@
             <div class="mb-4">
                 <label class="block text-gray-300 font-medium mb-2">Banner Image</label>
                 <input type="file" name="image" accept="image/*" class="w-full bg-[#0f172a] border border-[#334155] text-white rounded-lg px-4 py-2 focus:outline-none focus:border-indigo-500" required>
+                <p class="text-xs text-gray-400 mt-1.5"><i class="fa-solid fa-circle-info mr-1 text-indigo-400"></i>Recommended size: <strong>1200 x 480 px</strong> (Aspect Ratio <strong>5:2</strong>). Keep important content centered.</p>
             </div>
             <div class="mb-6">
                 <label class="block text-gray-300 font-medium mb-2">Target Link URL (Optional)</label>

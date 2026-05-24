@@ -247,8 +247,8 @@
           <li><a href="{{ url('admin/courses/modules') }}" class="nav-link sub-link"><span>Course Modules</span></a></li>
           <li><a href="{{ url('admin/courses') }}" class="nav-link sub-link"><span>All Courses</span></a></li>
           <li><a href="{{ url('admin/courses/create') }}" class="nav-link sub-link"><span>Add Course</span></a></li>
-          <li><a href="{{ url('admin/courses/content') }}" class="nav-link sub-link"><span>Course Content</span></a></li>
-          <li><a href="{{ url('admin/courses/progress') }}" class="nav-link sub-link"><span>User Course Progress</span></a></li>
+          <!-- <li><a href="{{ url('admin/courses/content') }}" class="nav-link sub-link"><span>Course Content</span></a></li> -->
+          <!-- <li><a href="{{ url('admin/courses/progress') }}" class="nav-link sub-link"><span>User Course Progress</span></a></li> -->
         </ul>
       </li>
 

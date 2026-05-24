@@ -37,7 +37,7 @@
             <div class="bg-gradient-to-r from-blue-900 to-indigo-900 p-6 text-center">
                 <p class="text-blue-200 text-sm font-medium mb-1">NEXA 1.0</p>
                 <h3 class="text-3xl font-bold text-white mb-2">{{ number_format($balance, 2) }}</h3>
-                <p class="text-xs text-blue-300">Rate: 1 NEXA 1.0 = ${{ number_format($utilityValue, 2) }}</p>
+                <!-- <p class="text-xs text-blue-300">Rate: 1 NEXA 1.0 = ${{ number_format($utilityValue, 2) }}</p> -->
             </div>
             <div class="p-6">
                 <form action="{{ route('token.conversion.submit') }}" method="POST">
@@ -63,13 +63,13 @@
             <div class="bg-gradient-to-r from-emerald-900 to-teal-900 p-6 text-center">
                 <p class="text-emerald-200 text-sm font-medium mb-1">NEXA 2.0</p>
                 <h3 class="text-3xl font-bold text-white mb-2">{{ number_format($renewalBalance, 2) }}</h3>
-                <p class="text-xs text-emerald-300">Rate: 1 NEXA 2.0 = ${{ number_format($renewalValue, 2) }}</p>
+                <!-- <p class="text-xs text-emerald-300">Rate: 1 NEXA 2.0 = ${{ number_format($renewalValue, 2) }}</p> -->
             </div>
             <div class="p-6">
-                <div class="mb-4 text-center">
+                <!-- <div class="mb-4 text-center">
                     <p class="text-sm text-gray-300">Account Age: <strong class="text-white">{{ $daysSinceActivation }} Days</strong></p>
                     <p class="text-xs text-gray-500 mt-1">Requires 300 days since activation to convert.</p>
-                </div>
+                </div> -->
                 <form action="{{ route('token.conversion.submit') }}" method="POST">
                     @csrf
                     <input type="hidden" name="token_type" value="renewal">
