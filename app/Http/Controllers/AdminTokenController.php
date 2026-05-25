@@ -40,15 +40,18 @@ class AdminTokenController extends Controller
     {
         $request->validate([
             'user_id'    => 'required|exists:users,id',
-            'token_type' => 'required|in:utility,renewal',
+            'token_type' => 'required|in:utility,renewal,nexa_3',
             'amount'     => 'required|numeric|min:0.0001',
             'note'       => 'nullable|string|max:255',
         ]);
 
         // Get token value from settings
-        $valueKey = $request->token_type === 'utility'
-            ? 'utility_token_value'
-            : 'renewal_token_value';
+        $valueKey = 'utility_token_value';
+        if ($request->token_type === 'renewal') {
+            $valueKey = 'renewal_token_value';
+        } elseif ($request->token_type === 'nexa_3') {
+            $valueKey = 'nexa_3_token_value';
+        }
         $tokenValue = (float) (Setting::get($valueKey, 1));
 
         DB::transaction(function () use ($request, $tokenValue) {
@@ -65,12 +68,17 @@ class AdminTokenController extends Controller
 
             // Update the user's wallet balance
             $wallet = Wallet::firstOrCreate(['user_id' => $request->user_id]);
-            $walletField = $request->token_type === 'utility' ? 'utility_token_wallet' : 'renewal_token_wallet';
+            $walletField = 'utility_token_wallet';
+            if ($request->token_type === 'renewal') {
+                $walletField = 'renewal_token_wallet';
+            } elseif ($request->token_type === 'nexa_3') {
+                $walletField = 'nexa_3_wallet';
+            }
             $wallet->increment($walletField, $request->amount);
         });
 
         $user = User::find($request->user_id);
-        $typeLabel = ucfirst($request->token_type);
+        $typeLabel = $request->token_type === 'nexa_3' ? 'NEXA 3.0' : ucfirst($request->token_type);
 
         return redirect()->route('admin.tokens.manual')
             ->with('success', "{$request->amount} {$typeLabel} tokens credited to {$user->name} successfully.");

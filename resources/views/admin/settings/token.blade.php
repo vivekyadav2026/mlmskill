@@ -54,12 +54,27 @@
       <div class="s-header"><i class="fa-solid fa-rotate text-cyan-400"></i><h3>NEXA 2.0 (RT)</h3></div>
       <div class="s-body grid grid-cols-1 md:grid-cols-2 gap-4">
         <div>
-          <label class="f-label">Token Display Name</label>
+          <label class="f-label">Token Name (Display)</label>
           <input type="text" readonly name="renewal_token_name" class="f-ctrl" value="{{ $settings['renewal_token_name'] ?? 'NEXA 2.0' }}" placeholder="e.g. NEXA 2.0">
         </div>
         <div>
-          <label class="f-label">Token Value ($) per 1 Token</label>
-          <input type="number" step="0.0001" name="renewal_token_value" class="f-ctrl" value="{{ $settings['renewal_token_value'] ?? '1' }}" required>
+          <label class="f-label">Token Value ($)</label>
+          <input type="number" step="0.01" name="renewal_token_value" class="f-ctrl" value="{{ $settings['renewal_token_value'] ?? '1.00' }}">
+        </div>
+      </div>
+    </div>
+
+    <!-- NEXA 3.0 -->
+    <div class="s-card">
+      <div class="s-header"><i class="fa-solid fa-graduation-cap text-teal-400"></i><h3>NEXA 3.0 (Course Reward)</h3></div>
+      <div class="s-body grid grid-cols-1 md:grid-cols-2 gap-4">
+        <div>
+          <label class="f-label">Course Completion Reward Amount</label>
+          <input type="number" step="1" name="nexa_3_course_reward" class="f-ctrl" value="{{ $settings['nexa_3_course_reward'] ?? '300' }}">
+        </div>
+        <div>
+          <label class="f-label">Token Value ($)</label>
+          <input type="number" step="0.01" name="nexa_3_token_value" class="f-ctrl" value="{{ $settings['nexa_3_token_value'] ?? '1.00' }}">
         </div>
       </div>
     </div>

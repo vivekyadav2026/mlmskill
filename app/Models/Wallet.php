@@ -15,6 +15,7 @@ class Wallet extends Model
         'package_wallet',
         'utility_token_wallet',
         'renewal_token_wallet',
+        'nexa_3_wallet',
     ];
 
     public function user()
@@ -22,3 +23,4 @@ class Wallet extends Model
         return $this->belongsTo(User::class);
     }
 }
+

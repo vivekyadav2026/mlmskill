@@ -29,14 +29,18 @@
 
     {{-- Stats Row --}}
     <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-3 mb-6">
-        <div class="stat-card border-indigo-900">
-            <p class="text-gray-400 text-xs uppercase tracking-wider mb-1">NEXA 1.0</p>
-            <p class="text-xl font-bold text-indigo-400">{{ number_format($totalUtility, 2) }}</p>
-        </div>
-        <div class="stat-card border-yellow-900">
-            <p class="text-gray-400 text-xs uppercase tracking-wider mb-1">NEXA 2.0</p>
-            <p class="text-xl font-bold text-yellow-400">{{ number_format($totalRenewal, 2) }}</p>
-        </div>
+            <div class="bg-[#111827] rounded-lg p-5 border border-[#334155]">
+                <p class="text-gray-400 text-xs uppercase tracking-wider mb-1">NEXA 1.0</p>
+                <h3 class="text-2xl font-bold text-indigo-400">{{ number_format($totalUtility, 2) }}</h3>
+            </div>
+            <div class="bg-[#111827] rounded-lg p-5 border border-[#334155]">
+                <p class="text-gray-400 text-xs uppercase tracking-wider mb-1">NEXA 2.0</p>
+                <h3 class="text-2xl font-bold text-yellow-400">{{ number_format($totalRenewal, 2) }}</h3>
+            </div>
+            <div class="bg-[#111827] rounded-lg p-5 border border-[#334155]">
+                <p class="text-gray-400 text-xs uppercase tracking-wider mb-1">NEXA 3.0</p>
+                <h3 class="text-2xl font-bold text-teal-400">{{ number_format(\App\Models\TokenLedger::where('token_type', 'nexa_3')->sum('token_count'), 2) }}</h3>
+            </div>
         <div class="stat-card">
             <p class="text-gray-400 text-xs uppercase tracking-wider mb-1">Total Entries</p>
             <p class="text-xl font-bold text-white">{{ number_format($totalEntries) }}</p>
@@ -97,8 +101,12 @@
                         <td>
                             @if($token->token_type === 'utility')
                                 <span class="text-xs bg-indigo-900/40 text-indigo-400 border border-indigo-800 px-2 py-1 rounded-full"><i class="fa-solid fa-circle-bolt mr-1"></i>NEXA 1.0</span>
-                            @else
+                            @elseif($token->token_type === 'renewal')
                                 <span class="text-xs bg-yellow-900/40 text-yellow-400 border border-yellow-800 px-2 py-1 rounded-full"><i class="fa-solid fa-rotate mr-1"></i>NEXA 2.0</span>
+                            @elseif($token->token_type === 'nexa_3')
+                                <span class="text-xs bg-teal-900/40 text-teal-400 border border-teal-800 px-2 py-1 rounded-full"><i class="fa-solid fa-graduation-cap mr-1"></i>NEXA 3.0</span>
+                            @else
+                                <span class="text-xs bg-gray-900/40 text-gray-400 border border-gray-800 px-2 py-1 rounded-full">{{ ucfirst($token->token_type) }}</span>
                             @endif
                         </td>
                         <td class="font-mono font-bold {{ $token->status === 'credited' ? 'text-green-400' : 'text-gray-400' }}">

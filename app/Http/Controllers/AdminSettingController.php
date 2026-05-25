@@ -212,41 +212,46 @@ class AdminSettingController extends Controller
     public function salary()
     {
         $settings = Setting::pluck('value', 'key');
-        // Build tiers array for the view (defaults match BonusService)
+        
         $defaults = [
-            1 => ['directs' =>  20, 'amount' =>  10.00],
-            2 => ['directs' =>  50, 'amount' =>  20.00],
-            3 => ['directs' => 100, 'amount' =>  30.00],
-            4 => ['directs' => 200, 'amount' =>  50.00],
-            5 => ['directs' => 500, 'amount' => 100.00],
+            'Manager'        => 20,
+            'Sr. Manager'    => 50,
+            'Director'       => 100,
+            'Sr. Director'   => 200,
+            'Crown'          => 500,
+            'Silver Crown'   => 1000,
+            'Gold Crown'     => 5000,
+            'Platinum Crown' => 10000,
+            'Diamond Crown'  => 25000,
         ];
-        $tiers = [];
-        for ($i = 1; $i <= 5; $i++) {
-            $tiers[$i] = [
-                'directs' => $settings->get("salary_tier_{$i}_directs", $defaults[$i]['directs']),
-                'amount'  => $settings->get("salary_tier_{$i}_amount",  $defaults[$i]['amount']),
-            ];
+        
+        $ranks = [];
+        foreach ($defaults as $rank => $defaultAmount) {
+            $settingKey = 'salary_amount_' . str_replace([' ', '.'], '_', $rank);
+            $ranks[$rank] = $settings->get($settingKey, $defaultAmount);
         }
-        $payout_day = $settings->get('salary_payout_day', 20);
-        return view('admin.settings-salary', compact('settings', 'tiers', 'payout_day'));
+        
+        $payout_day_of_week = $settings->get('salary_payout_day_of_week', 1);
+        return view('admin.settings-salary', compact('settings', 'ranks', 'payout_day_of_week'));
     }
 
     public function saveSalary(Request $request)
     {
         $request->validate([
-            'tier.*.directs' => 'required|integer|min:0',
-            'tier.*.amount'  => 'required|numeric|min:0',
-            'salary_payout_day' => 'required|integer|min:1|max:28',
+            'ranks.*' => 'required|numeric|min:0',
+            'salary_payout_day_of_week' => 'required|integer|min:0|max:6',
         ]);
 
-        for ($i = 1; $i <= 5; $i++) {
-            Setting::set("salary_tier_{$i}_directs", (int)   $request->input("tier.{$i}.directs", 0));
-            Setting::set("salary_tier_{$i}_amount",  (float) $request->input("tier.{$i}.amount",  0));
+        if ($request->has('ranks')) {
+            foreach ($request->input('ranks') as $rank => $amount) {
+                $settingKey = 'salary_amount_' . str_replace([' ', '.'], '_', $rank);
+                Setting::set($settingKey, (float) $amount);
+            }
         }
         
-        Setting::set('salary_payout_day', (int) $request->input('salary_payout_day', 20));
+        Setting::set('salary_payout_day_of_week', (int) $request->input('salary_payout_day_of_week', 1));
 
-        return back()->with('success', 'Salary tier settings saved successfully!');
+        return back()->with('success', 'Salary settings saved successfully!');
     }
 
     // ── Theme Customizer ───────────────────────────────────────

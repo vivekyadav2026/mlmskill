@@ -8,18 +8,17 @@ Artisan::command('inspire', function () {
     $this->comment(Inspiring::quote());
 })->purpose('Display an inspiring quote');
 
-// ─── Salary Bonus: Run on 20th of every month at midnight ───────────────────
-// This pays monthly salary to all eligible users (based on active direct count).
-// Max 12 payments per user per tier. Output is logged to storage/logs/salary-bonus.log
-$payoutDay = (int) \App\Models\Setting::get('salary_payout_day', 20);
-$payoutDay = ($payoutDay >= 1 && $payoutDay <= 28) ? $payoutDay : 20;
+// ─── Salary Bonus: Run weekly on the specified day ───────────────────
+// This pays weekly salary to all eligible users based on achieved ranks.
+// Max 12 payments per user per rank. Output is logged to storage/logs/salary-bonus.log
+$payoutDayOfWeek = (int) \App\Models\Setting::get('salary_payout_day_of_week', 1); // 0=Sun, 1=Mon, ..., 6=Sat
+$payoutDayOfWeek = ($payoutDayOfWeek >= 0 && $payoutDayOfWeek <= 6) ? $payoutDayOfWeek : 1;
 
 Schedule::command('bonuses:salary')
-    ->monthlyOn($payoutDay, '00:00')                         // dynamic payout day
+    ->weeklyOn($payoutDayOfWeek, '00:00')                    // dynamic payout day of the week
     ->appendOutputTo(storage_path('logs/salary-bonus.log'))  // save output to log file
     ->withoutOverlapping()                           // prevent double-run if previous is still running
     ->runInBackground();                             // don't block other scheduled jobs
 
 // ─── Daily Token Distribution ───────────────────────────────────────────────
 // Schedule::command('app:distribute-daily-tokens')->dailyAt('00:00');
-

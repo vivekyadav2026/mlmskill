@@ -104,6 +104,30 @@ class WalletController extends Controller
         return view('user.wallets.renewal', compact('balance', 'history', 'renewalTarget'));
     }
 
+    public function nexa3()
+    {
+        $user = Auth::user();
+        $balance = $user->wallet->nexa_3_wallet ?? 0;
+        
+        $history = DB::table('token_ledgers')
+            ->where('user_id', $user->id)
+            ->where('token_type', 'nexa_3')
+            ->orderBy('created_at', 'desc')
+            ->paginate(15);
+            
+        $chartData = DB::table('token_ledgers')
+            ->select(DB::raw('DATE(created_at) as date'), DB::raw('SUM(token_count) as total'))
+            ->where('user_id', $user->id)
+            ->where('token_type', 'nexa_3')
+            ->where('token_count', '>', 0)
+            ->groupBy(DB::raw('DATE(created_at)'))
+            ->orderBy(DB::raw('DATE(created_at)'), 'asc')
+            ->take(30)
+            ->get();
+            
+        return view('user.wallets.nexa3', compact('balance', 'history', 'chartData'));
+    }
+
     public function history(Request $request)
     {
         $user = Auth::user();

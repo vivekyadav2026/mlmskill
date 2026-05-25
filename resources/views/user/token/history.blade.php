@@ -31,16 +31,26 @@
                         <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-400">{{ \Carbon\Carbon::parse($item->created_at)->format('M d, Y h:i A') }}</td>
                         <td class="px-6 py-4 whitespace-nowrap">
                             @if($item->token_type === 'utility')
-                                <span class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-blue-900 text-blue-300 border border-blue-700">NEXA 1.0</span>
+                                <span class="bg-blue-900/30 text-blue-400 border border-blue-800 px-2 py-1 rounded-full text-xs">
+                                    <i class="fa-solid fa-coins mr-1"></i>NEXA 1.0
+                                </span>
+                            @elseif($item->token_type === 'renewal')
+                                <span class="bg-orange-900/30 text-orange-400 border border-orange-800 px-2 py-1 rounded-full text-xs">
+                                    <i class="fa-solid fa-rotate mr-1"></i>NEXA 2.0
+                                </span>
+                            @elseif($item->token_type === 'nexa_3')
+                                <span class="bg-teal-900/30 text-teal-400 border border-teal-800 px-2 py-1 rounded-full text-xs">
+                                    <i class="fa-solid fa-graduation-cap mr-1"></i>NEXA 3.0
+                                </span>
                             @else
-                                <span class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-orange-900 text-orange-300 border border-orange-700">NEXA 2.0</span>
+                                <span class="bg-gray-800 text-gray-300 px-2 py-1 rounded-full text-xs">{{ ucfirst($item->token_type) }}</span>
                             @endif
                         </td>
                         <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-300">
                             {{ $item->source ?? 'Daily ROI Generation' }}
                         </td>
-                        <td class="px-6 py-4 whitespace-nowrap text-sm font-bold {{ $item->token_type === 'utility' ? 'text-blue-400' : 'text-orange-400' }}">
-                            +{{ number_format($item->token_count, 2) }}
+                        <td class="px-6 py-4 whitespace-nowrap text-sm font-bold {{ $item->token_type === 'utility' ? 'text-blue-400' : ($item->token_type === 'renewal' ? 'text-orange-400' : 'text-teal-400') }}">
+                            {{ $item->token_count > 0 ? '+' : '' }}{{ number_format($item->token_count, 2) }}
                         </td>
                     </tr>
                     @empty

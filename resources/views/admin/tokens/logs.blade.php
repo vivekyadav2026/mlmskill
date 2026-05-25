@@ -30,29 +30,23 @@
         $allLogs        = \App\Models\TokenLedger::all();
         $totalUtility   = $allLogs->where('token_type','utility')->sum('token_count');
         $totalRenewal   = $allLogs->where('token_type','renewal')->sum('token_count');
+        $totalNexa3     = $allLogs->where('token_type','nexa_3')->sum('token_count');
         $totalCredited  = $allLogs->where('status','credited')->count();
         $totalUsed      = $allLogs->where('status','used')->count();
     @endphp
-    <div class="grid grid-cols-2 md:grid-cols-4 gap-4 mb-6">
-        <div class="bg-[#1a222d] border border-[#334155] rounded-lg p-4">
-            <p class="text-gray-400 text-xs uppercase tracking-wider mb-1">Total Distributions</p>
-            <p class="text-2xl font-bold text-white">{{ $logs->total() }}</p>
-        </div>
-        <div class="bg-[#1a222d] border border-indigo-900 rounded-lg p-4">
+    
+    <div class="grid grid-cols-1 md:grid-cols-3 gap-4 mb-6">
+        <div class="bg-[#111827] rounded-lg p-5 border border-[#334155]">
             <p class="text-gray-400 text-xs uppercase tracking-wider mb-1">NEXA 1.0 Issued</p>
-            <p class="text-2xl font-bold text-indigo-400">{{ number_format($totalUtility, 2) }}</p>
+            <h3 class="text-2xl font-bold text-indigo-400">{{ number_format($totalUtility, 2) }}</h3>
         </div>
-        <div class="bg-[#1a222d] border border-yellow-900 rounded-lg p-4">
+        <div class="bg-[#111827] rounded-lg p-5 border border-[#334155]">
             <p class="text-gray-400 text-xs uppercase tracking-wider mb-1">NEXA 2.0 Issued</p>
-            <p class="text-2xl font-bold text-yellow-400">{{ number_format($totalRenewal, 2) }}</p>
+            <h3 class="text-2xl font-bold text-yellow-400">{{ number_format($totalRenewal, 2) }}</h3>
         </div>
-        <div class="bg-[#1a222d] border border-[#334155] rounded-lg p-4">
-            <p class="text-gray-400 text-xs uppercase tracking-wider mb-1">Active / Used</p>
-            <p class="text-2xl font-bold text-white">
-                <span class="text-green-400">{{ $totalCredited }}</span>
-                <span class="text-gray-500 text-lg"> / </span>
-                <span class="text-gray-400">{{ $totalUsed }}</span>
-            </p>
+        <div class="bg-[#111827] rounded-lg p-5 border border-[#334155]">
+            <p class="text-gray-400 text-xs uppercase tracking-wider mb-1">NEXA 3.0 Issued</p>
+            <h3 class="text-2xl font-bold text-teal-400">{{ number_format($totalNexa3, 2) }}</h3>
         </div>
     </div>
 
@@ -90,8 +84,12 @@
                         <td>
                             @if($log->token_type === 'utility')
                                 <span class="badge-utility"><i class="fa-solid fa-circle-bolt mr-1"></i>NEXA 1.0</span>
-                            @else
+                            @elseif($log->token_type === 'renewal')
                                 <span class="badge-renewal"><i class="fa-solid fa-rotate mr-1"></i>NEXA 2.0</span>
+                            @elseif($log->token_type === 'nexa_3')
+                                <span class="text-xs bg-teal-900/40 text-teal-400 border border-teal-800 px-2 py-1 rounded-full"><i class="fa-solid fa-graduation-cap mr-1"></i>NEXA 3.0</span>
+                            @else
+                                <span class="text-xs bg-gray-900/40 text-gray-400 border border-gray-800 px-2 py-1 rounded-full">{{ ucfirst($log->token_type) }}</span>
                             @endif
                         </td>
                         <td class="font-mono font-bold text-indigo-300">

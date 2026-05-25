@@ -161,6 +161,7 @@
           <li><a href="{{ url('user/wallets/package') }}" class="nav-link sub-link"><span>Package Wallet</span></a></li>
           <li><a href="{{ url('user/wallets/utility') }}" class="nav-link sub-link"><span>NEXA 1.0 Wallet</span></a></li>
           <li><a href="{{ url('user/wallets/renewal') }}" class="nav-link sub-link"><span>NEXA 2.0 Wallet</span></a></li>
+          <li><a href="{{ url('user/wallets/nexa3') }}" class="nav-link sub-link"><span>NEXA 3.0 Wallet</span></a></li>
           <li><a href="{{ url('user/wallets/history') }}" class="nav-link sub-link"><span>Wallet History</span></a></li>
         </ul>
       </li>
@@ -235,6 +236,7 @@
           <!-- <li><a href="{{ url('user/token/history') }}" class="nav-link sub-link"><span>Daily Token History</span></a></li> -->
           <li><a href="{{ url('user/token/utility') }}" class="nav-link sub-link"><span>NEXA 1.0 Details</span></a></li>
           <li><a href="{{ url('user/token/renewal') }}" class="nav-link sub-link"><span>NEXA 2.0 Details</span></a></li>
+          <li><a href="{{ url('user/token/nexa3') }}" class="nav-link sub-link"><span>NEXA 3.0 Details</span></a></li>
           <li><a href="{{ url('user/token/conversion') }}" class="nav-link sub-link"><span>Token Conversion</span></a></li>
         </ul>
       </li>

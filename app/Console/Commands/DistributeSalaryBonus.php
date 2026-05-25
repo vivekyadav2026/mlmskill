@@ -12,15 +12,15 @@ use Carbon\Carbon;
 class DistributeSalaryBonus extends Command
 {
     protected $signature   = 'bonuses:salary {--dry-run : Preview without paying}';
-    protected $description = 'Distributes the monthly Salary Bonus based on direct referrals (runs 1st of every month)';
+    protected $description = 'Distributes the weekly Salary Bonus based on achieved ranks';
 
     public function handle(BonusService $bonusService): int
     {
         $isDryRun = $this->option('dry-run');
-        $month    = Carbon::now()->format('F Y');
+        $weekDate = Carbon::now()->format('d M Y');
 
         $this->info("═══════════════════════════════════════");
-        $this->info("  Salary Bonus Distribution — {$month}");
+        $this->info("  Salary Bonus Distribution — {$weekDate}");
         $this->info("═══════════════════════════════════════");
 
         if ($isDryRun) {
@@ -31,7 +31,7 @@ class DistributeSalaryBonus extends Command
         $totalBefore = CommissionLedger::where('commission_type', 'salary_bonus')->sum('amount');
 
         if (!$isDryRun) {
-            $bonusService->distributeMonthlySalaryBonus();
+            $bonusService->distributeWeeklySalaryBonus();
         }
 
         // Calculate how much was paid this run
@@ -52,7 +52,7 @@ class DistributeSalaryBonus extends Command
         if (!$isDryRun) {
             ActivityLog::log(
                 'salary_bonus_distributed',
-                "Monthly salary bonus distributed for {$month}: {$recipientCount} users paid, total \${$paidThisRun}"
+                "Weekly salary bonus distributed for {$weekDate}: {$recipientCount} users paid, total \${$paidThisRun}"
             );
         }
 

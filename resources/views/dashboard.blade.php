@@ -99,8 +99,8 @@
         </div>
     </div>
 
-    <!-- 5 Stat Cards Row -->
-    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-4 mb-6">
+    <!-- 6 Stat Cards Row -->
+    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 mb-6">
         <div class="stat-card border-l-4 border-l-green-500">
             <div class="stat-icon bg-green-500/10 text-green-500"><i class="fa-solid fa-wallet"></i></div>
             <div class="flex-grow">
@@ -129,10 +129,17 @@
                 <h3 class="text-2xl font-bold text-gray-100">{{ number_format($wallet->renewal_token_wallet ?? 0, 2) }} </h3>
             </div>
         </div>
+        <div class="stat-card border-l-4 border-l-teal-500">
+            <div class="stat-icon bg-teal-500/10 text-teal-500"><i class="fa-solid fa-graduation-cap"></i></div>
+            <div class="flex-grow">
+                <p class="text-sm font-medium text-gray-400">NEXA 3.0</p>
+                <h3 class="text-2xl font-bold text-gray-100">{{ number_format($wallet->nexa_3_wallet ?? 0, 2) }} </h3>
+            </div>
+        </div>
         <div class="stat-card border-l-4 border-l-indigo-500">
             <div class="stat-icon bg-indigo-500/10 text-indigo-500"><i class="fa-solid fa-chart-line"></i></div>
             <div class="flex-grow">
-                <p class="text-sm font-medium text-gray-400">Total Income (All-Time)</p>
+                <p class="text-sm font-medium text-gray-400">Total Income</p>
                 <h3 class="text-2xl font-bold text-gray-100">${{ number_format($totalEarned, 2) }}</h3>
             </div>
         </div>
@@ -173,10 +180,18 @@
                     <div class="h-2 rounded-full" style="width: {{ $currentRank['progress_pct'] }}%; background-color: {{ $currentRank['current_color'] }}"></div>
                 </div>
                 <div class="flex justify-between text-xs mt-4 border-t border-[#334155] pt-4">
+                    @if($currentRank['next_directs'] > 0)
                     <div>
                         <p class="text-gray-500">Directs</p>
                         <p class="text-gray-200 font-bold">{{ $currentRank['direct_count'] }} / {{ $currentRank['next_directs'] }}</p>
                     </div>
+                    @else
+                    <div>
+                        <p class="text-gray-500">Directs</p>
+                        <p class="text-green-400 font-bold">Achieved</p>
+                    </div>
+                    @endif
+                    
                     @if($currentRank['next_team'] > 0)
                     <div class="text-right">
                         <p class="text-gray-500">Team Size</p>
@@ -224,29 +239,29 @@
 
         <!-- Salary Bonus Status -->
         <div class="bg-[#1a222d] rounded-lg border border-[#334155] p-6 shadow-lg">
-            <h3 class="text-gray-200 font-medium mb-4"><i class="fa-solid fa-money-check-dollar mr-2 text-green-400"></i>Monthly Salary Status</h3>
+            <h3 class="text-gray-200 font-medium mb-4"><i class="fa-solid fa-money-check-dollar mr-2 text-green-400"></i>Weekly Salary Status</h3>
             
             <div class="grid grid-cols-2 gap-4 mb-4">
                 <div class="bg-[#0b1220] border border-[#334155] rounded p-3 text-center">
-                    <p class="text-xs text-gray-500 uppercase">Active Salary Tier</p>
+                    <p class="text-xs text-gray-500 uppercase">Active Salary Rank</p>
                     @if($salaryStatus['active_amount'] > 0)
-                        <p class="text-xl font-bold text-green-400">${{ number_format($salaryStatus['active_amount'], 0) }} /Monthly</p>
+                        <p class="text-xl font-bold text-green-400">${{ number_format($salaryStatus['active_amount'], 0) }} /Weekly</p>
+                        <p class="text-xs text-gray-400">{{ $salaryStatus['active_tier'] }}</p>
                     @else
                         <p class="text-xl font-bold text-gray-500">None</p>
                     @endif
                 </div>
                 <div class="bg-[#0b1220] border border-[#334155] rounded p-3 text-center">
-                    <p class="text-xs text-gray-500 uppercase">Next Tier (${{ number_format($salaryStatus['next_amount'], 0) }})</p>
-                    <p class="text-lg font-bold text-gray-100 mt-1">{{ $salaryStatus['current_directs'] }} / {{ $salaryStatus['next_tier'] }} Directs</p>
+                    <p class="text-xs text-gray-500 uppercase">Next Rank (${{ number_format($salaryStatus['next_amount'], 0) }})</p>
+                    <p class="text-lg font-bold text-gray-100 mt-1">{{ $salaryStatus['next_tier'] !== 'None' ? $salaryStatus['next_tier'] : 'Maxed' }}</p>
                 </div>
             </div>
             
-            @if($salaryStatus['next_tier'] > 0)
-            @php $salPct = min(100, ($salaryStatus['current_directs'] / $salaryStatus['next_tier']) * 100); @endphp
+            @if($salaryStatus['next_tier'] !== 'None')
             <div class="w-full bg-gray-900 rounded-full h-1.5 mb-1 border border-[#334155]">
-                <div class="bg-green-500 h-1.5 rounded-full" style="width: {{ $salPct }}%"></div>
+                <div class="bg-green-500 h-1.5 rounded-full" style="width: {{ $salaryStatus['progress_pct'] }}%"></div>
             </div>
-            <p class="text-xs text-gray-500 text-right">Need {{ $salaryStatus['next_tier'] - $salaryStatus['current_directs'] }} more directs for upgrade</p>
+            <p class="text-xs text-gray-500 text-right">Keep growing your team to reach {{ $salaryStatus['next_tier'] }}</p>
             @endif
         </div>
     </div>
@@ -355,7 +370,7 @@
                 <tbody>
                     @forelse($recentTokens as $tok)
                     <tr>
-                        <td><span class="text-xs bg-indigo-900 text-indigo-300 px-2 py-1 rounded capitalize">{{ $tok->token_type === 'utility' ? 'NEXA 1.0' : ($tok->token_type === 'renewal' ? 'NEXA 2.0' : $tok->token_type) }}</span></td>
+                        <td><span class="text-xs bg-indigo-900 text-indigo-300 px-2 py-1 rounded capitalize">{{ $tok->token_type === 'utility' ? 'NEXA 1.0' : ($tok->token_type === 'renewal' ? 'NEXA 2.0' : ($tok->token_type === 'nexa_3' ? 'NEXA 3.0' : $tok->token_type)) }}</span></td>
                         <td class="font-bold text-indigo-400">+{{ number_format($tok->token_count, 2) }}</td>
                         <td>{{ \Carbon\Carbon::parse($tok->created_at)->format('Y-m-d H:i') }}</td>
                     </tr>

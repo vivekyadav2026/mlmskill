@@ -45,8 +45,31 @@ class CourseController extends Controller
         if ($user->status === 'active' && !$user->course_completed_at) {
             $user->course_completed_at = now();
             $user->save();
+
+            // Reward NEXA 3.0 Tokens
+            $nexa3RewardAmount = (float) \App\Models\Setting::get('nexa_3_course_reward', 300);
+            
+            if ($nexa3RewardAmount > 0) {
+                // Ensure wallet exists
+                $wallet = \App\Models\Wallet::firstOrCreate(['user_id' => $user->id]);
+                
+                $wallet->nexa_3_wallet += $nexa3RewardAmount;
+                $wallet->save();
+
+                \App\Models\TokenLedger::create([
+                    'user_id' => $user->id,
+                    'token_type' => 'nexa_3',
+                    'token_count' => $nexa3RewardAmount,
+                    'token_value' => \App\Models\Setting::get('nexa_3_token_value', 1),
+                    'source' => 'Course Completion',
+                    'status' => 'credited',
+                    'credited_date' => now(),
+                ]);
+
+                \App\Models\ActivityLog::log('nexa_3_credited', "Credited {$nexa3RewardAmount} NEXA 3.0 for course completion to user {$user->referral_code}.");
+            }
         }
-        return redirect()->back()->with('success', 'Congratulations! Course marked as completed!');
+        return redirect()->back()->with('success', 'Congratulations! Course marked as completed. You received NEXA 3.0 tokens in your wallet!');
     }
 
     public function certificate()

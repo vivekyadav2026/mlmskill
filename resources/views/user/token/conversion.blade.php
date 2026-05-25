@@ -31,7 +31,7 @@
         </div>
     @endif
 
-    <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+    <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
         <!-- NEXA 1.0 -->
         <div class="bg-[#1a222d] rounded-lg shadow-lg border border-[#334155] overflow-hidden">
             <div class="bg-gradient-to-r from-blue-900 to-indigo-900 p-6 text-center">
@@ -83,12 +83,36 @@
                     </div>
                     <button type="submit" class="w-full bg-emerald-600 hover:bg-emerald-700 text-white font-bold py-2 px-4 rounded transition" {{ $daysSinceActivation < 300 || $renewalBalance < 1 ? 'disabled' : '' }}>
                         @if($daysSinceActivation < 300)
-                            Locked (Need {{ 300 - $daysSinceActivation }} more days)
+                            Locked 
                         @elseif($renewalBalance < 1)
                             Insufficient Balance
                         @else
                             Convert to Package Wallet
                         @endif
+                    </button>
+                </form>
+            </div>
+        </div>
+        <!-- NEXA 3.0 -->
+        <div class="bg-[#1a222d] rounded-lg shadow-lg border border-[#334155] overflow-hidden">
+            <div class="bg-gradient-to-r from-teal-900 to-cyan-900 p-6 text-center">
+                <p class="text-teal-200 text-sm font-medium mb-1">NEXA 3.0</p>
+                <h3 class="text-3xl font-bold text-white mb-2">{{ number_format($nexa3Balance, 2) }}</h3>
+            </div>
+            <div class="p-6">
+                <form action="{{ route('token.conversion.submit') }}" method="POST">
+                    @csrf
+                    <input type="hidden" name="token_type" value="nexa_3">
+                    <div class="mb-4">
+                        <label class="block text-sm text-gray-300 mb-2">Amount to Convert (Min: 1)</label>
+                        <input type="number" name="amount" min="1" max="{{ $nexa3Balance }}" id="nexa3Amount" class="w-full bg-[#0b1220] border border-[#334155] rounded py-2 px-3 text-gray-100" placeholder="1">
+                    </div>
+                    <div class="text-sm text-gray-400 mb-6 flex justify-between">
+                        <span>You will receive:</span>
+                        <span class="font-bold text-green-400" id="nexa3Receive">$0.00</span>
+                    </div>
+                    <button type="submit" class="w-full bg-teal-600 hover:bg-teal-700 text-white font-bold py-2 px-4 rounded transition" {{ $nexa3Balance < 1 ? 'disabled' : '' }}>
+                        {{ $nexa3Balance < 1 ? 'Insufficient Balance' : 'Convert to Package Wallet' }}
                     </button>
                 </form>
             </div>
@@ -99,6 +123,7 @@
 <script>
     const utilRate = {{ $utilityValue }};
     const renRate = {{ $renewalValue }};
+    const nexa3Rate = {{ $nexa3Value }};
     
     document.getElementById('utilityAmount').addEventListener('input', function(e) {
         let val = parseFloat(e.target.value) || 0;
@@ -108,6 +133,11 @@
     document.getElementById('renewalAmount').addEventListener('input', function(e) {
         let val = parseFloat(e.target.value) || 0;
         document.getElementById('renewalReceive').innerText = '$' + (val * renRate).toFixed(2);
+    });
+
+    document.getElementById('nexa3Amount')?.addEventListener('input', function(e) {
+        let val = parseFloat(e.target.value) || 0;
+        document.getElementById('nexa3Receive').innerText = '$' + (val * nexa3Rate).toFixed(2);
     });
 </script>
 @endsection

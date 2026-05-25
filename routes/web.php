@@ -85,6 +85,7 @@ Route::middleware(['auth'])->group(function () {
     Route::get('/user/wallets/package', [\App\Http\Controllers\WalletController::class, 'package'])->name('wallets.package');
     Route::get('/user/wallets/utility', [\App\Http\Controllers\WalletController::class, 'utility'])->name('wallets.utility');
     Route::get('/user/wallets/renewal', [\App\Http\Controllers\WalletController::class, 'renewal'])->name('wallets.renewal');
+    Route::get('/user/wallets/nexa3', [\App\Http\Controllers\WalletController::class, 'nexa3'])->name('wallets.nexa3');
     Route::get('/user/wallets/history', [\App\Http\Controllers\WalletController::class, 'history'])->name('wallets.history');
     Route::get('/user/wallets/transfer', [\App\Http\Controllers\WalletController::class, 'transfer'])->name('wallets.transfer');
     Route::post('/user/wallets/transfer', [\App\Http\Controllers\WalletController::class, 'processTransfer'])->name('wallets.transfer.submit');
@@ -115,6 +116,7 @@ Route::middleware(['auth'])->group(function () {
     Route::get('/user/token/history', [\App\Http\Controllers\TokenSystemController::class, 'history'])->name('token.history');
     Route::get('/user/token/utility', [\App\Http\Controllers\TokenSystemController::class, 'utility'])->name('token.utility');
     Route::get('/user/token/renewal', [\App\Http\Controllers\TokenSystemController::class, 'renewal'])->name('token.renewal');
+    Route::get('/user/token/nexa3', [\App\Http\Controllers\TokenSystemController::class, 'nexa3'])->name('token.nexa3');
     Route::get('/user/token/conversion', [\App\Http\Controllers\TokenSystemController::class, 'conversion'])->name('token.conversion');
     Route::post('/user/token/conversion', [\App\Http\Controllers\TokenSystemController::class, 'processConversion'])->name('token.conversion.submit');
 

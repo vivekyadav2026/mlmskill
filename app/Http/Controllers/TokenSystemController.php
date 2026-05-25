@@ -29,6 +29,11 @@ class TokenSystemController extends Controller
         return app(WalletController::class)->renewal();
     }
 
+    public function nexa3()
+    {
+        return app(WalletController::class)->nexa3();
+    }
+
     public function conversion()
     {
         $user = Auth::user();
@@ -39,14 +44,17 @@ class TokenSystemController extends Controller
         
         $utilityValue = (float) \App\Models\Setting::get('utility_token_value', 0.10); // Default 10 cents
         $renewalValue = (float) \App\Models\Setting::get('renewal_token_value', 0.50);
+        
+        $nexa3Balance = $user->wallet->nexa_3_wallet ?? 0;
+        $nexa3Value = (float) \App\Models\Setting::get('nexa_3_token_value', 1.00);
 
-        return view('user.token.conversion', compact('user', 'balance', 'renewalBalance', 'daysSinceActivation', 'utilityValue', 'renewalValue'));
+        return view('user.token.conversion', compact('user', 'balance', 'renewalBalance', 'nexa3Balance', 'daysSinceActivation', 'utilityValue', 'renewalValue', 'nexa3Value'));
     }
 
     public function processConversion(Request $request)
     {
         $request->validate([
-            'token_type' => 'required|in:utility,renewal',
+            'token_type' => 'required|in:utility,renewal,nexa_3',
             'amount' => 'required|integer|min:1'
         ]);
 
@@ -112,6 +120,33 @@ class TokenSystemController extends Controller
             });
 
             return back()->with('success', "Successfully converted {$amount} NEXA 2.0 to $" . number_format($creditAmount, 2) . " in Package Wallet.");
+        }
+
+        if ($request->token_type === 'nexa_3') {
+            if (!$wallet || $wallet->nexa_3_wallet < $amount) {
+                return back()->with('error', 'Insufficient NEXA 3.0.');
+            }
+
+            $tokenValue = (float) \App\Models\Setting::get('nexa_3_token_value', 0.10);
+            $creditAmount = $amount * $tokenValue;
+
+            \Illuminate\Support\Facades\DB::transaction(function () use ($wallet, $user, $amount, $creditAmount, $tokenValue) {
+                $wallet->nexa_3_wallet -= $amount;
+                $wallet->package_wallet += $creditAmount;
+                $wallet->save();
+
+                \App\Models\TokenLedger::create([
+                    'user_id' => $user->id,
+                    'token_type' => 'nexa_3',
+                    'token_count' => -$amount,
+                    'token_value' => $tokenValue,
+                    'source' => 'conversion',
+                    'status' => 'used',
+                    'used_date' => now()
+                ]);
+            });
+
+            return back()->with('success', "Successfully converted {$amount} NEXA 3.0 to $" . number_format($creditAmount, 2) . " in Package Wallet.");
         }
 
         return back()->with('error', 'Invalid token type.');

@@ -125,6 +125,17 @@
 
   <!-- Theme component CSS -->
   <link rel="stylesheet" href="{{ asset('assets/dist/theme.css') }}">
+
+  <!-- TomSelect for searchable dropdowns -->
+  <link href="https://cdn.jsdelivr.net/npm/tom-select@2.3.1/dist/css/tom-select.css" rel="stylesheet">
+  <style>
+    /* Dark theme tom-select override */
+    [data-bs-theme="dark"] .ts-control { background-color: #0b1220; border-color: #334155; color: #e2e8f0; }
+    [data-bs-theme="dark"] .ts-dropdown { background-color: #1a222d; border-color: #334155; color: #e2e8f0; }
+    [data-bs-theme="dark"] .ts-dropdown .active { background-color: #334155; color: white; }
+    [data-bs-theme="dark"] .ts-control input { color: #e2e8f0; }
+    [data-bs-theme="light"] .ts-control { background-color: #f8fafc; border-color: #e2e8f0; }
+  </style>
 </head>
 <body>
   @include('components.preloader')
@@ -766,6 +777,23 @@
       })
       .catch(err => console.error(err));
   }, 5000);
+</script>
+
+<script src="https://cdn.jsdelivr.net/npm/tom-select@2.3.1/dist/js/tom-select.complete.min.js"></script>
+<script>
+  document.addEventListener("DOMContentLoaded", function() {
+    // Make any user_id select searchable
+    document.querySelectorAll('select[name="user_id"]').forEach((el) => {
+      new TomSelect(el, {
+        create: false,
+        sortField: {
+          field: "text",
+          direction: "asc"
+        },
+        placeholder: 'Search user by ID or Name...'
+      });
+    });
+  });
 </script>
 
 </body></html>

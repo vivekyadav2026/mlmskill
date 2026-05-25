@@ -28,6 +28,7 @@ class WalletAdjustmentLog extends Model
             'package_wallet'       => 'Package Wallet',
             'utility_token_wallet' => 'NEXA 1.0',
             'renewal_token_wallet' => 'NEXA 2.0',
+            'nexa_3_wallet'        => 'NEXA 3.0',
             default                => ucfirst($this->wallet_type),
         };
     }

@@ -47,33 +47,34 @@ class BonusService
     ];
 
     /**
-     * Build salary bonus tiers dynamically from admin settings.
-     * Keys: salary_tier_N_directs / salary_tier_N_amount (N = 1..5)
-     * Defaults match the admin salary settings UI (S1–S5).
-     * Sorted descending so the highest eligible tier is matched first.
+     * Build salary bonus milestones based on Rank.
+     * Keys: salary_amount_{RankName}
      */
     private function getSalaryBonusMilestones(): array
     {
         $defaults = [
-            1 => ['directs' =>  20, 'amount' =>  10.00],
-            2 => ['directs' =>  50, 'amount' =>  20.00],
-            3 => ['directs' => 100, 'amount' =>  30.00],
-            4 => ['directs' => 200, 'amount' =>  50.00],
-            5 => ['directs' => 500, 'amount' => 100.00],
+            'Diamond Crown'  => 25000,
+            'Platinum Crown' => 10000,
+            'Gold Crown'     => 5000,
+            'Silver Crown'   => 1000,
+            'Crown'          => 500,
+            'Sr. Director'   => 200,
+            'Director'       => 100,
+            'Sr. Manager'    => 50,
+            'Manager'        => 20,
         ];
 
         $milestones = [];
-        for ($i = 1; $i <= 5; $i++) {
-            $directs = (int)   \App\Models\Setting::get("salary_tier_{$i}_directs", $defaults[$i]['directs']);
-            $amount  = (float) \App\Models\Setting::get("salary_tier_{$i}_amount",  $defaults[$i]['amount']);
-            if ($directs > 0 && $amount > 0) {
-                $milestones[$directs] = $amount;
+        foreach ($defaults as $rank => $defaultAmount) {
+            // Keep the key database friendly
+            $settingKey = 'salary_amount_' . str_replace([' ', '.'], '_', $rank);
+            $amount  = (float) \App\Models\Setting::get($settingKey, $defaultAmount);
+            if ($amount > 0) {
+                $milestones[$rank] = $amount;
             }
         }
 
-        // Sort descending by directs so the highest matching tier wins first
-        krsort($milestones);
-        return $milestones;
+        return $milestones; // Order is implicitly highest rank to lowest based on $defaults array
     }
 
     /**
@@ -196,34 +197,51 @@ class BonusService
     }
 
     /**
-     * Distribute the monthly salary bonus. To be called from a scheduled command.
+     * Distribute the weekly salary bonus based on Rank. To be called from a scheduled command.
      */
-    public function distributeMonthlySalaryBonus()
+    public function distributeWeeklySalaryBonus()
     {
         $activeUsers = User::where('status', 'active')->get();
 
         foreach ($activeUsers as $user) {
-            $directCount = User::where('sponsor_id', $user->referral_code)
-                ->where('status', 'active')
-                ->count();
+            $rankData = $this->getCurrentRank($user);
+            $currentRankName = $rankData['current_rank'];
+            
+            $rankLadder = [
+                'Diamond Crown'  => 11,
+                'Platinum Crown' => 10,
+                'Gold Crown'     => 9,
+                'Silver Crown'   => 8,
+                'Crown'          => 7,
+                'Sr. Director'   => 6,
+                'Director'       => 5,
+                'Sr. Manager'    => 4,
+                'Manager'        => 3,
+                'Star'           => 2,
+                'Active Associate'=> 1,
+                'Unranked'       => 0
+            ];
+            
+            $userRankLevel = $rankLadder[$currentRankName] ?? 0;
 
-            // Find highest eligible tier
             $eligibleAmount = 0;
-            $eligibleTier = 0;
+            $eligibleRank = '';
 
-            foreach ($this->getSalaryBonusMilestones() as $directsNeeded => $amount) {
-                if ($directCount >= $directsNeeded) {
-                    $eligibleTier = $directsNeeded;
+            foreach ($this->getSalaryBonusMilestones() as $rank => $amount) {
+                $loopRankLevel = $rankLadder[$rank] ?? 0;
+                if ($userRankLevel >= $loopRankLevel && $loopRankLevel > 0) {
+                    $eligibleRank = $rank;
                     $eligibleAmount = $amount;
-                    break; // Because array is sorted desc
+                    break;
                 }
             }
 
-            if ($eligibleAmount > 0) {
-                DB::transaction(function () use ($user, $eligibleTier, $eligibleAmount) {
-                    $milestoneKey = 'salary_' . $eligibleTier;
+            if ($eligibleAmount > 0 && $eligibleRank) {
+                DB::transaction(function () use ($user, $eligibleRank, $eligibleAmount) {
+                    $milestoneKey = 'salary_' . str_replace([' ', '.'], '_', $eligibleRank);
 
                     // Check how many times this tier has been paid
+                    // We reuse 'month_count' as the week counter to avoid db migration
                     $bonusRecord = UserBonus::where('user_id', $user->id)
                         ->where('bonus_type', 'salary_bonus')
                         ->where('milestone', $milestoneKey)
@@ -236,11 +254,11 @@ class BonusService
                             'bonus_type' => 'salary_bonus',
                             'milestone' => $milestoneKey,
                             'amount' => $eligibleAmount,
-                            'month_count' => 1,
+                            'month_count' => 1, // acts as week_count
                         ]);
                         $this->payoutSalary($user, $eligibleAmount);
                     } elseif ($bonusRecord->month_count < 12) {
-                        // Increment month and pay
+                        // Increment week and pay
                         $bonusRecord->increment('month_count');
                         $this->payoutSalary($user, $eligibleAmount);
                     }
@@ -329,17 +347,23 @@ class BonusService
         // Progress toward next rank (team-based if team required, else directs)
         $progressPct = 0;
         if ($nextRank) {
+            $teamProgress = 100;
             if ($nextRank['team'] > 0) {
                 $fromTeam = $currentRank ? $currentRank['team'] : 0;
-                $progressPct = $fromTeam < $nextRank['team']
+                $teamProgress = $fromTeam < $nextRank['team']
                     ? min(100, round((($teamSize - $fromTeam) / ($nextRank['team'] - $fromTeam)) * 100, 1))
                     : 100;
-            } else {
+            }
+
+            $dirProgress = 100;
+            if ($nextRank['directs'] > 0) {
                 $fromDir = $currentRank ? $currentRank['directs'] : 0;
-                $progressPct = $fromDir < $nextRank['directs']
+                $dirProgress = $fromDir < $nextRank['directs']
                     ? min(100, round((($directCount - $fromDir) / ($nextRank['directs'] - $fromDir)) * 100, 1))
                     : 100;
             }
+
+            $progressPct = min($teamProgress, $dirProgress);
         }
 
         return [
@@ -356,35 +380,57 @@ class BonusService
 
     public function getCurrentSalaryTier(User $user)
     {
-        $directCount = User::where('sponsor_id', $user->referral_code)->where('status', 'active')->count();
+        $rankData = $this->getCurrentRank($user);
+        $currentRankName = $rankData['current_rank'];
+        
+        $rankLadder = [
+            'Diamond Crown'  => 11,
+            'Platinum Crown' => 10,
+            'Gold Crown'     => 9,
+            'Silver Crown'   => 8,
+            'Crown'          => 7,
+            'Sr. Director'   => 6,
+            'Director'       => 5,
+            'Sr. Manager'    => 4,
+            'Manager'        => 3,
+            'Star'           => 2,
+            'Active Associate'=> 1,
+            'Unranked'       => 0
+        ];
+        
+        $userRankLevel = $rankLadder[$currentRankName] ?? 0;
+        
         $eligibleAmount = 0;
-        $eligibleTier = 0;
-
-        foreach ($this->getSalaryBonusMilestones() as $directsNeeded => $amount) {
-            if ($directCount >= $directsNeeded) {
-                $eligibleTier = $directsNeeded;
+        $eligibleRank = 'None';
+        
+        foreach ($this->getSalaryBonusMilestones() as $rank => $amount) {
+            $loopRankLevel = $rankLadder[$rank] ?? 0;
+            if ($userRankLevel >= $loopRankLevel && $loopRankLevel > 0) {
+                $eligibleRank = $rank;
                 $eligibleAmount = $amount;
                 break;
             }
         }
-        
-        $nextTier = 0;
+
+        $nextRank = 'None';
         $nextAmount = 0;
         $reversedMilestones = array_reverse($this->getSalaryBonusMilestones(), true);
-        foreach ($reversedMilestones as $directsNeeded => $amount) {
-            if ($directCount < $directsNeeded) {
-                $nextTier = $directsNeeded;
+        foreach ($reversedMilestones as $rank => $amount) {
+            $loopRankLevel = $rankLadder[$rank] ?? 0;
+            if ($userRankLevel < $loopRankLevel) {
+                $nextRank = $rank;
                 $nextAmount = $amount;
                 break;
             }
         }
 
         return [
-            'current_directs' => $directCount,
+            'current_rank' => $currentRankName,
             'active_amount' => $eligibleAmount,
-            'active_tier' => $eligibleTier,
-            'next_tier' => $nextTier,
+            'active_tier' => $eligibleRank,
+            'next_tier' => $nextRank,
             'next_amount' => $nextAmount,
+            'progress_pct' => $rankData['progress_pct']
         ];
     }
 }

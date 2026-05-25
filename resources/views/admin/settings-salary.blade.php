@@ -1,11 +1,11 @@
 @extends('layouts.admin')
-@section('title', 'Monthly Salary Settings')
+@section('title', 'Weekly Salary Settings')
 
 @section('content')
 <div class="d-flex align-items-center justify-content-between mb-4">
   <div>
-    <h3 class="fw-heading mb-1"><i class="fa-solid fa-money-bill me-2"></i>Monthly Salary Settings</h3>
-    <p class="text-muted mb-0 small">Direct-referral–based monthly salary. Paid for up to 12 months per tier. Changes apply immediately on the next run.</p>
+    <h3 class="fw-heading mb-1"><i class="fa-solid fa-money-bill me-2"></i>Weekly Salary Settings</h3>
+    <p class="text-muted mb-0 small">Rank-based weekly salary. Paid for up to 12 weeks per rank. Changes apply immediately on the next run.</p>
   </div>
 </div>
 
@@ -24,51 +24,48 @@
     <div class="card-body">
       <div class="row align-items-center">
         <div class="col-md-6">
-          <label class="form-label fw-semibold">Distribution Date (Day of the month)</label>
+          <label class="form-label fw-semibold">Distribution Day (Day of the week)</label>
           <div class="input-group">
-            <input type="number" name="salary_payout_day" class="form-control" min="1" max="28" value="{{ old('salary_payout_day', $payout_day ?? 20) }}">
-            <span class="input-group-text">of every month</span>
+            <select name="salary_payout_day_of_week" class="form-select">
+              <option value="0" {{ ($payout_day_of_week ?? 1) == 0 ? 'selected' : '' }}>Sunday</option>
+              <option value="1" {{ ($payout_day_of_week ?? 1) == 1 ? 'selected' : '' }}>Monday</option>
+              <option value="2" {{ ($payout_day_of_week ?? 1) == 2 ? 'selected' : '' }}>Tuesday</option>
+              <option value="3" {{ ($payout_day_of_week ?? 1) == 3 ? 'selected' : '' }}>Wednesday</option>
+              <option value="4" {{ ($payout_day_of_week ?? 1) == 4 ? 'selected' : '' }}>Thursday</option>
+              <option value="5" {{ ($payout_day_of_week ?? 1) == 5 ? 'selected' : '' }}>Friday</option>
+              <option value="6" {{ ($payout_day_of_week ?? 1) == 6 ? 'selected' : '' }}>Saturday</option>
+            </select>
+            <span class="input-group-text">of every week</span>
           </div>
-          <div class="form-text">Choose a day between 1 and 28 when the automated script will pay out monthly salaries.</div>
+          <div class="form-text">Choose the day of the week when the automated script will pay out weekly salaries.</div>
         </div>
       </div>
     </div>
   </div>
 
   <div class="card border-themed mb-4">
-    <div class="card-header"><h6 class="mb-0"><i class="fa-solid fa-list-ol me-2"></i>Salary Tiers (T1 = lowest, T5 = highest)</h6></div>
+    <div class="card-header"><h6 class="mb-0"><i class="fa-solid fa-list-ol me-2"></i>Rank Salary Amounts</h6></div>
     <div class="card-body p-0">
       <div class="table-responsive">
         <table class="table table-hover align-middle mb-0">
           <thead class="table-light">
             <tr>
-              <th class="ps-3">Tier</th>
-              <th>Min. Active Directs Required</th>
-              <th>Monthly Salary ($)</th>
+              <th class="ps-3">Rank</th>
+              <th>Weekly Salary ($)</th>
               <th class="text-muted small">Notes</th>
             </tr>
           </thead>
           <tbody>
-            @php
-              $tierNames = ['T1 — Bronze', 'T2 — Silver', 'T3 — Gold', 'T4 — Platinum', 'T5 — Diamond'];
-            @endphp
-            @foreach($tiers as $n => $tier)
+            @foreach($ranks as $rankName => $amount)
             <tr>
-              <td class="ps-3 fw-semibold">{{ $tierNames[$n - 1] }}</td>
+              <td class="ps-3 fw-semibold">{{ $rankName }}</td>
               <td>
-                <input type="number" min="0" name="tier[{{ $n }}][directs]"
-                       class="form-control form-control-sm" style="max-width:110px;"
-                       value="{{ old("tier.{$n}.directs", $tier['directs']) }}">
-              </td>
-              <td>
-                <input type="number" step="0.01" min="0" name="tier[{{ $n }}][amount]"
-                       class="form-control form-control-sm" style="max-width:130px;"
-                       value="{{ old("tier.{$n}.amount", $tier['amount']) }}">
+                <input type="number" step="0.01" min="0" name="ranks[{{ $rankName }}]"
+                       class="form-control form-control-sm" style="max-width:150px;"
+                       value="{{ old('ranks.'.$rankName, $amount) }}">
               </td>
               <td class="text-muted small">
-                @if($n === 1) Base tier (no prerequisite)
-                @else Requires meeting a lower tier first
-                @endif
+                 Paid weekly for 12 weeks upon reaching {{ $rankName }}.
               </td>
             </tr>
             @endforeach
@@ -77,7 +74,7 @@
       </div>
       <div class="p-3 small text-muted border-top">
         <i class="fa-solid fa-info-circle me-1"></i>
-        The <strong>highest</strong> qualifying tier is paid each month. A user with 5 active directs gets T1; with 8+ directs they get T2 (if T2 requires ≤ 8). Max 12 payments per tier.
+        The <strong>highest</strong> qualifying rank's salary is paid each week. Max 12 payments per rank.
       </div>
     </div>
   </div>
