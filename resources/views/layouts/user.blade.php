@@ -198,6 +198,7 @@
         <ul class="nav-submenu list-unstyled mb-0">
           <li><a href="{{ url('user/referral/link') }}" class="nav-link sub-link"><span>My Referral Link</span></a></li>
           <li><a href="{{ url('user/referral/invite') }}" class="nav-link sub-link"><span>Invite / Share</span></a></li>
+          <li><a href="{{ url('user/invite/poster-editor') }}" class="nav-link sub-link"><span>Poster Editor</span></a></li>
           <li><a href="{{ url('user/referral/history') }}" class="nav-link sub-link"><span>Referral History</span></a></li>
         </ul>
       </li>

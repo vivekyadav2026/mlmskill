@@ -11,8 +11,8 @@
             <div class="mb-4"><label class="block text-gray-300 mb-2">Amount ($)</label><input type="number" name="amount" min="10" max="{{ $balance }}" class="w-full bg-[#0b1220] border border-[#334155] text-white p-3 rounded" required></div>
             <div class="mb-6"><label class="block text-gray-300 mb-2">Payment Method</label>
                 <select class="w-full bg-[#0b1220] border border-[#334155] text-white p-3 rounded">
-                    <option>USDT (TRC20)</option>
-                    <option>Bank Transfer</option>
+                    <!-- <option>USDT (TRC20)</option> -->
+                    <!-- <option>Bank Transfer</option> -->
                     <option>Cash Withdrawal</option>
                 </select>
             </div>

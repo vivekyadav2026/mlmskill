@@ -135,6 +135,34 @@
     [data-bs-theme="dark"] .ts-dropdown .active { background-color: #334155; color: white; }
     [data-bs-theme="dark"] .ts-control input { color: #e2e8f0; }
     [data-bs-theme="light"] .ts-control { background-color: #f8fafc; border-color: #e2e8f0; }
+
+    /* Scope inputs styling and light/dark theme overrides */
+    .tailwind-scope input, .tailwind-scope select, .tailwind-scope textarea {
+        color: #ffffff !important;
+        background-color: #0b1220 !important;
+    }
+    .tailwind-scope option {
+        color: #ffffff !important;
+        background-color: #1a222d !important;
+    }
+    [data-bs-theme="light"] .tailwind-scope input, 
+    [data-bs-theme="light"] .tailwind-scope select, 
+    [data-bs-theme="light"] .tailwind-scope textarea {
+        color: #000000 !important;
+        background-color: #ffffff !important;
+    }
+    [data-bs-theme="light"] .tailwind-scope option {
+        color: #000000 !important;
+        background-color: #ffffff !important;
+    }
+
+    /* Searchable dropdown text override for visibility */
+    .ts-control, .ts-control input, .ts-dropdown {
+        color: #000000 !important;
+    }
+    [data-bs-theme="dark"] .ts-control, [data-bs-theme="dark"] .ts-control input, [data-bs-theme="dark"] .ts-dropdown {
+        color: #ffffff !important;
+    }
   </style>
 </head>
 <body>
@@ -220,6 +248,7 @@
         <ul class="nav-submenu list-unstyled mb-0">
           <li><a href="{{ url('admin/commissions/direct') }}" class="nav-link sub-link"><span>Direct Commission</span></a></li>
           <li><a href="{{ url('admin/commissions/level') }}" class="nav-link sub-link"><span>Level Commission</span></a></li>
+          <li><a href="{{ url('admin/commissions/salary') }}" class="nav-link sub-link"><span>Salary Adj. Logs</span></a></li>
           <li><a href="{{ url('admin/settings/plan') }}" class="nav-link sub-link"><span>Commission Settings</span></a></li>
         </ul>
       </li>
@@ -234,7 +263,6 @@
         <ul class="nav-submenu list-unstyled mb-0">
           <li><a href="{{ route('admin.jobs.index') }}" class="nav-link sub-link"><span>Postings</span></a></li>
           <li><a href="{{ route('admin.jobs.applications') }}" class="nav-link sub-link"><span>Applications</span></a></li>
-          <li><a href="{{ route('admin.jobs.create') }}" class="nav-link sub-link"><span>Create New</span></a></li>
         </ul>
       </li>
 
@@ -269,6 +297,7 @@
           <i class="fa-solid fa-chevron-down nav-arrow"></i>
         </a>
         <ul class="nav-submenu list-unstyled mb-0">
+          <li><a href="{{ url('admin/certificates/requests') }}" class="nav-link sub-link"><span>Certificate Requests</span></a></li>
           <li><a href="{{ url('admin/certificates/generate') }}" class="nav-link sub-link"><span>Generate Certificate</span></a></li>
           <li><a href="{{ url('admin/certificates/issued') }}" class="nav-link sub-link"><span>Issued Certificates</span></a></li>
         </ul>
@@ -319,6 +348,7 @@
         </a>
         <ul class="nav-submenu list-unstyled mb-0">
           <li><a href="{{ url('admin/cms/banners') }}" class="nav-link sub-link"><span>Banners</span></a></li>
+          <li><a href="{{ url('admin/cms/poster-editor') }}" class="nav-link sub-link"><span>Poster Editor</span></a></li>
           <li><a href="{{ url('admin/cms/announcements') }}" class="nav-link sub-link"><span>Announcements</span></a></li>
           <li><a href="{{ url('admin/cms/pages') }}" class="nav-link sub-link"><span>Pages</span></a></li>
         </ul>

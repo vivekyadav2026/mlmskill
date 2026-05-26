@@ -29,6 +29,7 @@
                     <option value="package_wallet">Package Wallet</option>
                     <option value="utility_token_wallet">NEXA 1.0</option>
                     <option value="renewal_token_wallet">NEXA 2.0</option>
+                    <option value="nexa_3_wallet">NEXA 3.0</option>
                 </select>
             </div>
             <div class="mb-4">

@@ -45,13 +45,22 @@ class WalletService
                 throw new Exception("Insufficient income wallet balance.");
             }
 
+            // ── Calculate charge ──────────────────────────────────
+            $chargePct    = (float) \App\Models\Setting::get('withdrawal_charge_pct', 10);
+            $chargeAmount = round($amount * $chargePct / 100, 2);
+            $netAmount    = round($amount - $chargeAmount, 2);
+
+            // Deduct full requested amount from wallet
             $wallet->decrement('income_wallet', $amount);
 
+            // Create withdrawal record with charge breakdown
             $withdrawal = Withdrawal::create([
-                'user_id' => $user->id,
-                'amount' => $amount,
-                'wallet_type' => 'income_wallet',
-                'status' => 'pending',
+                'user_id'       => $user->id,
+                'amount'        => $amount,         // requested amount
+                'charge_amount' => $chargeAmount,   // charge deducted
+                'net_amount'    => $netAmount,       // user will receive this
+                'wallet_type'   => 'income_wallet',
+                'status'        => 'pending',
             ]);
 
             return $withdrawal;

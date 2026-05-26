@@ -145,9 +145,14 @@ class AdminUserController extends Controller
 
     public function exportPDF()
     {
-        $users = User::with('wallet')->get();
-        $pdf = Pdf::loadView('admin.exports.users', compact('users'))->setPaper('a4', 'landscape');
-        return $pdf->download('users_report_' . date('Y-m-d') . '.pdf');
+        try {
+            $users = User::with('wallet')->get();
+            $pdf = Pdf::loadView('admin.exports.users', compact('users'))->setPaper('a4', 'landscape');
+            return $pdf->download('users_report_' . date('Y-m-d') . '.pdf');
+        } catch (\Exception $e) {
+            \Log::error('PDF Export failed: ' . $e->getMessage());
+            return back()->with('error', 'PDF Export failed: ' . $e->getMessage());
+        }
     }
 
     public function destroy($id) {

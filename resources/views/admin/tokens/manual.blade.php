@@ -1,5 +1,47 @@
 @extends('layouts.admin')
 @section('content')
+{{-- Tom Select CSS --}}
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/tom-select@2.3.1/dist/css/tom-select.bootstrap5.min.css">
+<style>
+/* ── Tom Select dark-theme overrides ── */
+.ts-wrapper.full .ts-control,
+.ts-control {
+    background: #0b1220 !important;
+    border: 1px solid #334155 !important;
+    color: #f1f5f9 !important;
+    border-radius: 0.5rem !important;
+    padding: 0.6rem 1rem !important;
+    min-height: 48px !important;
+    box-shadow: none !important;
+}
+.ts-control input {
+    color: #f1f5f9 !important;
+    background: transparent !important;
+}
+.ts-control input::placeholder { color: #64748b !important; }
+.ts-dropdown {
+    background: #0f172a !important;
+    border: 1px solid #334155 !important;
+    border-radius: 0.5rem !important;
+    box-shadow: 0 10px 40px rgba(0,0,0,0.5) !important;
+    margin-top: 4px !important;
+    overflow: hidden;
+}
+.ts-dropdown .ts-dropdown-content { padding: 4px !important; }
+.ts-dropdown .option {
+    color: #e2e8f0 !important;
+    padding: 0.6rem 0.85rem !important;
+    border-radius: 0.35rem;
+    font-size: 0.875rem;
+    cursor: pointer;
+    transition: background 0.15s;
+}
+.ts-dropdown .option:hover,
+.ts-dropdown .option.active  { background: #1e3a5f !important; color: #fff !important; }
+.ts-dropdown .option.selected { background: rgba(99,102,241,.2) !important; color: #a5b4fc !important; }
+.ts-control .item            { color: #f1f5f9 !important; background: transparent !important; }
+</style>
+
 <div class="tailwind-scope mt-4 max-w-2xl mx-auto">
 
     {{-- Header --}}
@@ -39,7 +81,7 @@
                 <label class="block text-gray-300 text-sm font-medium mb-2">
                     <i class="fa-solid fa-user mr-1 text-indigo-400"></i> Target User <span class="text-red-400">*</span>
                 </label>
-                <select name="user_id" class="w-full bg-[#0b1220] border border-[#334155] text-white p-3 rounded focus:border-indigo-500 focus:outline-none" required>
+                <select id="tokenUserSelect" name="user_id" required>
                     <option value="">-- Select Active User --</option>
                     @foreach($users as $u)
                         <option value="{{ $u->id }}" {{ old('user_id') == $u->id ? 'selected' : '' }}>
@@ -47,6 +89,9 @@
                         </option>
                     @endforeach
                 </select>
+                <p class="text-gray-500 text-xs mt-2">
+                    <i class="fa-solid fa-circle-info mr-1"></i>Type name, email or referral code to search.
+                </p>
             </div>
 
             {{-- Token Type --}}
@@ -161,4 +206,24 @@
         </a>
     </div>
 </div>
+
+{{-- Tom Select JS --}}
+<script src="https://cdn.jsdelivr.net/npm/tom-select@2.3.1/dist/js/tom-select.complete.min.js"></script>
+<script>
+document.addEventListener('DOMContentLoaded', function () {
+    new TomSelect('#tokenUserSelect', {
+        placeholder: 'Type to search user by name, email or referral code...',
+        searchField: ['text'],
+        maxOptions: 300,
+        render: {
+            option: function(data, escape) {
+                return '<div>' + escape(data.text) + '</div>';
+            },
+            item: function(data, escape) {
+                return '<div class="text-white">' + escape(data.text) + '</div>';
+            }
+        }
+    });
+});
+</script>
 @endsection

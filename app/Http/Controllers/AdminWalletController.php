@@ -25,7 +25,7 @@ class AdminWalletController extends Controller
     {
         $request->validate([
             'user_id'     => 'required|exists:users,id',
-            'wallet_type' => 'required|in:income_wallet,package_wallet,utility_token_wallet,renewal_token_wallet',
+            'wallet_type' => 'required|in:income_wallet,package_wallet,utility_token_wallet,renewal_token_wallet,nexa_3_wallet',
             'amount'      => 'required|numeric',
             'note'        => 'nullable|string|max:255',
         ]);

@@ -6,12 +6,19 @@
     @if(session('success')) <div class="bg-green-500/10 text-green-400 p-4 rounded mb-4">{{ session('success') }}</div> @endif
     <div class="bg-[#1a222d] border border-[#334155] rounded-lg overflow-hidden">
         <table class="w-full table-custom">
-            <thead><tr><th>User</th><th>Amount</th><th>Status</th><th>Requested At</th><th>Action</th></tr></thead>
+            <thead><tr><th>User</th><th>Requested Amount</th><th>Charges</th><th>Net Payable</th><th>Status</th><th>Requested At</th><th>Action</th></tr></thead>
             <tbody>
                 @forelse($withdrawals as $w)
+                @php 
+                    $chargePct = (float) \App\Models\Setting::get('withdrawal_charge_pct', 5);
+                    $charge = $w->amount * ($chargePct / 100);
+                    $net = $w->amount - $charge;
+                @endphp
                 <tr>
                     <td class="font-bold">{{ $w->user->name ?? 'Unknown' }}</td>
-                    <td class="font-bold text-green-400">$\{{ number_format($w->amount, 2) }}</td>
+                    <td class="font-bold text-gray-300">${{ number_format($w->amount, 2) }}</td>
+                    <td class="text-red-400 font-semibold">${{ number_format($charge, 2) }} <span class="text-[10px] text-gray-500">({{ $chargePct }}%)</span></td>
+                    <td class="font-bold text-green-400">${{ number_format($net, 2) }}</td>
                     <td><span class="px-2 py-1 text-xs rounded capitalize bg-{{ $w->status=='approved'?'green':($w->status=='rejected'?'red':'yellow') }}-900 text-{{ $w->status=='approved'?'green':($w->status=='rejected'?'red':'yellow') }}-300">{{ $w->status }}</span></td>
                     <td>{{ $w->created_at->format('M d, Y H:i') }}</td>
                     <td>

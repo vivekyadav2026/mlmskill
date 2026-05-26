@@ -19,7 +19,7 @@ class AdminReportController extends Controller
         $commissions     = CommissionLedger::with(['user', 'fromUser'])->latest()->paginate(25);
         $totalIncome     = CommissionLedger::sum('amount');
         $directTotal     = CommissionLedger::where('commission_type', 'direct')->sum('amount');
-        $levelTotal      = CommissionLedger::where('commission_type', 'level')->sum('amount');
+        $levelTotal      = CommissionLedger::whereIn('commission_type', ['level', 'team'])->sum('amount');
         $totalEntries    = CommissionLedger::count();
         $uniqueEarners   = CommissionLedger::distinct('user_id')->count('user_id');
 
@@ -123,15 +123,25 @@ class AdminReportController extends Controller
 
     public function exportIncomePDF()
     {
-        $commissions = CommissionLedger::with(['user', 'fromUser'])->get();
-        $pdf = Pdf::loadView('admin.exports.income', compact('commissions'))->setPaper('a4', 'landscape');
-        return $pdf->download('income_report_' . date('Y-m-d') . '.pdf');
+        try {
+            $commissions = CommissionLedger::with(['user', 'fromUser'])->get();
+            $pdf = Pdf::loadView('admin.exports.income', compact('commissions'))->setPaper('a4', 'landscape');
+            return $pdf->download('income_report_' . date('Y-m-d') . '.pdf');
+        } catch (\Exception $e) {
+            \Log::error('Income PDF Export failed: ' . $e->getMessage());
+            return back()->with('error', 'Income PDF Export failed: ' . $e->getMessage());
+        }
     }
 
     public function exportFinancialPDF()
     {
-        $withdrawals = Withdrawal::with('user')->get();
-        $pdf = Pdf::loadView('admin.exports.withdrawals', compact('withdrawals'))->setPaper('a4', 'landscape');
-        return $pdf->download('withdrawal_report_' . date('Y-m-d') . '.pdf');
+        try {
+            $withdrawals = Withdrawal::with('user')->get();
+            $pdf = Pdf::loadView('admin.exports.withdrawals', compact('withdrawals'))->setPaper('a4', 'landscape');
+            return $pdf->download('withdrawal_report_' . date('Y-m-d') . '.pdf');
+        } catch (\Exception $e) {
+            \Log::error('Financial PDF Export failed: ' . $e->getMessage());
+            return back()->with('error', 'Financial PDF Export failed: ' . $e->getMessage());
+        }
     }
 }

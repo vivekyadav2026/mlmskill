@@ -23,7 +23,7 @@
 
     {{-- Stats --}}
     @php
-        $all = \App\Models\CommissionLedger::where('commission_type','level');
+        $all = \App\Models\CommissionLedger::whereIn('commission_type', ['level', 'team']);
     @endphp
     <div class="grid grid-cols-2 md:grid-cols-4 gap-4 mb-6">
         <div class="bg-[#1a222d] border border-[#334155] rounded-lg p-4 text-center">

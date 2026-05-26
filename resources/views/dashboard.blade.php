@@ -4,14 +4,27 @@
 
 <style>
   .app-main { padding: 20px; }
-  .stat-card { background: #1e293b; border: 1px solid #334155; border-radius: 0.5rem; padding: 1.25rem; display: flex; align-items: center; transition: all 0.3s ease; }
+  .stat-card { background: #1e293b; border: 1px solid #334155; border-radius: 0.5rem; padding: 0.75rem; display: flex; align-items: center; transition: all 0.3s ease; }
+  @media (min-width: 640px) {
+      .stat-card { padding: 1.25rem; }
+  }
   [data-bs-theme="light"] .stat-card { background: #ffffff; border-color: #e2e8f0; }
   .stat-card:hover { border-color: #475569; transform: translateY(-2px); }
   [data-bs-theme="light"] .stat-card:hover { border-color: #cbd5e1; }
-  .stat-icon { width: 48px; height: 48px; border-radius: 0.5rem; display: flex; align-items: center; justify-content: center; font-size: 1.25rem; margin-right: 1rem; flex-shrink: 0; }
+  .stat-icon { width: 36px; height: 36px; border-radius: 0.5rem; display: flex; align-items: center; justify-content: center; font-size: 1rem; margin-right: 0.5rem; flex-shrink: 0; }
+  @media (min-width: 640px) {
+      .stat-icon { width: 48px; height: 48px; font-size: 1.25rem; margin-right: 1rem; }
+  }
   .table-custom th { background: #0f172a; color: #94a3b8; font-weight: 600; font-size: 0.75rem; text-transform: uppercase; padding: 0.75rem 1rem; border-bottom: 1px solid #334155; }
   .table-custom td { padding: 1rem; border-bottom: 1px solid #334155; color: #e2e8f0; font-size: 0.875rem; }
   .table-custom tr:hover { background: #1e293b; }
+  
+  @media (max-width: 767.98px) {
+      .tailwind-scope .grid.stat-cards-grid {
+          grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
+          gap: 0.5rem !important;
+      }
+  }
 </style>
 
 <div class="tailwind-scope mt-4 max-w-[1600px] mx-auto">
@@ -100,47 +113,47 @@
     </div>
 
     <!-- 6 Stat Cards Row -->
-    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 mb-6">
+    <div class="grid grid-cols-2 sm:grid-cols-2 lg:grid-cols-3 gap-4 mb-6 stat-cards-grid">
         <div class="stat-card border-l-4 border-l-green-500">
             <div class="stat-icon bg-green-500/10 text-green-500"><i class="fa-solid fa-wallet"></i></div>
             <div class="flex-grow">
-                <p class="text-sm font-medium text-gray-400">Income Wallet</p>
-                <h3 class="text-2xl font-bold text-gray-100">${{ number_format($wallet->income_wallet ?? 0, 2) }}</h3>
+                <p class="text-xs sm:text-sm font-medium text-gray-400">Income Wallet</p>
+                <h3 class="text-lg sm:text-2xl font-bold text-gray-100">${{ number_format($wallet->income_wallet ?? 0, 2) }}</h3>
             </div>
         </div>
         <div class="stat-card border-l-4 border-l-purple-500">
             <div class="stat-icon bg-purple-500/10 text-purple-500"><i class="fa-solid fa-box"></i></div>
             <div class="flex-grow">
-                <p class="text-sm font-medium text-gray-400">Package Wallet</p>
-                <h3 class="text-2xl font-bold text-gray-100">${{ number_format($wallet->package_wallet ?? 0, 2) }}</h3>
+                <p class="text-xs sm:text-sm font-medium text-gray-400">Package Wallet</p>
+                <h3 class="text-lg sm:text-2xl font-bold text-gray-100">${{ number_format($wallet->package_wallet ?? 0, 2) }}</h3>
             </div>
         </div>
         <div class="stat-card border-l-4 border-l-blue-500">
             <div class="stat-icon bg-blue-500/10 text-blue-500"><i class="fa-solid fa-coins"></i></div>
             <div class="flex-grow">
-                <p class="text-sm font-medium text-gray-400">NEXA 1.0</p>
-                <h3 class="text-2xl font-bold text-gray-100">{{ number_format($wallet->utility_token_wallet ?? 0, 2) }}</h3>
+                <p class="text-xs sm:text-sm font-medium text-gray-400">NEXA 1.0</p>
+                <h3 class="text-lg sm:text-2xl font-bold text-gray-100">{{ number_format($wallet->utility_token_wallet ?? 0, 2) }}</h3>
             </div>
         </div>
         <div class="stat-card border-l-4 border-l-orange-500">
             <div class="stat-icon bg-orange-500/10 text-orange-500"><i class="fa-solid fa-arrows-spin"></i></div>
             <div class="flex-grow">
-                <p class="text-sm font-medium text-gray-400">NEXA 2.0</p>
-                <h3 class="text-2xl font-bold text-gray-100">{{ number_format($wallet->renewal_token_wallet ?? 0, 2) }} </h3>
+                <p class="text-xs sm:text-sm font-medium text-gray-400">NEXA 2.0</p>
+                <h3 class="text-lg sm:text-2xl font-bold text-gray-100">{{ number_format($wallet->renewal_token_wallet ?? 0, 2) }} </h3>
             </div>
         </div>
         <div class="stat-card border-l-4 border-l-teal-500">
             <div class="stat-icon bg-teal-500/10 text-teal-500"><i class="fa-solid fa-graduation-cap"></i></div>
             <div class="flex-grow">
-                <p class="text-sm font-medium text-gray-400">NEXA 3.0</p>
-                <h3 class="text-2xl font-bold text-gray-100">{{ number_format($wallet->nexa_3_wallet ?? 0, 2) }} </h3>
+                <p class="text-xs sm:text-sm font-medium text-gray-400">NEXA 3.0</p>
+                <h3 class="text-lg sm:text-2xl font-bold text-gray-100">{{ number_format($wallet->nexa_3_wallet ?? 0, 2) }} </h3>
             </div>
         </div>
         <div class="stat-card border-l-4 border-l-indigo-500">
             <div class="stat-icon bg-indigo-500/10 text-indigo-500"><i class="fa-solid fa-chart-line"></i></div>
             <div class="flex-grow">
-                <p class="text-sm font-medium text-gray-400">Total Income</p>
-                <h3 class="text-2xl font-bold text-gray-100">${{ number_format($totalEarned, 2) }}</h3>
+                <p class="text-xs sm:text-sm font-medium text-gray-400">Total Income</p>
+                <h3 class="text-lg sm:text-2xl font-bold text-gray-100">${{ number_format($totalEarned, 2) }}</h3>
             </div>
         </div>
     </div>

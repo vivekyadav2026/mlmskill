@@ -22,12 +22,14 @@
             <h2 class="text-2xl font-bold text-gray-100">Your Certificate</h2>
             <p class="text-gray-400">Download and share your official samarth.digital achievement.</p>
         </div>
+        @if($certificate && $certificate->status === 'issued')
         <button onclick="window.print()" class="bg-[#1e293b] hover:bg-[#334155] border border-[#475569] text-white px-4 py-2 rounded shadow transition">
             <i class="fa-solid fa-print mr-2"></i> Print / Save PDF
         </button>
+        @endif
     </div>
 
-    @if($user->course_completed_at)
+    @if($certificate && $certificate->status === 'issued')
     <div class="max-w-4xl mx-auto mt-8 bg-white p-2 rounded-lg" id="certificate-area">
         <div class="cert-container">
             <div class="absolute top-8 left-8">
@@ -48,7 +50,7 @@
             
             <div class="mt-16 flex justify-between items-end px-12">
                 <div class="text-center">
-                    <div class="border-b border-gray-400 w-48 pb-2 mb-2 font-medium">{{ \Carbon\Carbon::parse($user->course_completed_at)->format('F d, Y') }}</div>
+                    <div class="border-b border-gray-400 w-48 pb-2 mb-2 font-medium">{{ $certificate->issue_date ? $certificate->issue_date->format('F d, Y') : now()->format('F d, Y') }}</div>
                     <p class="text-sm font-bold text-gray-500 uppercase">Date of Issue</p>
                 </div>
                 
@@ -64,11 +66,26 @@
             </div>
         </div>
     </div>
+    @elseif($certificate && $certificate->status === 'pending')
+    <div class="bg-[#1a222d] border border-yellow-500/50 p-10 rounded-lg text-center max-w-2xl mx-auto mt-10 shadow-lg">
+        <i class="fa-solid fa-hourglass-half text-5xl text-yellow-400 mb-5 block animate-pulse"></i>
+        <h3 class="text-2xl font-bold text-white mb-2">Awaiting Admin Approval</h3>
+        <p class="text-gray-300 mb-6 leading-relaxed">
+            Your course completion status is under review. Your official certificate (and Nexa 3.0 Token rewards) will be unlocked as soon as an administrator approves your request.
+        </p>
+        <div class="inline-block bg-[#0f172a] border border-[#334155] rounded-lg px-5 py-3 text-xs text-left">
+            <span class="text-gray-500">Request Date:</span> 
+            <span class="text-gray-300 font-semibold">{{ $certificate->created_at->format('d M Y, h:i A') }}</span>
+        </div>
+        <a href="{{ url('user/course/complete') }}" class="mt-6 block text-indigo-400 hover:text-indigo-300 text-sm transition">
+            <i class="fa-solid fa-arrow-left mr-1"></i> Back to Completion Status
+        </a>
+    </div>
     @else
     <div class="bg-[#1a222d] border border-red-500/50 p-6 rounded-lg text-center max-w-2xl mx-auto mt-10">
         <i class="fa-solid fa-lock text-4xl text-gray-500 mb-4 block"></i>
-        <p class="text-gray-300">You must complete the course before accessing your certificate.</p>
-        <a href="{{ url('user/course/progress') }}" class="mt-4 inline-block bg-indigo-600 text-white px-6 py-2 rounded">Go to Course</a>
+        <p class="text-gray-300">You must complete the course and obtain admin approval before accessing your certificate.</p>
+        <a href="{{ url('user/course/complete') }}" class="mt-4 inline-block bg-indigo-600 text-white px-6 py-2 rounded">Check Progress</a>
     </div>
     @endif
 </div>

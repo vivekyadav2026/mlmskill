@@ -231,8 +231,46 @@ class AdminSettingController extends Controller
             $ranks[$rank] = $settings->get($settingKey, $defaultAmount);
         }
         
+        $users = \App\Models\User::orderBy('name')->get();
         $payout_day_of_week = $settings->get('salary_payout_day_of_week', 1);
-        return view('admin.settings-salary', compact('settings', 'ranks', 'payout_day_of_week'));
+        return view('admin.settings-salary', compact('settings', 'ranks', 'payout_day_of_week', 'users'));
+    }
+
+    public function adjustSalary(Request $request)
+    {
+        $request->validate([
+            'user_id' => 'required|exists:users,id',
+            'amount'  => 'required|numeric',
+            'note'    => 'required|string|max:255',
+        ]);
+
+        $user = \App\Models\User::findOrFail($request->user_id);
+        $amount = (float) $request->amount;
+
+        \Illuminate\Support\Facades\DB::transaction(function () use ($user, $amount, $request) {
+            // Update user's wallet (salary goes into income_wallet)
+            $wallet = \App\Models\Wallet::firstOrCreate(['user_id' => $user->id]);
+            $wallet->increment('income_wallet', $amount);
+
+            // Create a CommissionLedger log under salary_bonus
+            \App\Models\CommissionLedger::create([
+                'user_id'         => $user->id,
+                'from_user_id'    => auth()->id(), // Admin
+                'level'           => 0,
+                'amount'          => $amount,
+                'commission_type' => 'salary_bonus',
+                'status'          => 'credited',
+                'remarks'         => $request->note,
+            ]);
+
+            \App\Models\ActivityLog::log(
+                'salary_adjustment', 
+                'Manually adjusted salary for ' . $user->email . ' by $' . $amount . '. Note: ' . $request->note, 
+                $user->id
+            );
+        });
+
+        return back()->with('success', 'Salary adjusted successfully! Amount updated in user\'s income wallet and transaction logged.');
     }
 
     public function saveSalary(Request $request)

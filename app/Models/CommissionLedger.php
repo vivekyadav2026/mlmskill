@@ -16,6 +16,7 @@ class CommissionLedger extends Model
         'amount',
         'commission_type',
         'status',
+        'remarks',
     ];
 
     public function user()

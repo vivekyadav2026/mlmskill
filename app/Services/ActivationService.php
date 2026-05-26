@@ -30,6 +30,24 @@ class ActivationService
             $user->activation_date = now();
             $user->save();
 
+            // ✅ Log to ActivationRequest so it populates Payment & Activation History
+            $fee = (float) \App\Models\Setting::get('registration_fee', 300);
+            $existingReq = \App\Models\ActivationRequest::where('user_id', $user->id)
+                ->where('status', 'pending')
+                ->first();
+            if ($existingReq) {
+                $existingReq->update(['status' => 'approved', 'remarks' => 'Activated successfully']);
+            } else {
+                \App\Models\ActivationRequest::create([
+                    'user_id' => $user->id,
+                    'amount' => $fee,
+                    'payment_method' => 'Admin Manual',
+                    'transaction_id' => 'MAN-' . strtoupper(substr(md5(uniqid()), 0, 8)),
+                    'status' => 'approved',
+                    'remarks' => 'Manually activated by admin',
+                ]);
+            }
+
             $wallet = Wallet::firstOrCreate(['user_id' => $user->id]);
 
             // Grant access to all courses in the active module automatically

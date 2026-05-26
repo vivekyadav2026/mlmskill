@@ -152,6 +152,10 @@ Route::middleware(['auth'])->group(function () {
     Route::get('/user/loans/history', [\App\Http\Controllers\User\UserLoanController::class, 'history'])->name('user.loans.history');
     Route::post('/user/loans/{id}/apply', [\App\Http\Controllers\User\UserLoanController::class, 'apply'])->name('user.loans.apply');
 
+    // Referral
+    Route::get('/user/invite/poster-editor', [\App\Http\Controllers\PosterController::class, 'userView'])->name('user.invite.poster-editor');
+    Route::post('/user/invite/poster-editor/download', [\App\Http\Controllers\PosterController::class, 'download'])->name('user.invite.poster-editor.download');
+
     // Settings Module (Mapping directly to Profile controller for account management)
     Route::get('/user/settings/account', [\App\Http\Controllers\ProfileController::class, 'edit'])->name('settings.account');
     Route::get('/user/settings/security', [\App\Http\Controllers\ProfileController::class, 'password'])->name('settings.security');
@@ -218,9 +222,9 @@ Route::middleware(['auth', 'admin'])->prefix('admin')->group(function () {
     Route::get('/tokens/manual', [\App\Http\Controllers\AdminTokenController::class, 'manual'])->name('admin.tokens.manual');
     Route::post('/tokens/manual', [\App\Http\Controllers\AdminTokenController::class, 'creditManual'])->name('admin.tokens.manual.submit');
 
-    // Commissions
     Route::get('/commissions/direct', [\App\Http\Controllers\AdminCommissionController::class, 'direct'])->name('admin.commissions.direct');
     Route::get('/commissions/level', [\App\Http\Controllers\AdminCommissionController::class, 'level'])->name('admin.commissions.level');
+    Route::get('/commissions/salary', [\App\Http\Controllers\AdminCommissionController::class, 'salary'])->name('admin.commissions.salary');
     // Route::get('/commissions/settings', [\App\Http\Controllers\AdminCommissionController::class, 'settings'])->name('admin.commissions.settings');
 
     // Courses
@@ -244,6 +248,9 @@ Route::middleware(['auth', 'admin'])->prefix('admin')->group(function () {
     Route::get('/courses/progress', [\App\Http\Controllers\AdminCourseController::class, 'progress'])->name('admin.courses.progress');
 
     // Certificates
+    Route::get('/certificates/requests', [\App\Http\Controllers\AdminCertificateController::class, 'requests'])->name('admin.certificates.requests');
+    Route::post('/certificates/requests/{id}/approve', [\App\Http\Controllers\AdminCertificateController::class, 'approveRequest'])->name('admin.certificates.approve');
+    Route::post('/certificates/requests/{id}/reject', [\App\Http\Controllers\AdminCertificateController::class, 'rejectRequest'])->name('admin.certificates.reject');
     Route::get('/certificates/generate', [\App\Http\Controllers\AdminCertificateController::class, 'generateForm'])->name('admin.certificates.generate');
     Route::post('/certificates/generate', [\App\Http\Controllers\AdminCertificateController::class, 'generate']);
     Route::get('/certificates/issued', [\App\Http\Controllers\AdminCertificateController::class, 'issued'])->name('admin.certificates.issued');
@@ -267,6 +274,8 @@ Route::middleware(['auth', 'admin'])->prefix('admin')->group(function () {
     Route::get('/closing/reports', [\App\Http\Controllers\AdminClosingController::class, 'reports'])->name('admin.closing.reports');
 
     // CMS / Content
+    Route::get('/cms/poster-editor', [\App\Http\Controllers\PosterController::class, 'adminView'])->name('admin.cms.poster-editor');
+    Route::post('/cms/poster-editor/download', [\App\Http\Controllers\PosterController::class, 'download'])->name('admin.cms.poster-editor.download');
     Route::get('/cms/banners', [\App\Http\Controllers\AdminCmsController::class, 'banners'])->name('admin.cms.banners');
     Route::post('/cms/banners', [\App\Http\Controllers\AdminCmsController::class, 'storeBanner']);
     Route::post('/cms/banners/{id}/delete', [\App\Http\Controllers\AdminCmsController::class, 'destroyBanner'])->name('admin.cms.banners.destroy');
@@ -297,6 +306,7 @@ Route::middleware(['auth', 'admin'])->prefix('admin')->group(function () {
 
     Route::get('/settings/salary', [\App\Http\Controllers\AdminSettingController::class, 'salary'])->name('admin.settings.salary');
     Route::post('/settings/salary', [\App\Http\Controllers\AdminSettingController::class, 'saveSalary']);
+    Route::post('/settings/salary/adjust', [\App\Http\Controllers\AdminSettingController::class, 'adjustSalary'])->name('admin.salary.adjust');
 
     Route::post('/settings/theme', [\App\Http\Controllers\AdminSettingController::class, 'saveTheme'])->name('admin.settings.theme');
 

@@ -21,12 +21,32 @@ class AdminCmsController extends Controller
     {
         $request->validate([
             'title' => 'required|string|max:255',
-            'image' => 'required|image|mimes:jpeg,png,jpg,gif|max:2048',
+            'image' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
+            'cropped_image' => 'nullable|string',
             'link_url' => 'nullable|url',
         ]);
 
         $imagePath = '';
-        if ($request->hasFile('image')) {
+        if ($request->filled('cropped_image')) {
+            $croppedData = $request->input('cropped_image');
+            if (preg_match('/^data:image\/(\w+);base64,/', $croppedData, $type)) {
+                $croppedData = substr($croppedData, strpos($croppedData, ',') + 1);
+                $type = strtolower($type[1]); // jpg, png, gif
+
+                if (!in_array($type, ['jpg', 'jpeg', 'png', 'gif'])) {
+                    return back()->withErrors(['image' => 'Invalid image format.']);
+                }
+
+                $croppedData = base64_decode($croppedData);
+                if ($croppedData === false) {
+                    return back()->withErrors(['image' => 'Base64 decode failed.']);
+                }
+
+                $imageName = 'banner_' . time() . '_' . Str::random(10) . '.' . $type;
+                file_put_contents(public_path('uploads/banners/' . $imageName), $croppedData);
+                $imagePath = asset('uploads/banners/' . $imageName);
+            }
+        } elseif ($request->hasFile('image')) {
             $imageName = time() . '_' . $request->file('image')->getClientOriginalName();
             $request->file('image')->move(public_path('uploads/banners'), $imageName);
             $imagePath = asset('uploads/banners/' . $imageName);

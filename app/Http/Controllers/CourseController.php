@@ -36,40 +36,61 @@ class CourseController extends Controller
             $moduleName = $progress->course->module->name;
         }
 
-        return view('user.course.complete', compact('user', 'moduleName'));
+        // 1-year course completion validity check
+        $activationDate = $user->activation_date;
+        $canComplete = false;
+        $daysRemaining = 0;
+
+        if ($activationDate) {
+            $completionDate = $activationDate->copy()->addYear();
+            if (now()->greaterThanOrEqualTo($completionDate)) {
+                $canComplete = true;
+            } else {
+                $daysRemaining = now()->diffInDays($completionDate, false);
+            }
+        }
+
+        $pendingCertificate = \App\Models\Certificate::where('user_id', $user->id)->where('status', 'pending')->first();
+
+        return view('user.course.complete', compact('user', 'moduleName', 'canComplete', 'daysRemaining', 'pendingCertificate'));
     }
 
     public function markComplete()
     {
         $user = Auth::user();
+
+        // Enforce 1 year validity rule
+        $activationDate = $user->activation_date;
+        if (!$activationDate) {
+            return redirect()->back()->with('error', 'Your account activation date is not set.');
+        }
+
+        $completionDate = $activationDate->copy()->addYear();
+        if (now()->lessThan($completionDate)) {
+            $daysRemaining = now()->diffInDays($completionDate, false);
+            return redirect()->back()->with('error', "You cannot complete this course yet. You must wait {$daysRemaining} more days (1 year completion validity rule).");
+        }
+
         if ($user->status === 'active' && !$user->course_completed_at) {
             $user->course_completed_at = now();
             $user->save();
 
-            // Reward NEXA 3.0 Tokens
-            $nexa3RewardAmount = (float) \App\Models\Setting::get('nexa_3_course_reward', 300);
-            
-            if ($nexa3RewardAmount > 0) {
-                // Ensure wallet exists
-                $wallet = \App\Models\Wallet::firstOrCreate(['user_id' => $user->id]);
-                
-                $wallet->nexa_3_wallet += $nexa3RewardAmount;
-                $wallet->save();
+            // Create a pending certificate request instead of crediting tokens immediately
+            $progress = \App\Models\CourseProgress::with('course.module')->where('user_id', $user->id)->first();
+            $moduleId = $progress->course->module_id ?? null;
 
-                \App\Models\TokenLedger::create([
-                    'user_id' => $user->id,
-                    'token_type' => 'nexa_3',
-                    'token_count' => $nexa3RewardAmount,
-                    'token_value' => \App\Models\Setting::get('nexa_3_token_value', 1),
-                    'source' => 'Course Completion',
-                    'status' => 'credited',
-                    'credited_date' => now(),
-                ]);
+            \App\Models\Certificate::firstOrCreate([
+                'user_id' => $user->id,
+                'module_id' => $moduleId,
+            ], [
+                'certificate_number' => 'CERT-' . strtoupper(\Illuminate\Support\Str::random(10)),
+                'status' => 'pending',
+                'issue_date' => null,
+            ]);
 
-                \App\Models\ActivityLog::log('nexa_3_credited', "Credited {$nexa3RewardAmount} NEXA 3.0 for course completion to user {$user->referral_code}.");
-            }
+            \App\Models\ActivityLog::log('course_completion_requested', "User {$user->referral_code} requested course completion. Certificate approval is pending.");
         }
-        return redirect()->back()->with('success', 'Congratulations! Course marked as completed. You received NEXA 3.0 tokens in your wallet!');
+        return redirect()->back()->with('success', 'Course marked as completed! Your certificate is pending admin approval. Nexa 3.0 tokens will be credited upon approval.');
     }
 
     public function certificate()
@@ -84,7 +105,10 @@ class CourseController extends Controller
             $moduleName = $progress->course->module->name;
             $moduleDesc = $progress->course->module->description ?: 'skill development and associated mechanics';
         }
+
+        // Check if an approved certificate exists
+        $certificate = \App\Models\Certificate::where('user_id', $user->id)->where('status', 'issued')->first();
         
-        return view('user.course.certificate', compact('user', 'moduleName', 'moduleDesc'));
+        return view('user.course.certificate', compact('user', 'moduleName', 'moduleDesc', 'certificate'));
     }
 }
