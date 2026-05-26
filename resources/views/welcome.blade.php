@@ -935,6 +935,154 @@
         </div>
     </section>
 
+    <!-- Recognitions & Certifications Section -->
+    <section id="certifications" class="py-20 bg-white relative overflow-hidden border-t border-gray-200">
+        <!-- Decorative background elements -->
+        <div class="absolute -top-40 -left-40 w-96 h-96 bg-brand-500/10 rounded-full blur-3xl pointer-events-none"></div>
+        <div class="absolute -bottom-40 -right-40 w-96 h-96 bg-accent-500/10 rounded-full blur-3xl pointer-events-none"></div>
+
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+            <!-- Section Header -->
+            <div class="text-center max-w-3xl mx-auto mb-16">
+                <span class="text-brand-600 font-bold text-sm uppercase tracking-wider bg-brand-50 px-4 py-1.5 rounded-full border border-brand-200 font-devanagari">
+                    संबद्धता एवं मान्यता
+                </span>
+                <h2 class="font-devanagari text-3xl sm:text-4xl lg:text-5xl font-black text-navy-900 mt-4 mb-4">
+                    हमारी <span class="text-brand-500">मान्यताएं एवं प्रमाणपत्र</span>
+                </h2>
+                <div class="w-24 h-1.5 bg-brand-500 mx-auto rounded-full mb-4"></div>
+                <p class="text-gray-600 text-lg font-medium font-devanagari">
+                    Samarth Digital Skills Education is proudly powered by <strong>SEWA TRUST (NGO)</strong> and <strong>Satvik Udyog</strong>, ensuring high-quality, recognized training for self-reliance.
+                </p>
+                <p class="text-gray-500 text-sm mt-1">
+                    (सामर्थ डिजिटल स्किल्स एजुकेशन गर्व के साथ सेवा ट्रस्ट (NGO) और सात्विक उद्योग द्वारा संचालित है)
+                </p>
+            </div>
+
+            <!-- Certificates Grid -->
+            <div class="grid md:grid-cols-2 gap-12 max-w-5xl mx-auto">
+                <!-- Certificate 1: SEWA TRUST -->
+                <div class="bg-gray-50 rounded-3xl p-6 border border-gray-200 hover:border-brand-500 hover:shadow-premium transition-all duration-300 flex flex-col group">
+                    <div class="relative rounded-2xl overflow-hidden bg-white border border-gray-150 p-2 shadow-inner group-hover:scale-[1.01] transition duration-300 cursor-pointer" onclick="openCertificateModal('{{ asset('images/certificates/sewa_trust_enrollment.jpg') }}', 'SEWA TRUST (NGO) - NITI Aayog Certificate of Enrollment')">
+                        <img src="{{ asset('images/certificates/sewa_trust_enrollment.jpg') }}" alt="SEWA TRUST NGO Darpan Enrollment" class="w-full h-auto max-h-[450px] object-contain rounded-xl mx-auto">
+                        <div class="absolute inset-0 bg-navy-900/40 opacity-0 group-hover:opacity-100 transition duration-300 flex items-center justify-center rounded-xl">
+                            <span class="bg-white text-navy-900 font-bold px-5 py-2.5 rounded-full shadow-lg flex items-center gap-2 transform translate-y-4 group-hover:translate-y-0 transition duration-300">
+                                <i class="fa-solid fa-magnifying-glass-plus text-brand-500"></i> ज़ूम करके देखें
+                            </span>
+                        </div>
+                    </div>
+                    <div class="mt-6 text-center space-y-3 flex-1 flex flex-col justify-between">
+                        <div>
+                            <span class="inline-block bg-brand-100 text-brand-700 font-bold text-xs uppercase tracking-wider px-3.5 py-1.5 rounded-full border border-brand-200 mb-2">
+                                NGO DARPAN (NITI AAYOG)
+                            </span>
+                            <h3 class="font-devanagari text-2xl font-extrabold text-navy-900">
+                                SEWA TRUST (NGO)
+                            </h3>
+                            <p class="text-sm text-gray-500 mt-1 font-semibold">Unique ID: HR/2019/0240539</p>
+                            <p class="text-gray-600 text-sm mt-3 leading-relaxed font-devanagari">
+                                भारत सरकार के नीति आयोग (NITI Aayog) के NGO दर्पण के अंतर्गत पंजीकृत संस्था, जो समाज में शिक्षा एवं डिजिटल सशक्तिकरण के कार्यों को बढ़ावा देने के लिए प्रतिबद्ध है।
+                            </p>
+                        </div>
+                        <button onclick="openCertificateModal('{{ asset('images/certificates/sewa_trust_enrollment.jpg') }}', 'SEWA TRUST (NGO) - NITI Aayog Certificate of Enrollment')" class="mt-4 w-full py-3 bg-white hover:bg-brand-500 text-brand-700 hover:text-white border border-brand-200 hover:border-brand-500 rounded-xl font-bold transition duration-300 shadow-sm flex items-center justify-center gap-2">
+                            <i class="fa-solid fa-expand"></i> प्रमाणपत्र देखें
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Certificate 2: SATVIK UDYOG -->
+                <div class="bg-gray-50 rounded-3xl p-6 border border-gray-200 hover:border-brand-500 hover:shadow-premium transition-all duration-300 flex flex-col group">
+                    <div class="relative rounded-2xl overflow-hidden bg-white border border-gray-150 p-2 shadow-inner group-hover:scale-[1.01] transition duration-300 cursor-pointer" onclick="openCertificateModal('{{ asset('images/certificates/satvik_udyog_udyam.jpg') }}', 'SATVIK UDYOG - Udyam Registration Certificate')">
+                        <img src="{{ asset('images/certificates/satvik_udyog_udyam.jpg') }}" alt="Satvik Udyog Udyam Registration Certificate" class="w-full h-auto max-h-[450px] object-contain rounded-xl mx-auto">
+                        <div class="absolute inset-0 bg-navy-900/40 opacity-0 group-hover:opacity-100 transition duration-300 flex items-center justify-center rounded-xl">
+                            <span class="bg-white text-navy-900 font-bold px-5 py-2.5 rounded-full shadow-lg flex items-center gap-2 transform translate-y-4 group-hover:translate-y-0 transition duration-300">
+                                <i class="fa-solid fa-magnifying-glass-plus text-brand-500"></i> ज़ूम करके देखें
+                            </span>
+                        </div>
+                    </div>
+                    <div class="mt-6 text-center space-y-3 flex-1 flex flex-col justify-between">
+                        <div>
+                            <span class="inline-block bg-accent-100 text-accent-700 font-bold text-xs uppercase tracking-wider px-3.5 py-1.5 rounded-full border border-accent-200 mb-2">
+                                MSME (GOVT OF INDIA)
+                            </span>
+                            <h3 class="font-devanagari text-2xl font-extrabold text-navy-900">
+                                SATVIK UDYOG
+                            </h3>
+                            <p class="text-sm text-gray-500 mt-1 font-semibold">Udyam No: UDYAM-HR-03-0152703</p>
+                            <p class="text-gray-600 text-sm mt-3 leading-relaxed font-devanagari">
+                                भारत सरकार के सूक्ष्म, लघु एवं मध्यम उद्यम मंत्रालय (MSME) के अंतर्गत पंजीकृत औद्योगिक इकाई, जो व्यावहारिक कौशल विकास और विनिर्माण कौशल को प्रोत्साहित करती है।
+                            </p>
+                        </div>
+                        <button onclick="openCertificateModal('{{ asset('images/certificates/satvik_udyog_udyam.jpg') }}', 'SATVIK UDYOG - Udyam Registration Certificate')" class="mt-4 w-full py-3 bg-white hover:bg-accent-600 text-accent-700 hover:text-white border border-accent-200 hover:border-accent-600 rounded-xl font-bold transition duration-300 shadow-sm flex items-center justify-center gap-2">
+                            <i class="fa-solid fa-expand"></i> प्रमाणपत्र देखें
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Certificate Lightbox Modal -->
+    <div id="certificateModal" class="fixed inset-0 z-50 hidden bg-navy-950/80 backdrop-blur-md flex items-center justify-center p-4 transition-all duration-300 opacity-0">
+        <div class="relative bg-white w-full max-w-4xl rounded-3xl overflow-hidden shadow-2xl border border-white/20 transform scale-95 transition-all duration-300 max-h-[90vh] flex flex-col">
+            <!-- Modal Header -->
+            <div class="px-6 py-4 bg-navy-900 text-white flex items-center justify-between border-b border-navy-800">
+                <h3 id="modalTitle" class="font-bold text-lg sm:text-xl">Certificate Preview</h3>
+                <button onclick="closeCertificateModal()" class="w-10 h-10 bg-white/10 hover:bg-white/20 text-white rounded-full flex items-center justify-center transition">
+                    <i class="fa-solid fa-xmark text-lg"></i>
+                </button>
+            </div>
+            <!-- Modal Body (Image Container) -->
+            <div class="p-6 bg-gray-50 overflow-y-auto flex justify-center items-center flex-1">
+                <img id="modalImage" src="" alt="Certificate Full View" class="max-w-full max-h-[65vh] object-contain rounded-lg shadow-md border border-gray-200">
+            </div>
+            <!-- Modal Footer -->
+            <div class="px-6 py-4 bg-gray-100 flex justify-end border-t border-gray-200">
+                <button onclick="closeCertificateModal()" class="bg-navy-900 hover:bg-navy-800 text-white font-bold py-2.5 px-6 rounded-xl transition">
+                    बंद करें
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        function openCertificateModal(imgSrc, title) {
+            const modal = document.getElementById('certificateModal');
+            const modalImg = document.getElementById('modalImage');
+            const modalTitle = document.getElementById('modalTitle');
+            
+            modalImg.src = imgSrc;
+            modalTitle.innerText = title;
+            
+            // Show modal with animation
+            modal.classList.remove('hidden');
+            setTimeout(() => {
+                modal.classList.remove('opacity-0');
+                modal.querySelector('.transform').classList.remove('scale-95');
+                modal.querySelector('.transform').classList.add('scale-100');
+            }, 10);
+        }
+
+        function closeCertificateModal() {
+            const modal = document.getElementById('certificateModal');
+            
+            modal.classList.add('opacity-0');
+            modal.querySelector('.transform').classList.remove('scale-100');
+            modal.querySelector('.transform').classList.add('scale-95');
+            
+            setTimeout(() => {
+                modal.classList.add('hidden');
+            }, 300);
+        }
+
+        // Close on clicking outside modal content
+        document.getElementById('certificateModal').addEventListener('click', function(e) {
+            if (e.target === this) {
+                closeCertificateModal();
+            }
+        });
+    </script>
+
     <!-- 7. FREQUENTLY ASKED QUESTIONS -->
     <section id="faq" class="py-20 bg-gray-50">
         <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
