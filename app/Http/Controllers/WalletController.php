@@ -323,7 +323,7 @@ class WalletController extends Controller
         $user = Auth::user();
         
         $query = \App\Models\ActivityLog::where('user_id', $user->id)
-                    ->whereIn('action', ['p2p_transfer', 'p2p_received']);
+                    ->whereIn('action', ['p2p_transfer', 'p2p_received', 'wallet_conversion']);
                     
         if ($request->filled('date_from')) {
             $query->whereDate('created_at', '>=', $request->date_from);
@@ -354,6 +354,14 @@ class WalletController extends Controller
                     if (preg_match('/Received\s+\\$([\d\.]+).*from\s+(.*?)\s+\\(([^)]+)\\)/', $log->description, $m)) {
                         $parsed['amount'] = '+' . $m[1];
                         $parsed['sender'] = trim($m[2]) . ' (' . trim($m[3]) . ')';
+                        $parsed['receiver'] = auth()->user()->name . ' (' . auth()->user()->referral_code . ')';
+                    }
+                }
+                else if ($log->action === 'wallet_conversion') {
+                    if (preg_match('/Converted\s+\\$([\d\.]+)\s+from\s+(.*?)\s+to\s+(.*)/', $log->description, $m)) {
+                        $parsed['type'] = 'Self Conversion';
+                        $parsed['amount'] = '-' . $m[1];
+                        $parsed['sender'] = auth()->user()->name . ' (' . auth()->user()->referral_code . ')';
                         $parsed['receiver'] = auth()->user()->name . ' (' . auth()->user()->referral_code . ')';
                     }
                 }
@@ -411,6 +419,13 @@ class WalletController extends Controller
                     $parsed['amount'] = $m[1];
                     $parsed['target_name'] = trim($m[2]);
                     $parsed['target_id'] = trim($m[3]);
+                }
+            }
+            else if ($log->action === 'wallet_conversion') {
+                if (preg_match('/Converted\s+\\$([\d\.]+)\s+from\s+(.*?)\s+to\s+(.*)/', $log->description, $m)) {
+                    $parsed['amount'] = $m[1];
+                    $parsed['target_name'] = 'Self (' . trim($m[3]) . ')';
+                    $parsed['target_id'] = auth()->user()->referral_code;
                 }
             }
             return (object) $parsed;

@@ -36,17 +36,20 @@ class CourseController extends Controller
             $moduleName = $progress->course->module->name;
         }
 
-        // 1-year course completion validity check
+        // 1-year course completion validity check (Must complete WITHIN 1 year)
         $activationDate = $user->activation_date;
         $canComplete = false;
         $daysRemaining = 0;
+        $daysExpired = 0;
 
         if ($activationDate) {
-            $completionDate = $activationDate->copy()->addYear();
-            if (now()->greaterThanOrEqualTo($completionDate)) {
+            $expirationDate = $activationDate->copy()->addYear();
+            if (now()->lessThanOrEqualTo($expirationDate)) {
                 $canComplete = true;
+                $daysRemaining = now()->diffInDays($expirationDate, false);
             } else {
-                $daysRemaining = now()->diffInDays($completionDate, false);
+                $canComplete = false;
+                $daysExpired = now()->diffInDays($expirationDate, false) * -1; // positive number of days expired
             }
         }
 
@@ -65,10 +68,10 @@ class CourseController extends Controller
             return redirect()->back()->with('error', 'Your account activation date is not set.');
         }
 
-        $completionDate = $activationDate->copy()->addYear();
-        if (now()->lessThan($completionDate)) {
-            $daysRemaining = now()->diffInDays($completionDate, false);
-            return redirect()->back()->with('error', "You cannot complete this course yet. You must wait {$daysRemaining} more days (1 year completion validity rule).");
+        $expirationDate = $activationDate->copy()->addYear();
+        if (now()->greaterThan($expirationDate)) {
+            $daysExpired = now()->diffInDays($expirationDate, false) * -1;
+            return redirect()->back()->with('error', "Your course completion validity of 1 year has expired ({$daysExpired} days ago). You can no longer complete this course.");
         }
 
         if ($user->status === 'active' && !$user->course_completed_at) {

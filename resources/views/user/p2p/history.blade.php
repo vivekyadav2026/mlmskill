@@ -59,6 +59,10 @@
                                     <span class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-bold bg-red-900/30 text-red-400 border border-red-500/30">
                                         <i class="fa-solid fa-arrow-up"></i> Sent
                                     </span>
+                                @elseif($log->type === 'wallet_conversion')
+                                    <span class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-bold bg-blue-900/30 text-blue-400 border border-blue-500/30">
+                                        <i class="fa-solid fa-rotate"></i> Converted
+                                    </span>
                                 @else
                                     <span class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-bold bg-green-900/30 text-green-400 border border-green-500/30">
                                         <i class="fa-solid fa-arrow-down"></i> Received
@@ -68,7 +72,7 @@
                             
                             <!-- Sender Column -->
                             <td class="p-4">
-                                @if($log->type === 'p2p_transfer')
+                                @if($log->type === 'p2p_transfer' || $log->type === 'wallet_conversion')
                                     <!-- I sent this -->
                                     <div class="font-semibold text-gray-200">You ({{ auth()->user()->name }})</div>
                                     <div class="text-xs text-indigo-400">{{ auth()->user()->referral_code }}</div>
@@ -81,8 +85,8 @@
                             
                             <!-- Receiver Column -->
                             <td class="p-4">
-                                @if($log->type === 'p2p_transfer')
-                                    <!-- I sent to someone -->
+                                @if($log->type === 'p2p_transfer' || $log->type === 'wallet_conversion')
+                                    <!-- I sent to someone (or myself) -->
                                     <div class="font-semibold text-gray-200">{{ $log->target_name }}</div>
                                     <div class="text-xs text-indigo-400">{{ $log->target_id }}</div>
                                 @else
@@ -93,8 +97,8 @@
                             </td>
 
                             <td class="p-4">
-                                <span class="font-bold {{ $log->type === 'p2p_transfer' ? 'text-red-400' : 'text-green-400' }}">
-                                    {{ $log->type === 'p2p_transfer' ? '-' : '+' }}${{ number_format((float)$log->amount, 2) }}
+                                <span class="font-bold {{ $log->type === 'p2p_received' ? 'text-green-400' : ($log->type === 'wallet_conversion' ? 'text-blue-400' : 'text-red-400') }}">
+                                    {{ $log->type === 'p2p_received' ? '+' : '-' }}${{ number_format((float)$log->amount, 2) }}
                                 </span>
                             </td>
                             <td class="p-4 text-gray-400 text-sm">

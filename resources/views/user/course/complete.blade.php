@@ -33,11 +33,16 @@
             <div class="bg-[#0f172a] rounded-lg p-5 border border-amber-500/30 text-left mb-6">
                 <h4 class="text-amber-400 font-bold text-sm mb-2"><i class="fa-solid fa-clock mr-1"></i> Course Completion Validity Rule</h4>
                 <p class="text-xs text-gray-400 leading-relaxed">
-                    Under the <strong>1-Year Course Completion Validity Rule</strong>, you can only finalize your course and request a certificate after 1 year (365 days) from your account activation date.
+                    Under the <strong>1-Year Course Completion Validity Rule</strong>, you must finalize your course and request your certificate <strong>within 1 year (365 days)</strong> of your account activation date.
                 </p>
-                <div class="mt-3 text-xs">
-                    <span class="text-gray-500">Your Activation Date:</span> 
-                    <span class="text-gray-300 font-semibold">{{ $user->activation_date ? $user->activation_date->format('d M, Y') : 'Not Activated' }}</span>
+                <div class="mt-3 text-xs flex justify-between">
+                    <div>
+                        <span class="text-gray-500">Your Activation Date:</span> 
+                        <span class="text-gray-300 font-semibold">{{ $user->activation_date ? $user->activation_date->format('d M, Y') : 'Not Activated' }}</span>
+                    </div>
+                    @if($canComplete)
+                        <div class="text-green-400 font-bold"><i class="fa-solid fa-clock-rotate-left"></i> Valid for {{ $daysRemaining }} more days</div>
+                    @endif
                 </div>
             </div>
 
@@ -50,9 +55,9 @@
                 </form>
             @else
                 <button type="button" disabled class="bg-gray-700 text-gray-500 font-bold py-3 px-8 rounded shadow-lg text-lg w-full cursor-not-allowed">
-                    <i class="fa-solid fa-lock mr-2"></i> Locked ({{ $daysRemaining }} days remaining)
+                    <i class="fa-solid fa-lock mr-2"></i> Expired ({{ $daysExpired ?? 0 }} days ago)
                 </button>
-                <p class="text-xs text-red-400 mt-2"><i class="fa-solid fa-circle-exclamation mr-1"></i> You must complete 1 year of enrollment before finalizing this course.</p>
+                <p class="text-xs text-red-400 mt-2"><i class="fa-solid fa-circle-exclamation mr-1"></i> Your 1-year course completion validity has expired. You can no longer request a certificate.</p>
             @endif
         @else
             @if($pendingCertificate)

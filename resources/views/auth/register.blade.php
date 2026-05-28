@@ -83,7 +83,7 @@
                 </div>
             @endif
 
-            <form method="POST" action="{{ route('register') }}" class="space-y-5">
+            <form method="POST" action="{{ route('register') }}" class="space-y-5" id="registerForm" onsubmit="document.getElementById('submitBtn').disabled = true; document.getElementById('submitBtn').innerHTML = '<i class=\'fa-solid fa-spinner fa-spin mr-2\'></i> Creating Account...';">
                 @csrf
                 
                 @php
@@ -181,7 +181,7 @@
                     </div>
                 </div>
 
-                <button type="submit" class="w-full bg-gradient-to-r from-brand-600 to-brand-500 hover:from-brand-500 hover:to-brand-400 text-white font-bold py-3.5 rounded-xl shadow-lg shadow-brand-500/30 transition transform hover:-translate-y-0.5 border border-white/10 mt-6">
+                <button type="submit" id="submitBtn" class="w-full bg-gradient-to-r from-brand-600 to-brand-500 hover:from-brand-500 hover:to-brand-400 text-white font-bold py-3.5 rounded-xl shadow-lg shadow-brand-500/30 transition transform hover:-translate-y-0.5 border border-white/10 mt-6 disabled:opacity-50 disabled:cursor-not-allowed disabled:transform-none">
                     Create Account
                 </button>
             </form>
