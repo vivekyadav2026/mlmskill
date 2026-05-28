@@ -169,7 +169,7 @@
                 </div>
                 <div class="bg-[#0b1220] border border-[#334155] rounded p-3 text-center">
                     <p class="text-xs text-gray-500 uppercase">Total Network</p>
-                    <p class="text-xl font-bold text-gray-100">{{ $networkCount + $directCount }}</p>
+                    <p class="text-xl font-bold text-gray-100">{{ $networkCount }}</p>
                 </div>
                 <div class="bg-[#0b1220] border border-[#334155] rounded p-3 text-center">
                     <p class="text-xs text-gray-500 uppercase">Active Status</p>

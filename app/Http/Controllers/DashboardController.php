@@ -14,11 +14,23 @@ class DashboardController extends Controller
         
         $totalEarned = \App\Models\CommissionLedger::where('user_id', $user->id)->sum('amount');
         $directCount = \App\Models\User::where('sponsor_id', $user->referral_code)->count();
-        $networkCount = \Illuminate\Support\Facades\DB::table('commission_ledgers')
-            ->where('user_id', $user->id)
-            ->whereIn('commission_type', ['direct', 'team'])
-            ->distinct('from_user_id')
-            ->count();
+        
+        // Calculate real downline network count (up to 10 levels deep)
+        $levelCounts = [];
+        $currentLevelSponsorCodes = [$user->referral_code];
+        for ($level = 1; $level <= 10; $level++) {
+            if (empty($currentLevelSponsorCodes)) {
+                $levelCounts[$level] = 0;
+                continue;
+            }
+            $nextLevelSponsorCodes = \App\Models\User::whereIn('sponsor_id', $currentLevelSponsorCodes)
+                ->pluck('referral_code')
+                ->filter()
+                ->toArray();
+            $levelCounts[$level] = count($nextLevelSponsorCodes);
+            $currentLevelSponsorCodes = $nextLevelSponsorCodes;
+        }
+        $networkCount = array_sum($levelCounts);
             
         // Recent records
         $recentIncome = \App\Models\CommissionLedger::where('user_id', $user->id)->latest()->take(4)->get();
