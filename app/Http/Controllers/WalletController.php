@@ -154,9 +154,9 @@ class WalletController extends Controller
                 return [
                     'date' => $item->created_at,
                     'wallet' => 'Income Wallet',
-                    'type' => ucfirst($item->commission_type) . ' Commission',
-                    'amount' => '+$' . number_format($item->amount, 2),
-                    'color' => 'text-green-400',
+                    'type' => ucwords(str_replace('_', ' ', $item->commission_type)) . ' Commission',
+                    'amount' => ($item->amount >= 0 ? '+$' : '-$') . number_format(abs($item->amount), 2),
+                    'color' => $item->amount >= 0 ? 'text-green-400' : 'text-red-400',
                     'bg' => 'bg-green-100 text-green-800'
                 ];
             });
@@ -164,12 +164,12 @@ class WalletController extends Controller
         $tokens = $applyDateFilter(DB::table('token_ledgers')->where('user_id', $user->id))
             ->get()->map(function($item) use ($tokenName) {
                 $isAdd = $item->token_count > 0;
-                $label = $item->token_type == 'utility' ? strtoupper($tokenName) : 'RT';
+                $typeStr = $item->token_type == 'utility' ? 'NEXA 1.0' : ($item->token_type == 'renewal' ? 'NEXA 2.0' : 'NEXA 3.0');
                 return [
                     'date' => $item->created_at,
-                    'wallet' => ucfirst($item->token_type) . ' Tokens',
+                    'wallet' => $typeStr . ' Wallet',
                     'type' => 'Token ' . ucfirst($item->source ?? 'Distribution'),
-                    'amount' => ($isAdd ? '+' : '') . number_format($item->token_count, 2) . ' ' . $label,
+                    'amount' => ($isAdd ? '+' : '') . number_format($item->token_count, 2),
                     'color' => $isAdd ? 'text-blue-400' : 'text-red-400',
                     'bg' => $isAdd ? 'bg-blue-100 text-blue-800' : 'bg-red-100 text-red-800'
                 ];

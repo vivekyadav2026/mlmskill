@@ -16,6 +16,11 @@
                 <div>
                     <h3 class="text-lg font-bold text-gray-100 mb-1">{{ $app->job->title }}</h3>
                     <p class="text-sm text-gray-400">{{ $app->job->company_name }} • Applied on {{ $app->created_at->format('d M, Y') }}</p>
+                    @if($app->resume_path)
+                    <a href="{{ Storage::url($app->resume_path) }}" target="_blank" class="text-xs text-indigo-400 hover:underline mt-1 inline-block"><i class="fa-solid fa-download mr-1"></i> View Submitted CV</a>
+                    @else
+                    <span class="text-xs text-red-400 mt-1 inline-block"><i class="fa-solid fa-triangle-exclamation mr-1"></i> No CV Attached</span>
+                    @endif
                 </div>
             </div>
 

@@ -67,7 +67,7 @@ class AdminWithdrawalController extends Controller
         });
 
         return redirect()->back()
-            ->with('success', 'Withdrawal rejected. ₹' . number_format($withdrawal->amount, 2) . ' has been refunded to the user\'s Income Wallet.');
+            ->with('success', 'Withdrawal rejected. $' . number_format($withdrawal->amount, 2) . ' has been refunded to the user\'s Income Wallet.');
     }
 
     public function logs()

@@ -61,7 +61,7 @@
                         <th>User</th>
                         <th>Token Type</th>
                         <th>Amount</th>
-                        <th>Value (₹/$)</th>
+                        <th>Value ($)</th>
                         <th>Source</th>
                         <th>Status</th>
                         <th>Credited On</th>
@@ -96,7 +96,7 @@
                             +{{ number_format($log->token_count, 4) }}
                         </td>
                         <td class="font-mono text-gray-300">
-                            {{ $log->token_value ? '₹' . number_format($log->token_value, 4) : '—' }}
+                            {{ $log->token_value ? '$' . number_format($log->token_value, 4) : '—' }}
                         </td>
                         <td>
                             <span class="text-gray-400 text-sm capitalize">{{ $log->source ?? 'Daily Distribution' }}</span>

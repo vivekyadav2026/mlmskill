@@ -15,10 +15,21 @@
             <h2 class="text-2xl font-bold text-gray-100">Level Income Logs</h2>
             <p class="text-gray-400 text-sm mt-1">Commission earned from multi-level downline activations (Levels 1–10).</p>
         </div>
-        <a href="{{ url('admin/commissions/direct') }}"
-           class="text-sm text-indigo-400 hover:text-indigo-300 border border-indigo-800 px-4 py-2 rounded transition">
-            <i class="fa-solid fa-arrow-left mr-1"></i> Direct Income Logs
-        </a>
+        <div class="flex items-center gap-3">
+            <form action="{{ url('admin/commissions/level') }}" method="GET" class="flex items-center gap-2 bg-[#1a222d] border border-[#334155] rounded-lg p-1.5">
+                <input type="date" name="from_date" value="{{ request('from_date') }}" class="bg-[#0f172a] border border-[#334155] text-gray-300 text-xs rounded px-2 py-1.5 focus:outline-none">
+                <span class="text-gray-500 text-xs">to</span>
+                <input type="date" name="to_date" value="{{ request('to_date') }}" class="bg-[#0f172a] border border-[#334155] text-gray-300 text-xs rounded px-2 py-1.5 focus:outline-none">
+                <button type="submit" class="bg-indigo-600 hover:bg-indigo-700 text-white text-xs px-3 py-1.5 rounded transition">Filter</button>
+                @if(request('from_date') || request('to_date'))
+                <a href="{{ url('admin/commissions/level') }}" class="bg-gray-600 hover:bg-gray-700 text-white text-xs px-2 py-1.5 rounded transition"><i class="fa-solid fa-xmark"></i></a>
+                @endif
+            </form>
+            <a href="{{ url('admin/commissions/direct') }}"
+               class="text-sm text-indigo-400 hover:text-indigo-300 border border-indigo-800 px-4 py-2 rounded transition">
+                <i class="fa-solid fa-arrow-left mr-1"></i> Direct Income Logs
+            </a>
+        </div>
     </div>
 
     {{-- Stats --}}

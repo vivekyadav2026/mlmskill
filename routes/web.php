@@ -278,10 +278,12 @@ Route::middleware(['auth', 'admin'])->prefix('admin')->group(function () {
     Route::post('/cms/poster-editor/download', [\App\Http\Controllers\PosterController::class, 'download'])->name('admin.cms.poster-editor.download');
     Route::get('/cms/banners', [\App\Http\Controllers\AdminCmsController::class, 'banners'])->name('admin.cms.banners');
     Route::post('/cms/banners', [\App\Http\Controllers\AdminCmsController::class, 'storeBanner']);
+    Route::post('/cms/banners/{id}/update', [\App\Http\Controllers\AdminCmsController::class, 'updateBanner'])->name('admin.cms.banners.update');
     Route::post('/cms/banners/{id}/delete', [\App\Http\Controllers\AdminCmsController::class, 'destroyBanner'])->name('admin.cms.banners.destroy');
     
     Route::get('/cms/announcements', [\App\Http\Controllers\AdminCmsController::class, 'announcements'])->name('admin.cms.announcements');
     Route::post('/cms/announcements', [\App\Http\Controllers\AdminCmsController::class, 'storeAnnouncement']);
+    Route::post('/cms/announcements/{id}/update', [\App\Http\Controllers\AdminCmsController::class, 'updateAnnouncement'])->name('admin.cms.announcements.update');
     Route::post('/cms/announcements/{id}/delete', [\App\Http\Controllers\AdminCmsController::class, 'destroyAnnouncement'])->name('admin.cms.announcements.destroy');
 
     Route::get('/cms/pages', [\App\Http\Controllers\AdminCmsController::class, 'pages'])->name('admin.cms.pages');

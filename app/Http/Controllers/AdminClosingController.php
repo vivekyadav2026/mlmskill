@@ -41,7 +41,7 @@ class AdminClosingController extends Controller
             'total_active_users' => User::where('status', 'active')->count(),
             'total_income_generated' => CommissionLedger::whereBetween('created_at', [$startDate, $endDate])->sum('amount'),
             'total_withdrawals' => Withdrawal::whereBetween('created_at', [$startDate, $endDate])->where('status', 'approved')->sum('amount'),
-            'total_tokens_issued' => TokenLedger::whereBetween('created_at', [$startDate, $endDate])->where('status', 'credited')->sum('token_count')
+            'total_tokens_issued' => TokenLedger::whereBetween('created_at', [$startDate, $endDate])->whereIn('status', ['credited', 'locked'])->sum('token_count')
         ];
 
         return view('admin.closing.generate', compact('currentMonth', 'currentYear', 'startDateInput', 'endDateInput', 'preview'));
@@ -51,6 +51,10 @@ class AdminClosingController extends Controller
     {
         $closings = MonthlyClosing::orderBy('year', 'desc')->orderBy('month', 'desc')->get();
         
+        $lifetimeIncome = CommissionLedger::sum('amount');
+        $lifetimeWithdrawals = Withdrawal::where('status', 'approved')->sum('amount');
+        $lifetimeTokens = TokenLedger::whereIn('status', ['credited', 'locked'])->sum('token_count');
+
         // Prepare chart data (reverse so oldest is first, up to last 6 closings)
         $chartClosings = $closings->take(6)->reverse();
         $chartLabels = [];
@@ -70,7 +74,7 @@ class AdminClosingController extends Controller
             $chartWithdrawals[] = (float) $c->total_withdrawals;
         }
 
-        return view('admin.closing.reports', compact('closings', 'chartLabels', 'chartIncome', 'chartWithdrawals'));
+        return view('admin.closing.reports', compact('closings', 'chartLabels', 'chartIncome', 'chartWithdrawals', 'lifetimeIncome', 'lifetimeWithdrawals', 'lifetimeTokens'));
     }
 
     public function store(Request $request)
@@ -105,7 +109,7 @@ class AdminClosingController extends Controller
         $activeUsers = User::where('status', 'active')->count();
         $income = CommissionLedger::whereBetween('created_at', [$startDate, $endDate])->sum('amount');
         $withdrawals = Withdrawal::whereBetween('created_at', [$startDate, $endDate])->where('status', 'approved')->sum('amount');
-        $tokens = TokenLedger::whereBetween('created_at', [$startDate, $endDate])->where('status', 'credited')->sum('token_count');
+        $tokens = TokenLedger::whereBetween('created_at', [$startDate, $endDate])->whereIn('status', ['credited', 'locked'])->sum('token_count');
 
         $reportJson = [
             'start_date' => $startDate->toDateString(),

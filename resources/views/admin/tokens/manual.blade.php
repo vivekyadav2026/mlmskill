@@ -40,6 +40,16 @@
 .ts-dropdown .option.active  { background: #1e3a5f !important; color: #fff !important; }
 .ts-dropdown .option.selected { background: rgba(99,102,241,.2) !important; color: #a5b4fc !important; }
 .ts-control .item            { color: #f1f5f9 !important; background: transparent !important; }
+
+/* ── Custom Radio Button Checked States ── */
+input[value="utility"]:checked ~ div .radio-box { border-color: #6366f1 !important; }
+input[value="utility"]:checked ~ div .radio-dot { opacity: 1 !important; }
+
+input[value="renewal"]:checked ~ div .radio-box { border-color: #06b6d4 !important; }
+input[value="renewal"]:checked ~ div .radio-dot { opacity: 1 !important; }
+
+input[value="nexa_3"]:checked ~ div .radio-box { border-color: #14b8a6 !important; }
+input[value="nexa_3"]:checked ~ div .radio-dot { opacity: 1 !important; }
 </style>
 
 <div class="tailwind-scope mt-4 max-w-2xl mx-auto">
@@ -101,52 +111,52 @@
                 </label>
                 <div class="grid grid-cols-1 md:grid-cols-3 gap-3">
                     <!-- Token Type: NEXA 1.0 -->
-                    <label class="cursor-pointer relative block">
+                    <label class="cursor-pointer relative block h-full">
                         <input type="radio" name="token_type" value="utility" class="sr-only peer" {{ old('token_type', 'utility') === 'utility' ? 'checked' : '' }} required>
                         <div class="flex items-center p-4 border border-[#334155] rounded-lg cursor-pointer transition-all peer-checked:border-indigo-500 peer-checked:bg-indigo-500/10 hover:border-[#475569] h-full">
-                            <div class="w-10 h-10 rounded-full bg-indigo-900/30 text-indigo-400 flex items-center justify-center text-lg mr-3">
+                            <div class="w-10 h-10 flex-shrink-0 rounded-full bg-indigo-900/30 text-indigo-400 flex items-center justify-center text-lg mr-3">
                                 <i class="fa-solid fa-circle-bolt"></i>
                             </div>
                             <div>
                                 <p class="text-white font-semibold text-sm">NEXA 1.0</p>
                                 <p class="text-xs text-gray-500">Daily income, convertible</p>
                             </div>
-                            <div class="ml-auto w-5 h-5 rounded-full border-2 border-gray-600 peer-checked:border-indigo-500 flex items-center justify-center">
-                                <div class="w-2.5 h-2.5 rounded-full bg-indigo-500 opacity-0 peer-checked:opacity-100 transition-opacity"></div>
+                            <div class="radio-box ml-auto w-5 h-5 flex-shrink-0 rounded-full border-2 border-gray-600 flex items-center justify-center" style="transition: all 0.2s;">
+                                <div class="radio-dot w-2.5 h-2.5 rounded-full bg-indigo-500 opacity-0" style="transition: all 0.2s;"></div>
                             </div>
                         </div>
                     </label>
 
                     <!-- Token Type: NEXA 2.0 -->
-                    <label class="cursor-pointer relative block">
+                    <label class="cursor-pointer relative block h-full">
                         <input type="radio" name="token_type" value="renewal" class="sr-only peer" {{ old('token_type') === 'renewal' ? 'checked' : '' }}>
                         <div class="flex items-center p-4 border border-[#334155] rounded-lg cursor-pointer transition-all peer-checked:border-cyan-500 peer-checked:bg-cyan-500/10 hover:border-[#475569] h-full">
-                            <div class="w-10 h-10 rounded-full bg-cyan-900/30 text-cyan-400 flex items-center justify-center text-lg mr-3">
+                            <div class="w-10 h-10 flex-shrink-0 rounded-full bg-cyan-900/30 text-cyan-400 flex items-center justify-center text-lg mr-3">
                                 <i class="fa-solid fa-rotate"></i>
                             </div>
                             <div>
                                 <p class="text-white font-semibold text-sm">NEXA 2.0</p>
-                                <p class="text-xs text-gray-500">Renewal Token (RT)</p>
+                                <p class="text-xs text-gray-500">Account Renewal</p>
                             </div>
-                            <div class="ml-auto w-5 h-5 rounded-full border-2 border-gray-600 peer-checked:border-cyan-500 flex items-center justify-center">
-                                <div class="w-2.5 h-2.5 rounded-full bg-cyan-500 opacity-0 peer-checked:opacity-100 transition-opacity"></div>
+                            <div class="radio-box ml-auto w-5 h-5 flex-shrink-0 rounded-full border-2 border-gray-600 flex items-center justify-center" style="transition: all 0.2s;">
+                                <div class="radio-dot w-2.5 h-2.5 rounded-full bg-cyan-500 opacity-0" style="transition: all 0.2s;"></div>
                             </div>
                         </div>
                     </label>
                     
                     <!-- Token Type: NEXA 3.0 -->
-                    <label class="cursor-pointer relative block">
+                    <label class="cursor-pointer relative block h-full">
                         <input type="radio" name="token_type" value="nexa_3" class="sr-only peer" {{ old('token_type') === 'nexa_3' ? 'checked' : '' }}>
                         <div class="flex items-center p-4 border border-[#334155] rounded-lg cursor-pointer transition-all peer-checked:border-teal-500 peer-checked:bg-teal-500/10 hover:border-[#475569] h-full">
-                            <div class="w-10 h-10 rounded-full bg-teal-900/30 text-teal-400 flex items-center justify-center text-lg mr-3">
+                            <div class="w-10 h-10 flex-shrink-0 rounded-full bg-teal-900/30 text-teal-400 flex items-center justify-center text-lg mr-3">
                                 <i class="fa-solid fa-graduation-cap"></i>
                             </div>
                             <div>
                                 <p class="text-white font-semibold text-sm">NEXA 3.0</p>
                                 <p class="text-xs text-gray-500">Course Reward Token</p>
                             </div>
-                            <div class="ml-auto w-5 h-5 rounded-full border-2 border-gray-600 peer-checked:border-teal-500 flex items-center justify-center">
-                                <div class="w-2.5 h-2.5 rounded-full bg-teal-500 opacity-0 peer-checked:opacity-100 transition-opacity"></div>
+                            <div class="radio-box ml-auto w-5 h-5 flex-shrink-0 rounded-full border-2 border-gray-600 flex items-center justify-center" style="transition: all 0.2s;">
+                                <div class="radio-dot w-2.5 h-2.5 rounded-full bg-teal-500 opacity-0" style="transition: all 0.2s;"></div>
                             </div>
                         </div>
                     </label>
@@ -170,9 +180,9 @@
                     This is the <strong class="text-gray-300">number of tokens</strong> to credit — not a rupee/dollar amount.
                     </p>
                     <p class="text-gray-400 text-sm">
-                    Each NEXA 1.0 ≈ <span class="text-indigo-400">₹{{ \App\Models\Setting::get('utility_token_value', '1') }}</span> &nbsp;|&nbsp; 
-                    Each NEXA 2.0 ≈ <span class="text-cyan-400">₹{{ \App\Models\Setting::get('renewal_token_value', '1') }}</span> &nbsp;|&nbsp; 
-                    Each NEXA 3.0 ≈ <span class="text-teal-400">₹{{ \App\Models\Setting::get('nexa_3_token_value', '1') }}</span>
+                    Each NEXA 1.0 ≈ <span class="text-indigo-400">${{ \App\Models\Setting::get('utility_token_value', '1') }}</span> &nbsp;|&nbsp; 
+                    Each NEXA 2.0 ≈ <span class="text-cyan-400">${{ \App\Models\Setting::get('renewal_token_value', '1') }}</span> &nbsp;|&nbsp; 
+                    Each NEXA 3.0 ≈ <span class="text-teal-400">${{ \App\Models\Setting::get('nexa_3_token_value', '1') }}</span>
                     </p>
             </div>
 

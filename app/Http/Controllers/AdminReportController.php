@@ -20,6 +20,7 @@ class AdminReportController extends Controller
         $totalIncome     = CommissionLedger::sum('amount');
         $directTotal     = CommissionLedger::where('commission_type', 'direct')->sum('amount');
         $levelTotal      = CommissionLedger::whereIn('commission_type', ['level', 'team'])->sum('amount');
+        $bonusTotal      = CommissionLedger::whereIn('commission_type', ['reward_income', 'salary_bonus'])->sum('amount');
         $totalEntries    = CommissionLedger::count();
         $uniqueEarners   = CommissionLedger::distinct('user_id')->count('user_id');
 
@@ -35,7 +36,7 @@ class AdminReportController extends Controller
         }
 
         return view('admin.reports.income', compact(
-            'commissions', 'totalIncome', 'directTotal', 'levelTotal',
+            'commissions', 'totalIncome', 'directTotal', 'levelTotal', 'bonusTotal',
             'totalEntries', 'uniqueEarners', 'monthlyLabels', 'monthlyData'
         ));
     }
@@ -43,11 +44,12 @@ class AdminReportController extends Controller
     public function token()
     {
         $tokens        = TokenLedger::with('user')->latest()->paginate(25);
-        $totalUtility  = TokenLedger::where('token_type', 'utility')->sum('token_count');
-        $totalRenewal  = TokenLedger::where('token_type', 'renewal')->sum('token_count');
+        $totalUtility  = TokenLedger::where('token_type', 'utility')->whereIn('status', ['credited', 'locked'])->sum('token_count');
+        $totalRenewal  = TokenLedger::where('token_type', 'renewal')->whereIn('status', ['credited', 'locked'])->sum('token_count');
+        $totalNexa3    = TokenLedger::where('token_type', 'nexa_3')->whereIn('status', ['credited', 'locked'])->sum('token_count');
         $totalEntries  = TokenLedger::count();
         $uniqueHolders = TokenLedger::distinct('user_id')->count('user_id');
-        $totalCredited = TokenLedger::where('status', 'credited')->count();
+        $totalCredited = TokenLedger::whereIn('status', ['credited', 'locked'])->count();
         $totalUsed     = TokenLedger::where('status', 'used')->count();
 
         // Monthly token distribution (last 6 months)
@@ -58,17 +60,19 @@ class AdminReportController extends Controller
             $month = Carbon::now()->subMonths($i);
             $monthlyLabels[]  = $month->format('M Y');
             $utilityMonthly[] = (float) TokenLedger::where('token_type', 'utility')
+                                    ->whereIn('status', ['credited', 'locked'])
                                     ->whereYear('created_at', $month->year)
                                     ->whereMonth('created_at', $month->month)
                                     ->sum('token_count');
             $renewalMonthly[] = (float) TokenLedger::where('token_type', 'renewal')
+                                    ->whereIn('status', ['credited', 'locked'])
                                     ->whereYear('created_at', $month->year)
                                     ->whereMonth('created_at', $month->month)
                                     ->sum('token_count');
         }
 
         return view('admin.reports.token', compact(
-            'tokens', 'totalUtility', 'totalRenewal', 'totalEntries',
+            'tokens', 'totalUtility', 'totalRenewal', 'totalNexa3', 'totalEntries',
             'uniqueHolders', 'totalCredited', 'totalUsed',
             'monthlyLabels', 'utilityMonthly', 'renewalMonthly'
         ));

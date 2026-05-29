@@ -58,17 +58,23 @@
                         <div>
                             <label class="block text-sm font-medium text-gray-400 mb-2">Upload Resume (PDF/DOC, Max 2MB)</label>
                             <div class="relative group">
-                                <input type="file" name="resume" required class="absolute inset-0 w-full h-full opacity-0 cursor-pointer z-10">
+                                <input type="file" name="resume" id="resumeInput" required class="absolute inset-0 w-full h-full opacity-0 cursor-pointer z-10">
                                 <div class="w-full bg-[#1a222d] border-2 border-dashed border-[#334155] group-hover:border-indigo-500 transition rounded-xl p-6 text-center">
                                     <i class="fa-solid fa-cloud-arrow-up text-3xl text-gray-500 group-hover:text-indigo-400 mb-2"></i>
-                                    <p class="text-sm text-gray-400 group-hover:text-gray-200">Click or drag to upload your CV</p>
+                                    <p id="resumeText" class="text-sm text-gray-400 group-hover:text-gray-200">Click or drag to upload your CV</p>
                                 </div>
                             </div>
+                            @error('resume')
+                                <p class="text-red-500 text-xs mt-1">{{ $message }}</p>
+                            @enderror
                         </div>
 
                         <div>
                             <label class="block text-sm font-medium text-gray-400 mb-2">Cover Letter / Professional Summary (Optional)</label>
-                            <textarea name="cover_letter" rows="4" class="w-full bg-[#1a222d] border border-[#334155] rounded-xl px-4 py-3 text-white focus:outline-none focus:ring-2 focus:ring-indigo-500 transition" placeholder="Tell us why you are a good fit for this role..."></textarea>
+                            <textarea name="cover_letter" rows="4" class="w-full bg-[#1a222d] border border-[#334155] rounded-xl px-4 py-3 text-white focus:outline-none focus:ring-2 focus:ring-indigo-500 transition" placeholder="Tell us why you are a good fit for this role...">{{ old('cover_letter') }}</textarea>
+                            @error('cover_letter')
+                                <p class="text-red-500 text-xs mt-1">{{ $message }}</p>
+                            @enderror
                         </div>
 
                         <button type="submit" class="w-full py-4 bg-indigo-600 hover:bg-indigo-700 text-white rounded-xl font-bold text-lg shadow-xl shadow-indigo-500/20 transition transform hover:-translate-y-1">
@@ -80,4 +86,22 @@
         </div>
     </div>
 </div>
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        const resumeInput = document.getElementById('resumeInput');
+        const resumeText = document.getElementById('resumeText');
+        
+        if (resumeInput) {
+            resumeInput.addEventListener('change', function() {
+                if (this.files && this.files.length > 0) {
+                    resumeText.textContent = 'Selected: ' + this.files[0].name;
+                    resumeText.classList.replace('text-gray-400', 'text-green-400');
+                } else {
+                    resumeText.textContent = 'Click or drag to upload your CV';
+                    resumeText.classList.replace('text-green-400', 'text-gray-400');
+                }
+            });
+        }
+    });
+</script>
 @endsection

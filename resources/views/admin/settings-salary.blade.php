@@ -203,7 +203,7 @@
                     <thead>
                         <tr class="border-b border-[#334155]">
                             <th class="text-left text-gray-400 text-xs uppercase tracking-wider px-5 py-3 font-semibold">Rank</th>
-                            <th class="text-left text-gray-400 text-xs uppercase tracking-wider px-5 py-3 font-semibold">Weekly Salary (₹)</th>
+                            <th class="text-left text-gray-400 text-xs uppercase tracking-wider px-5 py-3 font-semibold">Weekly Salary ($)</th>
                             <th class="text-left text-gray-400 text-xs uppercase tracking-wider px-5 py-3 font-semibold hidden sm:table-cell">Notes</th>
                         </tr>
                     </thead>
@@ -215,7 +215,7 @@
                             </td>
                             <td class="px-5 py-3">
                                 <div class="flex items-center gap-2">
-                                    <span class="text-gray-400 text-sm">₹</span>
+                                    <span class="text-gray-400 text-sm">$</span>
                                     <input type="number" step="0.01" min="0"
                                            name="ranks[{{ $rankName }}]"
                                            value="{{ old('ranks.'.$rankName, $amount) }}"

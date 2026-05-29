@@ -37,22 +37,26 @@
     </div>
 
     <!-- Overview Stats -->
-    <div class="grid grid-cols-1 md:grid-cols-4 gap-4 mb-8">
+    <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-4 mb-8">
         <div class="bg-[#1a222d] rounded-lg p-5 border border-[#334155]">
             <p class="text-sm text-gray-400 mb-1">Income Wallet</p>
-            <p class="text-2xl font-bold text-green-400">${{ number_format($user->wallet->income_wallet ?? 0, 2) }}</p>
+            <p class="text-xl lg:text-2xl font-bold text-green-400">${{ number_format($user->wallet->income_wallet ?? 0, 2) }}</p>
         </div>
         <div class="bg-[#1a222d] rounded-lg p-5 border border-[#334155]">
             <p class="text-sm text-gray-400 mb-1">Package Wallet</p>
-            <p class="text-2xl font-bold text-purple-400">${{ number_format($user->wallet->package_wallet ?? 0, 2) }}</p>
+            <p class="text-xl lg:text-2xl font-bold text-purple-400">${{ number_format($user->wallet->package_wallet ?? 0, 2) }}</p>
         </div>
         <div class="bg-[#1a222d] rounded-lg p-5 border border-[#334155]">
             <p class="text-sm text-gray-400 mb-1">NEXA 1.0</p>
-            <p class="text-2xl font-bold text-blue-400">{{ number_format($user->wallet->utility_token_wallet ?? 0, 2) }}</p>
+            <p class="text-xl lg:text-2xl font-bold text-blue-400">{{ number_format($user->wallet->utility_token_wallet ?? 0, 2) }}</p>
         </div>
         <div class="bg-[#1a222d] rounded-lg p-5 border border-[#334155]">
             <p class="text-sm text-gray-400 mb-1">NEXA 2.0</p>
-            <p class="text-2xl font-bold text-orange-400">{{ number_format($user->wallet->renewal_token_wallet ?? 0, 2) }}  </p>
+            <p class="text-xl lg:text-2xl font-bold text-orange-400">{{ number_format($user->wallet->renewal_token_wallet ?? 0, 2) }}</p>
+        </div>
+        <div class="bg-[#1a222d] rounded-lg p-5 border border-[#334155]">
+            <p class="text-sm text-gray-400 mb-1">NEXA 3.0</p>
+            <p class="text-xl lg:text-2xl font-bold text-teal-400">{{ number_format($user->wallet->nexa_3_wallet ?? 0, 2) }}</p>
         </div>
     </div>
 

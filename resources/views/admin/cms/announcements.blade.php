@@ -45,10 +45,15 @@
                         <div class="text-gray-400 text-sm truncate max-w-md">{{ $ann->content }}</div>
                     </td>
                     <td>
-                        <form action="{{ route('admin.cms.announcements.destroy', $ann->id) }}" method="POST" onsubmit="return confirm('Delete announcement?');">
-                            @csrf
-                            <button type="submit" class="text-red-400 hover:text-red-300"><i class="fa-solid fa-trash"></i></button>
-                        </form>
+                        <div class="flex items-center gap-3">
+                            <button type="button" class="text-indigo-400 hover:text-indigo-300" onclick="editAnnouncement({{ json_encode($ann) }})">
+                                <i class="fa-solid fa-pen-to-square"></i>
+                            </button>
+                            <form action="{{ route('admin.cms.announcements.destroy', $ann->id) }}" method="POST" onsubmit="return confirm('Delete announcement?');" class="inline">
+                                @csrf
+                                <button type="submit" class="text-red-400 hover:text-red-300"><i class="fa-solid fa-trash"></i></button>
+                            </form>
+                        </div>
                     </td>
                 </tr>
                 @empty
@@ -97,4 +102,59 @@
         </form>
     </div>
 </div>
+
+<!-- Edit Modal -->
+<div id="editModal" class="fixed inset-0 z-50 hidden bg-black/60 flex items-center justify-center backdrop-blur-sm">
+    <div class="bg-[#1a222d] border border-[#334155] rounded-xl w-full max-w-lg p-6 shadow-2xl">
+        <div class="flex justify-between items-center mb-4">
+            <h3 class="text-xl font-bold text-white">Edit Announcement</h3>
+            <button onclick="document.getElementById('editModal').classList.add('hidden')" class="text-gray-400 hover:text-white"><i class="fa-solid fa-times text-xl"></i></button>
+        </div>
+        <form action="" method="POST" id="editAnnouncementForm">
+            @csrf
+            <div class="mb-4">
+                <label class="block text-gray-300 font-medium mb-2">Title</label>
+                <input type="text" name="title" id="editTitle" class="w-full bg-[#0f172a] border border-[#334155] text-white rounded-lg px-4 py-2 focus:outline-none focus:border-indigo-500" required>
+            </div>
+            <div class="mb-4">
+                <label class="block text-gray-300 font-medium mb-2">Message Type</label>
+                <select name="type" id="editType" class="w-full bg-[#0f172a] border border-[#334155] text-white rounded-lg px-4 py-2 focus:outline-none focus:border-indigo-500" required>
+                    <option value="info">Info (Blue)</option>
+                    <option value="success">Success (Green)</option>
+                    <option value="warning">Warning (Orange)</option>
+                    <option value="danger">Urgent/Danger (Red)</option>
+                </select>
+            </div>
+            <div class="mb-4">
+                <label class="block text-gray-300 font-medium mb-2">Status</label>
+                <select name="status" id="editStatus" class="w-full bg-[#0f172a] border border-[#334155] text-white rounded-lg px-4 py-2 focus:outline-none focus:border-indigo-500" required>
+                    <option value="active">Active</option>
+                    <option value="inactive">Inactive</option>
+                </select>
+            </div>
+            <div class="mb-6">
+                <label class="block text-gray-300 font-medium mb-2">Content</label>
+                <textarea name="content" id="editContent" rows="4" class="w-full bg-[#0f172a] border border-[#334155] text-white rounded-lg px-4 py-2 focus:outline-none focus:border-indigo-500" required></textarea>
+            </div>
+            <div class="flex justify-end gap-3">
+                <button type="button" onclick="document.getElementById('editModal').classList.add('hidden')" class="px-4 py-2 bg-gray-700 text-white rounded hover:bg-gray-600 transition">Cancel</button>
+                <button type="submit" class="px-6 py-2 bg-indigo-600 text-white font-semibold rounded hover:bg-indigo-700 transition">Update</button>
+            </div>
+        </form>
+    </div>
+</div>
+
+<script>
+function editAnnouncement(ann) {
+    document.getElementById('editTitle').value = ann.title;
+    document.getElementById('editType').value = ann.type;
+    document.getElementById('editStatus').value = ann.status;
+    document.getElementById('editContent').value = ann.content;
+    
+    const form = document.getElementById('editAnnouncementForm');
+    form.action = `/admin/cms/announcements/${ann.id}/update`;
+    
+    document.getElementById('editModal').classList.remove('hidden');
+}
+</script>
 @endsection

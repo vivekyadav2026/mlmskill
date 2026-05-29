@@ -4,7 +4,7 @@
 .table-custom th { background:#0f172a; color:#94a3b8; font-weight:600; font-size:0.72rem; text-transform:uppercase; letter-spacing:0.05em; padding:0.75rem 1rem; border-bottom:1px solid #334155; white-space:nowrap; }
 .table-custom td { padding:0.85rem 1rem; border-bottom:1px solid #1e293b; color:#e2e8f0; font-size:0.875rem; vertical-align:middle; }
 .table-custom tr:hover td { background:rgba(255,255,255,0.03); }
-.stat-card { background:#1a222d; border:1px solid #334155; border-radius:0.5rem; padding:1.25rem; }
+.stat-card { background:#1a222d; border:1px solid #334155; border-radius:0.5rem; padding:1.25rem; display: flex; flex-direction: column; align-items: flex-start; justify-content: center; }
 .table-scroll { overflow-x:auto; -webkit-overflow-scrolling:touch; }
 .table-scroll table { min-width:750px; }
 @media(max-width:767px){
@@ -39,7 +39,7 @@
             </div>
             <div class="bg-[#111827] rounded-lg p-5 border border-[#334155]">
                 <p class="text-gray-400 text-xs uppercase tracking-wider mb-1">NEXA 3.0</p>
-                <h3 class="text-2xl font-bold text-teal-400">{{ number_format(\App\Models\TokenLedger::where('token_type', 'nexa_3')->sum('token_count'), 2) }}</h3>
+                <h3 class="text-2xl font-bold text-teal-400">{{ number_format($totalNexa3, 2) }}</h3>
             </div>
         <div class="stat-card">
             <p class="text-gray-400 text-xs uppercase tracking-wider mb-1">Total Entries</p>
@@ -60,12 +60,12 @@
     </div>
 
     {{-- Chart --}}
-    <div class="stat-card mb-6">
+    <!-- <div class="stat-card mb-6">
         <h3 class="text-gray-300 font-semibold mb-4 flex items-center gap-2">
             <i class="fa-solid fa-chart-line text-indigo-400"></i> Monthly Token Distribution (Last 6 Months)
         </h3>
         <canvas id="tokenChart" height="80"></canvas>
-    </div>
+    </div> -->
 
     {{-- Table --}}
     <div class="bg-[#1a222d] border border-[#334155] rounded-lg overflow-hidden">
@@ -113,7 +113,7 @@
                             {{ $token->status === 'credited' ? '+' : '' }}{{ number_format($token->token_count, 4) }}
                         </td>
                         <td class="font-mono text-gray-400 text-sm hide-mobile">
-                            {{ $token->token_value ? '₹'.number_format($token->token_value, 4) : '—' }}
+                            {{ $token->token_value ? '$'.number_format($token->token_value, 4) : '—' }}
                         </td>
                         <td class="text-gray-400 text-sm hide-mobile max-w-[180px] truncate" title="{{ $token->source ?? 'System' }}">
                             {{ $token->source ?? 'Daily Distribution' }}

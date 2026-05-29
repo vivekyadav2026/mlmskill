@@ -19,9 +19,12 @@ class AdminController extends Controller
         // Income & Tokens
         $totalIncome = CommissionLedger::sum('amount');
         $directIncomePaid = CommissionLedger::where('commission_type', 'direct')->sum('amount');
-        $levelIncomePaid = CommissionLedger::where('commission_type', 'level')->sum('amount');
-        $totalUtilityTokens = \App\Models\TokenLedger::where('token_type', 'utility')->sum('token_count');
-        $totalRenewalTokens = \App\Models\TokenLedger::where('token_type', 'renewal')->sum('token_count');
+        $levelIncomePaid = CommissionLedger::whereIn('commission_type', ['level', 'team'])->sum('amount');
+        $salaryIncomePaid = CommissionLedger::where('commission_type', 'salary_bonus')->sum('amount');
+        $rewardIncomePaid = CommissionLedger::where('commission_type', 'reward_income')->sum('amount');
+        $totalUtilityTokens = \App\Models\TokenLedger::where('token_type', 'utility')->whereIn('status', ['credited', 'locked'])->sum('token_count');
+        $totalRenewalTokens = \App\Models\TokenLedger::where('token_type', 'renewal')->whereIn('status', ['credited', 'locked'])->sum('token_count');
+        $totalNexa3Tokens = \App\Models\TokenLedger::where('token_type', 'nexa_3')->whereIn('status', ['credited', 'locked'])->sum('token_count');
 
         // Withdrawals
         $pendingWithdrawalsAmount = Withdrawal::where('status', 'pending')->sum('amount');
@@ -60,8 +63,8 @@ class AdminController extends Controller
             
         return view('admin.dashboard', compact(
             'totalUsers', 'activeUsers', 'inactiveUsers',
-            'totalIncome', 'directIncomePaid', 'levelIncomePaid',
-            'totalUtilityTokens', 'totalRenewalTokens',
+            'totalIncome', 'directIncomePaid', 'levelIncomePaid', 'salaryIncomePaid', 'rewardIncomePaid',
+            'totalUtilityTokens', 'totalRenewalTokens', 'totalNexa3Tokens',
             'pendingWithdrawalsAmount', 'pendingWithdrawalsCount', 'totalWithdrawalsPaid',
             'latestRegistrations', 'latestActivations', 'latestWithdrawals',
             'growthLabels', 'growthData', 'distLabels', 'distData'

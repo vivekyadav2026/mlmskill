@@ -11,7 +11,11 @@ Artisan::command('inspire', function () {
 // ─── Salary Bonus: Run weekly on the specified day ───────────────────
 // This pays weekly salary to all eligible users based on achieved ranks.
 // Max 12 payments per user per rank. Output is logged to storage/logs/salary-bonus.log
-$payoutDayOfWeek = (int) \App\Models\Setting::get('salary_payout_day_of_week', 1); // 0=Sun, 1=Mon, ..., 6=Sat
+try {
+    $payoutDayOfWeek = (int) \App\Models\Setting::get('salary_payout_day_of_week', 1); // 0=Sun, 1=Mon, ..., 6=Sat
+} catch (\Exception $e) {
+    $payoutDayOfWeek = 1; // Fallback during migrations/setup
+}
 $payoutDayOfWeek = ($payoutDayOfWeek >= 0 && $payoutDayOfWeek <= 6) ? $payoutDayOfWeek : 1;
 
 Schedule::command('bonuses:salary')

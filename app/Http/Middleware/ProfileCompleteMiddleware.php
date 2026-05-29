@@ -14,7 +14,7 @@ class ProfileCompleteMiddleware
         if (Auth::check() && Auth::user()->role === 'user') {
             if (!Auth::user()->is_profile_complete) {
                 // Allow them to submit the profile form or view it
-                if (!$request->routeIs('user.complete.profile') && !$request->routeIs('user.complete.profile.submit') && !$request->routeIs('logout')) {
+                if (!$request->routeIs('user.complete.profile') && !$request->routeIs('user.complete.profile.submit') && !$request->routeIs('logout') && $request->path() !== 'logout') {
                     return redirect()->route('user.complete.profile');
                 }
             }

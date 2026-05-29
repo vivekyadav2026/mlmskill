@@ -8,7 +8,7 @@
 <div class="tailwind-scope mt-4">
     <div class="mb-6">
         <h2 class="text-2xl font-bold text-gray-100">NEXA 1.0 Wallet</h2>
-        <p class="text-gray-400">Daily tokens credited for utility use and conversion.</p>
+        <p class="text-gray-400">Daily tokens credited for conversion.</p>
     </div>
 
     <!-- Top Row: Balance and Chart -->

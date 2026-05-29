@@ -4,7 +4,7 @@
 .table-custom th { background:#0f172a; color:#94a3b8; font-weight:600; font-size:0.72rem; text-transform:uppercase; letter-spacing:0.05em; padding:0.75rem 1rem; border-bottom:1px solid #334155; white-space:nowrap; }
 .table-custom td { padding:0.85rem 1rem; border-bottom:1px solid #1e293b; color:#e2e8f0; font-size:0.875rem; vertical-align:middle; }
 .table-custom tr:hover td { background:rgba(255,255,255,0.03); }
-.stat-card { background:#1a222d; border:1px solid #334155; border-radius:0.5rem; padding:1.25rem; }
+.stat-card { background:#1a222d; border:1px solid #334155; border-radius:0.5rem; padding:1.25rem; display: flex; flex-direction: column; align-items: flex-start; justify-content: center; }
 .table-scroll { overflow-x:auto; -webkit-overflow-scrolling:touch; }
 .table-scroll table { min-width:700px; }
 @media(max-width:767px){
@@ -38,7 +38,7 @@
     </div>
 
     {{-- Stats Row --}}
-    <div class="grid grid-cols-2 md:grid-cols-5 gap-3 mb-6">
+    <div class="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-3 mb-6">
         <div class="stat-card border-green-900">
             <p class="text-gray-400 text-xs uppercase tracking-wider mb-1">Total Distributed</p>
             <p class="text-2xl font-bold text-green-400">${{ number_format($totalIncome, 2) }}</p>
@@ -51,6 +51,10 @@
             <p class="text-gray-400 text-xs uppercase tracking-wider mb-1">Level Income</p>
             <p class="text-2xl font-bold text-purple-400">${{ number_format($levelTotal, 2) }}</p>
         </div>
+        <div class="stat-card border-orange-900">
+            <p class="text-gray-400 text-xs uppercase tracking-wider mb-1">Bonus Income</p>
+            <p class="text-2xl font-bold text-orange-400">${{ number_format($bonusTotal ?? 0, 2) }}</p>
+        </div>
         <div class="stat-card">
             <p class="text-gray-400 text-xs uppercase tracking-wider mb-1">Total Entries</p>
             <p class="text-2xl font-bold text-white">{{ number_format($totalEntries) }}</p>
@@ -62,12 +66,12 @@
     </div>
 
     {{-- Monthly Chart --}}
-    <div class="stat-card mb-6">
+    <!-- <div class="stat-card mb-6">
         <h3 class="text-gray-300 font-semibold mb-4 flex items-center gap-2">
             <i class="fa-solid fa-chart-line text-green-400"></i> Monthly Income Trend (Last 6 Months)
         </h3>
         <canvas id="incomeChart" height="80"></canvas>
-    </div>
+    </div> -->
 
     {{-- Table --}}
     <div class="bg-[#1a222d] border border-[#334155] rounded-lg overflow-hidden">

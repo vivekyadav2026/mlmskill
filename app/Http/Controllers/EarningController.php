@@ -40,10 +40,11 @@ class EarningController extends Controller
             ->orderBy('created_at', 'desc')
             ->paginate(15);
             
-        $totalEarned = $earnings->sum('amount');
+        $totalEarned = CommissionLedger::where('user_id', $user->id)->sum('amount');
         $directEarned = CommissionLedger::where('user_id', $user->id)->where('commission_type', 'direct')->sum('amount');
-        $levelEarned = CommissionLedger::where('user_id', $user->id)->where('commission_type', 'team')->sum('amount');
+        $levelEarned = CommissionLedger::where('user_id', $user->id)->whereIn('commission_type', ['team', 'level'])->sum('amount');
+        $bonusEarned = CommissionLedger::where('user_id', $user->id)->whereIn('commission_type', ['reward_income', 'salary_bonus'])->sum('amount');
         
-        return view('user.earnings.total', compact('earnings', 'totalEarned', 'directEarned', 'levelEarned'));
+        return view('user.earnings.total', compact('earnings', 'totalEarned', 'directEarned', 'levelEarned', 'bonusEarned'));
     }
 }

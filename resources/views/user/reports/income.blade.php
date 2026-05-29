@@ -19,7 +19,7 @@
     </div>
 
     <!-- Analytics Overview -->
-    <div class="grid grid-cols-1 md:grid-cols-3 gap-4 mb-8">
+    <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-4 mb-8">
         <div class="bg-[#1a222d] border border-[#334155] p-5 rounded-xl shadow-lg">
             <h3 class="text-gray-400 font-medium mb-1 text-xs uppercase">Total Earned</h3>
             <div class="text-2xl font-bold text-green-400">${{ number_format($totalEarned, 2) }}</div>
@@ -31,6 +31,10 @@
         <div class="bg-[#1a222d] border border-[#334155] p-5 rounded-xl shadow-lg">
             <h3 class="text-gray-400 font-medium mb-1 text-xs uppercase">Team Income</h3>
             <div class="text-2xl font-bold text-purple-400">${{ number_format($teamEarned, 2) }}</div>
+        </div>
+        <div class="bg-[#1a222d] border border-[#334155] p-5 rounded-xl shadow-lg">
+            <h3 class="text-gray-400 font-medium mb-1 text-xs uppercase">Bonus Income</h3>
+            <div class="text-2xl font-bold text-orange-400">${{ number_format($bonusEarned ?? 0, 2) }}</div>
         </div>
     </div>
 

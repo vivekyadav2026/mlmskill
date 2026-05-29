@@ -61,6 +61,7 @@ class DashboardController extends Controller
             ->pluck('total', 'date')->toArray();
 
         $tokens = \App\Models\TokenLedger::where('user_id', $user->id)
+            ->whereIn('status', ['credited', 'locked'])
             ->where('created_at', '>=', $startDate)
             ->selectRaw('DATE(created_at) as date, sum(token_count) as total')
             ->groupBy('date')

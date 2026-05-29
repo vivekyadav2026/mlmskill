@@ -44,7 +44,7 @@
                         <div class="text-xs text-indigo-400 font-mono">{{ $user->referral_code }}</div>
                     </td>
                     <td class="text-gray-400 text-sm">{{ $user->sponsor->name ?? 'Direct' }}</td>
-                    <td class="font-bold text-green-400">${{ number_format($user->wallet->balance ?? 0, 2) }}</td>
+                    <td class="font-bold text-green-400">${{ number_format($user->wallet->income_wallet ?? 0, 2) }}</td>
                     <td>
                         @if($user->status == 'active')
                             <span class="bg-green-900/50 border border-green-500/50 text-green-400 px-2 py-1 rounded text-xs font-medium">Active</span>

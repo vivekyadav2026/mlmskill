@@ -33,15 +33,15 @@
         </div>
         <div class="bg-[#1a222d] border border-[#334155] p-5 rounded-xl shadow-lg">
             <h3 class="text-gray-400 font-medium mb-1 text-xs uppercase">Lifetime Income</h3>
-            <div class="text-2xl font-bold text-green-400">${{ number_format($closings->sum('total_income_generated'), 2) }}</div>
+            <div class="text-2xl font-bold text-green-400">${{ number_format($lifetimeIncome, 2) }}</div>
         </div>
         <div class="bg-[#1a222d] border border-[#334155] p-5 rounded-xl shadow-lg">
             <h3 class="text-gray-400 font-medium mb-1 text-xs uppercase">Lifetime Withdrawals</h3>
-            <div class="text-2xl font-bold text-orange-400">${{ number_format($closings->sum('total_withdrawals'), 2) }}</div>
+            <div class="text-2xl font-bold text-orange-400">${{ number_format($lifetimeWithdrawals, 2) }}</div>
         </div>
         <div class="bg-[#1a222d] border border-[#334155] p-5 rounded-xl shadow-lg">
             <h3 class="text-gray-400 font-medium mb-1 text-xs uppercase">Tokens Distributed</h3>
-            <div class="text-2xl font-bold text-purple-400">{{ number_format($closings->sum('total_tokens_issued')) }}</div>
+            <div class="text-2xl font-bold text-purple-400">{{ number_format($lifetimeTokens) }}</div>
         </div>
     </div>
     

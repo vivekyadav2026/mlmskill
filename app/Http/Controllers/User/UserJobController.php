@@ -33,7 +33,11 @@ class UserJobController extends Controller
         }
 
         $request->validate([
-            'resume' => 'nullable|mimes:pdf,doc,docx|max:2048',
+            'resume' => 'required|file|mimes:pdf,doc,docx|max:2048',
+        ], [
+            'resume.required' => 'Please upload your CV.',
+            'resume.mimes' => 'Only PDF, DOC, and DOCX files are allowed.',
+            'resume.max' => 'Your CV must be less than 2MB in size.',
         ]);
 
         $resumePath = null;

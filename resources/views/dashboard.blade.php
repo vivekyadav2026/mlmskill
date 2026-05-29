@@ -82,23 +82,33 @@
     @if($banners->count() > 0)
     <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-{{ min(3, $banners->count()) }} gap-4 mb-6">
         @foreach($banners as $banner)
-            <div class="rounded-lg overflow-hidden border border-[#334155] shadow-lg group relative h-40">
-                @if($banner->link_url)
-                    <a href="{{ $banner->link_url }}" target="_blank" class="block w-full h-full">
-                @endif
-                
+            <div class="rounded-lg overflow-hidden border border-[#334155] shadow-lg group relative h-40 cursor-pointer" onclick="openBannerLightbox('{{ $banner->image_url }}', '{{ addslashes($banner->title) }}', '{{ $banner->link_url }}')">
                 <img src="{{ $banner->image_url }}" alt="{{ $banner->title }}" class="w-full h-full object-cover transition duration-300 group-hover:scale-105">
                 <div class="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black/90 to-transparent p-3 pt-8">
                     <h4 class="text-white font-bold text-sm drop-shadow-md">{{ $banner->title }}</h4>
                 </div>
-
-                @if($banner->link_url)
-                    </a>
-                @endif
             </div>
         @endforeach
     </div>
     @endif
+
+    <!-- Banner Lightbox Modal -->
+    <div id="bannerLightbox" class="fixed inset-0 z-[9999] hidden bg-black/85 flex flex-col items-center justify-center backdrop-blur-sm p-4" onclick="closeBannerLightbox()">
+        <div class="absolute top-4 right-4 z-50">
+            <button class="text-gray-300 hover:text-white bg-black/40 hover:bg-black/60 rounded-full p-2.5 transition focus:outline-none">
+                <i class="fa-solid fa-times text-2xl"></i>
+            </button>
+        </div>
+        <div class="max-w-4xl max-h-[80vh] w-full flex items-center justify-center relative" onclick="event.stopPropagation()">
+            <img id="lightboxImage" src="" alt="Full Banner" class="max-w-full max-h-[80vh] rounded-lg shadow-2xl object-contain border border-[#334155]">
+        </div>
+        <div class="mt-4 text-center" onclick="event.stopPropagation()">
+            <h3 id="lightboxTitle" class="text-white font-bold text-lg mb-2"></h3>
+            <a id="lightboxLink" href="" target="_blank" class="hidden px-5 py-2 bg-indigo-600 hover:bg-indigo-700 text-white font-semibold rounded-lg shadow transition inline-flex items-center gap-2">
+                <i class="fa-solid fa-arrow-up-right-from-square"></i> Open Link
+            </a>
+        </div>
+    </div>
 
     <!-- Referral Link Bar -->
     <div class="bg-[#1a222d] rounded-lg border border-[#334155] p-3 mb-6 flex flex-col md:flex-row items-center gap-3">
@@ -684,6 +694,31 @@ document.addEventListener('DOMContentLoaded', function() {
             }
         }
     });
+});
+function openBannerLightbox(imageUrl, title, linkUrl) {
+    document.getElementById('lightboxImage').src = imageUrl;
+    document.getElementById('lightboxTitle').textContent = title;
+    
+    const linkBtn = document.getElementById('lightboxLink');
+    if (linkUrl && linkUrl !== '') {
+        linkBtn.href = linkUrl;
+        linkBtn.classList.remove('hidden');
+    } else {
+        linkBtn.classList.add('hidden');
+    }
+    
+    document.getElementById('bannerLightbox').classList.remove('hidden');
+}
+
+function closeBannerLightbox() {
+    document.getElementById('bannerLightbox').classList.add('hidden');
+}
+
+document.addEventListener('DOMContentLoaded', function() {
+    const lightbox = document.getElementById('bannerLightbox');
+    if (lightbox) {
+        document.body.appendChild(lightbox);
+    }
 });
 </script>
 @endsection

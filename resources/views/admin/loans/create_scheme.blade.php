@@ -50,7 +50,7 @@
 
             <div>
                 <label class="block text-sm font-medium text-gray-400 mb-1">
-                    Min Amount (₹) <span class="text-red-400">*</span>
+                    Min Amount ($) <span class="text-red-400">*</span>
                 </label>
                 <input type="number" name="min_amount" required step="0.01" min="0"
                        value="{{ old('min_amount') }}"
@@ -61,7 +61,7 @@
 
             <div>
                 <label class="block text-sm font-medium text-gray-400 mb-1">
-                    Max Amount (₹) <span class="text-red-400">*</span>
+                    Max Amount ($) <span class="text-red-400">*</span>
                 </label>
                 <input type="number" name="max_amount" required step="0.01" min="0"
                        value="{{ old('max_amount') }}"

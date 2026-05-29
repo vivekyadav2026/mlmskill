@@ -21,11 +21,22 @@
                 Complete history of all manual salary credit &amp; debit entries.
             </p>
         </div>
-        <a href="{{ url('admin/settings/salary') }}"
-           class="px-4 py-2 text-sm bg-yellow-500/10 border border-yellow-700/50 text-yellow-400
-                  hover:bg-yellow-500/20 rounded-lg transition flex items-center gap-2">
-            <i class="fa-solid fa-plus"></i> New Adjustment
-        </a>
+        <div class="flex items-center gap-3">
+            <form action="{{ url('admin/commissions/salary') }}" method="GET" class="flex items-center gap-2 bg-[#1a222d] border border-[#334155] rounded-lg p-1.5">
+                <input type="date" name="from_date" value="{{ request('from_date') }}" class="bg-[#0f172a] border border-[#334155] text-gray-300 text-xs rounded px-2 py-1.5 focus:outline-none">
+                <span class="text-gray-500 text-xs">to</span>
+                <input type="date" name="to_date" value="{{ request('to_date') }}" class="bg-[#0f172a] border border-[#334155] text-gray-300 text-xs rounded px-2 py-1.5 focus:outline-none">
+                <button type="submit" class="bg-indigo-600 hover:bg-indigo-700 text-white text-xs px-3 py-1.5 rounded transition">Filter</button>
+                @if(request('from_date') || request('to_date'))
+                <a href="{{ url('admin/commissions/salary') }}" class="bg-gray-600 hover:bg-gray-700 text-white text-xs px-2 py-1.5 rounded transition"><i class="fa-solid fa-xmark"></i></a>
+                @endif
+            </form>
+            <a href="{{ url('admin/settings/salary') }}"
+               class="px-4 py-2 text-sm bg-yellow-500/10 border border-yellow-700/50 text-yellow-400
+                      hover:bg-yellow-500/20 rounded-lg transition flex items-center gap-2">
+                <i class="fa-solid fa-plus"></i> New
+            </a>
+        </div>
     </div>
 
     {{-- Stats --}}
@@ -36,7 +47,7 @@
         </div>
         <div class="bg-[#1a222d] border border-green-900/60 rounded-xl p-4 text-center">
             <p class="text-gray-400 text-xs uppercase tracking-wider mb-1">Total Credited</p>
-            <p class="text-2xl font-bold text-green-400">+₹{{ number_format($totalCredit, 2) }}</p>
+            <p class="text-2xl font-bold text-green-400">+${{ number_format($totalCredit, 2) }}</p>
         </div>
         <div class="bg-[#1a222d] border border-red-900/60 rounded-xl p-4 text-center">
             <p class="text-gray-400 text-xs uppercase tracking-wider mb-1">Total Debited</p>
@@ -46,7 +57,7 @@
             <p class="text-gray-400 text-xs uppercase tracking-wider mb-1">Net Balance</p>
             @php $net = $totalCredit + $totalDebit; @endphp
             <p class="text-2xl font-bold {{ $net >= 0 ? 'text-green-400' : 'text-red-400' }}">
-                {{ $net >= 0 ? '+' : '' }}₹{{ number_format($net, 2) }}
+                {{ $net >= 0 ? '+' : '' }}${{ number_format($net, 2) }}
             </p>
         </div>
     </div>
@@ -110,7 +121,7 @@
                         {{-- Amount --}}
                         <td>
                             <span class="font-mono font-bold text-base {{ $isCredit ? 'text-green-400' : 'text-red-400' }}">
-                                {{ $isCredit ? '+' : '' }}₹{{ number_format($log->amount, 2) }}
+                                {{ $isCredit ? '+' : '' }}${{ number_format($log->amount, 2) }}
                             </span>
                         </td>
 

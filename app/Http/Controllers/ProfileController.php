@@ -92,7 +92,7 @@ class ProfileController extends Controller
         $activeDirectCount = \App\Models\User::where('sponsor_id', $user->referral_code)->where('status', 'active')->count();
 
         // Tokens
-        $totalTokens  = \App\Models\TokenLedger::where('user_id', $user->id)->sum('token_count');
+        $totalTokens  = \App\Models\TokenLedger::where('user_id', $user->id)->whereIn('status', ['credited', 'locked'])->sum('token_count');
         $tokenName    = \App\Models\Setting::get('utility_token_name', 'SKT');
         $tokenPrice   = \App\Models\Setting::get('utility_token_value', 0.42);
 

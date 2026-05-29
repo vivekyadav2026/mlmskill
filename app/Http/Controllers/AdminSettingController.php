@@ -154,19 +154,22 @@ class AdminSettingController extends Controller
         $request->validate([
             'utility_token_value'  => 'required|numeric|min:0',
             'renewal_token_value'  => 'required|numeric|min:0',
-            'token_expiry_days'    => 'required|integer|min:0',
-            'min_token_redeem'     => 'required|numeric|min:0',
+            // 'token_expiry_days'    => 'required|integer|min:0',
+            // 'min_token_redeem'     => 'required|numeric|min:0',
+            'nexa_3_course_reward' => 'required|numeric|min:0',
+            'nexa_3_token_value'   => 'required|numeric|min:0',
         ]);
 
         $fields = [
             'utility_token_value', 'renewal_token_value',
-            'token_expiry_days', 'min_token_redeem',
+            // 'token_expiry_days', 'min_token_redeem',
             'utility_token_name', 'renewal_token_name',
+            'nexa_3_course_reward', 'nexa_3_token_value',
         ];
         foreach ($fields as $f) Setting::set($f, $request->input($f, ''));
 
-        Setting::set('token_auto_credit',  $request->has('token_auto_credit')  ? '1' : '0');
-        Setting::set('token_transferable', $request->has('token_transferable') ? '1' : '0');
+        // Setting::set('token_auto_credit',  $request->has('token_auto_credit')  ? '1' : '0');
+        // Setting::set('token_transferable', $request->has('token_transferable') ? '1' : '0');
 
         return back()->with('success', 'Token settings saved successfully!');
     }

@@ -17,8 +17,8 @@ class AdminTokenController extends Controller
         $settings = Setting::whereIn('key', [
             'utility_token_name', 'utility_token_value',
             'renewal_token_name', 'renewal_token_value',
-            'token_expiry_days', 'min_token_redeem',
-            'token_auto_credit', 'token_transferable',
+            // 'token_expiry_days', 'min_token_redeem',
+            // 'token_auto_credit', 'token_transferable',
         ])->pluck('value', 'key')->toArray();
 
         return view('admin.tokens.settings', compact('settings'));

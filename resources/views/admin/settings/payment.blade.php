@@ -44,7 +44,7 @@
         </div>
         <div>
           <label class="f-label">Currency Symbol</label>
-          <input type="text" name="payment_currency_sym" class="f-ctrl" value="{{ $settings['payment_currency_sym'] ?? '$' }}" placeholder="$, ₹, €..." maxlength="5" required>
+          <input type="text" name="payment_currency_sym" class="f-ctrl" value="{{ $settings['payment_currency_sym'] ?? '$' }}" placeholder="$, $, €..." maxlength="5" required>
         </div>
       </div>
     </div>

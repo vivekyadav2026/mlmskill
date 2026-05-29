@@ -36,10 +36,10 @@
 
     <!-- NEXA 1.0 -->
     <div class="s-card">
-      <div class="s-header"><i class="fa-solid fa-coins text-indigo-400"></i><h3>NEXA 1.0 (UT)</h3></div>
+      <div class="s-header"><i class="fa-solid fa-coins text-indigo-400"></i><h3>NEXA 1.0</h3></div>
       <div class="s-body grid grid-cols-1 md:grid-cols-2 gap-4">
         <div>
-          <label class="f-label">Token Display Name</label>
+          <label class="f-label">NEXA 1.0</label>
           <input type="text" readonly name="utility_token_name" class="f-ctrl" value="{{ $settings['utility_token_name'] ?? 'NEXA 1.0' }}" placeholder="e.g. NEXA 1.0">
         </div>
         <div>
@@ -51,7 +51,7 @@
 
     <!-- NEXA 2.0 -->
     <div class="s-card">
-      <div class="s-header"><i class="fa-solid fa-rotate text-cyan-400"></i><h3>NEXA 2.0 (RT)</h3></div>
+      <div class="s-header"><i class="fa-solid fa-rotate text-cyan-400"></i><h3>NEXA 2.0</h3></div>
       <div class="s-body grid grid-cols-1 md:grid-cols-2 gap-4">
         <div>
           <label class="f-label">Token Name (Display)</label>
@@ -80,6 +80,7 @@
     </div>
 
     <!-- Token Rules -->
+    {{--
     <div class="s-card">
       <div class="s-header"><i class="fa-solid fa-sliders text-orange-400"></i><h3>Token Rules & Restrictions</h3></div>
       <div class="s-body grid grid-cols-1 md:grid-cols-2 gap-4">
@@ -116,6 +117,7 @@
         </div>
       </div>
     </div>
+    --}}
 
     <div class="flex justify-end">
       <button type="submit" class="btn-save"><i class="fa-solid fa-floppy-disk mr-2"></i> Save Token Settings</button>

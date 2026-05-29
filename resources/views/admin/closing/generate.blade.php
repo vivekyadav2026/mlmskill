@@ -17,7 +17,7 @@
     @endif
 
     <!-- Date Filter Form -->
-    <form method="GET" action="{{ url('admin/closing/generate') }}" class="bg-[#1a222d] border border-[#334155] rounded-xl p-6 shadow-xl mb-6">
+    <!-- <form method="GET" action="{{ url('admin/closing/generate') }}" class="bg-[#1a222d] border border-[#334155] rounded-xl p-6 shadow-xl mb-6">
         <h3 class="text-gray-200 font-bold mb-4 flex items-center border-b border-[#334155] pb-2">
             <i class="fa-solid fa-calendar-days text-indigo-500 mr-2"></i> Select Date Range
         </h3>
@@ -36,7 +36,7 @@
                 </button>
             </div>
         </div>
-    </form>
+    </form> -->
 
     <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8">
         <!-- Preview Data -->

@@ -15,7 +15,7 @@ class PosterController extends Controller
 
     public function userView()
     {
-        return view('user.referral.poster_editor');
+        abort(404);
     }
 
     public function download(Request $request)

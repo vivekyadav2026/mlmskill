@@ -157,15 +157,20 @@
             <p class="text-xs text-gray-400 uppercase tracking-wide">NEXA 2.0</p>
             <p class="text-lg font-bold text-gray-100">{{ number_format($totalRenewalTokens, 2) }}</p>
         </div>
-        <div class="bg-[#1a222d] rounded-lg p-4 border border-[#334155] text-center opacity-50">
+        <div class="bg-[#1a222d] rounded-lg p-4 border border-[#334155] text-center">
+            <i class="fa-solid fa-graduation-cap text-teal-400 mb-2"></i>
+            <p class="text-xs text-gray-400 uppercase tracking-wide">NEXA 3.0</p>
+            <p class="text-lg font-bold text-gray-100">{{ number_format($totalNexa3Tokens, 2) }}</p>
+        </div>
+        <div class="bg-[#1a222d] rounded-lg p-4 border border-[#334155] text-center">
             <i class="fa-solid fa-money-bill text-green-400 mb-2"></i>
             <p class="text-xs text-gray-400 uppercase tracking-wide">Weekly Salary</p>
-            <p class="text-lg font-bold text-gray-100">$0.00</p>
+            <p class="text-lg font-bold text-gray-100">${{ number_format($salaryIncomePaid ?? 0, 2) }}</p>
         </div>
-        <div class="bg-[#1a222d] rounded-lg p-4 border border-[#334155] text-center opacity-50">
+        <div class="bg-[#1a222d] rounded-lg p-4 border border-[#334155] text-center">
             <i class="fa-solid fa-trophy text-yellow-400 mb-2"></i>
             <p class="text-xs text-gray-400 uppercase tracking-wide">Rank Rewards</p>
-            <p class="text-lg font-bold text-gray-100">$0.00</p>
+            <p class="text-lg font-bold text-gray-100">${{ number_format($rewardIncomePaid ?? 0, 2) }}</p>
         </div>
         <div class="bg-[#1a222d] rounded-lg p-4 border border-[#334155] text-center">
             <i class="fa-solid fa-shield text-gray-400 mb-2"></i>

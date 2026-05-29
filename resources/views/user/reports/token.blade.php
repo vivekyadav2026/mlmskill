@@ -19,7 +19,7 @@
     </div>
 
     <!-- Analytics Overview -->
-    <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-8">
+    <div class="grid grid-cols-1 md:grid-cols-3 gap-4 mb-8">
         <div class="bg-[#1a222d] border border-[#334155] p-5 rounded-xl shadow-lg">
             <h3 class="text-gray-400 font-medium mb-1 text-xs uppercase"> NEXA 1.0 </h3>
             <div class="text-2xl font-bold text-blue-400">{{ number_format($totalUtility, 2) }}</div>
@@ -27,6 +27,10 @@
         <div class="bg-[#1a222d] border border-[#334155] p-5 rounded-xl shadow-lg">
             <h3 class="text-gray-400 font-medium mb-1 text-xs uppercase"> NEXA 2.0 </h3>
             <div class="text-2xl font-bold text-orange-400">{{ number_format($totalRenewal, 2) }}</div>
+        </div>
+        <div class="bg-[#1a222d] border border-[#334155] p-5 rounded-xl shadow-lg">
+            <h3 class="text-gray-400 font-medium mb-1 text-xs uppercase"> NEXA 3.0 </h3>
+            <div class="text-2xl font-bold text-green-400">{{ number_format($totalNexa3, 2) }}</div>
         </div>
     </div>
 
@@ -49,9 +53,13 @@
                         <td class="whitespace-nowrap text-gray-400">{{ \Carbon\Carbon::parse($item->created_at)->format('M d, Y') }}<br><span class="text-xs">{{ \Carbon\Carbon::parse($item->created_at)->format('H:i') }}</span></td>
                         <td>
                             @if($item->token_type == 'utility')
-                                <span class="bg-blue-900/50 text-blue-400 border border-blue-500/30 px-2 py-1 rounded text-xs uppercase">NEXA 1.0 ({{ strtoupper($tokenName) }})</span>
+                                <span class="bg-blue-900/50 text-blue-400 border border-blue-500/30 px-2 py-1 rounded text-xs uppercase">NEXA 1.0</span>
+                            @elseif($item->token_type == 'renewal')
+                                <span class="bg-orange-900/50 text-orange-400 border border-orange-500/30 px-2 py-1 rounded text-xs uppercase">NEXA 2.0</span>
+                            @elseif($item->token_type == 'nexa_3')
+                                <span class="bg-green-900/50 text-green-400 border border-green-500/30 px-2 py-1 rounded text-xs uppercase">NEXA 3.0</span>
                             @else
-                                <span class="bg-orange-900/50 text-orange-400 border border-orange-500/30 px-2 py-1 rounded text-xs uppercase">NEXA 2.0 (RT)</span>
+                                <span class="bg-gray-900/50 text-gray-400 border border-gray-500/30 px-2 py-1 rounded text-xs uppercase">{{ $item->token_type }}</span>
                             @endif
                         </td>
                         <td class="text-gray-300 capitalize">{{ $item->source ?? 'Distribution' }}</td>

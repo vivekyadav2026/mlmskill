@@ -12,7 +12,7 @@
     </div>
 
     <!-- Stats -->
-    <div class="grid grid-cols-1 md:grid-cols-3 gap-4 mb-8">
+    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 mb-8">
         <div class="bg-[#1a222d] rounded-lg p-5 border border-[#334155]">
             <p class="text-sm text-gray-400 mb-1">Direct Income</p>
             <p class="text-2xl font-bold text-indigo-400">${{ number_format($directEarned, 2) }}</p>
@@ -20,6 +20,10 @@
         <div class="bg-[#1a222d] rounded-lg p-5 border border-[#334155]">
             <p class="text-sm text-gray-400 mb-1">Team Level Income</p>
             <p class="text-2xl font-bold text-blue-400">${{ number_format($levelEarned, 2) }}</p>
+        </div>
+        <div class="bg-[#1a222d] rounded-lg p-5 border border-[#334155]">
+            <p class="text-sm text-gray-400 mb-1">Bonus Income</p>
+            <p class="text-2xl font-bold text-orange-400">${{ number_format($bonusEarned ?? 0, 2) }}</p>
         </div>
         <div class="bg-gradient-to-r from-green-600 to-green-900 rounded-lg p-5 border border-green-500">
             <p class="text-sm text-green-100 mb-1">Total Earned</p>
@@ -49,8 +53,10 @@
                         <td class="px-6 py-4 whitespace-nowrap">
                             @if($item->commission_type === 'direct')
                                 <span class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-indigo-900 text-indigo-300 border border-indigo-700">Direct</span>
-                            @else
+                            @elseif($item->commission_type === 'team' || $item->commission_type === 'level')
                                 <span class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-blue-900 text-blue-300 border border-blue-700">Level {{ $item->level }}</span>
+                            @else
+                                <span class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-gray-800 text-gray-300 border border-gray-600 uppercase">{{ str_replace('_', ' ', $item->commission_type) }}</span>
                             @endif
                         </td>
                         <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-200">
