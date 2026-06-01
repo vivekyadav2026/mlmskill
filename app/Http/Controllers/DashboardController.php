@@ -13,7 +13,7 @@ class DashboardController extends Controller
         $wallet = $user->wallet;
         
         $totalEarned = \App\Models\CommissionLedger::where('user_id', $user->id)->sum('amount');
-        $directCount = \App\Models\User::where('sponsor_id', $user->referral_code)->count();
+        $directCount = \App\Models\User::where('sponsor_id', $user->referral_code)->where('status', 'active')->count();
         
         // Calculate real downline network count (up to 10 levels deep)
         $levelCounts = [];
@@ -23,11 +23,11 @@ class DashboardController extends Controller
                 $levelCounts[$level] = 0;
                 continue;
             }
-            $nextLevelSponsorCodes = \App\Models\User::whereIn('sponsor_id', $currentLevelSponsorCodes)
-                ->pluck('referral_code')
+            $nextLevelUsers = \App\Models\User::whereIn('sponsor_id', $currentLevelSponsorCodes)->get();
+            $nextLevelSponsorCodes = $nextLevelUsers->pluck('referral_code')
                 ->filter()
                 ->toArray();
-            $levelCounts[$level] = count($nextLevelSponsorCodes);
+            $levelCounts[$level] = $nextLevelUsers->where('status', 'active')->count();
             $currentLevelSponsorCodes = $nextLevelSponsorCodes;
         }
         $networkCount = array_sum($levelCounts);

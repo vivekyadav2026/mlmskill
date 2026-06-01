@@ -93,12 +93,17 @@ class NetworkController extends Controller
                 continue;
             }
             
-            $nextLevelSponsorCodes = \App\Models\User::whereIn('sponsor_id', $currentLevelSponsorCodes)
-                                            ->pluck('referral_code')
+            // Get all downlines on this level to continue the chain
+            $nextLevelUsers = \App\Models\User::whereIn('sponsor_id', $currentLevelSponsorCodes)->get();
+            
+            $nextLevelSponsorCodes = $nextLevelUsers->pluck('referral_code')
                                             ->filter()
                                             ->toArray();
                                             
-            $levelCounts[$level] = count($nextLevelSponsorCodes);
+            // Count ONLY active users for this level
+            $activeCountForLevel = $nextLevelUsers->where('status', 'active')->count();
+                                            
+            $levelCounts[$level] = $activeCountForLevel;
             $levelEarnings[$level] = $levelEarningsRaw[$level] ?? 0;
             $currentLevelSponsorCodes = $nextLevelSponsorCodes;
         }
