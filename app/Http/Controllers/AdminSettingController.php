@@ -168,8 +168,7 @@ class AdminSettingController extends Controller
         ];
         foreach ($fields as $f) Setting::set($f, $request->input($f, ''));
 
-        // Setting::set('token_auto_credit',  $request->has('token_auto_credit')  ? '1' : '0');
-        // Setting::set('token_transferable', $request->has('token_transferable') ? '1' : '0');
+        Setting::set('nexa_2_locked', $request->has('nexa_2_locked') ? '1' : '0');
 
         return back()->with('success', 'Token settings saved successfully!');
     }

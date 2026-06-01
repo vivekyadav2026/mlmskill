@@ -90,12 +90,11 @@ class TokenSystemController extends Controller
         }
 
         if ($request->token_type === 'renewal') {
-            $activationDate = $user->activation_date ? \Carbon\Carbon::parse($user->activation_date) : null;
-            $daysSinceActivation = $activationDate ? (int) $activationDate->diffInDays(now()) : 0;
-
-            if ($daysSinceActivation < 300) {
-                return back()->with('error', 'NEXA 2.0 can only be converted after 300 days of activation.');
+            // Check if conversions are locked by the administrator
+            if (\App\Models\Setting::get('nexa_2_locked', '0') == '1') {
+                return back()->with('error', 'NEXA 2.0 conversions are currently locked by the administrator.');
             }
+
             if (!$wallet || $wallet->renewal_token_wallet < $amount) {
                 return back()->with('error', 'Insufficient NEXA 2.0.');
             }

@@ -61,6 +61,19 @@
           <label class="f-label">Token Value ($)</label>
           <input type="number" step="0.01" name="renewal_token_value" class="f-ctrl" value="{{ $settings['renewal_token_value'] ?? '1.00' }}">
         </div>
+        
+        <div class="md:col-span-2 mt-2 pt-3 border-t border-slate-700/50">
+          <div class="toggle-row flex justify-between items-center">
+            <div>
+              <p class="text-gray-300 font-medium text-sm">Lock NEXA 2.0 Conversion</p>
+              <p class="text-gray-500 text-xs">If locked, users cannot convert NEXA 2.0 tokens to their Package Wallet (regardless of account age).</p>
+            </div>
+            <label class="relative inline-flex items-center cursor-pointer">
+              <input type="checkbox" name="nexa_2_locked" value="1" class="sr-only peer" {{ ($settings['nexa_2_locked'] ?? '0') == '1' ? 'checked' : '' }}>
+              <div class="w-11 h-6 bg-gray-700 peer-focus:outline-none rounded-full peer peer-checked:after:translate-x-full after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-indigo-600"></div>
+            </label>
+          </div>
+        </div>
       </div>
     </div>
 

@@ -81,9 +81,12 @@
                         <span>You will receive:</span>
                         <span class="font-bold text-green-400" id="renewalReceive">$0.00</span>
                     </div>
-                    <button type="submit" class="w-full bg-emerald-600 hover:bg-emerald-700 text-white font-bold py-2 px-4 rounded transition" {{ $daysSinceActivation < 300 || $renewalBalance < 1 ? 'disabled' : '' }}>
-                        @if($daysSinceActivation < 300)
-                            Locked 
+                    @php
+                        $nexa2Locked = \App\Models\Setting::get('nexa_2_locked', '0') == '1';
+                    @endphp
+                    <button type="submit" class="w-full bg-emerald-600 hover:bg-emerald-700 text-white font-bold py-2 px-4 rounded transition" {{ $nexa2Locked || $renewalBalance < 1 ? 'disabled' : '' }}>
+                        @if($nexa2Locked)
+                            Locked by Admin
                         @elseif($renewalBalance < 1)
                             Insufficient Balance
                         @else
