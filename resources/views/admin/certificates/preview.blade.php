@@ -5,8 +5,9 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Certificate – {{ $cert->certificate_number }}</title>
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+<script src="https://cdn.tailwindcss.com"></script>
 <style>
-  @import url('https://fonts.googleapis.com/css2?family=Allura&display=swap');
+  @import url('https://fonts.googleapis.com/css2?family=Allura&family=Cinzel:wght@600;700;800;900&family=Playfair+Display:ital,wght@0,600;0,700;0,800;1,600&family=Montserrat:wght@500;600;700;800&family=Noto+Sans+Devanagari:wght@400;700;900&display=swap');
   * { margin: 0; padding: 0; box-sizing: border-box; }
   body { background: #f1f5f9; display: flex; flex-direction: column; align-items: center; justify-content: flex-start; min-height: 100vh; font-family: 'Outfit', sans-serif; padding: 24px; }
 
@@ -17,27 +18,77 @@
   .btn-back { background: #334155; color: #e2e8f0; }
   .btn-back:hover { background: #475569; }
 
-  /* ── Certificate (mirrors user design exactly) ── */
+  /* ── Certificate Layout & Styles ── */
   #certificate-area { max-width: 900px; width: 100%; background: white; padding: 8px; border-radius: 10px; box-shadow: 0 25px 50px -12px rgba(0,0,0,0.3); }
 
   .cert-container {
-      background: url('https://www.transparenttextures.com/patterns/cubes.png'),
-                  linear-gradient(135deg, #f8fafc 0%, #e2e8f0 100%);
-      border: 8px double #1e293b;
-      padding: 40px;
-      text-align: center;
+      background: #ffffff;
+      border: 4px solid #004d40;
+      padding: 6px;
       position: relative;
+      width: 100%;
+      aspect-ratio: 1.414 / 1;
       color: #0f172a;
+      overflow: hidden;
+      box-sizing: border-box;
   }
-  .cert-header { font-family: 'Georgia', serif; font-size: 2.5rem; font-weight: bold; color: #1e293b; text-transform: uppercase; letter-spacing: 2px; }
-  .cert-name   { font-family: 'Georgia', serif; font-size: 3rem; font-weight: bold; color: #4338ca; margin: 20px 0; border-bottom: 2px solid #cbd5e1; display: inline-block; padding: 0 40px 10px; }
-  .cert-number { font-size: 0.75rem; color: #94a3b8; font-family: monospace; margin-top: 16px; letter-spacing: 0.08em; }
+  .cert-inner-border {
+      border: 1.5px solid #d4af37;
+      height: 100%;
+      width: 100%;
+      padding: 20px 24px 24px 84px; /* space on left for sidebar */
+      position: relative;
+      border-radius: 8px;
+      box-sizing: border-box;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+  }
 
   @media print {
-    body { background: white; padding: 0; }
-    .actions { display: none; }
-    #certificate-area { box-shadow: none; padding: 0; }
-    .cert-container { border-color: #1e293b; }
+    @page {
+        size: A4 landscape;
+        margin: 0;
+    }
+    body {
+        background-color: white !important;
+        margin: 0 !important;
+        padding: 0 !important;
+    }
+    body * {
+        visibility: hidden;
+    }
+    #certificate-area, #certificate-area * {
+        visibility: visible !important;
+    }
+    #certificate-area {
+        position: absolute;
+        left: 0;
+        top: 0;
+        width: 297mm !important;
+        height: 210mm !important;
+        margin: 0 !important;
+        padding: 0 !important;
+        border-radius: 0 !important;
+        box-shadow: none !important;
+        background: white !important;
+    }
+    .cert-container {
+        width: 297mm !important;
+        height: 210mm !important;
+        border-width: 5px !important;
+        border-radius: 0 !important;
+        box-shadow: none !important;
+        padding: 8px !important;
+        background: white !important;
+        -webkit-print-color-adjust: exact;
+        print-color-adjust: exact;
+    }
+    .cert-inner-border {
+        padding: 24px 28px 36px 96px !important;
+        border-radius: 0 !important;
+        border-width: 2px !important;
+    }
   }
 </style>
 </head>
@@ -48,87 +99,246 @@
   <button class="btn btn-print" onclick="window.print()"><i class="fa-solid fa-print"></i> Print / Save PDF</button>
 </div>
 
-<div id="certificate-area">
-  <div class="cert-container">
-
-    {{-- Top-left icon --}}
-    <div style="position:absolute;top:24px;left:24px;">
-      <i class="fa-solid fa-graduation-cap" style="font-size:2.5rem;color:#cbd5e1;"></i>
-    </div>
-
-    {{-- Top-right logo --}}
-    <div style="position:absolute;top:24px;right:24px;">
-      <img src="{{ asset('logo.png') }}" alt="Logo" style="width:64px;height:64px;border-radius:50%;object-fit:cover;box-shadow:0 2px 6px rgba(0,0,0,.15);border:1px solid #e2e8f0;">
-    </div>
-
-    <h1 class="cert-header" style="margin-top:40px;">Certificate of Completion</h1>
-    <p style="margin-top:32px;font-size:1.25rem;color:#475569;font-style:italic;">This is to proudly certify that</p>
-
-    <h2 class="cert-name">{{ $cert->user->name ?? 'Unknown' }}</h2>
-
-    <p style="margin-top:16px;font-size:1.1rem;color:#475569;max-width:600px;margin-left:auto;margin-right:auto;line-height:1.8;">
-      has successfully completed the comprehensive
-      <strong style="color:#1e293b;">{{ $cert->module->name ?? ($cert->course->title ?? 'Training Module') }}</strong>
-      demonstrating outstanding dedication and skill.
-    </p>
-
-    {{-- Footer row --}}
-    <div style="margin-top:60px;display:flex;justify-content:space-between;align-items:flex-end;padding:0 48px;">
-
-      {{-- Date --}}
-      <div style="text-align:center;">
-        <div style="border-bottom:1px solid #9ca3af;width:192px;padding-bottom:8px;margin-bottom:8px;font-weight:500;">
-          {{ $cert->issue_date->format('F d, Y') }}
-        </div>
-        <p style="font-size:0.75rem;font-weight:700;color:#6b7280;text-transform:uppercase;letter-spacing:0.08em;">Date of Issue</p>
-        <p style="font-size:0.65rem;color:#94a3b8;font-family:monospace;margin-top:4px;">{{ $cert->certificate_number }}</p>
+<div id="certificate-area" style="-webkit-print-color-adjust: exact; print-color-adjust: exact;">
+  <div class="cert-container" style="font-family: 'Inter', sans-serif; border: 5px solid #004d40; padding: 8px; border-radius: 14px; background: #ffffff; position: relative;">
+      
+      <!-- Diagonal Green & Gold Curved Corner Decorations -->
+      <!-- Top Left Diagonal Band -->
+      <div class="absolute top-0 left-0 w-44 h-44 overflow-hidden z-0 pointer-events-none">
+          <div class="w-[200%] h-[200%] bg-[#004d40] absolute top-0 left-0 transform -rotate-45 origin-top-left -translate-y-[55%] -translate-x-[20%] border-b-8 border-[#d4af37] shadow-lg"></div>
+          <!-- Extra fine decorative gold line -->
+          <div class="w-[200%] h-[200%] border-t-2 border-[#d4af37]/60 absolute top-[16px] left-[16px] transform -rotate-45 origin-top-left -translate-y-[55%] -translate-x-[20%]"></div>
+      </div>
+      
+      <!-- Bottom Right Diagonal Band -->
+      <div class="absolute bottom-0 right-0 w-44 h-44 overflow-hidden z-0 pointer-events-none">
+          <div class="w-[200%] h-[200%] bg-[#004d40] absolute bottom-0 right-0 transform -rotate-45 origin-bottom-right translate-y-[55%] translate-x-[20%] border-t-8 border-[#d4af37] shadow-lg"></div>
+          <div class="w-[200%] h-[200%] border-b-2 border-[#d4af37]/60 absolute bottom-[16px] right-[16px] transform -rotate-45 origin-bottom-right translate-y-[55%] translate-x-[20%]"></div>
       </div>
 
-      {{-- Seal --}}
-      <div style="position:relative;display:flex;flex-direction:column;align-items:center;justify-content:center;">
-        <!-- Indian Official Seal/Stamp -->
-        <div style="position:absolute;top:-45px;user-select:none;opacity:0.9;transform:rotate(-6deg);filter:drop-shadow(0px 4px 10px rgba(0,0,0,0.1));">
-          <svg width="105" height="105" viewBox="0 0 120 120" xmlns="http://www.w3.org/2000/svg" style="color: #1e3a8a; fill: none; stroke: currentColor; stroke-linecap: round; stroke-linejoin: round;">
-            <circle cx="60" cy="60" r="56" stroke-width="2.2" stroke-dasharray="3 1 1 1" />
-            <circle cx="60" cy="60" r="51" stroke-width="0.8" />
-            <circle cx="60" cy="60" r="36" stroke-width="1.5" />
-            
-            <circle cx="60" cy="60" r="16" stroke-width="1.5" />
-            <path d="M60,44 L60,76 M44,60 L76,60 M48.7,48.7 L71.3,71.3 M48.7,71.3 L71.3,48.7 M53.8,44.7 L66.2,75.3 M44.7,53.8 L75.3,66.2 M44.7,66.2 L75.3,53.8 M53.8,75.3 L66.2,44.7" stroke-width="0.8" opacity="0.8" />
-            
-            <path id="preview-stamp-top" d="M 16,60 A 44,44 0 1,1 104,60" fill="none" stroke="none" />
-            <path id="preview-stamp-bottom" d="M 104,60 A 44,44 0 1,1 16,60" fill="none" stroke="none" />
-            
-            <text font-family="'Inter', sans-serif" font-size="7.2" font-weight="900" fill="currentColor" letter-spacing="0.5">
-              <textPath href="#preview-stamp-top" startOffset="50%" text-anchor="middle">
-                ★ SAMARTH DIGITAL INDIA ★
-              </textPath>
-            </text>
-            <text font-family="'Inter', sans-serif" font-size="6.8" font-weight="900" fill="currentColor" letter-spacing="0.5">
-              <textPath href="#preview-stamp-bottom" startOffset="50%" text-anchor="middle">
-                GOVERNMENT REGISTERED
-              </textPath>
-            </text>
+      <!-- Subtle Centered Watermark Background (Tree Logo) -->
+      <div class="absolute inset-0 flex items-center justify-center opacity-[0.035] pointer-events-none z-0">
+          <img src="{{ asset('logo.png') }}" class="w-[320px] h-[320px] object-contain">
+      </div>
+
+      <!-- Inner Luxury Gold Border Frame -->
+      <div class="cert-inner-border" style="border: 2px solid #d4af37; padding: 14px 18px 24px 84px; border-radius: 10px;">
+          
+          <!-- Gold Ornamental Corner Flourishes inside the gold border -->
+          <svg class="absolute top-1 left-1 w-8 h-8 text-[#d4af37]/70 pointer-events-none" viewBox="0 0 100 100" fill="none" stroke="currentColor" stroke-width="3">
+              <path d="M 0,50 L 0,0 L 50,0 M 15,15 L 0,0 M 0,30 L 30,0" />
           </svg>
-        </div>
-        <div style="width:96px;height:96px;"></div>
-      </div>
-
-      {{-- Signature --}}
-      <div style="text-align:center; display:flex; flex-direction:column; align-items:center;">
-        <div style="border-bottom:1px solid #9ca3af;width:192px;height:64px;margin-bottom:8px;position:relative;display:flex;align-items:center;justify-content:center;padding-bottom:4px;">
-          <!-- Custom Drawn Calligraphy Signature Logo (Offline & 100% Identical) -->
-          <svg viewBox="0 0 240 70" style="width:160px;height:64px;fill:none;stroke:#4b5563;stroke-width:2.5;stroke-linecap:round;stroke-linejoin:round;filter:drop-shadow(1px 1px 1px rgba(0,0,0,0.05));">
-            <!-- smarth -->
-            <path d="M 15,48 C 22,46 26,38 23,45 C 20,52 28,52 35,46 C 38,36 43,36 44,46 C 45,36 49,36 50,46 C 51,36 55,36 56,46 C 58,42 62,38 66,41 C 68,44 67,50 63,49 C 67,46 70,44 71,46 C 73,41 76,40 79,41 C 77,46 76,50 81,46 C 83,36 84,28 85,28 C 85,28 83,41 87,45 C 89,47 93,45 96,44 M 76,35 L 86,35 C 98,32 100,21 100,21 C 100,21 98,36 102,40 C 104,44 107,44 109,44" />
-            <!-- space and digital -->
-            <path d="M 125,44 C 122,41 125,36 130,37 C 132,40 132,45 128,45 C 128,45 132,28 133,22 C 134,18 133,31 136,44 C 138,39 141,38 143,44 M 139,32 A 1.2,1.2 0 1,1 139,32.1 C 145,40 149,39 150,42 C 151,45 149,48 145,47 C 145,47 149,42 150,44 C 151,47 146,61 141,59 C 138,58 142,50 147,49 C 149,48 153,45 156,44 C 158,39 161,38 163,44 M 159,32 A 1.2,1.2 0 1,1 159,32.1 C 165,36 167,28 167,28 C 167,28 166,41 169,44 M 162,35 L 172,35 C 171,41 175,36 180,38 C 182,41 181,48 177,47 C 181,44 183,42 185,44 C 187,32 190,20 190,20 C 190,20 188,38 192,44 C 194,46 198,44 201,42" />
+          <svg class="absolute top-1 right-1 w-8 h-8 text-[#d4af37]/70 pointer-events-none" viewBox="0 0 100 100" fill="none" stroke="currentColor" stroke-width="3" style="transform: scaleX(-1);">
+              <path d="M 0,50 L 0,0 L 50,0 M 15,15 L 0,0 M 0,30 L 30,0" />
           </svg>
-        </div>
-        <p style="font-size:0.75rem;font-weight:700;color:#6b7280;text-transform:uppercase;letter-spacing:0.08em;">Authorized Signature</p>
-      </div>
-    </div>
+          <svg class="absolute bottom-6 left-1 w-8 h-8 text-[#d4af37]/70 pointer-events-none" viewBox="0 0 100 100" fill="none" stroke="currentColor" stroke-width="3" style="transform: scaleY(-1);">
+              <path d="M 0,50 L 0,0 L 50,0 M 15,15 L 0,0 M 0,30 L 30,0" />
+          </svg>
+          <svg class="absolute bottom-6 right-1 w-8 h-8 text-[#d4af37]/70 pointer-events-none" viewBox="0 0 100 100" fill="none" stroke="currentColor" stroke-width="3" style="transform: scale(-1);">
+              <path d="M 0,50 L 0,0 L 50,0 M 15,15 L 0,0 M 0,30 L 30,0" />
+          </svg>
 
+          <!-- Top-Right Certificate Number -->
+          <div class="absolute top-4 right-4 text-right z-10 text-[9px] font-bold text-gray-700">
+              <div>Certificate No.:</div>
+              <div class="text-[#004d40] font-mono text-[10px]">{{ $cert->certificate_number }}</div>
+          </div>
+
+          <!-- Left Sidebar Column with Icons -->
+          <div class="absolute left-4 top-[15%] bottom-[15%] w-12 flex flex-col items-center justify-around z-10">
+              <div class="flex flex-col items-center">
+                  <div class="w-10 h-10 rounded-full border-2 border-[#d4af37] bg-white flex items-center justify-center text-[#004d40] shadow-sm">
+                      <i class="fa-solid fa-graduation-cap text-base"></i>
+                  </div>
+                  <span class="text-[7px] font-bold text-[#004d40] uppercase text-center mt-1 leading-tight tracking-wider w-16">Skill<br>Education</span>
+              </div>
+              
+              <div class="w-[1.5px] flex-grow my-1 bg-[#d4af37]"></div>
+              
+              <div class="flex flex-col items-center">
+                  <div class="w-10 h-10 rounded-full border-2 border-[#d4af37] bg-white flex items-center justify-center text-[#004d40] shadow-sm">
+                      <i class="fa-solid fa-desktop text-sm"></i>
+                  </div>
+                  <span class="text-[7px] font-bold text-[#004d40] uppercase text-center mt-1 leading-tight tracking-wider w-16">Digital<br>Empowerment</span>
+              </div>
+              
+              <div class="w-[1.5px] flex-grow my-1 bg-[#d4af37]"></div>
+              
+              <div class="flex flex-col items-center">
+                  <div class="w-10 h-10 rounded-full border-2 border-[#d4af37] bg-white flex items-center justify-center text-[#004d40] shadow-sm">
+                      <i class="fa-solid fa-briefcase text-sm"></i>
+                  </div>
+                  <span class="text-[7px] font-bold text-[#004d40] uppercase text-center mt-1 leading-tight tracking-wider w-16">Self<br>Employment</span>
+              </div>
+          </div>
+
+          <!-- Center Logo Header & Decorative Gold Flourishes flanking it -->
+          <div class="text-center flex flex-col items-center mt-1 relative z-10">
+              <!-- Left logo flourish -->
+              <div class="absolute left-[20%] top-[40px] w-24 h-6 text-[#d4af37]/60 hidden md:block">
+                  <svg viewBox="0 0 100 20" fill="none" stroke="currentColor" stroke-width="2">
+                      <path d="M 0,10 C 30,10 50,5 60,10 C 70,15 80,10 100,10 M 20,5 Q 50,15 80,5" />
+                  </svg>
+              </div>
+              
+              <!-- 2x Larger Logo -->
+              <div class="w-24 h-24 rounded-full bg-white border border-gray-100 flex items-center justify-center shadow-md overflow-hidden mb-1 p-0.5">
+                  <img src="{{ asset('logo.png') }}" alt="Logo" class="w-full h-full object-contain">
+              </div>
+              
+              <!-- Right logo flourish -->
+              <div class="absolute right-[20%] top-[40px] w-24 h-6 text-[#d4af37]/60 hidden md:block" style="transform: scaleX(-1);">
+                  <svg viewBox="0 0 100 20" fill="none" stroke="currentColor" stroke-width="2">
+                      <path d="M 0,10 C 30,10 50,5 60,10 C 70,15 80,10 100,10 M 20,5 Q 50,15 80,5" />
+                  </svg>
+              </div>
+          </div>
+
+          <!-- Title Block (40% Larger Heading) -->
+          <div class="text-center relative z-10">
+              <h1 class="text-4xl font-extrabold text-[#004d40] tracking-widest leading-none mb-1" style="font-family: 'Cinzel', serif;">CERTIFICATE</h1>
+              <h2 class="text-sm font-bold text-[#aa7c11] tracking-[0.3em] uppercase leading-none" style="font-family: 'Montserrat', sans-serif;">of course completion</h2>
+              
+              <div class="flex items-center justify-center gap-3 my-2">
+                  <span class="w-20 h-[1.5px] bg-gradient-to-r from-transparent to-[#aa7c11]"></span>
+                  <span class="text-[11px] text-gray-500 italic font-semibold" style="font-family: 'Georgia', serif;">This is to certify that</span>
+                  <span class="w-20 h-[1.5px] bg-gradient-to-l from-transparent to-[#aa7c11]"></span>
+              </div>
+          </div>
+
+          <!-- Large Student Name Block with Tall Decorative Brackets -->
+          <div class="text-center my-1.5 relative z-10">
+              <span class="text-4xl font-extrabold text-[#004d40] tracking-wide block" style="font-family: 'Playfair Display', serif; font-style: italic;">
+                  <span class="text-[#aa7c11] font-light text-3xl opacity-80" style="font-family: 'Georgia', serif; vertical-align: middle;">[</span>
+                  <span class="mx-4 border-b-2 border-[#d4af37]/50 pb-1 px-8 inline-block min-w-[320px]">{{ $cert->user->name ?? 'Unknown' }}</span>
+                  <span class="text-[#aa7c11] font-light text-3xl opacity-80" style="font-family: 'Georgia', serif; vertical-align: middle;">]</span>
+              </span>
+          </div>
+
+          <!-- Course Details text -->
+          <div class="text-center max-w-2xl mx-auto px-4 relative z-10">
+              <p class="text-[9px] text-gray-500 font-bold uppercase tracking-wider mb-1">has successfully completed the course</p>
+              
+              <!-- Course Ribbon Banner (Gold Ribbon Banner instead of button) -->
+              <div class="relative inline-flex items-center justify-center my-2 px-14 py-2 bg-gradient-to-r from-[#d4af37] via-[#f3e5ab] to-[#d4af37] text-[#004d40] font-black text-sm uppercase tracking-widest rounded-sm shadow-md border-y border-[#aa7c11]">
+                  <!-- Left banner triangle end overlay -->
+                  <span class="absolute left-[-8px] top-0 bottom-0 w-[8px] bg-[#aa7c11] rounded-l-sm"></span>
+                  {{ $cert->module->name ?? ($cert->course->title ?? 'Training Module') }}
+                  <!-- Right banner triangle end overlay -->
+                  <span class="absolute right-[-8px] top-0 bottom-0 w-[8px] bg-[#aa7c11] rounded-r-sm"></span>
+              </div>
+
+              <!-- Description -->
+              <p class="text-[10px] text-gray-600 leading-relaxed max-w-xl mx-auto font-medium">
+                  with basic computer and AI, manufacturing of cleaning products, gau products and dhoop bati with natural ingredients. This comprehensive course has been designed to provide knowledge and practical skills for self-employment, career growth, and entrepreneurship. We wish the student success in their future endeavors.
+              </p>
+          </div>
+
+          <!-- Dates/Grades Row (DomPDF compatible Table structure) -->
+          <div class="my-2 relative z-10 text-center">
+              <table style="width: 85%; margin: 0 auto; border: 1.5px solid #d4af37; border-radius: 20px; background: white; padding: 6px 16px; font-size: 9px; font-weight: bold; color: #374151; border-collapse: separate;" cellpadding="0" cellspacing="0">
+                  <tr>
+                      <td style="width: 33%; text-align: center;">
+                          <i class="fa-solid fa-calendar" style="color:#004d40; margin-right: 4px;"></i>
+                          Course Start Date: <strong style="color:black;">{{ $cert->user->created_at ? $cert->user->created_at->format('d/m/Y') : '01/01/2026' }}</strong>
+                      </td>
+                      <td style="width: 1px; background: rgba(212,175,55,0.6); height: 16px;"></td>
+                      <td style="width: 33%; text-align: center;">
+                          <i class="fa-solid fa-star" style="color:#fbbf24; margin-right: 4px;"></i>
+                          Grade / Result: <strong style="color:black;">Excellent (A+)</strong>
+                      </td>
+                      <td style="width: 1px; background: rgba(212,175,55,0.6); height: 16px;"></td>
+                      <td style="width: 33%; text-align: center;">
+                          <i class="fa-solid fa-circle-check" style="color:#004d40; margin-right: 4px;"></i>
+                          Date of Completion: <strong style="color:black;">{{ $cert->issue_date ? $cert->issue_date->format('d/m/Y') : now()->format('d/m/Y') }}</strong>
+                      </td>
+                  </tr>
+              </table>
+          </div>
+
+          <!-- Hindi Slogan Banner -->
+          <div class="flex justify-center my-1 relative z-10">
+              <div class="bg-[#004d40] text-[#fbfbfb] px-12 py-1.5 font-bold text-[10px] rounded-full border border-[#d4af37] shadow-sm tracking-wider flex items-center gap-2" style="font-family: 'Noto Sans Devanagari', sans-serif;">
+                  कौशल से स्वावलंबन – अब नौकरी नहीं, अपना व्यवसाय करें
+              </div>
+          </div>
+
+          <!-- Signatures and Seals Row (DomPDF compatible Table structure) -->
+          <div class="relative z-10" style="margin-top: 10px;">
+              <table style="width: 100%; border-collapse: collapse;" cellpadding="0" cellspacing="0">
+                  <tr>
+                      <!-- Director's Signature (R. K.) -->
+                      <td style="width: 30%; text-align: center; vertical-align: bottom;">
+                          <div style="height: 44px; display: block; margin-bottom: 4px;">
+                              <!-- Custom drawn elegant R. K. signature -->
+                              <svg viewBox="0 0 200 60" style="width: 110px; height: 38px; fill: none; stroke: #1a365d; stroke-width: 2.5; stroke-linecap: round; stroke-linejoin: round; display: inline-block;">
+                                  <path d="M 15,40 C 15,15 30,15 30,22 C 30,30 18,35 25,45 C 30,42 35,32 38,28 M 42,45 A 1,1 0 1 1 42,44.9 M 52,15 L 52,45 M 68,18 C 60,28 53,30 53,30 L 68,45 M 74,45 A 1,1 0 1 1 74,44.9 M 10,48 C 30,50 60,49 85,46" />
+                              </svg>
+                          </div>
+                          <div style="border-top: 1.5px solid rgba(212,175,55,0.6); width: 85%; margin: 0 auto; padding-top: 2px;">
+                              <p style="font-size: 9px; font-weight: bold; color: #1f2937; margin: 0;">R. K.</p>
+                              <p style="font-size: 6px; font-weight: bold; color: #9ca3af; text-transform: uppercase; letter-spacing: 0.05em; margin: 0;">Director's Signature</p>
+                          </div>
+                      </td>
+
+                      <!-- Instructor's Signature (S. Tripathi) -->
+                      <td style="width: 30%; text-align: center; vertical-align: bottom;">
+                          <div style="height: 44px; display: block; margin-bottom: 4px;">
+                              <!-- Custom drawn S. Tripathi signature -->
+                              <svg viewBox="0 0 200 60" style="width: 110px; height: 38px; fill: none; stroke: #1a365d; stroke-width: 2.5; stroke-linecap: round; stroke-linejoin: round; display: inline-block;">
+                                  <path d="M 20,20 C 25,12 35,12 32,22 C 28,32 42,42 50,38 C 58,34 60,15 62,22 C 64,28 58,42 70,36 C 76,32 82,15 85,22 C 88,28 80,42 95,38 C 105,32 110,20 115,28 C 120,35 110,48 130,42 M 25,44 C 55,48 95,44 140,36" />
+                              </svg>
+                          </div>
+                          <div style="border-top: 1.5px solid rgba(212,175,55,0.6); width: 85%; margin: 0 auto; padding-top: 2px;">
+                              <p style="font-size: 9px; font-weight: bold; color: #1f2937; margin: 0;">S. Tripathi</p>
+                              <p style="font-size: 6px; font-weight: bold; color: #9ca3af; text-transform: uppercase; letter-spacing: 0.05em; margin: 0;">Instructor's Signature</p>
+                          </div>
+                      </td>
+
+                      <!-- Premium Embossed Gold Medallion & Seal Section -->
+                      <td style="width: 40%; text-align: right; vertical-align: bottom; padding-right: 20px;">
+                          <div style="display: inline-block; text-align: center; vertical-align: bottom;">
+                              <!-- Gold Medal with Ribbons -->
+                              <div style="position: relative; width: 88px; height: 88px; display: inline-block; vertical-align: bottom;">
+                                  <!-- Green Ribbons -->
+                                  <svg style="position: absolute; bottom: -8px; left: 22px; width: 44px; height: 44px; color: #004d40;" viewBox="0 0 100 100" fill="currentColor">
+                                      <path d="M 32,20 L 18,90 L 38,80 L 48,90 L 38,20 Z" />
+                                      <path d="M 68,20 L 82,90 L 62,80 L 52,90 L 62,20 Z" />
+                                  </svg>
+                                  <!-- Embossed Gold Badge -->
+                                  <svg style="width: 72px; height: 72px; color: #d4af37; position: absolute; top: 0; left: 8px; filter: drop-shadow(0 1px 3px rgba(0,0,0,0.15));" viewBox="0 0 100 100" fill="currentColor">
+                                      <circle cx="50" cy="50" r="46" fill="#d4af37" stroke="#aa7c11" stroke-width="2" />
+                                      <circle cx="50" cy="50" r="41" fill="none" stroke="#f3e5ab" stroke-width="1.5" stroke-dasharray="3 1.5" />
+                                      <circle cx="50" cy="50" r="38" fill="#d4af37" stroke="#aa7c11" stroke-width="1" />
+                                      <text x="50" y="46" font-family="'Noto Sans Devanagari', 'Inter', sans-serif" font-size="11" font-weight="900" fill="#004d40" text-anchor="middle">प्रमाणित</text>
+                                      <text x="50" y="62" font-family="sans-serif" font-size="12" fill="#004d40" text-anchor="middle">★★★</text>
+                                  </svg>
+                              </div>
+
+                              <!-- Authorized Seal Wreath -->
+                              <div style="display: inline-block; vertical-align: bottom; border-left: 1.5px solid rgba(212,175,55,0.6); padding-left: 8px; margin-left: 8px; height: 50px; width: 64px; text-align: center;">
+                                  <svg style="width: 30px; height: 30px; color: #aa7c11; display: block; margin: 0 auto 2px;" viewBox="0 0 100 100" fill="none" stroke="currentColor" stroke-width="2">
+                                      <path d="M 30,65 C 20,50 30,30 50,25 C 70,30 80,50 70,65" />
+                                      <path d="M 28,52 Q 22,42 32,42" stroke-width="1.2" />
+                                      <path d="M 22,42 Q 16,32 26,32" stroke-width="1.2" />
+                                      <path d="M 72,52 Q 78,42 68,42" stroke-width="1.2" />
+                                      <path d="M 78,42 Q 84,32 74,32" stroke-width="1.2" />
+                                  </svg>
+                                  <span style="font-size: 5px; font-weight: bold; color: #9ca3af; text-transform: uppercase; letter-spacing: 0.05em; line-height: 1.2; display: block;">Authorized<br>Seal</span>
+                              </div>
+                          </div>
+                      </td>
+                  </tr>
+              </table>
+          </div>
+
+          <!-- Green Footer Banner -->
+          <div class="w-full bg-[#004d40] text-[#fbfbfb] text-[9px] py-1.5 font-bold flex items-center justify-center gap-1.5 tracking-wider absolute bottom-0 left-0 right-0 rounded-b-[7px]">
+              <i class="fa-solid fa-location-dot text-[#d4af37]"></i>
+              <span>Samarth Skill Development & Employment Program</span>
+          </div>
+
+      </div>
   </div>
 </div>
 
