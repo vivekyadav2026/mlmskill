@@ -46,7 +46,7 @@
                 @else
                     <span class="bg-red-900 text-red-300 border border-red-700 px-2 py-1 rounded"><i class="fa-solid fa-lock mr-1"></i> Inactive</span>
                 @endif
-                <span class="bg-blue-900 text-blue-300 border border-blue-700 px-2 py-1 rounded"><i class="fa-solid fa-users mr-1"></i> {{ $networkCount + $directCount }} in Network</span>
+                <span class="bg-blue-900 text-blue-300 border border-blue-700 px-2 py-1 rounded"><i class="fa-solid fa-users mr-1"></i> {{ $networkCount }} in Network</span>
             </div>
         </div>
         <div class="mt-4 md:mt-0 flex gap-2">
